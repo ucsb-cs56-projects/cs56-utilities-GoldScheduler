@@ -53,5 +53,9 @@ url = 'https://ninjacourses.com/explore/4/department/ANTH/'
 
 anthList = getCourses(url)
 
-print anthList
+for dept in deptList:
+	print dept
+
+for course in anthList:
+	print course
 
