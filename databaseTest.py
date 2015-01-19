@@ -6,7 +6,7 @@ import mysql.connector
 from mysql.connector import errorcode
 
 '''
-My database, check it if you want, LAN access only(On campus or in UCSB offered house)
+My database, check it if you want, LAN access only (On campus or in UCSB offered house)
 http://169.231.51.23/phpmyadmin/
 username: root
 password: P@ssw0rd
