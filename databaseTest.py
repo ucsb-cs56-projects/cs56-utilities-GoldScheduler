@@ -1,12 +1,13 @@
 #!/usr/bin/python
 #An example to show how database works
 
+#Connector/Python: http://dev.mysql.com/downloads/connector/python/
 import mysql.connector
 from mysql.connector import errorcode
 
 '''
 My database, check it if you want
-#http://169.231.51.23/phpmyadmin/
+http://169.231.51.23/phpmyadmin/
 username: root
 password: P@ssw0rd
 '''
