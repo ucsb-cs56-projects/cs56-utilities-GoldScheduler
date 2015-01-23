@@ -1,6 +1,8 @@
 import requests
 from lxml import html
 
+# Use this website to get special course information 
+# http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/SpecialSubjectAreaRequirements.aspx
 
 # Opens the page, creates a DOM tree of HTML elements, closes page
 
