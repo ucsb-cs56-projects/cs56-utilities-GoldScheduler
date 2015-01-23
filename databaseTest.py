@@ -18,7 +18,7 @@ config = {
   'password': 'P@ssw0rd',  #password we are going to use
   'host': '169.231.51.253', #my ip now (not sure if it changes when I restart)
   'database': 'testdatabase',  #database table
-  'raise_on_warnings': True,  #not sure what this is
+  'raise_on_warnings': True,  #allows warnings to raise exceptions
 }
 
 cnx = mysql.connector.connect(**config)  #connect database
