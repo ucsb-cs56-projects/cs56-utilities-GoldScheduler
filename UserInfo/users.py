@@ -3,12 +3,12 @@
 	getID() is used to login. it returns ID if username and password matches; return -1 id no username; return -2 if password is wrong
 	getIdByEmail() is used to get User's Id by its email
 	getInfo() is used to get all the information for a student and return into a tuple
+	(ID, username, password, email, major, registered date)
 	
 	Register() is used to register. There are several precautions to use it:
-	1. username and email are primary, which means we don't want 2 users have the same username or email. Be sure to check it for the register part.
-	       Use getID() and getIdByEmail()
-	
-	2. I haven't think about it
+	1. username and email are primary, which means we don't want 2 users have the same username or email.
+	   Be sure to use Use getID() and getIdByEmail() to check it for the register part.
+
 """
 
 import mysql.connector
