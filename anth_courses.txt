@@ -1,216 +1,216 @@
-['ANTH 1', ' - Introduction to Communication']
-['ANTH 2', ' - Introductory Cultural Anthropology']
-['ANTH 3', ' - Introductory Archaeology']
-['ANTH 5', ' - Introductory Physical Anthropology']
-['ANTH 5H', ' - Introductory Physical Anthropology Honors']
-['ANTH 7', ' - Introductory Biosocial Anthropology']
-['ANTH 9', ' - Methods in the Human Behavioral Sciences']
-['ANTH 88', ' - Communication Research Methods']
-['ANTH 94ES', ' - Freshman Seminars']
-['ANTH 94GG', ' - Freshman Seminars']
-['ANTH 94GQ', ' - Freshman Seminars']
-['ANTH 94HG', ' - Freshman Seminars']
-['ANTH 94IX', ' - Freshman Seminars']
-['ANTH 94JV', ' - Freshman Seminars']
-['ANTH 94KN', ' - Freshman Seminars']
-['ANTH 94PF', ' - Freshman Seminars']
-['ANTH 94PO', ' - Freshman Seminars']
-['ANTH 94PT', ' - Freshman Seminars']
-['ANTH 94PX', ' - Freshman Seminars']
-['ANTH 98RA', ' - Introduction to Research']
-['ANTH 99', ' - Independent Studies']
-['ANTH 100', ' - Basic Archaeological Concepts']
-['ANTH 100RS', ' - Topics in Advanced Library Research']
-['ANTH 101', ' - Media Literacy']
-['ANTH 102', ' - The Anthropology of Slavery over Time and Space']
-['ANTH 103A', ' - Anthropology of China']
-['ANTH 103B', ' - Anthropology of Japan']
-['ANTH 103C', ' - Anthropology of Contemporary Korea']
-['ANTH 104', ' - Risk & Inequality']
-['ANTH 105', ' - Human Variation']
-['ANTH 106', ' - History of Anthropological Theory']
-['ANTH 106B', ' - Ritual and Violence.']
-['ANTH 107', ' - Psychological Anthropology']
-['ANTH 108', ' - Educating the Native']
-['ANTH 109', ' - Human Universals']
-['ANTH 110', ' - Technology and Culture']
-['ANTH 111', ' - The Anthropology of Food']
-['ANTH 112', ' - Bioarchaeology']
-['ANTH 112Z', ' - Theoretical Approaches in Contemporary Archaeology']
-['ANTH 113', ' - Indigenous People and the Nation State in the Americas']
-['ANTH 113FB', ' - Science and Society']
-['ANTH 114', ' - Social Organization']
-['ANTH 115', ' - Interactive Media Theory and Design']
-['ANTH 116', ' - The Internet, Communication, and Contemporary Society']
-['ANTH 116A', ' - Myth, Ritual and Symbol']
-['ANTH 116B', ' - Anthropological Approaches to Religion']
-['ANTH 116C', ' - Anthropology of Religion Practicum']
-['ANTH 117', ' - Borders and Borderlands']
-['ANTH 118TS', ' - Archaeology of the Ancient Near East']
-['ANTH 119', ' - Household Archaeology']
-['ANTH 120', ' - Advanced Group Interdisciplinary Studies']
-['ANTH 121', ' - Human Evolution']
-['ANTH 121T', ' - Genetics, Natural Selection, and Human Evolution']
-['ANTH 122', ' - Anthropology of World Systems']
-['ANTH 123MG', ' - Anthropological Data Analysis']
-['ANTH 124', ' - Family Communication']
-['ANTH 125', ' - Anthropology of Gender']
-['ANTH 127', ' - Hunters and Gatherers']
-['ANTH 129', ' - Ethnographic Research Methods: Ethics and Engagement']
-['ANTH 129MG', ' - Behavioral Ecology of Hunter Gatherers']
-['ANTH 130A', ' - Coupled Human and Natural Systems: Risks, Vulnerability, Resilience, and   Disasters']
-['ANTH 130B', ' - Global Tourism and Environmental Conservation']
-['ANTH 130C', ' - Global Food Systems and Human Food Security']
-['ANTH 131', ' - North American Indians']
-['ANTH 131CA', ' - California Indians']
-['ANTH 132TS', ' - Ceramic Analysis in Archaeology']
-['ANTH 133', ' - Cultural Development in Mesoamerica']
-['ANTH 134', ' - Modern Cultures of Latin America']
-['ANTH 135', ' - Modern Mexican Culture']
-['ANTH 136', ' - Peoples and Cultures of the Pacific']
-['ANTH 137', ' - The Ancient Maya']
-['ANTH 138TS', ' - Archaeology of Egypt']
-['ANTH 139', ' - Indigenous Peoples']
-['ANTH 141', ' - Agriculture and Society in Mexico: Past and Present']
-['ANTH 142', ' - Peoples and Cultures of India']
-['ANTH 143', ' - Introduction to Contemporary Social Theory']
-['ANTH 143F', ' - Ethics in Archaeology']
-['ANTH 145', ' - Anthropological Demography and Life History']
-['ANTH 147', ' - Water and Society']
-['ANTH 148', ' - Ecological Anthropology']
-['ANTH 148A', ' - Comparative Ethnicity']
-['ANTH 149', ' - World Agriculture, Food, and Population']
-['ANTH 150B', ' - Archaeology of Andean Civilizations']
-['ANTH 150C', ' - The Inca Empire']
-['ANTH 151T', ' - Evolutionary Psychology']
-['ANTH 152', ' - Communication & Organizational Membership']
-['ANTH 153', ' - Seminar on Primate and Human Sexual Behavior']
-['ANTH 153S', ' - The Evolution of Human Sexuality']
-['ANTH 153T', ' - Primate Behavior']
-['ANTH 154', ' - Special Topics in Social Anthropology']
-['ANTH 155', ' - Prehistory of California and the Great Basin']
-['ANTH 155L', ' - Congress Simulation Lab']
-['ANTH 156EE', ' - Environmental Ethics']
-['ANTH 157FS', ' - Ethnographic Field Methods']
-['ANTH 157L', ' - Medical Anthropology: Cultural Perspectives on Health and   Therapeutics']
-['ANTH 160', ' - Cultural Ecology']
-['ANTH 161', ' - "Human Growth and Development"']
-['ANTH 162', ' - Prehistoric Food Production']
-['ANTH 163', ' - Diffusion of Innovations']
-['ANTH 164', ' - The Origins of Complex Societies']
-['ANTH 166BT', ' - Biotechnology, Food, and Agriculture']
-['ANTH 166FP', ' - Small-Scale Food Production']
-['ANTH 167', ' - People of the Ice Age']
-['ANTH 168', ' - Ethnology in Rural California: Transformations in Agriculture, Farm Labor, and Rural Communities']
-['ANTH 169', ' - Evolution of Cooperation']
-['ANTH 171', ' - Politics and Communication']
-['ANTH 176', ' - Representations of Sexuality in Modern Japan']
-['ANTH 176B', ' - The American West']
-['ANTH 176TS', ' - Ancient Egyptian Religion']
-['ANTH 177AB', ' - Human Reproduction Ecology and Endocrinology']
-['ANTH 178', ' - Internship in Archaeological Record-Keeping and Collections']
-['ANTH 180', ' - Bureaucracy and Public Policy']
-['ANTH 180A', ' - Osteology']
-['ANTH 180B', ' - Osteology']
-['ANTH 181', ' - Methods and Techniques of Field Archaeology']
-['ANTH 181A', ' - Senior Honors Thesis']
-['ANTH 182', ' - Quantitative Data Analysis in Archaeology']
-['ANTH 182M', ' - Introduction to Lithic Analysis']
-['ANTH 183', ' - Internship in Archaeological Resource Management']
-['ANTH 184', ' - Settlement Pattern Analysis in Archaeology']
-['ANTH 184AF', ' - Honors Seminar: Special Topics']
-['ANTH 184MM', ' - Honors Seminar: Special Topics']
-['ANTH 184PD', ' - Honors Seminar: Special Topics']
-['ANTH 185', ' - Human Environmental Rights']
-['ANTH 185IV', ' - Interdisciplinary Humanities Seminar']
-['ANTH 185ST', ' - Selected Topics']
-['ANTH 185UA', ' - Interdisciplinary Humanities Seminar']
-['ANTH 186', ' - Lab Course in Paleoethnobotany']
-['ANTH 186Z', ' - Lab Course in Zooarchaeology']
-['ANTH 187', ' - The Clash of Cultures']
-['ANTH 189', ' - Problems in European Prehistory']
-['ANTH 190', ' - Cultural Anthropology Internship']
-['ANTH 190MA', ' - Junior Seminar for McNair Scholars']
-['ANTH 190MB', ' - Senior Seminar for McNair Scholars']
-['ANTH 191', ' - Indigenous Movements in Asia']
-['ANTH 192', ' - Field Research in Political Science']
-['ANTH 192AB', ' - Developmental Plasticity and Evolution']
-['ANTH 192DC', ' - Washington Center Internship']
-['ANTH 194', ' - Field Training Archaeology']
-['ANTH 194P', ' - Practicum in Field and Laboratory Analysis']
-['ANTH 195A', ' - Senior Honors Program']
-['ANTH 195B', ' - Senior Honors Program']
-['ANTH 196', ' - Senior Seminar in Political Science.']
-['ANTH 197', ' - Special Courses']
-['ANTH 197AC', ' - Special Courses']
-['ANTH 197B', ' - Honors Thesis Seminar in Political Science']
-['ANTH 197DK', ' - Special Courses']
-['ANTH 197E', ' - Senior Thesis in Political Science']
-['ANTH 197ES', ' - Special Courses']
-['ANTH 197JH', ' - Special Courses']
-['ANTH 197LG', ' - Special Courses']
-['ANTH 197MK', ' - Special Courses']
-['ANTH 197MS', ' - Special Courses']
-['ANTH 197XY', ' - Special Courses']
-['ANTH 198', ' - Independent Readings in Anthropology']
-['ANTH 199', ' - Independent Studies in Anthropology']
-['ANTH 199DC', ' - Independent Research At Washington Center']
-['ANTH 199RA', ' - Undergraduate Research Assistance Training in Anthropology']
-['ANTH 201A', ' - Classical Archaeological Theory']
-['ANTH 201B', ' - Contemporary Archaeology Theory']
-['ANTH 206', ' - Current Problems in Archaeology']
-['ANTH 206AV', ' - Current Problems in Archaeology']
-['ANTH 206GW', ' - Current Problems in Archaeology']
-['ANTH 206KS', ' - Current Problems in Archaeology']
-['ANTH 206LG', ' - Current Problems in Archaeology']
-['ANTH 207', ' - Problems in Hunter-Gatherer Archaeology']
-['ANTH 208', ' - Anthropological Political Economy']
-['ANTH 210', ' - Basic Issues in Physical Anthropology']
-['ANTH 218', ' - Problems in Andean Archaeology']
-['ANTH 222', ' - Ethnicity and Race in the Americas']
-['ANTH 225', ' - Peasants and Industrialization: "Traditional" Rural Societies']
-['ANTH 226', ' - Religion, Media, and Culture']
-['ANTH 228', ' - Culture and Spatial Practice']
-['ANTH 229', ' - Ethnographic Research Methods: Ethics and Engagement']
-['ANTH 232', ' - Graduate Proseminar']
-['ANTH 234', ' - Advanced Theory and Method in Evolutionary Psychology']
-['ANTH 235A', ' - Foundations of Modern Social Theory']
-['ANTH 235B', ' - Issues in Contemporary Anthropology']
-['ANTH 239A', ' - Research Design and Writing in Archaeology']
-['ANTH 240A', ' - Research Methods in Cultural Anthropology']
-['ANTH 240B', ' - Research Design and Writing in Sociocultural Anthropology']
-['ANTH 240C', ' - Research Seminar in Cultural Anthropology']
-['ANTH 241', ' - Contemporary Topics in Biological Anthropology']
-['ANTH 244', ' - Pedagogical Methods and Strategies in Biological Anthropology']
-['ANTH 245A', ' - Quantitative Data Analysis Archaeology']
-['ANTH 250CW', ' - METHOD AND THEORY']
-['ANTH 250DK', ' - Method and Theory in Anthropology']
-['ANTH 250ES', ' - METHOD AND THEORY']
-['ANTH 250GW', ' - Method and Theory in Anthropology']
-['ANTH 250JH', ' - Method and Theory in Anthropology']
-['ANTH 250JP', ' - Method and Theory in Anthropology']
-['ANTH 250MB', ' - Method and Theory in Anthropology']
-['ANTH 250MG', ' - Method and Theory in Anthropology']
-['ANTH 250MH', ' - Method and Theory in Anthropology']
-['ANTH 250MK', ' - Method and Theory in Anthropology']
-['ANTH 250MS', ' - Method and Theory in Anthropology']
-['ANTH 250SA', ' - Method and Theory in Anthropology']
-['ANTH 250SS', ' - Methods and Theory in Antropology']
-['ANTH 250TS', ' - Method and Theory in Anthropology']
-['ANTH 250VP', ' - Method and Theory in Anthropology']
-['ANTH 250XX', ' - Method and Theory in Anthropology']
-['ANTH 250ZZ', ' - METHOD AND THEORY']
-['ANTH 252', ' - Political Ecology']
-['ANTH 253', ' - Human Biology Laboratory Methods']
-['ANTH 256', ' - Modeling Social Behavior']
-['ANTH 257', ' - Human Behavioral Ecology Theory and Method']
-['ANTH 260', ' - Applied Data Analysis in R']
-['ANTH 275', ' - Problems in Archaeological Ceramic Analysis']
-['ANTH 276', ' - Culture Contact and Interaction']
-['ANTH 277', ' - Faculty Graduate Proseminar']
-['ANTH 501', ' - Teaching Assistant Practicum']
-['ANTH 594', ' - Field Research Training']
-['ANTH 596', ' - Directed Reading and Research']
-['ANTH 597', " - Individual Study for Master's Comprehensive Examinations"]
-['ANTH 598', " - Master's Thesis and Pre-Candidacy Preparation"]
-['ANTH 599', ' - Dissertation Research and Preparation']
+ANTH 1 - Introduction to Communication
+ANTH 2 - Introductory Cultural Anthropology
+ANTH 3 - Introductory Archaeology
+ANTH 5 - Introductory Physical Anthropology
+ANTH 5H - Introductory Physical Anthropology Honors
+ANTH 7 - Introductory Biosocial Anthropology
+ANTH 9 - Methods in the Human Behavioral Sciences
+ANTH 88 - Communication Research Methods
+ANTH 94ES - Freshman Seminars
+ANTH 94GG - Freshman Seminars
+ANTH 94GQ - Freshman Seminars
+ANTH 94HG - Freshman Seminars
+ANTH 94IX - Freshman Seminars
+ANTH 94JV - Freshman Seminars
+ANTH 94KN - Freshman Seminars
+ANTH 94PF - Freshman Seminars
+ANTH 94PO - Freshman Seminars
+ANTH 94PT - Freshman Seminars
+ANTH 94PX - Freshman Seminars
+ANTH 98RA - Introduction to Research
+ANTH 99 - Independent Studies
+ANTH 100 - Basic Archaeological Concepts
+ANTH 100RS - Topics in Advanced Library Research
+ANTH 101 - Media Literacy
+ANTH 102 - The Anthropology of Slavery over Time and Space
+ANTH 103A - Anthropology of China
+ANTH 103B - Anthropology of Japan
+ANTH 103C - Anthropology of Contemporary Korea
+ANTH 104 - Risk & Inequality
+ANTH 105 - Human Variation
+ANTH 106 - History of Anthropological Theory
+ANTH 106B - Ritual and Violence.
+ANTH 107 - Psychological Anthropology
+ANTH 108 - Educating the Native
+ANTH 109 - Human Universals
+ANTH 110 - Technology and Culture
+ANTH 111 - The Anthropology of Food
+ANTH 112 - Bioarchaeology
+ANTH 112Z - Theoretical Approaches in Contemporary Archaeology
+ANTH 113 - Indigenous People and the Nation State in the Americas
+ANTH 113FB - Science and Society
+ANTH 114 - Social Organization
+ANTH 115 - Interactive Media Theory and Design
+ANTH 116 - The Internet, Communication, and Contemporary Society
+ANTH 116A - Myth, Ritual and Symbol
+ANTH 116B - Anthropological Approaches to Religion
+ANTH 116C - Anthropology of Religion Practicum
+ANTH 117 - Borders and Borderlands
+ANTH 118TS - Archaeology of the Ancient Near East
+ANTH 119 - Household Archaeology
+ANTH 120 - Advanced Group Interdisciplinary Studies
+ANTH 121 - Human Evolution
+ANTH 121T - Genetics, Natural Selection, and Human Evolution
+ANTH 122 - Anthropology of World Systems
+ANTH 123MG - Anthropological Data Analysis
+ANTH 124 - Family Communication
+ANTH 125 - Anthropology of Gender
+ANTH 127 - Hunters and Gatherers
+ANTH 129 - Ethnographic Research Methods: Ethics and Engagement
+ANTH 129MG - Behavioral Ecology of Hunter Gatherers
+ANTH 130A - Coupled Human and Natural Systems: Risks, Vulnerability, Resilience, and   Disasters
+ANTH 130B - Global Tourism and Environmental Conservation
+ANTH 130C - Global Food Systems and Human Food Security
+ANTH 131 - North American Indians
+ANTH 131CA - California Indians
+ANTH 132TS - Ceramic Analysis in Archaeology
+ANTH 133 - Cultural Development in Mesoamerica
+ANTH 134 - Modern Cultures of Latin America
+ANTH 135 - Modern Mexican Culture
+ANTH 136 - Peoples and Cultures of the Pacific
+ANTH 137 - The Ancient Maya
+ANTH 138TS - Archaeology of Egypt
+ANTH 139 - Indigenous Peoples
+ANTH 141 - Agriculture and Society in Mexico: Past and Present
+ANTH 142 - Peoples and Cultures of India
+ANTH 143 - Introduction to Contemporary Social Theory
+ANTH 143F - Ethics in Archaeology
+ANTH 145 - Anthropological Demography and Life History
+ANTH 147 - Water and Society
+ANTH 148 - Ecological Anthropology
+ANTH 148A - Comparative Ethnicity
+ANTH 149 - World Agriculture, Food, and Population
+ANTH 150B - Archaeology of Andean Civilizations
+ANTH 150C - The Inca Empire
+ANTH 151T - Evolutionary Psychology
+ANTH 152 - Communication & Organizational Membership
+ANTH 153 - Seminar on Primate and Human Sexual Behavior
+ANTH 153S - The Evolution of Human Sexuality
+ANTH 153T - Primate Behavior
+ANTH 154 - Special Topics in Social Anthropology
+ANTH 155 - Prehistory of California and the Great Basin
+ANTH 155L - Congress Simulation Lab
+ANTH 156EE - Environmental Ethics
+ANTH 157FS - Ethnographic Field Methods
+ANTH 157L - Medical Anthropology: Cultural Perspectives on Health and   Therapeutics
+ANTH 160 - Cultural Ecology
+ANTH 161 - "Human Growth and Development"
+ANTH 162 - Prehistoric Food Production
+ANTH 163 - Diffusion of Innovations
+ANTH 164 - The Origins of Complex Societies
+ANTH 166BT - Biotechnology, Food, and Agriculture
+ANTH 166FP - Small-Scale Food Production
+ANTH 167 - People of the Ice Age
+ANTH 168 - Ethnology in Rural California: Transformations in Agriculture, Farm Labor, and Rural Communities
+ANTH 169 - Evolution of Cooperation
+ANTH 171 - Politics and Communication
+ANTH 176 - Representations of Sexuality in Modern Japan
+ANTH 176B - The American West
+ANTH 176TS - Ancient Egyptian Religion
+ANTH 177AB - Human Reproduction Ecology and Endocrinology
+ANTH 178 - Internship in Archaeological Record-Keeping and Collections
+ANTH 180 - Bureaucracy and Public Policy
+ANTH 180A - Osteology
+ANTH 180B - Osteology
+ANTH 181 - Methods and Techniques of Field Archaeology
+ANTH 181A - Senior Honors Thesis
+ANTH 182 - Quantitative Data Analysis in Archaeology
+ANTH 182M - Introduction to Lithic Analysis
+ANTH 183 - Internship in Archaeological Resource Management
+ANTH 184 - Settlement Pattern Analysis in Archaeology
+ANTH 184AF - Honors Seminar: Special Topics
+ANTH 184MM - Honors Seminar: Special Topics
+ANTH 184PD - Honors Seminar: Special Topics
+ANTH 185 - Human Environmental Rights
+ANTH 185IV - Interdisciplinary Humanities Seminar
+ANTH 185ST - Selected Topics
+ANTH 185UA - Interdisciplinary Humanities Seminar
+ANTH 186 - Lab Course in Paleoethnobotany
+ANTH 186Z - Lab Course in Zooarchaeology
+ANTH 187 - The Clash of Cultures
+ANTH 189 - Problems in European Prehistory
+ANTH 190 - Cultural Anthropology Internship
+ANTH 190MA - Junior Seminar for McNair Scholars
+ANTH 190MB - Senior Seminar for McNair Scholars
+ANTH 191 - Indigenous Movements in Asia
+ANTH 192 - Field Research in Political Science
+ANTH 192AB - Developmental Plasticity and Evolution
+ANTH 192DC - Washington Center Internship
+ANTH 194 - Field Training Archaeology
+ANTH 194P - Practicum in Field and Laboratory Analysis
+ANTH 195A - Senior Honors Program
+ANTH 195B - Senior Honors Program
+ANTH 196 - Senior Seminar in Political Science.
+ANTH 197 - Special Courses
+ANTH 197AC - Special Courses
+ANTH 197B - Honors Thesis Seminar in Political Science
+ANTH 197DK - Special Courses
+ANTH 197E - Senior Thesis in Political Science
+ANTH 197ES - Special Courses
+ANTH 197JH - Special Courses
+ANTH 197LG - Special Courses
+ANTH 197MK - Special Courses
+ANTH 197MS - Special Courses
+ANTH 197XY - Special Courses
+ANTH 198 - Independent Readings in Anthropology
+ANTH 199 - Independent Studies in Anthropology
+ANTH 199DC - Independent Research At Washington Center
+ANTH 199RA - Undergraduate Research Assistance Training in Anthropology
+ANTH 201A - Classical Archaeological Theory
+ANTH 201B - Contemporary Archaeology Theory
+ANTH 206 - Current Problems in Archaeology
+ANTH 206AV - Current Problems in Archaeology
+ANTH 206GW - Current Problems in Archaeology
+ANTH 206KS - Current Problems in Archaeology
+ANTH 206LG - Current Problems in Archaeology
+ANTH 207 - Problems in Hunter-Gatherer Archaeology
+ANTH 208 - Anthropological Political Economy
+ANTH 210 - Basic Issues in Physical Anthropology
+ANTH 218 - Problems in Andean Archaeology
+ANTH 222 - Ethnicity and Race in the Americas
+ANTH 225 - Peasants and Industrialization: "Traditional" Rural Societies
+ANTH 226 - Religion, Media, and Culture
+ANTH 228 - Culture and Spatial Practice
+ANTH 229 - Ethnographic Research Methods: Ethics and Engagement
+ANTH 232 - Graduate Proseminar
+ANTH 234 - Advanced Theory and Method in Evolutionary Psychology
+ANTH 235A - Foundations of Modern Social Theory
+ANTH 235B - Issues in Contemporary Anthropology
+ANTH 239A - Research Design and Writing in Archaeology
+ANTH 240A - Research Methods in Cultural Anthropology
+ANTH 240B - Research Design and Writing in Sociocultural Anthropology
+ANTH 240C - Research Seminar in Cultural Anthropology
+ANTH 241 - Contemporary Topics in Biological Anthropology
+ANTH 244 - Pedagogical Methods and Strategies in Biological Anthropology
+ANTH 245A - Quantitative Data Analysis Archaeology
+ANTH 250CW - METHOD AND THEORY
+ANTH 250DK - Method and Theory in Anthropology
+ANTH 250ES - METHOD AND THEORY
+ANTH 250GW - Method and Theory in Anthropology
+ANTH 250JH - Method and Theory in Anthropology
+ANTH 250JP - Method and Theory in Anthropology
+ANTH 250MB - Method and Theory in Anthropology
+ANTH 250MG - Method and Theory in Anthropology
+ANTH 250MH - Method and Theory in Anthropology
+ANTH 250MK - Method and Theory in Anthropology
+ANTH 250MS - Method and Theory in Anthropology
+ANTH 250SA - Method and Theory in Anthropology
+ANTH 250SS - Methods and Theory in Antropology
+ANTH 250TS - Method and Theory in Anthropology
+ANTH 250VP - Method and Theory in Anthropology
+ANTH 250XX - Method and Theory in Anthropology
+ANTH 250ZZ - METHOD AND THEORY
+ANTH 252 - Political Ecology
+ANTH 253 - Human Biology Laboratory Methods
+ANTH 256 - Modeling Social Behavior
+ANTH 257 - Human Behavioral Ecology Theory and Method
+ANTH 260 - Applied Data Analysis in R
+ANTH 275 - Problems in Archaeological Ceramic Analysis
+ANTH 276 - Culture Contact and Interaction
+ANTH 277 - Faculty Graduate Proseminar
+ANTH 501 - Teaching Assistant Practicum
+ANTH 594 - Field Research Training
+ANTH 596 - Directed Reading and Research
+ANTH 597 - Individual Study for Master's Comprehensive Examinations
+ANTH 598 - Master's Thesis and Pre-Candidacy Preparation
+ANTH 599 - Dissertation Research and Preparation

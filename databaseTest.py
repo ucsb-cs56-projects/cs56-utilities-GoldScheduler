@@ -7,7 +7,7 @@ from mysql.connector import errorcode
 
 '''
 My database, check it if you want, LAN access only (On campus or in UCSB offered house)
-http://169.231.51.23/phpmyadmin/
+http://169.231.51.253/phpmyadmin/
 username: root
 password: P@ssw0rd
 '''
@@ -16,9 +16,9 @@ password: P@ssw0rd
 config = {
   'user': 'cs48',          #username we are going to use
   'password': 'P@ssw0rd',  #password we are going to use
-  'host': '169.231.51.23', #my ip now (not sure if it changes when I restart)
+  'host': '169.231.51.253', #my ip now (not sure if it changes when I restart)
   'database': 'testdatabase',  #database table
-  'raise_on_warnings': True,  #not sure what this is
+  'raise_on_warnings': True,  #allows warnings to raise exceptions
 }
 
 cnx = mysql.connector.connect(**config)  #connect database
