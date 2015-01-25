@@ -1,3 +1,7 @@
+#Forrest:   Actually we do not need that much function to return values..
+#           Just declare every variable final(constant) and public
+#           becuase we do not need change it after it is declared.
+
 class Course:
     courseCode = ""
     courseID=0
