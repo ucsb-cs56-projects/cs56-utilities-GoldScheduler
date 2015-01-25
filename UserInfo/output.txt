@@ -1,0 +1,5 @@
+Get user ID by username and password
+23
+Get user info by ID
+(8, u'sxh19911230', u'P@ssw0rd', None, None, datetime.datetime(2015, 1, 24, 21, 15, 40))
+Register
