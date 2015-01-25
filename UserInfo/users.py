@@ -36,6 +36,7 @@ def getID(username, password):
 	cursor.close()
 	cnx.close()
 	
+	
 	#No username
 	if len(user_info) == 0:
 		return -1
