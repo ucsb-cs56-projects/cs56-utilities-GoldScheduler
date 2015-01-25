@@ -76,7 +76,7 @@ def getInfo(ID):
 
 	return user_info[0]
 
-def Register(username, password, email, major):
+def Register(username, password, email=None, major=None):
 	try:
 	 #Info to access database
 	  cnx = mysql.connector.connect(**config.config)  #connect database
@@ -92,9 +92,18 @@ def Register(username, password, email, major):
 	  
 	cursor = cnx.cursor()
 	
+	if email:
+		email = "'" + email + "'"
+	else:
+		email = "null"
+		
+	if major:
+		major = "'" + major + "'"
+	else:
+		major = "null"
 	
 	#try:
-	cursor.execute("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s','%s','%s');" % (username, password, email, major))
+	cursor.execute("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);" % (username, password, email, major))
 	
 	#except mysql.connector.errors.IntegrityError as err2:
 	#	print "mysql.connector.errors.IntegrityError: Duplicate entry"

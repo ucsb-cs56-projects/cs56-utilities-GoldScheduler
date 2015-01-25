@@ -1,8 +1,8 @@
 import users
 
 print "Get user ID by username and password"
-print users.getID("hehe3", "qwe")
+print users.getID("sxh19911230", "P@ssw0rd")
 print "Get user info by ID"
-print users.getInfo(8)
+print users.getInfo(1)
 print "Register"
-users.Register("hehe6","qwe",None,None)
+users.Register("hehe8","qwe",None,None)
