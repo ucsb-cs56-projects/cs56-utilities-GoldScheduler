@@ -2,10 +2,11 @@
 from Tkinter import *
 from PIL import Image, ImageTk
 import tkFont
+import UserInfo.users
 
 
 
-class MainPage(Frame):
+class hellopage(Frame):
 	def createWidgets(self):
 		self.logo = ImageTk.PhotoImage(Image.open("theLogo.png").resize((736, 550)))
         #Displaying it
@@ -34,7 +35,28 @@ class LoginPage(Frame):
 		self.logo = ImageTk.PhotoImage(Image.open("theLogo.png").resize((736, 550)))		
 		Label(self, image=self.logo).pack()
 		
-		self.BackButton = Button(self,  text = "Back", command=goToMain)
+		self.user = Label(self, text="Username: ")
+		self.user.pack()
+		self.userIn = Entry(self)
+		self.userIn.pack()
+		
+		self.pwd = Label(self, text="Password: ")
+		self.pwd.pack()
+		self.pwdIn = Entry(self)
+		self.pwdIn.pack()
+		
+		def submit():
+			
+			if (UserInfo.users.getID(self.userIn.get(), self.pwdIn.get()) > 0):
+				print "Login succeeded"
+			else:
+				print "Login Failed"
+				
+		
+		self.Login = Button(self,  text = "Submit", command=submit)
+		self.Login.pack()
+		
+		self.BackButton = Button(self,  text = "Back", command=goToHello)
 		self.BackButton.pack()
 		
 		
@@ -86,7 +108,7 @@ class RegisterPage(Frame):
 		self.Register = Button(self,  text = "Submit", command=submit)
 		self.Register.pack()
 		
-		self.BackButton = Button(self,  text = "Back", command=goToMain)
+		self.BackButton = Button(self,  text = "Back", command=goToHello)
 		self.BackButton.pack()
 	
 	def __init__(self, master=None):
@@ -94,18 +116,22 @@ class RegisterPage(Frame):
 		self.createWidgets()
 		
 def goToLgin():
-	mainpage.pack_forget()
+	hellopage.pack_forget()
 	loginpage.pack()
 	
-def goToMain():
+def goToHello():
 	registerpage.pack_forget()
 	loginpage.pack_forget()
-	mainpage.pack()
+	hellopage.pack()
 
 def createAccount():
-	mainpage.pack_forget()
+	hellopage.pack_forget()
 	registerpage.pack()
 
+def goToMain(ID=0):
+	hellopage.pack_forget()
+	loginpage.pack_forget()
+	registerpage.pack_forget()
 	
 	
 root = Tk()
@@ -113,11 +139,11 @@ root.geometry('{}x{}'.format(810, 1000))
 root.title("GOLDER")
 
 
-mainpage = MainPage(master=root)
+hellopage = hellopage(master=root)
 loginpage = LoginPage(master=root)
 registerpage = RegisterPage(master=root)
 
-mainpage.pack()
+hellopage.pack()
 
 root.mainloop()
 root.destory()
