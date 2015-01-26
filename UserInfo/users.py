@@ -77,21 +77,25 @@ def getInfo(ID):
 
 	return user_info[0]
 
-def Register(username, password, email=None, major=None):
+def Register(username, password, email="", major=""):
 
 	cnx = mysql.connector.connect(**config.config)  #connect database
 
 	cursor = cnx.cursor()
 	
-	if email:
-		email = "'" + email + "'"
-	else:
+	if email == "":
 		email = "null"
-		
-	if major:
-		major = "'" + major + "'"
 	else:
+		email = "'" + email + "'"
+
+	if major == "":
 		major = "null"
+	else:
+		major = "'" + major + "'"
+	
+	
+	
+		
 	
 	#try:
 	cursor.execute("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);" % (username, password, email, major))
@@ -101,6 +105,8 @@ def Register(username, password, email=None, major=None):
 	cnx.commit()
 	cursor.close()
 	cnx.close()
+	
+	return getID(username, password)
 
 def databaseCheck():
 	try:

@@ -3,7 +3,7 @@ from Tkinter import *
 from PIL import Image, ImageTk
 import tkFont
 import UserInfo.users
-
+import re
 
 
 class hellopage(Frame):
@@ -12,7 +12,7 @@ class hellopage(Frame):
         #Displaying it
 		Label(self, image=self.logo).pack()
 		
-		self.noAccount = Button(self, text = "Continue without Account")
+		self.noAccount = Button(self, text = "Continue without Account",command=goToMain)
 		self.loginButton = Button(self, text = "Login",command=goToLgin)
 		self.createButton = Button(self, text = "Create Account", command=createAccount)
 		
@@ -45,12 +45,19 @@ class LoginPage(Frame):
 		self.pwdIn = Entry(self)
 		self.pwdIn.pack()
 		
+		self.note = Label(self,fg="red", text="")
+		self.note.pack()
+		
 		def submit():
-			
-			if (UserInfo.users.getID(self.userIn.get(), self.pwdIn.get()) > 0):
-				print "Login succeeded"
+			miao = UserInfo.users.getID(self.userIn.get(), self.pwdIn.get())
+			if ( miao > 0):
+				goToMain(miao)
+			elif (miao == -1):
+				#No username
+				self.note['text'] = "user doesn't exist"
 			else:
-				print "Login Failed"
+				#Password Wrong
+				self.note['text'] = "Wrong password"
 				
 		
 		self.Login = Button(self,  text = "Submit", command=submit)
@@ -74,25 +81,25 @@ class RegisterPage(Frame):
 		self.user.pack()
 		self.userIn = Entry(self)
 		self.userIn.pack()
-		self.nameMsg = Label(self, text="*")
+		self.nameMsg = Label(self, text="*",fg="red")
 		self.nameMsg.pack()
 		
 		self.pwd = Label(self, text="Password: ")
 		self.pwd.pack()
 		self.pwdIn = Entry(self)
 		self.pwdIn.pack()
-		self.pwdMsg = Label(self, text="*")
+		self.pwdMsg = Label(self, text="*",fg="red")
 		self.pwdMsg.pack()
 		self.pwdIn2 = Entry(self)
 		self.pwdIn2.pack()
-		self.pwdMsg = Label(self, text="*")
-		self.pwdMsg.pack()
+		self.pwdMsg2 = Label(self, text="*",fg="red")
+		self.pwdMsg2.pack()
 		
 		self.email = Label(self, text="Email: ")
 		self.email.pack()
 		self.emailIn = Entry(self)
 		self.emailIn.pack()
-		self.emailMsg = Label(self, text="")
+		self.emailMsg = Label(self, text="",fg="red")
 		self.emailMsg.pack()
 		
 		self.major = Label(self, text="Major: ")
@@ -103,7 +110,46 @@ class RegisterPage(Frame):
 		self.majorMsg.pack()
 		
 		def submit():
-			print "Not Done Yet!"
+			u = self.userIn.get()
+			p = self.pwdIn.get()
+			p2 = self.pwdIn2.get()
+			e = self.emailIn.get()
+			m = self.majorIn.get()
+			
+			rgst = True;
+			if (u == ""):
+				rgst = False
+				self.nameMsg["text"] = "* Required"
+			elif (UserInfo.users.getID(u,"") == -2):
+				rgst = False
+				self.nameMsg["text"] = "* Username is already in use"	
+			else:
+				self.nameMsg["text"] = "*"
+			
+			
+			if (p == ""):
+				rgst = False
+				self.pwdMsg["text"] = "* Required"
+			else:
+				self.pwdMsg["text"] = "*"
+
+				
+			if (p2 != p):
+				rgst = False
+				self.pwdMsg2["text"] = "* Password does not match"
+			else:
+				self.pwdMsg2["text"] = "*"
+			
+			
+			if (e != "" and not re.match('\w+@\w+\.\w+', e)):
+				rgst = False
+				self.emailMsg["text"] = "Email address is not legal"
+			else:
+				self.emailMsg["text"] = ""
+
+			if (rgst):
+				goToMain(UserInfo.users.Register(u,p,e,m))
+			
 		
 		self.Register = Button(self,  text = "Submit", command=submit)
 		self.Register.pack()
@@ -115,16 +161,33 @@ class RegisterPage(Frame):
 		Frame.__init__(self, master)
 		self.createWidgets()
 		
+class mainPage(Frame):
+	def createWidgets(self):
+		self.note = Label(self,fg="red", text="Under construction")
+		self.note.pack()
+		
+		self.BackButton = Button(self,  text = "Back", command=goToHello)
+		self.BackButton.pack()
+
+	def __init__(self, master=None):
+		Frame.__init__(self, master)
+		self.createWidgets()
+
+
+
 def goToLgin():
+	mainPage.pack_forget()
 	hellopage.pack_forget()
 	loginpage.pack()
 	
 def goToHello():
+	mainPage.pack_forget()
 	registerpage.pack_forget()
 	loginpage.pack_forget()
 	hellopage.pack()
 
 def createAccount():
+	mainPage.pack_forget()
 	hellopage.pack_forget()
 	registerpage.pack()
 
@@ -132,6 +195,7 @@ def goToMain(ID=0):
 	hellopage.pack_forget()
 	loginpage.pack_forget()
 	registerpage.pack_forget()
+	mainPage.pack()
 	
 	
 root = Tk()
@@ -142,6 +206,7 @@ root.title("GOLDER")
 hellopage = hellopage(master=root)
 loginpage = LoginPage(master=root)
 registerpage = RegisterPage(master=root)
+mainPage = mainPage(master=root)
 
 hellopage.pack()
 

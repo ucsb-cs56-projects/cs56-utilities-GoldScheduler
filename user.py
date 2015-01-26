@@ -26,8 +26,6 @@ class User:
     def getMajor(self):
         return self.major
 
-root = Tk()
-root.geometry('{}x{}'.format(810, 1000))
 
 def createAccount():
     #root.destroy() #Kill first window
@@ -78,6 +76,8 @@ def createAccount():
     
 
 
+root = Tk()
+root.geometry('{}x{}'.format(810, 1000))
 root.title("GOLDER - Welcome Window")
 topFrame = Frame()
 topFrame.pack()
@@ -99,6 +99,3 @@ noAccount.grid(row=2)
 createButton.grid(row=1)
 
 root.mainloop()
-
-
-    
