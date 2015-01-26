@@ -6,15 +6,15 @@ import UserInfo.users
 import re
 
 
-class hellopage(Frame):
+class HelloPage(Frame):
 	def createWidgets(self):
 		self.logo = ImageTk.PhotoImage(Image.open("theLogo.png").resize((736, 550)))
         #Displaying it
 		Label(self, image=self.logo).pack()
 		
-		self.noAccount = Button(self, text = "Continue without Account",command=goToMain)
-		self.loginButton = Button(self, text = "Login",command=goToLgin)
-		self.createButton = Button(self, text = "Create Account", command=createAccount)
+		self.noAccount = Button(self, text = "Continue without Account",command=lambda:goToMain(self))
+		self.loginButton = Button(self, text = "Login",command=lambda:goToLgin(self))
+		self.createButton = Button(self, text = "Create Account", command=lambda:createAccount(self))
 		
 
 		self.loginButton.grid(row=2)
@@ -51,7 +51,7 @@ class LoginPage(Frame):
 		def submit():
 			miao = UserInfo.users.getID(self.userIn.get(), self.pwdIn.get())
 			if ( miao > 0):
-				goToMain(miao)
+				goToMain(self, miao)
 			elif (miao == -1):
 				#No username
 				self.note['text'] = "user doesn't exist"
@@ -63,7 +63,7 @@ class LoginPage(Frame):
 		self.Login = Button(self,  text = "Submit", command=submit)
 		self.Login.pack()
 		
-		self.BackButton = Button(self,  text = "Back", command=goToHello)
+		self.BackButton = Button(self,  text = "Back", command=lambda:goToHello(self))
 		self.BackButton.pack()
 		
 		
@@ -148,13 +148,13 @@ class RegisterPage(Frame):
 				self.emailMsg["text"] = ""
 
 			if (rgst):
-				goToMain(UserInfo.users.Register(u,p,e,m))
+				goToMain(self, UserInfo.users.Register(u,p,e,m))
 			
 		
 		self.Register = Button(self,  text = "Submit", command=submit)
 		self.Register.pack()
 		
-		self.BackButton = Button(self,  text = "Back", command=goToHello)
+		self.BackButton = Button(self,  text = "Back", command=lambda:goToHello(self))
 		self.BackButton.pack()
 	
 	def __init__(self, master=None):
@@ -166,7 +166,7 @@ class mainPage(Frame):
 		self.note = Label(self,fg="red", text="Under construction")
 		self.note.pack()
 		
-		self.BackButton = Button(self,  text = "Back", command=goToHello)
+		self.BackButton = Button(self,  text = "Back", command=lambda:goToHello(self))
 		self.BackButton.pack()
 
 	def __init__(self, master=None):
@@ -175,27 +175,21 @@ class mainPage(Frame):
 
 
 
-def goToLgin():
-	mainPage.pack_forget()
-	hellopage.pack_forget()
-	loginpage.pack()
+def goToLgin(t):
+	t.pack_forget()
+	LoginPage(master=root).pack()
 	
-def goToHello():
-	mainPage.pack_forget()
-	registerpage.pack_forget()
-	loginpage.pack_forget()
-	hellopage.pack()
+def goToHello(t):
+	t.pack_forget()
+	HelloPage(master=root).pack()
 
-def createAccount():
-	mainPage.pack_forget()
-	hellopage.pack_forget()
-	registerpage.pack()
+def createAccount(t):
+	t.pack_forget()
+	RegisterPage(master=root).pack()
 
-def goToMain(ID=0):
-	hellopage.pack_forget()
-	loginpage.pack_forget()
-	registerpage.pack_forget()
-	mainPage.pack()
+def goToMain(t, ID=0):
+	t.pack_forget()
+	mainPage(master=root).pack()
 	
 	
 root = Tk()
@@ -203,12 +197,7 @@ root.geometry('{}x{}'.format(810, 1000))
 root.title("GOLDER")
 
 
-hellopage = hellopage(master=root)
-loginpage = LoginPage(master=root)
-registerpage = RegisterPage(master=root)
-mainPage = mainPage(master=root)
-
-hellopage.pack()
+HelloPage(master=root).pack()
 
 root.mainloop()
 root.destory()
