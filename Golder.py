@@ -42,7 +42,7 @@ class LoginPage(Frame):
 		
 		self.pwd = Label(self, text="Password: ")
 		self.pwd.pack()
-		self.pwdIn = Entry(self)
+		self.pwdIn = Entry(self, show='*')
 		self.pwdIn.pack()
 		
 		self.note = Label(self,fg="red", text="")
@@ -86,11 +86,11 @@ class RegisterPage(Frame):
 		
 		self.pwd = Label(self, text="Password: ")
 		self.pwd.pack()
-		self.pwdIn = Entry(self)
+		self.pwdIn = Entry(self,show='*')
 		self.pwdIn.pack()
 		self.pwdMsg = Label(self, text="*",fg="red")
 		self.pwdMsg.pack()
-		self.pwdIn2 = Entry(self)
+		self.pwdIn2 = Entry(self,show='*')
 		self.pwdIn2.pack()
 		self.pwdMsg2 = Label(self, text="*",fg="red")
 		self.pwdMsg2.pack()
@@ -120,6 +120,8 @@ class RegisterPage(Frame):
 			if (u == ""):
 				rgst = False
 				self.nameMsg["text"] = "* Required"
+			elif (not re.match('\A\w+\Z', u)):
+				self.nameMsg["text"] = "* Only digits, letters and underscore _ are allowed"
 			elif (UserInfo.users.getID(u,"") == -2):
 				rgst = False
 				self.nameMsg["text"] = "* Username is already in use"	
@@ -141,7 +143,7 @@ class RegisterPage(Frame):
 				self.pwdMsg2["text"] = "*"
 			
 			
-			if (e != "" and not re.match('\w+@\w+\.\w+', e)):
+			if (e != "" and not re.match('\A\w+@\w+\.\w+\Z', e)):
 				rgst = False
 				self.emailMsg["text"] = "Email address is not legal"
 			else:
