@@ -26,9 +26,6 @@ class Scraper(object):
 		data = self.tree.xpath(xpath_)
 		return str(data)
 
-#"//*[@id='deptlist-left']/li[18]"
-#
-
 
 # Gets all Dept. names from Ninjacourse catalog
 	def getDepts(self):
@@ -48,8 +45,8 @@ class Scraper(object):
 			deptList.append(dept)
 		return deptList
 
-
-	def getCourses(self): #Returns a list of all courses in a single department
+	#Returns a list of all courses in a single department
+	def getCourses(self): 
 		courseList = []		 
 		courseList.append("trash")
 		i = 0
@@ -68,8 +65,32 @@ class Scraper(object):
 			courseList[i] = courseList[i] + str2
 
 		courseList.pop(0)
-		courseList.pop(-1)
+		#courseList.pop(-1)
 		return courseList
+
+	# Returns the list of courses that fulfill a particular requirement
+	# can only be used on the official UCSB course catalog website
+	def getReqCourses(self):
+		courseList = []		 
+		courseList.append("trash")
+		i = 0
+		xpath = '//*[@id="content"]/div/p[' + str(i+1) + ']/text()'
+		while(self.getData(xpath) != '[]'): #While there are still courses to get
+			#get the data according to the xpath
+			i = i + 1
+			xpath = '//*[@id="content"]/div/p[' + str(i) + ']/text()'
+			str1 = self.getData(xpath)
+
+			#Clean string up
+			str1 = str1.replace(" ","")
+			str1 = str1[6:]
+			str1 = str1[:-10]
+
+			#append course string to list
+			courseList.append(str1)
+		courseList.pop(0)
+		courseList.pop(-1)
+		return courseList	
 
 
 	def getDeptStubs(self): 
@@ -88,23 +109,25 @@ class Scraper(object):
 		return deptCodes
 
 
-	"""def getAllCourses(deptCodes):
+	def getAllCourses(self,deptCodes):
 		# This function gets all the courses on ninja courses for UCSB
 		# It uses the shortcodes of the departments to access each URL
-		# There are two issues:
-		# 1) Departments with spaces need to have '%20' in place of the space
-		# 2) getDeptStub() needs to be updated to get the departments from creative studies
-		data = {}
-		url = 'https://ninjacourses.com/explore/4/department/'
+		# There is one issue:
+		# getDeptStub() needs to be updated to get the departments from creative studies
+
+		courseDict = {}
+		tmpURL = self.url
 		
 		#This for-loop should loop through all departments and get courses for each one
-		for i in range (0, 53):
-			url = url + deptCodes[i] + '/'
-			data{deptCodes[i] : getCourses(url)}
-			url = 'https://ninjacourses.com/explore/4/department/'
-	"""
+		for dept in deptCodes:
+			# reset url for each new department
+			self.url = tmpURL + 'department/' + dept + '/'
+			#reset DOM tree for each new department
+			self.tree = self.openPage()
 
-
-path = '//*[@id="deptlist-left"]/li[18]/a/text()'
-
-
+			#add the list of courses as the value for each dept-shortcode key
+			courseDict[dept] = self.getCourses()
+		# Reset url and tree to original values	
+		self.url = tmpURL
+		self.tree = self.openPage()
+		return courseDict
