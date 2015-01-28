@@ -6,10 +6,14 @@ import UserInfo.users
 import re
 
 
+helloPage=None
+loginPage=None
+mainPage=None
+registerPage=None
+
 class HelloPage(Frame):
 	def createWidgets(self):
 		self.logo = ImageTk.PhotoImage(Image.open("theLogo.png").resize((736, 550)))
-        #Displaying it
 		Label(self, image=self.logo).pack()
 		
 		self.noAccount = Button(self, text = "Continue without Account",command=lambda:goToMain(self))
@@ -48,7 +52,7 @@ class LoginPage(Frame):
 		self.note = Label(self,fg="red", text="")
 		self.note.pack()
 		
-		def submit():
+		def submit(t=0):
 			miao = UserInfo.users.getID(self.userIn.get(), self.pwdIn.get())
 			if ( miao > 0):
 				goToMain(self, miao)
@@ -59,14 +63,18 @@ class LoginPage(Frame):
 				#Password Wrong
 				self.note['text'] = "Wrong password"
 				
+		self.pwdIn.bind('<Key-Return>', submit)
+		self.userIn.bind('<Key-Return>', submit)
 		
 		self.Login = Button(self,  text = "Submit", command=submit)
 		self.Login.pack()
 		
 		self.BackButton = Button(self,  text = "Back", command=lambda:goToHello(self))
 		self.BackButton.pack()
-		
-		
+
+	def clean(self):
+		self.userIn.delete(0,END)
+		self.pwdIn.delete(0,END)
 	
 	def __init__(self, master=None):
 		Frame.__init__(self, master)
@@ -80,6 +88,7 @@ class RegisterPage(Frame):
 		self.user = Label(self, text="Username: ")
 		self.user.pack()
 		self.userIn = Entry(self)
+		
 		self.userIn.pack()
 		self.nameMsg = Label(self, text="*",fg="red")
 		self.nameMsg.pack()
@@ -90,6 +99,7 @@ class RegisterPage(Frame):
 		self.pwdIn.pack()
 		self.pwdMsg = Label(self, text="*",fg="red")
 		self.pwdMsg.pack()
+		
 		self.pwdIn2 = Entry(self,show='*')
 		self.pwdIn2.pack()
 		self.pwdMsg2 = Label(self, text="*",fg="red")
@@ -98,6 +108,7 @@ class RegisterPage(Frame):
 		self.email = Label(self, text="Email: ")
 		self.email.pack()
 		self.emailIn = Entry(self)
+		
 		self.emailIn.pack()
 		self.emailMsg = Label(self, text="",fg="red")
 		self.emailMsg.pack()
@@ -105,11 +116,12 @@ class RegisterPage(Frame):
 		self.major = Label(self, text="Major: ")
 		self.major.pack()
 		self.majorIn = Entry(self)
+		
 		self.majorIn.pack()
 		self.majorMsg = Label(self, text="")
 		self.majorMsg.pack()
 		
-		def submit():
+		def submit(t=0):
 			u = self.userIn.get()
 			p = self.pwdIn.get()
 			p2 = self.pwdIn2.get()
@@ -150,56 +162,94 @@ class RegisterPage(Frame):
 				self.emailMsg["text"] = ""
 
 			if (rgst):
-				goToMain(self, UserInfo.users.Register(u,p,e,m))
+				goToDoneRegistration(self, UserInfo.users.Register(u,p,e,m))
 			
-		
+		self.userIn.bind('<Key-Return>', submit)
+		self.pwdIn.bind('<Key-Return>', submit)
+		self.pwdIn2.bind('<Key-Return>', submit)
+		self.emailIn.bind('<Key-Return>', submit)
+		self.majorIn.bind('<Key-Return>', submit)
+
 		self.Register = Button(self,  text = "Submit", command=submit)
 		self.Register.pack()
 		
 		self.BackButton = Button(self,  text = "Back", command=lambda:goToHello(self))
 		self.BackButton.pack()
 	
+	def clean(self):
+		self.userIn.delete(0,END)
+		self.pwdIn.delete(0,END)
+		self.pwdIn2.delete(0,END)
+		self.emailIn.delete(0,END)
+		self.majorIn.delete(0,END)
+	
 	def __init__(self, master=None):
 		Frame.__init__(self, master)
 		self.createWidgets()
+
+class RegisterDonePage(Frame):
+	
+	def createWidgets(self):
+		self.header = Label(self, text="Congratulations!\nYou have registered your account!\nPress Continue to go on!",fg="blue",font=tkFont.Font(size=30))
+		self.header.pack()
+		self.continueButton = Button(self,  text = "Continue", command=lambda:goToMain(self, self.UID))
+		self.continueButton.pack()
+	
+	def __init__(self, UID, master=None):
+		Frame.__init__(self, master)
+		self.UID = UID
+		self.createWidgets()
 		
-class mainPage(Frame):
+	
+class MainPage(Frame):
 	def createWidgets(self):
 		self.note = Label(self,fg="red", text="Under construction")
-		self.note.pack()
+		self.note.grid()
 		
 		self.BackButton = Button(self,  text = "Back", command=lambda:goToHello(self))
-		self.BackButton.pack()
+		self.BackButton.grid()
 
 	def __init__(self, master=None):
 		Frame.__init__(self, master)
 		self.createWidgets()
-
 
 
 def goToLgin(t):
 	t.pack_forget()
-	LoginPage(master=root).pack()
-	
+	t.grid_forget()
+	loginPage.clean()
+	loginPage.pack()
+
 def goToHello(t):
 	t.pack_forget()
-	HelloPage(master=root).pack()
+	t.grid_forget()
+	helloPage.pack()
 
 def createAccount(t):
 	t.pack_forget()
-	RegisterPage(master=root).pack()
+	t.grid_forget()
+	registerPage.clean()
+	registerPage.pack()
 
 def goToMain(t, ID=0):
 	t.pack_forget()
-	mainPage(master=root).pack()
+	t.grid_forget()
+	MainPage(master=root).grid()
+
+def goToDoneRegistration(t, ID):
+	t.pack_forget()
+	t.grid_forget()
+	RegisterDonePage(master=root,UID=ID).pack()
 	
-	
+
 root = Tk()
-root.geometry('{}x{}'.format(810, 1000))
-root.title("GOLDER")
+root.geometry('800x700')
+root.title("HELLO GOLDER")
 
+loginPage=LoginPage(master=root)
+registerPage=RegisterPage(master=root)
 
-HelloPage(master=root).pack()
+helloPage=HelloPage(master=root)
+helloPage.pack()
 
 root.mainloop()
-root.destory()
