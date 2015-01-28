@@ -68,7 +68,7 @@ class Scraper(object):
 			courseList[i] = courseList[i] + str2
 
 		courseList.pop(0)
-		courseList.pop(-1)
+		#courseList.pop(-1)
 		return courseList
 
 
@@ -88,23 +88,30 @@ class Scraper(object):
 		return deptCodes
 
 
-	"""def getAllCourses(deptCodes):
+	def getAllCourses(self,deptCodes):
 		# This function gets all the courses on ninja courses for UCSB
 		# It uses the shortcodes of the departments to access each URL
 		# There are two issues:
 		# 1) Departments with spaces need to have '%20' in place of the space
 		# 2) getDeptStub() needs to be updated to get the departments from creative studies
-		data = {}
-		url = 'https://ninjacourses.com/explore/4/department/'
+
+		courseDict = {}
+		tmpURL = self.url
 		
 		#This for-loop should loop through all departments and get courses for each one
-		for i in range (0, 53):
-			url = url + deptCodes[i] + '/'
-			data{deptCodes[i] : getCourses(url)}
-			url = 'https://ninjacourses.com/explore/4/department/'
-	"""
+		for dept in deptCodes:
+			#print dept
+			self.url = tmpURL + 'department/' + dept + '/'
+			self.tree = self.openPage()
+			#print self.url
+			courseDict[dept] = self.getCourses()
+			#print "self.getCourses() worked!"
+		self.url = tmpURL
+		self.tree = self.openPage()
+		return courseDict
+	
 
 
-path = '//*[@id="deptlist-left"]/li[18]/a/text()'
+#path = '//*[@id="deptlist-left"]/li[18]/a/text()'
 
 
