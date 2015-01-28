@@ -26,9 +26,6 @@ class Scraper(object):
 		data = self.tree.xpath(xpath_)
 		return str(data)
 
-#"//*[@id='deptlist-left']/li[18]"
-#
-
 
 # Gets all Dept. names from Ninjacourse catalog
 	def getDepts(self):
@@ -48,8 +45,8 @@ class Scraper(object):
 			deptList.append(dept)
 		return deptList
 
-
-	def getCourses(self): #Returns a list of all courses in a single department
+	#Returns a list of all courses in a single department
+	def getCourses(self): 
 		courseList = []		 
 		courseList.append("trash")
 		i = 0
@@ -71,6 +68,8 @@ class Scraper(object):
 		#courseList.pop(-1)
 		return courseList
 
+	# Returns the list of courses that fulfill a particular requirement
+	# can only be used on the official UCSB course catalog website
 	def getReqCourses(self):
 		courseList = []		 
 		courseList.append("trash")
@@ -92,6 +91,7 @@ class Scraper(object):
 		courseList.pop(0)
 		courseList.pop(-1)
 		return courseList	
+
 
 	def getDeptStubs(self): 
 		#Gets the dept short codes e.g. "ANTH"
@@ -131,9 +131,3 @@ class Scraper(object):
 		self.url = tmpURL
 		self.tree = self.openPage()
 		return courseDict
-	
-
-
-#path = '//*[@id="deptlist-left"]/li[18]/a/text()'
-
-
