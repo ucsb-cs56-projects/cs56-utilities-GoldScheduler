@@ -12,6 +12,11 @@ class Scraper(object):
 		self.url = url
 		self.tree = self.openPage()
 
+		#resets the URL and tree atribute of the scraper to value of 'url' parameter
+	def resetURL(self, url):
+		self.url = url
+		self.tree = self.openPage()
+
 # Opens the page, creates a DOM tree of HTML elements, closes page
 
 	def openPage(self):
