@@ -1,4 +1,4 @@
-import tkinter as tk
+import Tkinter as tk
 
 class SimpleSearchGUI(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -10,10 +10,10 @@ class SimpleSearchGUI(tk.Tk):
         #frame.grid()
 
         self.om = tk.OptionMenu(self, self.om_variable, ())
-        
+
         #setting grid size and giving it a title
-    
-        #Creating the welcome label 
+
+        #Creating the welcome label
         #welcome = tk.Label(self, text="Welcome to GOLDER!",fg="blue")
         #welcome.grid(row=0, column=1)
 
@@ -25,28 +25,30 @@ class SimpleSearchGUI(tk.Tk):
 
     def makeButtons(self):
         var = tk.IntVar()
-        dept = tk.Radiobutton(self, text="Department", variable=var, value=1, command=self.useDept)
-        prof = tk.Radiobutton(self, text="Professor", variable=var, value=2, command=self.useProf)
+        dept = tk.Radiobutton(self, text="Department", variable=var, value=1,
+                              command=self.useDept)
+        prof = tk.Radiobutton(self, text="Professor", variable=var, value=2,
+                              command=self.useProf)
         dept.grid(row=1, column=0)
         prof.grid(row=1, column=1)
-        
+
     def makeOptionMenu(self):
         self.om.configure(width=20)
         self.om.grid(row=1, column=2)
-        
+
     def makeSearchBar(self):
         searchHere = tk.Label(self, text="Search Here")
         searchHere.grid(row=4, column=0)
 
         searchVar = tk.StringVar()
-        
+
         #Creating search bar
         searchBar = tk.Entry(self,textvariable=searchVar)
         searchBar.grid(row=4,column=1)
 
         searchVar.set("Select")
         searchValue = searchVar.get()
-        
+
     def _reset_option_menu(self, options, index=None):
         '''reset the values in the option menu
 
@@ -64,8 +66,9 @@ class SimpleSearchGUI(tk.Tk):
 
     def useDept(self):
         '''switch option menu to display department info'''
-        self._reset_option_menu(["Anthropology","Biology","Computer Science","Feminist Studies"], 0)
-                
+        self._reset_option_menu(["Anthropology","Biology","Computer Science",
+                                 "Feminist Studies"], 0)
+
     def useProf(self):
         '''Switch the option menu to display professor info'''
         self._reset_option_menu(["Conrad", "Costanzo", "Turk"], 0)
@@ -78,7 +81,7 @@ class AdvancedSearchGUI(tk.Tk):
 
         self.geometry("500x500")
         self.title("GOLDER")
-        
+
         self.makeGenEdSearch()
 
     def makeGenEdSearch(self):
@@ -102,20 +105,6 @@ class AdvancedSearchGUI(tk.Tk):
                 genEdCheckButton.grid(row=(length-i+1), column=1)
         pressToSearch = tk.Button(self,text="search", width=10)
         pressToSearch.grid(row=4, column=3)
-'''
-class MainView(tk.Frame):
-    def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
-        frame = tk.Frame(self)
-        frame.grid()
-
-        SimpleSearchGUI().grid()
-        #advancedSearch = button(tk.frame,text="AdvancedSearch"
-
-    
-    
-
-'''
 
 class Page(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -126,12 +115,14 @@ class Page(tk.Frame):
 class Page1(Page):
    def __init__(self, *args, **kwargs):
        tk.Frame.__init__(self, *args, **kwargs)
+       SimpleSearchGUI().grid()
        label = tk.Label(self, text="Simple Search")
        label.pack(side="top", fill="both", expand=True)
 
 class Page2(Page):
    def __init__(self, *args, **kwargs):
        tk.Frame.__init__(self, *args, **kwargs)
+       AdvancedSearchGUI().grid()
        label = tk.Label(self, text="Advanced Search")
        label.pack(side="top", fill="both", expand=True)
 
@@ -143,35 +134,23 @@ class MainView(tk.Frame):
 
         buttonframe = tk.Frame(self)
         container = tk.Frame(self)
-        
+
         buttonframe.pack(side="top", fill="x", expand=False)
         container.pack(side="top", fill="both", expand=True)
 
-        simpleSearchPage.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        advancedSearchPage.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        simpleSearchPage.place(in_=container, x=0, y=0, relwidth=1,
+                               relheight=1)
+        advancedSearchPage.place(in_=container, x=0, y=0, relwidth=1,
+                                 relheight=1)
 
-        SimpleSearchGUI().grid()
-        
-        advancedSearch = tk.Button(buttonframe, text="Advanced Search")
-                                    #command=lambda: simpleSearchPage.lift())                                                             AdvancedSearchGUI().grid()))
-        advancedSearchPage.lift()
+        advancedSearch = tk.Button(buttonframe, text="Advanced Search",
+                                   command=lambda: advancedSearchPage.lift())
 
         advancedSearch.pack(side="left")
-        
+
         simpleSearchPage.show()
 
 
-
-   
- 
-    
-#if __name__ == "__main__":
-
-    #app = SimpleSearchGUI()
-    #app.mainloop()
-
-    #app2 = AdvancedSearchGUI()
-    #app2.mainloop()
 root = tk.Tk()
 root.geometry('800x700')
 root.title("GOLDER")
