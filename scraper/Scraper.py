@@ -9,6 +9,7 @@ class Scraper(object):
 	def __init__(self, url):
 	# Instance of Scraper object has its own url and its own DOM tree
 	# This means you must use a new Scraper instance for each web page
+	# or you must use the resetURL() method to change the web page you are scraping
 		self.url = url
 		self.tree = self.openPage()
 
@@ -57,6 +58,8 @@ class Scraper(object):
 		i = 0
 		xpath = '//*[@id="dept-course-list"]/li[' + str(i+1) + ']/a/text()'
 		while(self.getData(xpath) != '[]'): #While there are still courses to get
+			# Should include an if-statement that asks if there is a /span element
+			# if there is a span element, then the course is not being offered in Spring
 			
 			i = i + 1
 			xpath = '//*[@id="dept-course-list"]/li[' + str(i) + ']/a/text()'
@@ -136,3 +139,16 @@ class Scraper(object):
 		self.url = tmpURL
 		self.tree = self.openPage()
 		return courseDict
+
+
+	def getGetCourseTimes(self, courseDict):
+		courseTimes = dict()
+		# URL stub = https://ninjacourses.com/explore/4/course/
+		# append deptStub/course_number/#sections to get schedule page
+
+		for dept in courseDict: # This may not work. It should be "for each key in dict"
+			for course in dept: # This should be "for each course in the dept course list"
+				self.resetURL("https://ninjacourses.com/explore/4/course/" + dept + "/" + (course-dept) + "/#sections")
+				time = self.getData('//*[@id="tab-sections"]/table/tbody/tr[2]/td[2]') # This should get the 1st lecture time
+				courseTimes[course] = time
+		return courseTimes
