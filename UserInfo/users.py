@@ -1,20 +1,17 @@
 """ This is for User accessing
-	databaseCheck() is used to check if database works. 0 if no, 1 if yes. No exception thrown out.
-	getID() is used to login. it returns ID if username and password matches; return -1 id no username; return -2 if password is wrong
-	getIdByEmail() is used to get User's Id by its email
-	getInfo() is used to get all the information for a student and return into a tuple
-	(ID, username, password, email, major, registered date)
-	
-	Register() is used to register. There are several precautions to use it:
-	1. username and email are primary, which means we don't want 2 users have the same username or email.
-	   Be sure to use Use getID() and getIdByEmail() to check it for the register part.
-
+	@author Xianghong Sun
 """
 
 import mysql.connector
 from mysql.connector import errorcode
 
 import config
+
+"""
+	getID() is used to login. it returns ID if username and password matches; return -1 id no username; return -2 if password is wrong
+"""
+
+
 
 
 def getID(username, password):
@@ -41,6 +38,9 @@ def getID(username, password):
 	#Password is Wrong
 	return -2	
 
+"""
+	getIdByEmail() is used to get User's Id by its email
+"""
 def getIdByEmail(email):
 	cnx = mysql.connector.connect(**config.config)
 	  
@@ -58,6 +58,10 @@ def getIdByEmail(email):
 		return -1
 	return user_info[0][0]
 		
+"""
+getInfo() is used to get all the information for a student and return into a tuple
+(ID, username, password, email, major, registered date)
+"""
 
 def getInfo(ID):
 
@@ -108,6 +112,9 @@ def Register(username, password, email="", major=""):
 	
 	return getID(username, password)
 
+"""
+	databaseCheck() is used to check if database works. 0 if no, 1 if yes. No exception thrown out.
+"""
 def databaseCheck():
 	try:
 	 #Info to access database
