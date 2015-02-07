@@ -86,7 +86,7 @@ def Register(username, password, email="", major=""):
 	cnx = mysql.connector.connect(**config.config)  #connect database
 
 	cursor = cnx.cursor()
-	
+
 	if email == "":
 		email = "null"
 	else:
