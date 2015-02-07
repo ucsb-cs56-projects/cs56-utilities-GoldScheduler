@@ -134,7 +134,7 @@ public class UsersConnection {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
 			        return null;
-		        //TODO
+		        //TODO Write the User class and assign it to u
 		        u = new User();
 		    }
 
