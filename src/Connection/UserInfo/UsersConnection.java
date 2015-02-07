@@ -1,11 +1,12 @@
 package Connection.UserInfo;
 
 import java.sql.*;
+import Connection.Config;
 //import Course;
 
 /**
  * Database Connection For User Information
- * @author Forrest
+ * @author Forrest Sun
  *
  */
 public class UsersConnection {
@@ -36,7 +37,7 @@ public class UsersConnection {
 			major = "null";
 		else
 			major = "'" + major + '\'';
-		
+
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(String.format("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);", 
@@ -117,30 +118,96 @@ public class UsersConnection {
 		return id;
 	}
 	
+	/**
+	 * get User Infomation
+	 * @param ID User ID
+	 * @return User
+	 */
+	static User getInfo(int ID){
+		
+		User u = null;
+		
+		try {
+			stmt = conn.createStatement();
+			
+			if (stmt.execute(String.format("SELECT * FROM `users` WHERE ID='%s';", ID))) {
+		        rs = stmt.getResultSet();
+		        if (rs.isLast()) 
+			        return null;
+		        //TODO
+		        u = new User();
+		    }
+
+		} catch (SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return u;
+	}	
+	
+	/**
+	 * update password
+	 * @param ID
+	 * @param pw
+	 */
+	static void setPassword(int ID, String pw) {
+		
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",pw,ID));
+		} catch (SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	/**
+	 * update email
+	 * @param ID
+	 * @param email
+	 */
+	static void setEmail(int ID, String email) {
+		//TODO
+		
+	}
+	
+	/**
+	 * update major
+	 * @param ID
+	 * @param mj
+	 */
+	static void setMajor(int ID, String mj)  {
+		//TODO
+		
+	}
+	
+	/*
+	 * test 
+	
+	public static void main(String[] args) {
+		System.out.println(check());
+	}
+	*/
+	
+	//variables
 	static Statement stmt = null;
 	static ResultSet rs = null;
 	static Connection conn;
+	
+	//initial
 	static {
 		try {
-		    System.out.println("Loading driver...");
 		    Class.forName("com.mysql.jdbc.Driver");
-		    System.out.println("Driver loaded!");
 		} catch (ClassNotFoundException e) {
 		    throw new RuntimeException("Cannot find the driver in the classpath!", e);
 		}
 		
 		try {
-		    conn =
-		       DriverManager.getConnection("jdbc:mysql://"+Config.host+"/"+ Config.table,
+		    conn = DriverManager.getConnection("jdbc:mysql://"
+		    		   + Config.host+"/"+ Config.table,
 		    		   Config.username, Config.password);
-		
-		    // Do something with the Connection
-		    
-		
 		} catch (SQLException ex) {
 		    System.out.println("SQLException: " + ex.getMessage());
 		    System.out.println("SQLState: " + ex.getSQLState());
 		    System.out.println("VendorError: " + ex.getErrorCode());
-		} 
+		}
 	}
 }
