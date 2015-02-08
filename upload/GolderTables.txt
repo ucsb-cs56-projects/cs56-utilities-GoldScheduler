@@ -1,0 +1,41 @@
+CREATE TABLE Users
+(
+ID bigint NOT NULL AUTO_INCREMENT,
+user_name varchar(255) NOT NULL UNIQUE,
+user_password varchar(255) NOT NULL,
+email_address varchar(255) UNIQUE,
+major varchar(255),
+user_registered datetime DEFAULT NOW(),
+PRIMARY KEY (ID)
+)
+
+CREATE TABLE courses
+(
+course_name varchar(20) NOT NULL UNIQUE,
+course_code varchar(20),
+department varchar(20),
+description varchar(255),
+b_reqs TINYINT DEFAULT 0,
+c_reqs TINYINT DEFAULT 0,
+d_reqs TINYINT DEFAULT 0,
+e_reqs TINYINT DEFAULT 0,
+f_reqs TINYINT DEFAULT 0,
+g_reqs TINYINT DEFAULT 0,
+h_reqs TINYINT DEFAULT 0,
+ethnic_regs TINYINT  DEFAULT 0,
+euro_regs TINYINT DEFAULT 0,
+quantitative_reqs TINYINT DEFAULT 0,
+world_culture_reqs TINYINT DEFAULT 0,
+writ_reqs TINYINT DEFAULT 0,
+
+PRIMARY KEY (course_name)
+);
+
+
+CREATE TABLE depts
+(
+department varchar(20),
+description varchar(255),
+
+PRIMARY KEY (department)
+);
