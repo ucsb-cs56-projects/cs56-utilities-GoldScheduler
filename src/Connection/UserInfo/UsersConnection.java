@@ -165,7 +165,12 @@ public class UsersConnection {
 	 * @param email
 	 */
 	static void setEmail(int ID, String email) {
-		//TODO
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
+		} catch (SQLException e){
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
@@ -175,7 +180,12 @@ public class UsersConnection {
 	 * @param mj
 	 */
 	static void setMajor(int ID, String mj)  {
-		//TODO
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
+		} catch (SQLException e){
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
