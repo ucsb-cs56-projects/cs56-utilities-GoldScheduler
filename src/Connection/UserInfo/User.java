@@ -13,17 +13,20 @@ public class User {
 	private String password;
 	private String email;
 	private String major;
+	private LinkedList<Schedule> [] courses;
+	private int id;
 	public User(){
 		username=null;
 		password=null;
 		email=null;
 		major=null;
 	}
-	public User(String u, String p, String e, String m){
+	public User(String u, String p, String e, String m, int id){
 		username=u;
 		password=p;
 		email=e;
 		major=m;
+		id=id;
 	}
 	public String getUsername(){return this.username;}
 	public String getPassword(){return this.password;}
