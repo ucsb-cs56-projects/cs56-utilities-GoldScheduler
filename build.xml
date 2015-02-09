@@ -1,0 +1,60 @@
+<project default="compile">
+
+  <!-- build.xml for Golder, W15, CS48
+       name: Group 3-->
+
+  <property environment="env"/> <!-- load the environment variables -->
+
+  <target name="compile" description="compile">
+    <mkdir dir="build" />
+    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+      <classpath>
+        <pathelement location="build"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="run" depends="compile" description="run">
+    <java fork="true" classname="Golder" classpath="build" />
+  </target>
+
+  <target name="compileConnectUser" description="compile">
+    <mkdir dir="build" />
+    <javac srcdir="src/Connection/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+      <classpath>
+        <pathelement location="build"/>
+      </classpath>
+    </javac>
+  </target>
+
+
+
+
+
+
+ <target name="clean" description="delete unnecessary files and directories">
+    <delete dir="build" quiet="true" />
+  </target>
+
+ <target name="test" depends="compile" description="Runs all files ending in Test.java">
+
+    <junit haltonerror="no" haltonfailure="no">
+       <classpath>
+         <pathelement location="lib/junit-4.10.jar"/>
+         <pathelement location="build"/>
+       </classpath>
+
+       <batchtest fork="yes">
+          <fileset dir="src">
+            <!-- this will pick up every class with a name ending in Test -->
+            <include name="*Test.java"/>
+          </fileset>
+       </batchtest>
+
+       <formatter type="plain" usefile="false" />
+
+    </junit>
+ </target>
+
+
+</project>
