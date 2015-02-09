@@ -26,7 +26,7 @@ public class User {
 		password=p;
 		email=e;
 		major=m;
-		id=id;
+		this.id=id;
 	}
 	public String getUsername(){return this.username;}
 	public String getPassword(){return this.password;}
