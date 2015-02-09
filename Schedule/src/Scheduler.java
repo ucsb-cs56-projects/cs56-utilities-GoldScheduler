@@ -171,18 +171,18 @@ public class Scheduler extends ArrayList<Course>{
         courseEx6.setBackground(Color.blue);
         courseEx6.setOpaque(true);
         
-        panelHolder[13][2].add(courseEx);
-        panelHolder[14][2].add(courseEx2);
-        panelHolder[15][2].add(courseEx3);
-        panelHolder[13][4].add(courseEx4);
-        panelHolder[14][4].add(courseEx5);
-        panelHolder[15][4].add(courseEx6);
+        panelHolder[11][2].add(courseEx);
+        panelHolder[12][2].add(courseEx2);
+        panelHolder[13][2].add(courseEx3);
+        panelHolder[11][4].add(courseEx4);
+        panelHolder[12][4].add(courseEx5);
+        panelHolder[13][4].add(courseEx6);
+        panelHolder[11][2].setBackground(Color.blue);
+        panelHolder[12][2].setBackground(Color.blue);
         panelHolder[13][2].setBackground(Color.blue);
-        panelHolder[14][2].setBackground(Color.blue);
-        panelHolder[15][2].setBackground(Color.blue);
+        panelHolder[11][4].setBackground(Color.blue);
+        panelHolder[12][4].setBackground(Color.blue);
         panelHolder[13][4].setBackground(Color.blue);
-        panelHolder[14][4].setBackground(Color.blue);
-        panelHolder[15][4].setBackground(Color.blue);
         
         
         frame.add(panel);
