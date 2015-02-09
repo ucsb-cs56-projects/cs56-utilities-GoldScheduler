@@ -64,3 +64,6 @@ javadoc/
 *.jar
 *.war
 *.ear
+
+# Eclipse 
+.classpath
