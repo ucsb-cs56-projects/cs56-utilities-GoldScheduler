@@ -14,10 +14,10 @@ public class User {
 	private String email;
 	private String major;
 	public User(){
-		username=NULL;
-		password=NULL;
-		email=NULL;
-		major=NULL;
+		username=null;
+		password=null;
+		email=null;
+		major=null;
 	}
 	public User(String u, String p, String e, String m){
 		username=u;
@@ -29,9 +29,9 @@ public class User {
 	public String getPassword(){return this.password;}
 	public String getEmail(){return this.email;}
 	public String getMajor(){return this.major;}
-	public void setUsername(string username){this.username=username;}
-	public void setPassword(string password){this.password=password;}
-	public void setEmail(string email){this.email=email;}
-	public void setMajor(string major){this.major=major;}
+	public void setUsername(String username){this.username=username;}
+	public void setPassword(String password){this.password=password;}
+	public void setEmail(String email){this.email=email;}
+	public void setMajor(String major){this.major=major;}
 
 }
