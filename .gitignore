@@ -52,3 +52,15 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Java
+*.class
+javadoc/
+.ant-targets-build.xml
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
