@@ -10,10 +10,18 @@ import java.util.ArrayList;
  * @author Hanna Vigil
  * @version Feb7, 2015
  */
-public class Scheduler extends ArrayList<Course>{
-    //No-arg constructor just generates an empty schedule
+public class Scheduler {
+    ArrayList<Course> courseList;
+    JPanel panel;
+    //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
+    public Scheduler(ArrayList<Course> courseList, JPanel panel){
+        this.courseList = courseList;
+        this.panel = panel;
+    }
+    //No-arg constructor. Generates an empty schedule
     public Scheduler(){
-        super(0);
+        this.courseList = new ArrayList<Course>();
+        this.panel = new JPanel();
     }
     /**
      @param the course that needs to be added
@@ -24,13 +32,13 @@ public class Scheduler extends ArrayList<Course>{
             return false;
         //Check if times conflict: if so, return false or throw exception
         //TODO: right now returns false
-        for(Course d: this){
+        for(Course d: this.courseList){
             if(this.timeConflict(c,d)==true)
                 return false;
         }
         //No time conflict
-        //TODO: Check for restrictions?
-        super.add(c);
+        //TODO: Check for other restrictions?
+        courseList.add(c);
         return true;
     }
     
@@ -40,6 +48,8 @@ public class Scheduler extends ArrayList<Course>{
      @return true is there is time conflict and false if not
      */
     //TODO: This part needs to be tested still
+    //Also, not sure if this should be somewhere else or re-written
+    //This is just a temporary location
     public boolean timeConflict(Course c, Course d){
         //First, check if c starts before d
         if(c.getLect().timeStart<=d.getLect().timeStart){
@@ -64,8 +74,8 @@ public class Scheduler extends ArrayList<Course>{
         }
     }
     
-    public static void main(String[] args){
-        JFrame frame = new JFrame();
+    //TODO make param a color, right now I'll just use blue
+    public void SchedulerGUI(){
         GridLayout grid = new GridLayout(30, 6);
         JPanel panel = new JPanel();
         panel.setLayout(grid);
@@ -139,7 +149,45 @@ public class Scheduler extends ArrayList<Course>{
         panelHolder[0][4].add(r);
         panelHolder[0][5].add(f);
         
+        for(Course g:this.courseList){
+            
+            //Title, location, time
+            JLabel day1Title = new JLabel();
+            day1Title.setText(g.courseID);
+            day1Title.setBackground(Color.blue);
+            day1Title.setOpaque(true);
+            
+            JLabel day1Location = new JLabel();
+            day1Location.setText(g.getLect().location);
+            day1Location.setBackground(Color.blue);
+            day1Location.setOpaque(true);
+            
+            JLabel day1Time = new JLabel();
+            day1Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+            day1Time.setBackground(Color.blue);
+            day1Time.setOpaque(true);
+            
+            if(g.getLect().days.length>1){
+                JLabel day2 = new JLabel();
+                day2.setText(g.courseID);
+                day2.setBackground(Color.blue);
+                day2.setOpaque(true);
+            }
+            if(g.getLect().days.length>2){
+                JLabel day3 = new JLabel();
+                day3.setText(g.courseID);
+                day3.setBackground(Color.blue);
+                day3.setOpaque(true);
+            }
+            if(g.getLect().days.length>3){
+                JLabel day4 = new JLabel();
+                day4.setText(g.courseID);
+                day4.setBackground(Color.blue);
+                day4.setOpaque(true);
+            }
+        }
         
+        /*
         //test course
         //This is just an example of what I was thinking it would look like
         //If you guys have any other suggestions I'm open
@@ -189,6 +237,9 @@ public class Scheduler extends ArrayList<Course>{
         frame. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         frame. setSize(900,1200);
         frame. setVisible(true);
+         */
+        
     }
+
 }
 

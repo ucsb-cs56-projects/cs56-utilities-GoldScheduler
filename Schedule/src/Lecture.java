@@ -15,6 +15,7 @@ public class Lecture{
     public final char[] days;
     public final String location;
     public final String courseCode;
+    //TODO make section
     
     
     public Lecture(String professor, int timeStart, int timeEnd, char[] days, String location, String courseCode){
@@ -24,5 +25,22 @@ public class Lecture{
         this.days = days;
         this.location = location;
         this.courseCode = courseCode;
+    }
+    //Returns the times as strings
+    public String timeStartString(){
+        if(this.timeStart<1200){
+            return this.timeStart/100 + ":" + this.timeStart%100 + " AM";
+        }
+        else{
+            return (this.timeStart/100)-12 + ":" + this.timeStart%100 + " PM";
+        }
+    }
+    public String timeEndString(){
+        if(this.timeStart<1200){
+            return this.timeEnd/100 + ":" + this.timeEnd%100 + " AM";
+        }
+        else{
+            return (this.timeEnd/100)-12 + ":" + this.timeEnd%100 + " PM";
+        }
     }
 }
