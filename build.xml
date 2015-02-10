@@ -5,8 +5,11 @@
 
   <property environment="env"/> <!-- load the environment variables -->
 
-  <target name="compile" description="compile">
-    <mkdir dir="build" />
+  <target name="init" description="compile">
+	<mkdir dir="build" />
+  </target>
+  
+  <target name="compile" depends="init" description="compile">
     <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
       <classpath>
         <pathelement location="build"/>
@@ -18,8 +21,7 @@
     <java fork="true" classname="Golder" classpath="build" />
   </target>
 
-  <target name="compileConnectUser" description="compile">
-    <mkdir dir="build" />
+  <target name="compileConnectUser" depends="init" description="compile Connect test">
     <javac srcdir="src/Connection/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
       <classpath>
         <pathelement location="build"/>
@@ -27,6 +29,16 @@
     </javac>
   </target>
 
+  <target name="compileLogin" depends="init" description="compile Login test">
+    <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+      <classpath>
+        <pathelement location="build"/>
+      </classpath>
+    </javac>
+  </target>
+  <target name="runLogin" depends="compileLogin" description="run Login">
+    <java fork="true" classname="GUI.Login" classpath="build" />
+  </target>
 
 
 
