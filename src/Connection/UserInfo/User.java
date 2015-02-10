@@ -1,11 +1,12 @@
 package Connection.UserInfo;
 
+import java.util.LinkedList;
+
 //import Course
 
 /**
- * 
- * @author Wesley Pollek, Forrest Sun
- *
+ * @author Forrest Sun
+ * @author Wesley Pollek
  */
 
 public class User {
@@ -13,7 +14,7 @@ public class User {
 	private String password;
 	private String email;
 	private String major;
-	private LinkedList<Schedule> [] courses;
+	private LinkedList<Schedule> courses;
 	private int id;
 	public User(){
 		username=null;
