@@ -9,20 +9,20 @@ public class Login extends JFrame {
     JLabel userLable= new JLable("Enter Username:");
     JTextField password= new JTextField(20);
     JLabel passLable= new JLable("Enter Password:");
-    loginBox.add(userLable, BorderLayout.WEST);
-    loginBox.add(username, BorderLayout.CENTER);
-    loginBox.add(passLable, BorderLayout.WEST);
-    loginBox.add(password, BorderLayout.CENTER);
-    loginBox.setBackgroundColor(Color.BLUE);
-    loginBox.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Login Panel"));
     public Login(){
-            super("Enter Login Information");
-            setSize(400,400);
-            setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-            setBackground(Color.YELLOW)
-            add(loginBox);
-            pack();
+        super("Enter Login Information");
+        setSize(400,400);
+        setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
+        setBackground(Color.YELLOW)
+        loginBox.add(userLable, BorderLayout.WEST);
+        loginBox.add(username, BorderLayout.CENTER);
+        loginBox.add(passLable, BorderLayout.WEST);
+        loginBox.add(password, BorderLayout.CENTER);
+        loginBox.setBackgroundColor(Color.BLUE);
+        loginBox.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Login Panel"));
+        add(loginBox);
+        pack();
     }
     public static void main (String[] args){
         Login frame = new Login();
