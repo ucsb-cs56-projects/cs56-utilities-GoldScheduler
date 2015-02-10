@@ -2,28 +2,47 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.util.ArrayList;
-import Connection.UserInfo.*;
+
+import Connection.UserInfo.UsersConnection;
+
 
 public class Login extends JPanel{
-    JTextField username= new JTextField(20);
-    JLabel userLabel= new JLabel("Enter Username:");
-    JPasswordField password= new JPasswordField(20);
-    JLabel passLabel= new JLabel("Enter Password:");
-    JButton login= new JButton("Login");
-    login.addActionListener(new Validator());
-    JButton forpass = new JButton ("Forgot Password?");
-    JLabel wrong = new JLabel();
+	
+	JTextField username;
+    JLabel userLabel;
+    JPasswordField password;
+    JLabel passLabel;
+    JButton loginButton;
+    JButton forpass;
+    JLabel wrong;
+    
+    public Login() {
+    	username= new JTextField(20);
+        userLabel= new JLabel("Enter Username:");
+        password= new JPasswordField(20);
+        passLabel= new JLabel("Enter Password:");
+        loginButton= new JButton("Login");
+        loginButton.addActionListener(new Validator());
+        forpass = new JButton ("Forgot Password?");
+        wrong = new JLabel("123");
+    }
+    
+    
     class Validator implements ActionListener{
 	public void actionPerformed(ActionEvent e){
+		System.out.println("1");
 	    String userinfo = username.getText();
-	    String passinfo = password.getText();
-	    int ID = getID(userinfo,passinfo);
+	    char[] passinfo = password.getPassword();
+	    int ID = UsersConnection.getID(userinfo,new String(passinfo));
 	    if(ID == -3) wrong.setText("No Connection");
 	    else if (ID==-2) wrong.setText("Incorrect Password");
 	    else if (ID==-1) wrong.setText("No Username");
-	    
+	    System.out.println(ID);
+	    System.out.println("2");
 	}
     }
     public static void main (String[] args){
@@ -61,9 +80,9 @@ public class Login extends JPanel{
 	spot[1][2].add(username);
 	spot[2][1].add(passLabel);
 	spot[2][2].add(password);
-	spot[3][1].add(login);
+	spot[3][1].add(loginButton);
 	spot[3][2].add(forpass);
-	//spot[0][1].add(wrong);
+	spot[0][1].add(wrong);
 	rows[1].add(innerpanel);
     }
 }

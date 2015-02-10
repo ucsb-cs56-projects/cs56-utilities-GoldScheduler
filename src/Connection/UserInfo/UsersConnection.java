@@ -15,7 +15,7 @@ public class UsersConnection {
 	 * Check connection
 	 * @return true if connected; false otherwise
 	 */
-	static boolean check() {
+	public static boolean check() {
 		return conn != null;
 	}
 	
@@ -27,7 +27,7 @@ public class UsersConnection {
 	 * @param major
 	 * @return User ID
 	 */
-	static int Register(String username, String password, String email, String major) {
+	public static int Register(String username, String password, String email, String major) {
 		if (email == "")
 			email = "null";
 		else
@@ -60,7 +60,7 @@ public class UsersConnection {
 	 * -1 if no username
 	 * -2 if wrong password
 	 */
-	static int getID(String username, String password) {
+	public static int getID(String username, String password) {
 		int id = 0;
 		
 		try {
@@ -69,7 +69,7 @@ public class UsersConnection {
 			if (stmt.execute(String.format("SELECT ID, user_password FROM `users` WHERE user_name='%s';", username))) {
 		        rs = stmt.getResultSet();
 		        if (rs.next()) {
-			        if (rs.getString("user_password") == password) return -2; //password wrong
+			        if (rs.getString("user_password") != password) return -2; //password wrong
 			        id = rs.getInt("ID");
 		        } else {
 		        	return -1; //no username
@@ -95,7 +95,7 @@ public class UsersConnection {
 	 * -3 if no connection
 	 * -1 if no username
 	 */
-	static int getIdByEmail(String email) {
+	public static int getIdByEmail(String email) {
 		int id = 0;
 		
 		try {
@@ -123,7 +123,7 @@ public class UsersConnection {
 	 * @param ID User ID
 	 * @return User
 	 */
-	static User getInfo(int ID){
+	public static User getInfo(int ID){
 		
 		User u = null;
 		
@@ -149,7 +149,7 @@ public class UsersConnection {
 	 * @param ID
 	 * @param pw
 	 */
-	static void setPassword(int ID, String pw) {
+	public static void setPassword(int ID, String pw) {
 		
 		try {
 			stmt = conn.createStatement();
@@ -164,7 +164,7 @@ public class UsersConnection {
 	 * @param ID
 	 * @param email
 	 */
-	static void setEmail(int ID, String email) {
+	public static void setEmail(int ID, String email) {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
@@ -179,7 +179,7 @@ public class UsersConnection {
 	 * @param ID
 	 * @param mj
 	 */
-	static void setMajor(int ID, String mj)  {
+	public static void setMajor(int ID, String mj)  {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
@@ -191,16 +191,17 @@ public class UsersConnection {
 	
 	/*
 	 * test 
+	 */
 	
 	public static void main(String[] args) {
 		System.out.println(check());
 	}
-	*/
+	
 	
 	//variables
-	static Statement stmt = null;
-	static ResultSet rs = null;
-	static Connection conn;
+	public static Statement stmt = null;
+	public static ResultSet rs = null;
+	public static Connection conn;
 	
 	//initial
 	static {

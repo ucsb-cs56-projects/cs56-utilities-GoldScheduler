@@ -14,7 +14,7 @@ public class User {
 	private String password;
 	private String email;
 	private String major;
-	private LinkedList<Schedule> courses;
+//	private LinkedList<Schedule> courses;
 	private int id;
 	public User(){
 		username=null;
