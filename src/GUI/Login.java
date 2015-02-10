@@ -24,7 +24,7 @@ public class Login extends JFrame {
         loginBox.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Login Panel"));
         add(loginBox);
-        pack();
+        loginBox.pack();
     }
     public static void main (String[] args){
         Login frame = new Login();
