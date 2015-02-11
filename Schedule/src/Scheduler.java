@@ -172,18 +172,48 @@ public class Scheduler {
                 day2.setText(g.courseID);
                 day2.setBackground(Color.blue);
                 day2.setOpaque(true);
+                
+                JLabel day2Location = new JLabel();
+                day2Location.setText(g.getLect().location);
+                day2Location.setBackground(Color.blue);
+                day2Location.setOpaque(true);
+                
+                JLabel day2Time = new JLabel();
+                day2Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+                day2Time.setBackground(Color.blue);
+                day2Time.setOpaque(true);
             }
             if(g.getLect().days.length>2){
                 JLabel day3 = new JLabel();
                 day3.setText(g.courseID);
                 day3.setBackground(Color.blue);
                 day3.setOpaque(true);
+                
+                JLabel day3Location = new JLabel();
+                day3Location.setText(g.getLect().location);
+                day3Location.setBackground(Color.blue);
+                day3Location.setOpaque(true);
+                
+                JLabel day3Time = new JLabel();
+                day3Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+                day3Time.setBackground(Color.blue);
+                day3Time.setOpaque(true);
             }
             if(g.getLect().days.length>3){
                 JLabel day4 = new JLabel();
                 day4.setText(g.courseID);
                 day4.setBackground(Color.blue);
                 day4.setOpaque(true);
+                
+                JLabel day4Location = new JLabel();
+                day4Location.setText(g.getLect().location);
+                day4Location.setBackground(Color.blue);
+                day4Location.setOpaque(true);
+                
+                JLabel day4Time = new JLabel();
+                day4Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+                day4Time.setBackground(Color.blue);
+                day4Time.setOpaque(true);
             }
         }
         
