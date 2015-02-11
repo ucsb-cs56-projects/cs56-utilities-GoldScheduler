@@ -7,6 +7,7 @@ import java.util.LinkedList;
 /**
  * @author Forrest Sun
  * @author Wesley Pollek
+ * @version Feb 10 2015
  */
 
 public class User {

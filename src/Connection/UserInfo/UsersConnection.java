@@ -1,12 +1,16 @@
 package Connection.UserInfo;
 
 import java.sql.*;
+
 import Connection.Config;
+
 //import Course;
 
 /**
  * Database Connection For User Information
  * @author Forrest Sun
+ * @author Wesley Pollek
+ * @version Feb 10 2015
  *
  */
 public class UsersConnection {
@@ -134,7 +138,6 @@ public class UsersConnection {
 		        if (rs.isLast()) 
 			        return null;
 		        rs.next();
-		        //TODO
 		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
 		    }
 
@@ -187,6 +190,18 @@ public class UsersConnection {
 			System.out.println(e.getMessage());
 		}
 		
+	}
+	
+	public static void reconnect() {
+		try {
+		    conn = DriverManager.getConnection("jdbc:mysql://"
+		    		   + Config.host+"/"+ Config.table,
+		    		   Config.username, Config.password);
+		} catch (SQLException ex) {
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
 	}
 	
 	/*

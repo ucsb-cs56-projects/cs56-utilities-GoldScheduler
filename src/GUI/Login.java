@@ -1,5 +1,9 @@
 package GUI;
-
+/**
+ * @author Wesley Pollek
+ * @author Forrest Sun
+ * @version Feb 10 2015
+ */
 import java.awt.*;
 import java.awt.event.*;
 
