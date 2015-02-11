@@ -24,28 +24,48 @@ public class Login extends JPanel{
     
     public Login() {
     	username= new JTextField(20);
+    	username.addKeyListener(new KeyValidator());
         userLabel= new JLabel("Enter Username:");
         password= new JPasswordField(20);
+        password.addKeyListener(new KeyValidator());
         passLabel= new JLabel("Enter Password:");
         loginButton= new JButton("Login");
-        loginButton.addActionListener(new Validator());
+        loginButton.addActionListener(new ButtonValidator());
         forpass = new JButton ("Forgot Password?");
         wrong = new JLabel();
     }
     
     
-    class Validator implements ActionListener{
+    class KeyValidator extends KeyAdapter {
+    	public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == 10) Validator();
+        }
+    	/*
+        public void keyTyped(KeyEvent e) {
+            // Do something for the keyTyped event
+        }
+
+        public void keyPressed(KeyEvent e) {
+            // Do something for the keyPressed event
+        }
+        */
+    }
+    
+    class ButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-	
-		    String userinfo = username.getText();
-		    char[] passinfo = password.getPassword();
-		    wrong.setText("Connecting...");
-		    int ID = UsersConnection.getID(userinfo,new String(passinfo));
-		    if(ID == -3) wrong.setText("No Connection");
-		    else if (ID==-2) wrong.setText("Incorrect Password");
-		    else if (ID==-1) wrong.setText("No Username");
-		    else wrong.setText("Welcome! " + userinfo + "!");
+			Validator();
 		}
+    }
+    
+    public void Validator() {
+    	String userinfo = username.getText();
+	    char[] passinfo = password.getPassword();
+	    wrong.setText("Connecting...");
+	    int ID = UsersConnection.getID(userinfo,new String(passinfo));
+	    if(ID == -3) wrong.setText("No Connection");
+	    else if (ID==-2) wrong.setText("Incorrect Password");
+	    else if (ID==-1) wrong.setText("No Username");
+	    else wrong.setText("Welcome! " + userinfo + "!");
     }
     
 	public static void main (String[] args){
