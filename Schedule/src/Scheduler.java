@@ -150,8 +150,9 @@ public class Scheduler {
         panelHolder[0][5].add(f);
         
         for(Course g:this.courseList){
-            
+            //TODO: Add to panel holders, need to figure out how many are needed. Depends of start and end times
             //Title, location, time
+            //Day 1
             JLabel day1Title = new JLabel();
             day1Title.setText(g.courseID);
             day1Title.setBackground(Color.blue);
@@ -168,6 +169,7 @@ public class Scheduler {
             day1Time.setOpaque(true);
             
             if(g.getLect().days.length>1){
+                //DAY 2
                 JLabel day2 = new JLabel();
                 day2.setText(g.courseID);
                 day2.setBackground(Color.blue);
@@ -184,6 +186,7 @@ public class Scheduler {
                 day2Time.setOpaque(true);
             }
             if(g.getLect().days.length>2){
+               //DAY 3
                 JLabel day3 = new JLabel();
                 day3.setText(g.courseID);
                 day3.setBackground(Color.blue);
@@ -200,6 +203,7 @@ public class Scheduler {
                 day3Time.setOpaque(true);
             }
             if(g.getLect().days.length>3){
+                //DAY 4
                 JLabel day4 = new JLabel();
                 day4.setText(g.courseID);
                 day4.setBackground(Color.blue);
@@ -215,6 +219,9 @@ public class Scheduler {
                 day4Time.setBackground(Color.blue);
                 day4Time.setOpaque(true);
             }
+            
+            
+            this.panel = panel;
         }
         
         /*
