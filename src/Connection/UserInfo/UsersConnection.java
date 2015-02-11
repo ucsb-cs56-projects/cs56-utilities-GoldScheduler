@@ -69,13 +69,12 @@ public class UsersConnection {
 			if (stmt.execute(String.format("SELECT ID, user_password FROM `users` WHERE user_name='%s';", username))) {
 		        rs = stmt.getResultSet();
 		        if (rs.next()) {
-			        if (rs.getString("user_password") != password) return -2; //password wrong
+			        if (!rs.getString("user_password").equals(password)) return -2; //password wrong
 			        id = rs.getInt("ID");
 		        } else {
 		        	return -1; //no username
 		        }
 		    }
-
 		} catch (SQLException ex) {
 		    System.out.println("SQLException: " + ex.getMessage());
 		    System.out.println("SQLState: " + ex.getSQLState());
@@ -134,8 +133,9 @@ public class UsersConnection {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
 			        return null;
-		        //TODO Write the User class and assign it to u
-		        u = new User();
+		        rs.next();
+		        //TODO
+		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
 		    }
 
 		} catch (SQLException e){
@@ -191,12 +191,12 @@ public class UsersConnection {
 	
 	/*
 	 * test 
-	 */
+	 
 	
 	public static void main(String[] args) {
 		System.out.println(check());
 	}
-	
+	*/
 	
 	//variables
 	public static Statement stmt = null;
