@@ -45,11 +45,11 @@ public class Scheduler {
     /**
      @param Course to be checked for time conflict
      @param Course to be checked against
-     @return true is there is time conflict and false if not
+     @return true if there is time conflict and false if not
      */
     //TODO: This part needs to be tested still
     //Also, not sure if this should be somewhere else or re-written
-    //This is just a temporary location
+    //This is just a temporary location. Make static?
     public boolean timeConflict(Course c, Course d){
         //First, check if c starts before d
         if(c.getLect().timeStart<=d.getLect().timeStart){
@@ -72,6 +72,16 @@ public class Scheduler {
             else
                 return true;
         }
+    }
+    
+    /**
+     @param time the time you want converted to an int of which row it belongs in
+     @return the row that a particular time belongs in. If it is something:30, it will return the row\
+     corresponding to where the 30 is.
+     */
+    public int timeSlot(int time){
+        //STUB
+        return 0;
     }
     
     //TODO make param a color, right now I'll just use blue
@@ -151,6 +161,22 @@ public class Scheduler {
         
         for(Course g:this.courseList){
             //TODO: Add to panel holders, need to figure out how many are needed. Depends of start and end times
+            //Find how many panels needed
+            int numPanels = 0;
+            /*if(g.timeEnd-g.timeStart==50){
+                numPanels = 2;
+            }
+            if(g.timeEnd-g.timeStart==115){
+                numPanels = 3;
+            }
+            if(g.timeEnd-g.timeStart==150){
+                numPanels = 4;
+            }
+            if(numPanels==0){
+                //The class is not 50 minutes, 1hr and 15min, or 2hrs.
+                //Are there any other class lengths?
+            }
+             */
             //Title, location, time
             //Day 1
             JLabel day1Title = new JLabel();
@@ -168,6 +194,7 @@ public class Scheduler {
             day1Time.setBackground(Color.blue);
             day1Time.setOpaque(true);
             
+            //TODO: Are there any classes that are just one day a week?
             if(g.getLect().days.length>1){
                 //DAY 2
                 JLabel day2 = new JLabel();
@@ -184,6 +211,12 @@ public class Scheduler {
                 day2Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
                 day2Time.setBackground(Color.blue);
                 day2Time.setOpaque(true);
+                /*if(numPanels==2){
+                    panelHolder[][].add(day1Title);
+                    panelHolder[][].add(day1Time);
+                    panelHolder[][].add(day2Title);
+                    panelHolder[][].add(day2Time);
+                }*/
             }
             if(g.getLect().days.length>2){
                //DAY 3
@@ -201,6 +234,10 @@ public class Scheduler {
                 day3Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
                 day3Time.setBackground(Color.blue);
                 day3Time.setOpaque(true);
+               /* if(numPanels==2){
+                    panelHolder[][].add(day3Title);
+                    panelHolder[][].add(day3Time);
+                }*/
             }
             if(g.getLect().days.length>3){
                 //DAY 4
@@ -275,7 +312,6 @@ public class Scheduler {
         frame. setSize(900,1200);
         frame. setVisible(true);
          */
-        
     }
 
 }
