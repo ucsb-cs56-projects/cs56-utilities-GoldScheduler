@@ -3,6 +3,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.*;
 
+
+//For GUI
+//TODO clean up!
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.ArrayList;
+
 /**
  *Test class for Scheduler class
  * @author Hanna Vigil
@@ -91,5 +99,24 @@ public class SchedulerTest{
         assertEquals(9, s.timeSlot(1200));
     }
     
+    /**
+     test timeSlot2, which returns an int to the row the time belongs to
+     @see Scheduler#timeSlot(int time)
+     */
+    @Test
+    public void testTimeSlot2(){
+        Scheduler s = new Scheduler();
+        assertEquals(10, s.timeSlot(1230));
+    }
+    
+    /**
+     test daySlot, which returns an int to the column it belongs in
+     @see Scheduler#daySlot(char day)
+     */
+    @Test
+    public void testDaySlot(){
+        Scheduler s = new Scheduler();
+        assertEquals(2, s.daySlot('T'));
+    }
     
 }
