@@ -51,7 +51,7 @@ public class Scheduler {
     //Also, not sure if this should be somewhere else or re-written
     //This is just a temporary location. Make static?
     public boolean timeConflict(Course c, Course d){
-        //First, check if c starts before d
+       //First, check if c starts before d
         if(c.getLect().timeStart<=d.getLect().timeStart){
             //Check if they start at the same time
             if(c.getLect().timeStart==d.getLect().timeStart)
@@ -80,8 +80,103 @@ public class Scheduler {
      corresponding to where the 30 is.
      */
     public int timeSlot(int time){
-        //STUB
-        return 0;
+        int slot;
+        switch(time){
+            case 800:
+                slot=1;
+                break;
+            case 830:
+                slot=2;
+                break;
+            case 900:
+                slot=3;
+                break;
+            case 930:
+                slot=3;
+                break;
+            case 1000:
+                slot=5;
+                break;
+            case 1030:
+                slot=6;
+                break;
+            case 1100:
+                slot=7;
+                break;
+            case 1130:
+                slot=8;
+                break;
+            case 1200:
+                slot=9;
+                break;
+            case 1230:
+                slot=10;
+                break;
+            case 1300:
+                slot=11;
+                break;
+            case 1330:
+                slot=12;
+                break;
+            case 1400:
+                slot=13;
+                break;
+            case 1430:
+                slot=14;
+                break;
+            case 1500:
+                slot=15;
+                break;
+            case 1530:
+                slot=16;
+                break;
+            case 1600:
+                slot=17;
+                break;
+            case 1630:
+                slot=18;
+                break;
+            case 1700:
+                slot=19;
+                break;
+            case 1730:
+                slot=20;
+                break;
+            case 1800:
+                slot=21;
+                break;
+            case 1830:
+                slot=22;
+                break;
+            case 1900:
+                slot=23;
+                break;
+            case 1930:
+                slot=24;
+                break;
+            case 2000:
+                slot=25;
+                break;
+            case 2030:
+                slot=26;
+                break;
+            case 2100:
+                slot=27;
+                break;
+            case 2130:
+                slot=28;
+                break;
+            case 2200:
+                slot=29;
+                break;
+            default:
+                slot=0;
+                break;
+        }
+        if(slot==0){
+            //TODO: ERROR
+        }
+        return slot;
     }
     
     //TODO make param a color, right now I'll just use blue
