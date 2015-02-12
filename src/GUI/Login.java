@@ -9,7 +9,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import Connection.UserInfo.UsersConnection;
+import connection.userInfo.UsersConnection;
 
 
 public class Login extends JPanel{

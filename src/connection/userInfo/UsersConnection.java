@@ -1,8 +1,8 @@
-package Connection.UserInfo;
+package connection.userInfo;
 
-import java.sql.*;
+import java.sql.SQLException;
 
-import Connection.Config;
+import connection.GolderConnection;
 
 //import Course;
 
@@ -13,15 +13,9 @@ import Connection.Config;
  * @version Feb 10 2015
  *
  */
-public class UsersConnection {
+public class UsersConnection extends GolderConnection{
 	
-	/**
-	 * Check connection
-	 * @return true if connected; false otherwise
-	 */
-	public static boolean check() {
-		return conn != null;
-	}
+	
 	
 	/**
 	 * Registration for users
@@ -43,7 +37,7 @@ public class UsersConnection {
 			major = "'" + major + '\'';
 
 		try {
-			stmt = conn.createStatement();
+			
 			stmt.executeUpdate(String.format("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);", 
 					username, password, email, major));
 
@@ -68,7 +62,6 @@ public class UsersConnection {
 		int id = 0;
 		
 		try {
-			stmt = conn.createStatement();
 			
 			if (stmt.execute(String.format("SELECT ID, user_password FROM `users` WHERE user_name='%s';", username))) {
 		        rs = stmt.getResultSet();
@@ -102,7 +95,6 @@ public class UsersConnection {
 		int id = 0;
 		
 		try {
-			stmt = conn.createStatement();
 			
 			if (stmt.execute(String.format("SELECT ID FROM `users` WHERE email_address='%s';", email))) {
 		        rs = stmt.getResultSet();
@@ -131,7 +123,6 @@ public class UsersConnection {
 		User u = null;
 		
 		try {
-			stmt = conn.createStatement();
 			
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE ID='%s';", ID))) {
 		        rs = stmt.getResultSet();
@@ -155,7 +146,6 @@ public class UsersConnection {
 	public static void setPassword(int ID, String pw) {
 		
 		try {
-			stmt = conn.createStatement();
 			stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",pw,ID));
 		} catch (SQLException e){
 			System.out.println(e.getMessage());
@@ -169,7 +159,6 @@ public class UsersConnection {
 	 */
 	public static void setEmail(int ID, String email) {
 		try {
-			stmt = conn.createStatement();
 			stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
 		} catch (SQLException e){
 			System.out.println(e.getMessage());
@@ -184,7 +173,6 @@ public class UsersConnection {
 	 */
 	public static void setMajor(int ID, String mj)  {
 		try {
-			stmt = conn.createStatement();
 			stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
 		} catch (SQLException e){
 			System.out.println(e.getMessage());
@@ -192,17 +180,7 @@ public class UsersConnection {
 		
 	}
 	
-	public static void reconnect() {
-		try {
-		    conn = DriverManager.getConnection("jdbc:mysql://"
-		    		   + Config.host+"/"+ Config.table,
-		    		   Config.username, Config.password);
-		} catch (SQLException ex) {
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
-		}
-	}
+
 	
 	/*
 	 * test 
@@ -213,27 +191,5 @@ public class UsersConnection {
 	}
 	*/
 	
-	//variables
-	public static Statement stmt = null;
-	public static ResultSet rs = null;
-	public static Connection conn;
-	
-	//initial
-	static {
-		try {
-		    Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-		    throw new RuntimeException("Cannot find the driver in the classpath!", e);
-		}
-		
-		try {
-		    conn = DriverManager.getConnection("jdbc:mysql://"
-		    		   + Config.host+"/"+ Config.table,
-		    		   Config.username, Config.password);
-		} catch (SQLException ex) {
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
-		}
-	}
+
 }

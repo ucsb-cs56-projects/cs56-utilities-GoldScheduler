@@ -1,4 +1,4 @@
-package Connection.UserInfo;
+package connection.userInfo;
 
 import java.util.LinkedList;
 
@@ -11,13 +11,21 @@ import java.util.LinkedList;
  */
 
 public class User {
+	private int id;
 	private String username;
 	private String password;
 	private String email;
 	private String major;
-//	private LinkedList<Schedule> courses;
-	private int id;
-
+//	private LinkedList<Schedule> mySchedules;
+	
+	/**
+	 * Constructor Only can be called by UsersConnection.getInfo
+	 * @param u  username
+	 * @param p  password
+	 * @param e  email
+	 * @param m  major
+	 * @param id Id
+	 */
 	User(String u, String p, String e, String m, int id){
 		username=u;
 		password=p;
@@ -45,5 +53,16 @@ public class User {
 		this.major=major;
 		UsersConnection.setMajor(id, major);
 	}
-
+	
+	public void addNewSchedule() {
+		
+	}
+	
+	
+	
+	/*
+	public void addCourse(Schedule s, Course c) {
+		
+	}
+	 */
 }
