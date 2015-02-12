@@ -34,8 +34,6 @@ public class Scheduler {
     public boolean add(Course c){
         if(c==null)
             return false;
-        //Check if times conflict: if so, return false or throw exception
-        //TODO: right now returns false
         for(Course d: this.courseList){
             if(this.timeConflict(c,d)==true)
                 return false;
@@ -287,6 +285,11 @@ public class Scheduler {
         r.setText("Thursday");
         JLabel f = new JLabel();
         f.setText("Friday");
+        m.setFont(m.getFont().deriveFont(11f));
+        t.setFont(t.getFont().deriveFont(11f));
+        w.setFont(w.getFont().deriveFont(11f));
+        r.setFont(r.getFont().deriveFont(11f));
+        f.setFont(f.getFont().deriveFont(11f));
         panelHolder[0][1].add(m);
         panelHolder[0][2].add(t);
         panelHolder[0][3].add(w);
@@ -324,11 +327,13 @@ public class Scheduler {
             
             JLabel day1Location = new JLabel();
             day1Location.setText(lect.location);
+            day1Location.setFont(day1Location.getFont().deriveFont(10f));
             day1Location.setBackground(lect.col);
             day1Location.setOpaque(true);
             
             JLabel day1Time = new JLabel();
             day1Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+            day1Time.setFont(day1Time.getFont().deriveFont(10f));
             day1Time.setBackground(lect.col);
             day1Time.setOpaque(true);
             
@@ -342,11 +347,13 @@ public class Scheduler {
                 
                 JLabel day2Location = new JLabel();
                 day2Location.setText(lect.location);
+                day2Location.setFont(day1Location.getFont().deriveFont(10f));
                 day2Location.setBackground(lect.col);
                 day2Location.setOpaque(true);
                 
                 JLabel day2Time = new JLabel();
                 day2Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day2Time.setFont(day2Time.getFont().deriveFont(10f));
                 day2Time.setBackground(lect.col);
                 day2Time.setOpaque(true);
                 
@@ -397,11 +404,13 @@ public class Scheduler {
                 
                 JLabel day3Location = new JLabel();
                 day3Location.setText(lect.location);
+                day3Location.setFont(day3Location.getFont().deriveFont(10f));
                 day3Location.setBackground(lect.col);
                 day3Location.setOpaque(true);
                 
                 JLabel day3Time = new JLabel();
                 day3Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day3Time.setFont(day1Time.getFont().deriveFont(10f));
                 day3Time.setBackground(lect.col);
                 day3Time.setOpaque(true);
                 
@@ -434,11 +443,13 @@ public class Scheduler {
                 
                 JLabel day4Location = new JLabel();
                 day4Location.setText(lect.location);
+                day4Location.setFont(day4Location.getFont().deriveFont(10f));
                 day4Location.setBackground(lect.col);
                 day4Location.setOpaque(true);
                 
                 JLabel day4Time = new JLabel();
                 day4Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day4Time.setFont(day4Time.getFont().deriveFont(10f));
                 day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
                 
@@ -463,6 +474,7 @@ public class Scheduler {
                 }
             }
         }
+        panel.setPreferredSize(new Dimension(600, 600));
         this.panel = panel;
     }
     
