@@ -28,19 +28,29 @@ public class Lecture{
     }
     //Returns the times as strings
     public String timeStartString(){
+        String min = "";
+        if(this.timeStart%100==0)
+            min = "00";
+        else
+            min += this.timeStart%100;
         if(this.timeStart<1200){
-            return this.timeStart/100 + ":" + this.timeStart%100 + " AM";
+            return this.timeStart/100 + ":" + min + " AM";
         }
         else{
-            return (this.timeStart/100)-12 + ":" + this.timeStart%100 + " PM";
+            return (this.timeStart/100)-12 + ":" + min + " PM";
         }
     }
     public String timeEndString(){
+        String min = "";
+        if(this.timeStart%100==0)
+            min = "00";
+        else
+            min += this.timeStart%100;
         if(this.timeStart<1200){
-            return this.timeEnd/100 + ":" + this.timeEnd%100 + " AM";
+            return this.timeEnd/100 + ":" + min + " AM";
         }
         else{
-            return (this.timeEnd/100)-12 + ":" + this.timeEnd%100 + " PM";
+            return (this.timeEnd/100)-12 + ":" + min + " PM";
         }
     }
 }
