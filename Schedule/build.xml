@@ -19,6 +19,10 @@
   <target name="run" depends="compile" description="run the Scheduler program">
     <java fork="true" classname="Scheduler" classpath="build" />
   </target>
+  
+  <target name="runGui" depends="compile" description="run the ScheduleGUI program">
+      <java fork="true" classname="ScheduleGUI" classpath="build" />
+  </target>
 
  <target name="clean" description="delete unnecessary files and directories">
     <delete dir="build" quiet="true" />
