@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Scheduler {
     ArrayList<Course> courseList;
-    JPanel panel;
+    private JPanel panel;
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
     public Scheduler(ArrayList<Course> courseList, JPanel panel){
         this.courseList = courseList;
@@ -23,6 +23,12 @@ public class Scheduler {
         this.courseList = new ArrayList<Course>();
         this.panel = new JPanel();
     }
+    
+    //Getter
+    public JPanel getPanel(){
+        return this.panel;
+    }
+    
     /**
      @param the course that needs to be added
      @return whether or not the course was added
@@ -72,6 +78,38 @@ public class Scheduler {
             else
                 return true;
         }
+    }
+    
+    /**
+     @param day character you want converted to column it belongs in
+     @return the column that corresponds to the day
+     */
+    public int daySlot(char day){
+        int slot;
+        switch(day){
+            case 'M':
+                slot = 1;
+                break;
+            case 'T':
+                slot=2;
+                break;
+            case 'W':
+                slot = 3;
+                break;
+            case 'R':
+                slot=4;
+                break;
+            case 'F':
+                slot = 5;
+                break;
+            default:
+                slot = 0;
+                break;
+        }
+        if(slot==0){
+            //TODO: Error not a valid day
+        }
+        return slot;
     }
     
     /**
@@ -180,7 +218,7 @@ public class Scheduler {
     }
     
     //TODO make param a color, right now I'll just use blue
-    public void SchedulerGUI(){
+    public void schedulerGUI(){
         GridLayout grid = new GridLayout(30, 6);
         JPanel panel = new JPanel();
         panel.setLayout(grid);
@@ -258,20 +296,22 @@ public class Scheduler {
             //TODO: Add to panel holders, need to figure out how many are needed. Depends of start and end times
             //Find how many panels needed
             int numPanels = 0;
-            /*if(g.timeEnd-g.timeStart==50){
+            if(g.getLect().timeEnd-g.getLect().timeStart==50){
                 numPanels = 2;
             }
-            if(g.timeEnd-g.timeStart==115){
+            if(g.getLect().timeEnd-g.getLect().timeStart==115){
                 numPanels = 3;
             }
-            if(g.timeEnd-g.timeStart==150){
+            if(g.getLect().timeEnd-g.getLect().timeStart==150){
                 numPanels = 4;
             }
             if(numPanels==0){
                 //The class is not 50 minutes, 1hr and 15min, or 2hrs.
                 //Are there any other class lengths?
             }
-             */
+            
+            int row;
+            int column;
             //Title, location, time
             //Day 1
             JLabel day1Title = new JLabel();
@@ -285,17 +325,17 @@ public class Scheduler {
             day1Location.setOpaque(true);
             
             JLabel day1Time = new JLabel();
-            day1Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+            day1Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
             day1Time.setBackground(Color.blue);
             day1Time.setOpaque(true);
             
             //TODO: Are there any classes that are just one day a week?
             if(g.getLect().days.length>1){
                 //DAY 2
-                JLabel day2 = new JLabel();
-                day2.setText(g.courseID);
-                day2.setBackground(Color.blue);
-                day2.setOpaque(true);
+                JLabel day2Title = new JLabel();
+                day2Title.setText(g.courseID);
+                day2Title.setBackground(Color.blue);
+                day2Title.setOpaque(true);
                 
                 JLabel day2Location = new JLabel();
                 day2Location.setText(g.getLect().location);
@@ -303,22 +343,54 @@ public class Scheduler {
                 day2Location.setOpaque(true);
                 
                 JLabel day2Time = new JLabel();
-                day2Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+                day2Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
                 day2Time.setBackground(Color.blue);
                 day2Time.setOpaque(true);
-                /*if(numPanels==2){
-                    panelHolder[][].add(day1Title);
-                    panelHolder[][].add(day1Time);
-                    panelHolder[][].add(day2Title);
-                    panelHolder[][].add(day2Time);
-                }*/
+                
+                
+                row = this.timeSlot(g.getLect().timeStart);
+                column = 0;
+                if(numPanels>=2){
+                    //If just 2, show time and course ID for day 1 and 2
+                    //Labels
+                    column = this.daySlot(g.getLect().days[0]);
+                    panelHolder[row][column].add(day1Title);
+                    panelHolder[row+1][column].add(day1Time);
+                    //Background
+                    panelHolder[row][column].setBackground(Color.blue);
+                    panelHolder[row+1][column].setBackground(Color.blue);
+                    
+                    //Labels
+                    column = this.daySlot(g.getLect().days[1]);
+                    panelHolder[row][column].add(day2Title);
+                    panelHolder[row+1][column].add(day2Time);
+                    //Background
+                    panelHolder[row][column].setBackground(Color.blue);
+                    panelHolder[row+1][column].setBackground(Color.blue);
+                }
+                if(numPanels>=3){
+                    //If 3, add location
+                    column = this.daySlot(g.getLect().days[0]);
+                    panelHolder[row+2][column].add(day1Location);
+                    panelHolder[row+2][column].setBackground(Color.blue);
+                    column = this.daySlot(g.getLect().days[1]);
+                    panelHolder[row+2][column].add(day2Location);
+                    panelHolder[row+2][column].setBackground(Color.blue);
+                }
+                if(numPanels==4){
+                    //If four, just make another panel the same color
+                    column = this.daySlot(g.getLect().days[0]);
+                    panelHolder[row+3][column].setBackground(Color.blue);
+                    column = this.daySlot(g.getLect().days[1]);
+                    panelHolder[row+3][column].setBackground(Color.blue);
+                }
             }
             if(g.getLect().days.length>2){
                //DAY 3
-                JLabel day3 = new JLabel();
-                day3.setText(g.courseID);
-                day3.setBackground(Color.blue);
-                day3.setOpaque(true);
+                JLabel day3Title = new JLabel();
+                day3Title.setText(g.courseID);
+                day3Title.setBackground(Color.blue);
+                day3Title.setOpaque(true);
                 
                 JLabel day3Location = new JLabel();
                 day3Location.setText(g.getLect().location);
@@ -326,20 +398,36 @@ public class Scheduler {
                 day3Location.setOpaque(true);
                 
                 JLabel day3Time = new JLabel();
-                day3Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+                day3Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
                 day3Time.setBackground(Color.blue);
                 day3Time.setOpaque(true);
-               /* if(numPanels==2){
-                    panelHolder[][].add(day3Title);
-                    panelHolder[][].add(day3Time);
-                }*/
+                
+                
+                row = this.timeSlot(g.getLect().timeStart);
+                column = 0;
+               if(numPanels>=2){
+                   //Labels
+                   column = this.daySlot(g.getLect().days[2]);
+                   panelHolder[row][column].add(day3Title);
+                   panelHolder[row+1][column].add(day3Time);
+                   //Background
+                   panelHolder[row][column].setBackground(Color.blue);
+                   panelHolder[row+1][column].setBackground(Color.blue);
+                }
+                if(numPanels>=3){
+                    panelHolder[row+2][column].add(day3Location);
+                    panelHolder[row+2][column].setBackground(Color.blue);
+                }
+                if(numPanels==4){
+                    panelHolder[row+3][column].setBackground(Color.blue);
+                }
             }
             if(g.getLect().days.length>3){
                 //DAY 4
-                JLabel day4 = new JLabel();
-                day4.setText(g.courseID);
-                day4.setBackground(Color.blue);
-                day4.setOpaque(true);
+                JLabel day4Title = new JLabel();
+                day4Title.setText(g.courseID);
+                day4Title.setBackground(Color.blue);
+                day4Title.setOpaque(true);
                 
                 JLabel day4Location = new JLabel();
                 day4Location.setText(g.getLect().location);
@@ -347,14 +435,32 @@ public class Scheduler {
                 day4Location.setOpaque(true);
                 
                 JLabel day4Time = new JLabel();
-                day4Time.setText(g.getLect().timeStart + " - " + g.getLect().timeEnd);
+                day4Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
                 day4Time.setBackground(Color.blue);
                 day4Time.setOpaque(true);
+                
+                
+                row = this.timeSlot(g.getLect().timeStart);
+                column = 0;
+                if(numPanels>=2){
+                    column = this.daySlot(g.getLect().days[3]);
+                    //Labels
+                    panelHolder[row][column].add(day4Title);
+                    panelHolder[row+1][column].add(day4Time);
+                    //Background
+                    panelHolder[row][column].setBackground(Color.blue);
+                    panelHolder[row+1][column].setBackground(Color.blue);
+                }
+                if(numPanels>=3){
+                    panelHolder[row+2][column].add(day4Location);
+                    panelHolder[row+2][column].setBackground(Color.blue);
+                }
+                if(numPanels==4){
+                    panelHolder[row+3][column].setBackground(Color.blue);
+                }
             }
-            
-            
-            this.panel = panel;
         }
+        this.panel = panel;
         
         /*
         //test course
@@ -406,8 +512,8 @@ public class Scheduler {
         frame. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         frame. setSize(900,1200);
         frame. setVisible(true);
-         */
+        */
     }
-
+    
 }
 
