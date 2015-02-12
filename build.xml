@@ -22,7 +22,7 @@
   </target>
 
   <target name="compileConnectUser" depends="init" description="compile Connect test">
-    <javac srcdir="src/Connection/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+    <javac srcdir="src/connection/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
       <classpath>
         <pathelement location="build"/>
       </classpath>
