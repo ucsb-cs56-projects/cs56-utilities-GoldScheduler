@@ -30,7 +30,7 @@ public class Login extends JPanel{
         password.addKeyListener(new KeyValidator());
         passLabel= new JLabel("Enter Password:");
         loginButton= new JButton("Login");
-        loginButton.addActionListener(new ButtonValidator());
+        loginButton.addActionListener(new LoginButtonValidator());
         forpass = new JButton ("Forgot Password?");
         wrong = new JLabel();
     }
@@ -51,11 +51,23 @@ public class Login extends JPanel{
         */
     }
     
-    class ButtonValidator implements ActionListener{
+    class LoginButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			Validator();
 		}
     }
+    class NewUserButtonValidator implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			//public void NewUser();go to new user registration page;
+		}
+
+    }
+    /*
+    heres where we should implement go to newuser class
+    public void NewUser(){
+    	link to RegisterNewUser page
+    }
+    */
     
     public void Validator() {
     	String userinfo = username.getText();
@@ -64,8 +76,11 @@ public class Login extends JPanel{
 	    int ID = UsersConnection.getID(userinfo,new String(passinfo));
 	    if(ID == -3) wrong.setText("No Connection");
 	    else if (ID==-2) wrong.setText("Incorrect Password");
-	    else if (ID==-1) wrong.setText("No Username");
-	    else wrong.setText("Welcome! " + userinfo + "!");
+	    else if (ID==-1) wrong.setText("Not a Valid Username");
+	    else {
+	    	wrong.setText("Welcome! " + userinfo + "!");
+	    	//heres where we would transfer to user home page
+	    }
     }
     
 	public static void main (String[] args){
