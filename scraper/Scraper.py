@@ -56,21 +56,27 @@ class Scraper(object):
 		courseList = []		 
 		courseList.append("trash")
 		i = 0
+		j = 0
 		xpath = '//*[@id="dept-course-list"]/li[' + str(i+1) + ']/a/text()'
 		while(self.getData(xpath) != '[]'): #While there are still courses to get
-			# Should include an if-statement that asks if there is a /span element
-			# if there is a span element, then the course is not being offered in Spring
-			
 			i = i + 1
+			j = j + 1
+
+			if (self.getData('//*[@id="dept-course-list"]/li[' + str(i) + ']/span/text()') != '[]'):
+				# if there is a span element, then the course is not being offered in Spring
+				j = j - 1 # update j to match current index of courseList
+				continue  # Go to the next iteration because we don't want courses not offered
+
 			xpath = '//*[@id="dept-course-list"]/li[' + str(i) + ']/a/text()'
 			str1 = self.getData(xpath)
 			str1 = str1[2:len(str1)-2]
 			courseList.append(str1)
 
-			xpath = '//*[@id="dept-course-list"]/li[' + str(i) + ']/text()' #xpath taken from course ninja
-			str2 = self.getData(xpath)
-			str2 = str2[2:len(str2)-2]
-			courseList[i] = courseList[i] + str2
+			# This part addes the course title to the course
+			# xpath = '//*[@id="dept-course-list"]/li[' + str(i) + ']/text()' #xpath taken from course ninja
+			# str2 = self.getData(xpath)
+			# str2 = str2[2:len(str2)-2]
+			# courseList[j] = courseList[j] + str2
 
 		courseList.pop(0)
 		#courseList.pop(-1)
@@ -140,15 +146,33 @@ class Scraper(object):
 		self.tree = self.openPage()
 		return courseDict
 
+	def getCourseTimes(self, courseDict):
+		courseTimes = dict() # Dictionary to hold course times, with the course as the key
+		for dept in courseDict: 
+		# For each department shortcode key-value in the dict
+			for course in courseDict[dept]:
+				courseTimes[course] = []
+				i = 2
+				newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept):]) + "/#sections" 
+				# URL of each course page
+				self.resetURL(newURL) 
+				# reset this Scraper's url to reflect the course url
+				time = self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') 
+				# gets the time at the current table cell
+				courseTimes[course].append(time)
+				i = i + 1	
+				# Issue with this loop, it evaluates to false immediately
+				while (self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') != '[]'): 
+				# While there is still data in the current table cell
 
-	def getGetCourseTimes(self, courseDict):
-		courseTimes = dict()
-		# URL stub = https://ninjacourses.com/explore/4/course/
-		# append deptStub/course_number/#sections to get schedule page
+					newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept):]) + "/#sections" 
+					# URL of each course page
 
-		for dept in courseDict: # This may not work. It should be "for each key in dict"
-			for course in dept: # This should be "for each course in the dept course list"
-				self.resetURL("https://ninjacourses.com/explore/4/course/" + dept + "/" + (course-dept) + "/#sections")
-				time = self.getData('//*[@id="tab-sections"]/table/tbody/tr[2]/td[2]') # This should get the 1st lecture time
-				courseTimes[course] = time
+					self.resetURL(newURL) 
+					# reset this Scraper's url to reflect the course url
+
+					time = self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') 
+					# gets the time at the current table cell
+					courseTimes[course].append(time)
+					i = i + 1
 		return courseTimes

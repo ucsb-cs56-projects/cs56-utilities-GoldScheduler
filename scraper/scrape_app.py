@@ -1,4 +1,4 @@
-from scraper import Scraper
+from Scraper import Scraper
 
 # This is a simple application that uses the Scraper class from scraper.py
 # This application was used to gather all of the course information from 
@@ -17,11 +17,11 @@ deptScraper = Scraper(deptsURL)
 courseScraper = Scraper(deptUrlStub+"ANTH")
 
 #deptList = deptScraper.getDepts()
-#deptCodes = deptScraper.getDeptStubs()
+deptCodes = deptScraper.getDeptStubs()
 
 #anthCourses = courseScraper.getCourses()
 
-#courseDict = deptScraper.getAllCourses(deptCodes)
+courseDict = deptScraper.getAllCourses(deptCodes)
 
 # for item in deptList:
 # 	print item
@@ -33,56 +33,56 @@ courseScraper = Scraper(deptUrlStub+"ANTH")
  #	print item
 
 # for dept, classes in courseDict.iteritems():
-# 	print dept
-# 	for course in classes:
-# 		print course
+#  	print dept
+#  	for course in classes:
+#  		print course
 
 
 
 #This part grabs data from http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/SpecialSubjectAreaRequirements.aspx
 
-writURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/WritingReqCourses.aspx'
-euroURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/EurTradCourses.aspx'
-worldCultURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/WorldCulturesCourses.aspx'
-quantURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/QuantCourses.aspx'
-ethnURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/EthnicityCourses.aspx'
+# writURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/WritingReqCourses.aspx'
+# euroURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/EurTradCourses.aspx'
+# worldCultURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/WorldCulturesCourses.aspx'
+# quantURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/QuantCourses.aspx'
+# ethnURL = 'http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/EthnicityCourses.aspx'
 
-bURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaB.aspx" 
-cURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaC.aspx"
-dURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaD.aspx"
-eURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaE.aspx"
-fURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaF.aspx"
-gURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaG.aspx"
-hURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaH.aspx"
+# bURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaB.aspx" 
+# cURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaC.aspx"
+# dURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaD.aspx"
+# eURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaE.aspx"
+# fURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaF.aspx"
+# gURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaG.aspx"
+# hURL = "http://my.sa.ucsb.edu/catalog/current/UndergraduateEducation/AreaH.aspx"
 
 
-writScraper = Scraper(writURL)
-euroScraper = Scraper(euroURL)
-worldCultScraper = Scraper(worldCultURL)
-quantScraper = Scraper(quantURL)
-ethnScraper = Scraper(ethnURL)
+# writScraper = Scraper(writURL)	
+# euroScraper = Scraper(euroURL)
+# worldCultScraper = Scraper(worldCultURL)
+# quantScraper = Scraper(quantURL)
+# ethnScraper = Scraper(ethnURL)
 
-bScraper = Scraper(bURL)
-cScraper = Scraper(cURL)
-dScraper = Scraper(dURL)
-eScraper = Scraper(eURL)
-fScraper = Scraper(fURL)
-gScraper = Scraper(gURL)
-hScraper = Scraper(hURL)
+# bScraper = Scraper(bURL)
+# cScraper = Scraper(cURL)
+# dScraper = Scraper(dURL)
+# eScraper = Scraper(eURL)
+# fScraper = Scraper(fURL)
+# gScraper = Scraper(gURL)
+# hScraper = Scraper(hURL)
 
-writReqs = writScraper.getReqCourses()
-euroReqs = euroScraper.getReqCourses()
-worldCultReqs = worldCultScraper.getReqCourses()
-quantReqs = quantScraper.getReqCourses()
-ethnReqs = ethnScraper.getReqCourses()
+# writReqs = writScraper.getReqCourses()
+# euroReqs = euroScraper.getReqCourses()
+# worldCultReqs = worldCultScraper.getReqCourses()
+# quantReqs = quantScraper.getReqCourses()
+# ethnReqs = ethnScraper.getReqCourses()
 
-bReqs = bScraper.getReqCourses()
-cReqs = cScraper.getReqCourses()
-dReqs = dScraper.getReqCourses()
-eReqs = eScraper.getReqCourses()
-fReqs = fScraper.getReqCourses()
-gReqs = gScraper.getReqCourses()
-hReqs = hScraper.getReqCourses()
+# bReqs = bScraper.getReqCourses()
+# cReqs = cScraper.getReqCourses()
+# dReqs = dScraper.getReqCourses()
+# eReqs = eScraper.getReqCourses()
+# fReqs = fScraper.getReqCourses()
+# gReqs = gScraper.getReqCourses()
+# hReqs = hScraper.getReqCourses()
 #for item in writReqs:
 	#print item
 
@@ -117,5 +117,22 @@ hReqs = hScraper.getReqCourses()
 #for item in gReqs:
 #	print item
 
-for item in hReqs:
-	print item
+#for item in hReqs:
+#	print item
+
+# revisedDict = {}
+
+# for dept in courseDict:
+# 	revisedDict[dept] = []
+# 	for course in courseDict[dept]:
+# 		course = course[:course.find("-") - 1]
+# 		revisedDict[dept].append(course)
+
+courseTimes = deptScraper.getCourseTimes(courseDict)
+
+
+for courses, times in courseTimes.iteritems():
+  	print courses
+  	for times in courseTimes[courses]:
+  		print times
+
