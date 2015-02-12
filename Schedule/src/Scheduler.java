@@ -2,13 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
-//import java.util.regex.Pattern;
-//import java.util.regex.Matcher;
+
 
 /**
  *This class should just take care of adding and removing courses to and from a schedule
- * @author Hanna Vigil
- * @version Feb7, 2015
+ *It will also has a panel instance that will be used for displayins
  */
 public class Scheduler {
     ArrayList<Course> courseList;
@@ -53,7 +51,6 @@ public class Scheduler {
      @param Course to be checked against
      @return true if there is time conflict and false if not
      */
-    //TODO: This part needs to be tested still
     //Also, not sure if this should be somewhere else or re-written
     //This is just a temporary location. Make static?
     public boolean timeConflict(Course c, Course d){
@@ -299,6 +296,7 @@ public class Scheduler {
         for(Course g:this.courseList){
             int start = g.getLect().timeStart;
             int end = g.getLect().timeEnd;
+            Lecture lect = g.getLect();
             //Find how many panels needed
             int numPanels = 0;
             if(end-start==50){
@@ -321,17 +319,17 @@ public class Scheduler {
             //Day 1
             JLabel day1Title = new JLabel();
             day1Title.setText(g.courseID);
-            day1Title.setBackground(Color.blue);
+            day1Title.setBackground(lect.col);
             day1Title.setOpaque(true);
             
             JLabel day1Location = new JLabel();
-            day1Location.setText(g.getLect().location);
-            day1Location.setBackground(Color.blue);
+            day1Location.setText(lect.location);
+            day1Location.setBackground(lect.col);
             day1Location.setOpaque(true);
             
             JLabel day1Time = new JLabel();
-            day1Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
-            day1Time.setBackground(Color.blue);
+            day1Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+            day1Time.setBackground(lect.col);
             day1Time.setOpaque(true);
             
             //TODO: Are there any classes that are just one day a week?
@@ -339,129 +337,129 @@ public class Scheduler {
                 //DAY 2
                 JLabel day2Title = new JLabel();
                 day2Title.setText(g.courseID);
-                day2Title.setBackground(Color.blue);
+                day2Title.setBackground(lect.col);
                 day2Title.setOpaque(true);
                 
                 JLabel day2Location = new JLabel();
-                day2Location.setText(g.getLect().location);
-                day2Location.setBackground(Color.blue);
+                day2Location.setText(lect.location);
+                day2Location.setBackground(lect.col);
                 day2Location.setOpaque(true);
                 
                 JLabel day2Time = new JLabel();
-                day2Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
-                day2Time.setBackground(Color.blue);
+                day2Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day2Time.setBackground(lect.col);
                 day2Time.setOpaque(true);
                 
                 
-                row = this.timeSlot(g.getLect().timeStart)-1;
+                row = this.timeSlot(lect.timeStart)-1;
                 column = 0;
                 if(numPanels>=2){
                     //If just 2, show time and course ID for day 1 and 2
                     //Labels
-                    column = this.daySlot(g.getLect().days[0]);
+                    column = this.daySlot(lect.days[0]);
                     panelHolder[row][column].add(day1Title);
                     panelHolder[row+1][column].add(day1Time);
                     //Background
-                    panelHolder[row][column].setBackground(Color.blue);
-                    panelHolder[row+1][column].setBackground(Color.blue);
+                    panelHolder[row][column].setBackground(lect.col);
+                    panelHolder[row+1][column].setBackground(lect.col);
                     
                     //Labels
-                    column = this.daySlot(g.getLect().days[1]);
+                    column = this.daySlot(lect.days[1]);
                     panelHolder[row][column].add(day2Title);
                     panelHolder[row+1][column].add(day2Time);
                     //Background
-                    panelHolder[row][column].setBackground(Color.blue);
-                    panelHolder[row+1][column].setBackground(Color.blue);
+                    panelHolder[row][column].setBackground(lect.col);
+                    panelHolder[row+1][column].setBackground(lect.col);
                 }
                 if(numPanels>=3){
                     //If 3, add location
-                    column = this.daySlot(g.getLect().days[0]);
+                    column = this.daySlot(lect.days[0]);
                     panelHolder[row+2][column].add(day1Location);
-                    panelHolder[row+2][column].setBackground(Color.blue);
+                    panelHolder[row+2][column].setBackground(lect.col);
                     column = this.daySlot(g.getLect().days[1]);
                     panelHolder[row+2][column].add(day2Location);
-                    panelHolder[row+2][column].setBackground(Color.blue);
+                    panelHolder[row+2][column].setBackground(lect.col);
                 }
                 if(numPanels==4){
                     //If four, just make another panel the same color
-                    column = this.daySlot(g.getLect().days[0]);
-                    panelHolder[row+3][column].setBackground(Color.blue);
+                    column = this.daySlot(lect.days[0]);
+                    panelHolder[row+3][column].setBackground(lect.col);
                     column = this.daySlot(g.getLect().days[1]);
-                    panelHolder[row+3][column].setBackground(Color.blue);
+                    panelHolder[row+3][column].setBackground(lect.col);
                 }
             }
             if(g.getLect().days.length>2){
                //DAY 3
                 JLabel day3Title = new JLabel();
                 day3Title.setText(g.courseID);
-                day3Title.setBackground(Color.blue);
+                day3Title.setBackground(lect.col);
                 day3Title.setOpaque(true);
                 
                 JLabel day3Location = new JLabel();
-                day3Location.setText(g.getLect().location);
-                day3Location.setBackground(Color.blue);
+                day3Location.setText(lect.location);
+                day3Location.setBackground(lect.col);
                 day3Location.setOpaque(true);
                 
                 JLabel day3Time = new JLabel();
-                day3Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
-                day3Time.setBackground(Color.blue);
+                day3Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day3Time.setBackground(lect.col);
                 day3Time.setOpaque(true);
                 
                 
-                row = this.timeSlot(g.getLect().timeStart)-1;
+                row = this.timeSlot(lect.timeStart)-1;
                 column = 0;
                if(numPanels>=2){
                    //Labels
-                   column = this.daySlot(g.getLect().days[2]);
+                   column = this.daySlot(lect.days[2]);
                    panelHolder[row][column].add(day3Title);
                    panelHolder[row+1][column].add(day3Time);
                    //Background
-                   panelHolder[row][column].setBackground(Color.blue);
-                   panelHolder[row+1][column].setBackground(Color.blue);
+                   panelHolder[row][column].setBackground(lect.col);
+                   panelHolder[row+1][column].setBackground(lect.col);
                 }
                 if(numPanels>=3){
                     panelHolder[row+2][column].add(day3Location);
-                    panelHolder[row+2][column].setBackground(Color.blue);
+                    panelHolder[row+2][column].setBackground(lect.col);
                 }
                 if(numPanels==4){
-                    panelHolder[row+3][column].setBackground(Color.blue);
+                    panelHolder[row+3][column].setBackground(lect.col);
                 }
             }
             if(g.getLect().days.length>3){
                 //DAY 4
                 JLabel day4Title = new JLabel();
                 day4Title.setText(g.courseID);
-                day4Title.setBackground(Color.blue);
+                day4Title.setBackground(lect.col);
                 day4Title.setOpaque(true);
                 
                 JLabel day4Location = new JLabel();
-                day4Location.setText(g.getLect().location);
-                day4Location.setBackground(Color.blue);
+                day4Location.setText(lect.location);
+                day4Location.setBackground(lect.col);
                 day4Location.setOpaque(true);
                 
                 JLabel day4Time = new JLabel();
-                day4Time.setText(g.getLect().timeStartString() + " - " + g.getLect().timeEndString());
-                day4Time.setBackground(Color.blue);
+                day4Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
                 
                 
-                row = this.timeSlot(g.getLect().timeStart)-1;
+                row = this.timeSlot(lect.timeStart)-1;
                 column = 0;
                 if(numPanels>=2){
-                    column = this.daySlot(g.getLect().days[3]);
+                    column = this.daySlot(lect.days[3]);
                     //Labels
                     panelHolder[row][column].add(day4Title);
                     panelHolder[row+1][column].add(day4Time);
                     //Background
-                    panelHolder[row][column].setBackground(Color.blue);
-                    panelHolder[row+1][column].setBackground(Color.blue);
+                    panelHolder[row][column].setBackground(lect.col);
+                    panelHolder[row+1][column].setBackground(lect.col);
                 }
                 if(numPanels>=3){
                     panelHolder[row+2][column].add(day4Location);
-                    panelHolder[row+2][column].setBackground(Color.blue);
+                    panelHolder[row+2][column].setBackground(lect.col);
                 }
                 if(numPanels==4){
-                    panelHolder[row+3][column].setBackground(Color.blue);
+                    panelHolder[row+3][column].setBackground(lect.col);
                 }
             }
         }

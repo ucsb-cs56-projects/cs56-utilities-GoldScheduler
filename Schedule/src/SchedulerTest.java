@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 //For GUI
 //TODO clean up!
+import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class SchedulerTest{
     @Test
     public void testTimeEndString(){
         char [] a = {'T','R'};
-        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159");
+        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159", Color.blue);
         assertEquals("3:15 PM", l.timeEndString());
     }
     
@@ -42,7 +43,7 @@ public class SchedulerTest{
         Course [] b = {};
         String [] d = {};
         String [] e = {"CMPSC"};
-        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159");
+        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159", Color.blue);
         Course c = new Course("CMPSC 48", "COMP SCI PROJECT", "Computer Science Project", "CMPSC", 4.0, b, e, d, l);
         
         Scheduler s = new Scheduler();
@@ -61,11 +62,11 @@ public class SchedulerTest{
         Course [] b = {};
         String [] d = {};
         String [] e = {"CMPSC"};
-        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159");
+        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159", Color.blue);
         Course c = new Course("CMPSC 48", "COMP SCI PROJECT", "Computer Science Project", "CMPSC", 4.0, b, e, d, l);
         //Make course m
         char [] n = {'M','W'};
-        Lecture q = new Lecture("CONRAD, P", 930, 1045, n, "PHELP 3526", "09191");
+        Lecture q = new Lecture("CONRAD, P", 930, 1045, n, "PHELP 3526", "09191", Color.blue);
         Course r = new Course("CMPSC 56", "ADV APP PROGRAM", "Advanced Applications Programming",
                               "CMPSC", 4.0, b, d, e, q);
         
@@ -87,11 +88,11 @@ public class SchedulerTest{
         Course [] b = {};
         String [] d = {};
         String [] e = {"CMPSC"};
-        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159");
+        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159", Color.blue);
         Course c = new Course("CMPSC 48", "COMP SCI PROJECT", "Computer Science Project", "CMPSC", 4.0, b, e, d, l);
         //Make course r
         char [] n = {'M','W'};
-        Lecture q = new Lecture("CONRAD, P", 930, 1045, n, "PHELP 3526", "09191");
+        Lecture q = new Lecture("CONRAD, P", 930, 1045, n, "PHELP 3526", "09191", Color.blue);
         Course r = new Course("CMPSC 56", "ADV APP PROGRAM", "Advanced Applications Programming",
                               "CMPSC", 4.0, b, d, e, q);
         
