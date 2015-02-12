@@ -130,7 +130,7 @@ public class Scheduler {
                 slot=3;
                 break;
             case 930:
-                slot=3;
+                slot=4;
                 break;
             case 1000:
                 slot=5;
@@ -254,6 +254,10 @@ public class Scheduler {
         holder = new JLabel();
         holder.setText(temp);
         labels.add(holder);
+        temp = "12:30 PM";
+        holder = new JLabel();
+        holder.setText(temp);
+        labels.add(holder);
         for (int i = 1; i < 10; i++){
             for(int j=0; j<2;j++){
                 if(j==0)
@@ -293,20 +297,21 @@ public class Scheduler {
         panelHolder[0][5].add(f);
         
         for(Course g:this.courseList){
-            //TODO: Add to panel holders, need to figure out how many are needed. Depends of start and end times
+            int start = g.getLect().timeStart;
+            int end = g.getLect().timeEnd;
             //Find how many panels needed
             int numPanels = 0;
-            if(g.getLect().timeEnd-g.getLect().timeStart==50){
+            if(end-start==50){
                 numPanels = 2;
             }
-            if(g.getLect().timeEnd-g.getLect().timeStart==115){
+            if(end-start==115){
                 numPanels = 3;
             }
-            if(g.getLect().timeEnd-g.getLect().timeStart==150){
+            if(end-start==150){
                 numPanels = 4;
             }
             if(numPanels==0){
-                //The class is not 50 minutes, 1hr and 15min, or 2hrs.
+                //The class is not 50 minutes, 1hr and 15min, or 1hr and 50mins (Writing classes).
                 //Are there any other class lengths?
             }
             
@@ -348,7 +353,7 @@ public class Scheduler {
                 day2Time.setOpaque(true);
                 
                 
-                row = this.timeSlot(g.getLect().timeStart);
+                row = this.timeSlot(g.getLect().timeStart)-1;
                 column = 0;
                 if(numPanels>=2){
                     //If just 2, show time and course ID for day 1 and 2
@@ -403,7 +408,7 @@ public class Scheduler {
                 day3Time.setOpaque(true);
                 
                 
-                row = this.timeSlot(g.getLect().timeStart);
+                row = this.timeSlot(g.getLect().timeStart)-1;
                 column = 0;
                if(numPanels>=2){
                    //Labels
@@ -440,7 +445,7 @@ public class Scheduler {
                 day4Time.setOpaque(true);
                 
                 
-                row = this.timeSlot(g.getLect().timeStart);
+                row = this.timeSlot(g.getLect().timeStart)-1;
                 column = 0;
                 if(numPanels>=2){
                     column = this.daySlot(g.getLect().days[3]);
@@ -461,58 +466,6 @@ public class Scheduler {
             }
         }
         this.panel = panel;
-        
-        /*
-        //test course
-        //This is just an example of what I was thinking it would look like
-        //If you guys have any other suggestions I'm open
-        //Ideally, once the database is populated this is where we would get the
-        //info then store it in a class instance then display it.
-        JLabel courseEx = new JLabel();
-        courseEx.setText("CMPSC 48");
-        JLabel courseEx2 = new JLabel();
-        courseEx2.setText("PHELP 1160");
-        JLabel courseEx3 = new JLabel();
-        courseEx3.setText("2:00-3:15");
-        courseEx.setBackground(Color.blue);
-        courseEx.setOpaque(true);
-        courseEx2.setBackground(Color.blue);
-        courseEx2.setOpaque(true);
-        courseEx3.setBackground(Color.blue);
-        courseEx3.setOpaque(true);
-        
-        JLabel courseEx4 = new JLabel();
-        courseEx4.setText("CMPSC 48");
-        JLabel courseEx5 = new JLabel();
-        courseEx5.setText("PHELP 1160");
-        JLabel courseEx6 = new JLabel();
-        courseEx6.setText("2:00-3:15");
-        courseEx4.setBackground(Color.blue);
-        courseEx4.setOpaque(true);
-        courseEx5.setBackground(Color.blue);
-        courseEx5.setOpaque(true);
-        courseEx6.setBackground(Color.blue);
-        courseEx6.setOpaque(true);
-        
-        panelHolder[11][2].add(courseEx);
-        panelHolder[12][2].add(courseEx2);
-        panelHolder[13][2].add(courseEx3);
-        panelHolder[11][4].add(courseEx4);
-        panelHolder[12][4].add(courseEx5);
-        panelHolder[13][4].add(courseEx6);
-        panelHolder[11][2].setBackground(Color.blue);
-        panelHolder[12][2].setBackground(Color.blue);
-        panelHolder[13][2].setBackground(Color.blue);
-        panelHolder[11][4].setBackground(Color.blue);
-        panelHolder[12][4].setBackground(Color.blue);
-        panelHolder[13][4].setBackground(Color.blue);
-        
-        
-        frame.add(panel);
-        frame. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-        frame. setSize(900,1200);
-        frame. setVisible(true);
-        */
     }
     
 }

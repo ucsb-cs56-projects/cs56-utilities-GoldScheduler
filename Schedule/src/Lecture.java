@@ -36,18 +36,24 @@ public class Lecture{
         if(this.timeStart<1200){
             return this.timeStart/100 + ":" + min + " AM";
         }
+        else if(this.timeStart==1200||this.timeStart==1230){
+            return this.timeStart/100 + ":" + min + " PM";
+        }
         else{
             return (this.timeStart/100)-12 + ":" + min + " PM";
         }
     }
     public String timeEndString(){
         String min = "";
-        if(this.timeStart%100==0)
+        if(this.timeEnd%100==0)
             min = "00";
         else
-            min += this.timeStart%100;
-        if(this.timeStart<1200){
+            min += this.timeEnd%100;
+        if(this.timeEnd<1200){
             return this.timeEnd/100 + ":" + min + " AM";
+        }
+        else if(this.timeEnd==1200||this.timeEnd==1230){
+            return this.timeEnd/100 + ":" + min + " PM";
         }
         else{
             return (this.timeEnd/100)-12 + ":" + min + " PM";

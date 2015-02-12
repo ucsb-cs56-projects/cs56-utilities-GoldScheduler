@@ -21,6 +21,17 @@ public class SchedulerTest{
     //TODO: when creating a course, I used a bunch of letter variables, which aren't very descriptive
     //During clean-up should rename variables
     /**
+     test timeEndString from lecture
+     @see Lecture#timeStartString()
+     */
+    @Test
+    public void testTimeEndString(){
+        char [] a = {'T','R'};
+        Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159");
+        assertEquals("3:15 PM", l.timeEndString());
+    }
+    
+    /**
     test add course to schedule
      @see Scheduler#add(Course c)
     */
@@ -105,6 +116,16 @@ public class SchedulerTest{
      */
     @Test
     public void testTimeSlot2(){
+        Scheduler s = new Scheduler();
+        assertEquals(13, s.timeSlot(1400));
+    }
+    
+    /**
+     test timeSlot2, which returns an int to the row the time belongs to
+     @see Scheduler#timeSlot(int time)
+     */
+    @Test
+    public void testTimeSlot3(){
         Scheduler s = new Scheduler();
         assertEquals(10, s.timeSlot(1230));
     }
