@@ -93,7 +93,7 @@ public class Login extends JPanel{
 	    JFrame window = new JFrame();
 		Login frame = new Login();
 		window.setContentPane(frame);
-		//window.setSize(720,720);
+		window.setSize(1080,720);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
 	    frame.go();
