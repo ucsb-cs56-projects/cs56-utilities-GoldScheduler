@@ -13,12 +13,13 @@ class Scraper(object):
 		self.url = url
 		self.tree = self.openPage()
 
-		#resets the URL and tree atribute of the scraper to value of 'url' parameter
+	#resets the URL and tree atribute of the scraper to value of 'url' parameter
+	
 	def resetURL(self, url):
 		self.url = url
 		self.tree = self.openPage()
 
-# Opens the page, creates a DOM tree of HTML elements, closes page
+	# Opens the page, creates a DOM tree of HTML elements, closes page
 
 	def openPage(self):
 		page = requests.get(self.url,verify=False)
@@ -27,13 +28,15 @@ class Scraper(object):
 		return tree
 
 
-# Extracts data at given xpath
+	# Extracts data at given xpath
+	
 	def getData(self,xpath_):
 		data = self.tree.xpath(xpath_)
 		return str(data)
 
 
-# Gets all Dept. names from Ninjacourse catalog
+	# Gets all Dept. names from Ninjacourse catalog
+	
 	def getDepts(self):
 		deptList = []
 		for i in range (1,53):
@@ -51,7 +54,8 @@ class Scraper(object):
 			deptList.append(dept)
 		return deptList
 
-	#Returns a list of all courses in a single department
+	# Returns a list of all courses in a single department 
+	# Courses that aren't offered are not in the returned list
 	def getCourses(self): 
 		courseList = []		 
 		courseList.append("trash")
@@ -59,8 +63,8 @@ class Scraper(object):
 		j = 0
 		xpath = '//*[@id="dept-course-list"]/li[' + str(i+1) + ']/a/text()'
 		while(self.getData(xpath) != '[]'): #While there are still courses to get
-			i = i + 1
-			j = j + 1
+			i = i + 1 # i corresponds to a given course on the list on ninjacourses.com
+			j = j + 1 # j corresponds to the index of courseList
 
 			if (self.getData('//*[@id="dept-course-list"]/li[' + str(i) + ']/span/text()') != '[]'):
 				# if there is a span element, then the course is not being offered in Spring
@@ -69,10 +73,10 @@ class Scraper(object):
 
 			xpath = '//*[@id="dept-course-list"]/li[' + str(i) + ']/a/text()'
 			str1 = self.getData(xpath)
-			str1 = str1[2:len(str1)-2]
+			str1 = str1[2:len(str1)-2] # string clean up
 			courseList.append(str1)
 
-			# This part addes the course title to the course
+			# This part addes the course title to the course, e.g. "Advanced Applications Programming"
 			# xpath = '//*[@id="dept-course-list"]/li[' + str(i) + ']/text()' #xpath taken from course ninja
 			# str2 = self.getData(xpath)
 			# str2 = str2[2:len(str2)-2]
@@ -84,6 +88,7 @@ class Scraper(object):
 
 	# Returns the list of courses that fulfill a particular requirement
 	# can only be used on the official UCSB course catalog website
+
 	def getReqCourses(self):
 		courseList = []		 
 		courseList.append("trash")
@@ -108,8 +113,8 @@ class Scraper(object):
 
 
 	def getDeptStubs(self): 
-		#Gets the dept short codes e.g. "ANTH"
-		#need to figure out a way to bypass ("Creative studies")
+		# Gets the dept short codes e.g. "ANTH"
+		# need to figure out a way to bypass ("Creative studies")
 		# Meaning, need to look for 2nd occurrence of '(' and ')'
 		deptList = self.getDepts()
 		deptCodes = []
@@ -129,7 +134,7 @@ class Scraper(object):
 		# There is one issue:
 		# getDeptStub() needs to be updated to get the departments from creative studies
 
-		courseDict = {}
+		courseDict = dict()
 		tmpURL = self.url
 		
 		#This for-loop should loop through all departments and get courses for each one
@@ -146,33 +151,24 @@ class Scraper(object):
 		self.tree = self.openPage()
 		return courseDict
 
-	def getCourseTimes(self, courseDict):
+	def getCourseTimes(self, courseList): # Takes a list of courses in a single department
+		dept = "CMPSC"
 		courseTimes = dict() # Dictionary to hold course times, with the course as the key
-		for dept in courseDict: 
-		# For each department shortcode key-value in the dict
-			for course in courseDict[dept]:
-				courseTimes[course] = []
-				i = 2
-				newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept):]) + "/#sections" 
-				# URL of each course page
-				self.resetURL(newURL) 
-				# reset this Scraper's url to reflect the course url
+		for course in courseList: 
+			newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept)+1:]) + "/#sections"
+			self.resetURL(newURL)  
+		
+			# for each course, enter a for-loop that runs 20 times
+			for i in range(2,23): # Will loop 20 times to get all lecture and section times
+				if i == 2:
+					courseTimes[course] = [] # Initialize the list that corresponds to each course
+
 				time = self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') 
 				# gets the time at the current table cell
-				courseTimes[course].append(time)
-				i = i + 1	
-				# Issue with this loop, it evaluates to false immediately
-				while (self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') != '[]'): 
-				# While there is still data in the current table cell
-
-					newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept):]) + "/#sections" 
-					# URL of each course page
-
-					self.resetURL(newURL) 
-					# reset this Scraper's url to reflect the course url
-
-					time = self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') 
-					# gets the time at the current table cell
+				
+				if len(time) > 2: # Basically, "if the table cell is not empty"
+					time = time.replace(" ","") # Clean up the string and append to the courselist
+					time = time.replace("\\", "")
+					time = time.replace("n","")
 					courseTimes[course].append(time)
-					i = i + 1
 		return courseTimes
