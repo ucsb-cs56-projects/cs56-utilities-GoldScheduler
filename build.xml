@@ -11,6 +11,7 @@
   
   <target name="compile" depends="init" description="compile">
     <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+	  <exclude  name="**/*Test.java" />
       <classpath>
         <pathelement location="build"/>
       </classpath>
