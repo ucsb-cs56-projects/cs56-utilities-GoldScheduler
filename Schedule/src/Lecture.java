@@ -1,3 +1,4 @@
+//package Schedule;
 import java.awt.Color;
 //Lecture will include all of the information that we could potentially want to change
 //If that's the case, we could just create a new instance of Lecture, so all of these

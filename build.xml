@@ -47,6 +47,21 @@
       </classpath>
 	</java>
   </target>
+  
+  <target name="compileSchedule" depends="init" description="compile Schedule code">
+      <javac srcdir="src/Schedule" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+          <classpath>
+              <pathelement location="build"/>
+              <pathelement location="lib/junit-4.10.jar"/>
+          </classpath>
+      </javac>
+  </target>
+  
+  <target name="runScheduleGui" depends="init,compileSchedule" description="run the ScheduleGUI program">
+      <java fork="true" classname="ScheduleGUI" classpath="build" />
+  </target>
+  
+
 
 
 
@@ -76,5 +91,24 @@
     </junit>
  </target>
 
+<target name="testSchedule" depends="compileSchedule" description="Runs all files ending in Test.java">
+    
+    <junit haltonerror="no" haltonfailure="no">
+        <classpath>
+            <pathelement location="lib/junit-4.10.jar"/>
+            <pathelement location="build"/>
+        </classpath>
+        
+        <batchtest fork="yes">
+            <fileset dir="src/Schedule">
+                <!-- this will pick up every class with a name ending in Test -->
+                <include name="*Test.java"/>
+            </fileset>
+        </batchtest>
+        
+        <formatter type="plain" usefile="false" />
+        
+    </junit>
+</target>
 
 </project>

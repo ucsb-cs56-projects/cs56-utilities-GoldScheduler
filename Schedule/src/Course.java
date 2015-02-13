@@ -1,4 +1,4 @@
-
+//package Schedule;
 
 
 //Course will just store all the data retrieved from the database, so the program doesn't
