@@ -13,14 +13,15 @@ import connection.userInfo.UsersConnection;
 
 
 public class Login extends JPanel{
-	
-	JTextField username;
+    JTextField username;
     JLabel userLabel;
     JPasswordField password;
     JLabel passLabel;
     JButton loginButton;
     JButton forpass;
     JLabel wrong;
+    JButton createAcc;
+    
     
     public Login() {
     	username= new JTextField(20);
@@ -33,6 +34,12 @@ public class Login extends JPanel{
         loginButton.addActionListener(new LoginButtonValidator());
         forpass = new JButton ("Forgot Password?");
         wrong = new JLabel();
+        createAcc = new JButton("Create Account");
+        createAcc.addActioListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+			//link to createaccount class
+		}	
+        });
     }
     
     
@@ -60,7 +67,6 @@ public class Login extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			//public void NewUser();go to new user registration page;
 		}
-
     }
     /*
     heres where we should implement go to newuser class
@@ -121,6 +127,7 @@ public class Login extends JPanel{
 		spot[2][2].add(password);
 		spot[3][1].add(loginButton);
 		spot[3][2].add(forpass);
+		spot[3][3].add(createAcc);
 		spot[0][1].add(wrong);
 		rows[1].add(innerpanel);
     }
