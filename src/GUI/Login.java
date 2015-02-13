@@ -109,12 +109,12 @@ public class Login extends JPanel{
 			rows[i].setBackground(Color.BLUE);
 			this.add(rows[i]);
 		}
-		GridLayout innergrid = new GridLayout(4, 3);
+		GridLayout innergrid = new GridLayout(4, 4);
 		JPanel innerpanel = new JPanel();
 		innerpanel.setLayout(innergrid);
-		JPanel[][] spot= new JPanel[4][3];
+		JPanel[][] spot= new JPanel[4][4];
 		for(int m=0;m<4;m++){
-		    for (int k=0;k<3;k++){
+		    for (int k=0;k<4;k++){
 			spot[m][k]=new JPanel();
 			spot[m][k].setBackground(Color.YELLOW);
 			spot[m][k].setOpaque(true);
