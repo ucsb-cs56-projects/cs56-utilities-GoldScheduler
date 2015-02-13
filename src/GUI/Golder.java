@@ -22,10 +22,12 @@ public class Golder {
 	
 	public static void goToLogin() {
 		window.setContentPane(l);
+		window.validate();
 	}
 	
 	public static void goToCreate() {
 		window.setContentPane(ca);
+		window.validate();
 	}
 	
 }
