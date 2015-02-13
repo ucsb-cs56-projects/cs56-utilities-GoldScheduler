@@ -36,10 +36,16 @@ public class Login extends JPanel{
         wrong = new JLabel();
         createAcc = new JButton("Create Account");
         createAcc.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-			//link to createaccount class
-		}	
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Golder.goToCreate();
+			}
+        	
         });
+        
+        go();
     }
     
     
@@ -63,6 +69,7 @@ public class Login extends JPanel{
 			Validator();
 		}
     }
+    
     class NewUserButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			//public void NewUser();go to new user registration page;
@@ -96,7 +103,6 @@ public class Login extends JPanel{
 		window.setSize(1080,720);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
-	    frame.go();
 	}
 	
     public void go(){

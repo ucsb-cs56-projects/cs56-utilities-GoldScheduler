@@ -26,12 +26,12 @@ public class UsersConnection extends GolderConnection{
 	 * @return User ID
 	 */
 	public static int Register(String username, String password, String email, String major) {
-		if (email == "")
+		if (email.equals(""))
 			email = "null";
 		else
 			email = "'" + email + '\'';
 
-		if (major == "")
+		if (major.equals(""))
 			major = "null";
 		else
 			major = "'" + major + '\'';
@@ -46,6 +46,8 @@ public class UsersConnection extends GolderConnection{
 		    System.out.println("SQLState: " + ex.getSQLState());
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		} 
+		
+		
 		return getID(username,password);
 	}	
 	
