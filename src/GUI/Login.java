@@ -35,7 +35,7 @@ public class Login extends JPanel{
         forpass = new JButton ("Forgot Password?");
         wrong = new JLabel();
         createAcc = new JButton("Create Account");
-        createAcc.addActioListener(new ActionListener() {
+        createAcc.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 			//link to createaccount class
 		}	
