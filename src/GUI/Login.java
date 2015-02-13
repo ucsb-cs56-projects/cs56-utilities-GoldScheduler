@@ -93,7 +93,7 @@ public class Login extends JPanel{
 	    JFrame window = new JFrame();
 		Login frame = new Login();
 		window.setContentPane(frame);
-		window.setSize(720,720);
+		//window.setSize(720,720);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
 	    frame.go();
@@ -112,7 +112,7 @@ public class Login extends JPanel{
 		GridLayout innergrid = new GridLayout(4, 4);
 		JPanel innerpanel = new JPanel();
 		innerpanel.setLayout(innergrid);
-		JPanel[][] spot= new JPanel[4][4];
+		JPanel[][] spot= new JPanel[4][3];
 		for(int m=0;m<4;m++){
 		    for (int k=0;k<4;k++){
 			spot[m][k]=new JPanel();
@@ -121,14 +121,14 @@ public class Login extends JPanel{
 			innerpanel.add(spot[m][k]);
 		    }
 		}
-		spot[1][1].add(userLabel);
-		spot[1][2].add(username);
-		spot[2][1].add(passLabel);
-		spot[2][2].add(password);
-		spot[3][1].add(loginButton);
-		spot[3][2].add(forpass);
-		spot[3][3].add(createAcc);
-		spot[0][1].add(wrong);
+		spot[1][0].add(userLabel);
+		spot[1][1].add(username);
+		spot[2][0].add(passLabel);
+		spot[2][1].add(password);
+		spot[3][0].add(loginButton);
+		spot[3][1].add(forpass);
+		spot[3][2].add(createAcc);
+		spot[0][0].add(wrong);
 		rows[1].add(innerpanel);
     }
 }
