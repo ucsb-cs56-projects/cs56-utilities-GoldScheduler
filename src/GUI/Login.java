@@ -94,7 +94,7 @@ public class Login extends JPanel{
 	}
 	
     public void go(){
-		GridLayout basegrid = new GridLayout(3, 3);
+		GridLayout basegrid = new GridLayout(3, 1);
 		this.setLayout(basegrid);
 		JPanel[] rows = new JPanel[3];
 		for(int i=0;i<3; i++){
