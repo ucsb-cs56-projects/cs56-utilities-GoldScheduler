@@ -18,7 +18,7 @@ public class Golder {
 	
 	static Login l;
 	static CreateAccount ca;
-
+	
 	public static void main (String[] args) throws SQLException{
 	    window = new JFrame();
 	    window.setSize(1080,720);
@@ -31,17 +31,18 @@ public class Golder {
 		l = new Login();
 		ca = new CreateAccount();
 
-		window.setContentPane(l);
-		window.validate();
+		goToLogin();
 	}
 	
 	public static void goToLogin() {
 		window.setContentPane(l);
+		l.clean();
 		window.validate();
 	}
 	
 	public static void goToCreate() {
 		window.setContentPane(ca);
+		ca.clean();
 		window.validate();
 	}
 	
