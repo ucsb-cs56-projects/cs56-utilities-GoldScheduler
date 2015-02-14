@@ -27,16 +27,6 @@ public class ScheduleGUI{
         
         JPanel sPanel = new JPanel();
         JPanel bp1 = new JPanel();
-        bp1.setLayout(new GridLayout(10,2));
-        JPanel[][] panelHolder = new JPanel[10][2];
-        for(int m = 0; m < 10; m++) {
-            for(int n = 0; n < 2; n++) {
-                panelHolder[m][n] = new JPanel();
-                panelHolder[m][n].setBackground(Color.LIGHT_GRAY);
-                bp1.add(panelHolder[m][n]);
-            }
-        }
-        bp1.setPreferredSize(new Dimension(300, 400));
         mainPanel.add(sPanel, BorderLayout.WEST);
         mainPanel.add(bp1, BorderLayout.EAST);
         
@@ -62,53 +52,16 @@ public class ScheduleGUI{
         //TODO: Add action listeners
         //Add courses
         s.add(c);
-        JLabel title1 = new JLabel(c.title);
-        String [] colorList = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
-        JComboBox cMenu = new JComboBox(colorList);
-        cMenu.setSelectedIndex(2);
-        //cMenu.addActionListener(listener);
-        panelHolder[0][0].add(title1);
-        panelHolder[0][1].add(cMenu);
-        JButton view1 = new JButton("View");
-        panelHolder[1][0].add(view1);
-        JButton delete1 = new JButton("Remove Course");
-        panelHolder[1][1].add(delete1);
-        
-        
         s.add(r);
-        JLabel title2 = new JLabel(r.title);
-        String [] colorList2 = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
-        JComboBox cMenu2 = new JComboBox(colorList2);
-        cMenu2.setSelectedIndex(0);
-        //cMenu.addActionListener(listener);
-        panelHolder[2][0].add(title2);
-        panelHolder[2][1].add(cMenu2);
-        JButton view2 = new JButton("View");
-        panelHolder[3][0].add(view2);
-        JButton delete2 = new JButton("Remove Course");
-        panelHolder[3][1].add(delete2);
-
-        
         s.add(w);
-        JLabel title3 = new JLabel(w.title);
-        String [] colorList3 = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
-        JComboBox cMenu3 = new JComboBox(colorList3);
-        cMenu3.setSelectedIndex(1);
-        //cMenu.addActionListener(listener);
-        panelHolder[4][0].add(title3);
-        panelHolder[4][1].add(cMenu3);
-        JButton view3 = new JButton("View");
-        panelHolder[5][0].add(view3);
-        JButton delete3 = new JButton("Remove Course");
-        panelHolder[5][1].add(delete3);
 
 
         
         //Make GUI
         s.schedulerGUI();
         //Display it
-        JPanel panel = s.getPanel();
-        sPanel.add(panel);
+        bp1.add(s.getControl());
+        sPanel.add(s.getPanel());
         frame.add(mainPanel);
         frame. setVisible(true);
     }

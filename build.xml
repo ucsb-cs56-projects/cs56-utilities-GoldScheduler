@@ -73,6 +73,7 @@
 	</java>		
   </target>		
   		
+        
   <target name="compileSchedule" depends="init" description="compile Schedule code">		
       <javac srcdir="src/Schedule" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">		
           <classpath>		
@@ -80,10 +81,23 @@
               <pathelement location="lib/junit-4.10.jar"/>		
           </classpath>		
       </javac>		
-  </target>		
-  		
-  <target name="runScheduleGui" depends="init,compileSchedule" description="run the ScheduleGUI program">		
+  </target>
+  
+  <target name="runScheduleGui" depends="init,compileSchedule" description="run the ScheduleGUI program">
       <java fork="true" classname="ScheduleGUI" classpath="build" />		
+  </target>
+  
+  <target name="compileSearch" depends="init" description="compile Search code">
+      <javac srcdir="src/Search" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+          <classpath>
+              <pathelement location="build"/>
+              <pathelement location="lib/junit-4.10.jar"/>
+          </classpath>
+      </javac>
+  </target>
+  
+  <target name="runSearch" depends="init,compileSearch" description="run the Search program">
+      <java fork="true" classname="SearchGUI" classpath="build" />
   </target>
 
 
