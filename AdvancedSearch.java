@@ -8,7 +8,7 @@ public class AdvancedSearch extends JPanel {
     JComboBox searchDropMenu2;
     String[] searchOptions = {"Department", "Professor", "General Education"};
     TextField text;
-
+    
     public AdvancedSearch() {
 	searchLavel = new Label("Advanced Search");
 	searchDropMenu = new JComboBox(searchOptions);
