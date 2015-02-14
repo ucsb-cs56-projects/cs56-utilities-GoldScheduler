@@ -1,39 +1,39 @@
 package connection.courseInfo;
 
-
 import java.sql.SQLException;
 
 import connection.GolderConnection;
 
-
+/**
+ * Connection to golder/courses Table and get data
+ * @author Forrest Sun
+ * @version Feb 12 2015
+ */
 public class CourseConnection extends GolderConnection{
 	
-	public static String[] getMajor() {
+	public static String[] getMajor() throws SQLException {
 		String [] m = null;
 		
-		try {
+
 			
 			if (stmt.execute(String.format("SELECT * FROM `depts`;"))) {
 		        rs = stmt.getResultSet();
 		        
 		        rs.last();
 		        
-		        m = new String[rs.getRow()];
+		        m = new String[rs.getRow() + 1];
 		        
 		        rs.beforeFirst();
 		        
-		        for (int i = 0; i < m.length; i++) {
+		        m[0] = "";
+		        
+		        for (int i = 1; i < m.length; i++) {
 		        	rs.next();
 		        	m[i] = rs.getString(2) + " (" + rs.getString(1) + ")";
 		        }
 		        
 		    }
-		} catch (SQLException ex) {
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
-
-		} 	
+ 	
 		
 		return m;
 	}

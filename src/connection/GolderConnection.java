@@ -1,14 +1,18 @@
 package connection;
 
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
- * @author Xianghong Sun
- *
+ * @author Forrest Sun
+ * @version Feb 12 2014
  */
 
 class Config{
@@ -21,9 +25,14 @@ class Config{
 
 public class GolderConnection {
 	//variables
-	public static Statement stmt = null;
-	public static ResultSet rs = null;
+	public static Statement stmt;
+	public static ResultSet rs;
 	public static Connection conn;
+	
+	private static JFrame frame = new JFrame();
+	static {
+		frame.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
+	}
 	
 
 	//initial
@@ -43,6 +52,7 @@ public class GolderConnection {
 	
 	/**
 	 * For Connect or Reconnect
+	 * @throws SQLException 
 	 */
 	public static void connect() {
 		try {
@@ -50,16 +60,22 @@ public class GolderConnection {
 		} catch (ClassNotFoundException e) {
 		    throw new RuntimeException("Cannot find the driver in the classpath!", e);
 		}
-		
 		try {
-		    conn = DriverManager.getConnection("jdbc:mysql://"
-		    		   + Config.host+"/"+ Config.table,
-		    		   Config.username, Config.password);
-		    stmt = conn.createStatement();
-		} catch (SQLException ex) {
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
+			conn = DriverManager.getConnection("jdbc:mysql://"
+			    		   + Config.host+"/"+ Config.table,
+			    		   Config.username, Config.password);
+			stmt = conn.createStatement();
+		} catch (SQLException e) {
+			
+			int n = JOptionPane.showConfirmDialog(
+					frame,
+				    "Do you want to reconnect?",
+				    "Connection Error",
+				    JOptionPane.YES_NO_OPTION,
+				    JOptionPane.ERROR_MESSAGE);
+			if (n == 0) connect();
+			else frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		}
+
 	}
 }

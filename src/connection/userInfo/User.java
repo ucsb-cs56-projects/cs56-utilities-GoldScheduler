@@ -1,5 +1,6 @@
 package connection.userInfo;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 //import Course
@@ -39,17 +40,17 @@ public class User {
 	public String getEmail(){return this.email;}
 	public String getMajor(){return this.major;}
 
-	public void setPassword(String password){
+	public void setPassword(String password) throws SQLException{
 		this.password=password;
 		UsersConnection.setPassword(id, password);
 	}
 	
-	public void setEmail(String email){
+	public void setEmail(String email) throws SQLException{
 		this.email=email;
 		UsersConnection.setEmail(id, email);
 	}
 	
-	public void setMajor(String major){
+	public void setMajor(String major) throws SQLException{
 		this.major=major;
 		UsersConnection.setMajor(id, major);
 	}

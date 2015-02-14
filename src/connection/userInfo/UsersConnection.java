@@ -24,8 +24,9 @@ public class UsersConnection extends GolderConnection{
 	 * @param email
 	 * @param major
 	 * @return User ID
+	 * @throws SQLException 
 	 */
-	public static int Register(String username, String password, String email, String major) {
+	public static int Register(String username, String password, String email, String major) throws SQLException {
 		if (email.equals(""))
 			email = "null";
 		else
@@ -36,16 +37,11 @@ public class UsersConnection extends GolderConnection{
 		else
 			major = "'" + major + '\'';
 
-		try {
 			
-			stmt.executeUpdate(String.format("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);", 
+		stmt.executeUpdate(String.format("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);", 
 					username, password, email, major));
 
-		} catch (SQLException ex) {
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
-		} 
+
 		
 		
 		return getID(username,password);
@@ -56,14 +52,14 @@ public class UsersConnection extends GolderConnection{
 	 * @param username
 	 * @param password
 	 * @return User ID 
-	 * -3 if no connection
 	 * -1 if no username
 	 * -2 if wrong password
+	 * @throws SQLException 
 	 */
-	public static int getID(String username, String password) {
+	public static int getID(String username, String password) throws SQLException {
 		int id = 0;
 		
-		try {
+
 			
 			if (stmt.execute(String.format("SELECT ID, user_password FROM `users` WHERE user_name='%s';", username))) {
 		        rs = stmt.getResultSet();
@@ -74,12 +70,7 @@ public class UsersConnection extends GolderConnection{
 		        	return -1; //no username
 		        }
 		    }
-		} catch (SQLException ex) {
-		    System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
-		    id = -3;
-		} 	
+	
 		
 		
 		return id;
@@ -90,13 +81,13 @@ public class UsersConnection extends GolderConnection{
 	 * Check if email is used
 	 * @param email
 	 * @return User Id
-	 * -3 if no connection
 	 * -1 if no username
+	 * @throws SQLException 
 	 */
-	public static int getIdByEmail(String email) {
+	public static int getIdByEmail(String email) throws SQLException {
 		int id = 0;
 		
-		try {
+
 			
 			if (stmt.execute(String.format("SELECT ID FROM `users` WHERE email_address='%s';", email))) {
 		        rs = stmt.getResultSet();
@@ -107,10 +98,7 @@ public class UsersConnection extends GolderConnection{
 		        
 		    }
 
-		} catch (SQLException e){
-			System.out.println(e.getMessage());
-			id = -3;
-		}
+
 		
 		return id;
 	}
@@ -119,12 +107,13 @@ public class UsersConnection extends GolderConnection{
 	 * get User Infomation
 	 * @param ID User ID
 	 * @return User
+	 * @throws SQLException 
 	 */
-	public static User getInfo(int ID){
+	public static User getInfo(int ID) throws SQLException{
 		
 		User u = null;
 		
-		try {
+
 			
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE ID='%s';", ID))) {
 		        rs = stmt.getResultSet();
@@ -134,9 +123,7 @@ public class UsersConnection extends GolderConnection{
 		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
 		    }
 
-		} catch (SQLException e){
-			System.out.println(e.getMessage());
-		}
+
 		return u;
 	}	
 	
@@ -144,27 +131,25 @@ public class UsersConnection extends GolderConnection{
 	 * update password
 	 * @param ID
 	 * @param pw
+	 * @throws SQLException 
 	 */
-	public static void setPassword(int ID, String pw) {
+	public static void setPassword(int ID, String pw) throws SQLException {
 		
-		try {
-			stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",pw,ID));
-		} catch (SQLException e){
-			System.out.println(e.getMessage());
-		}
+
+		stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",pw,ID));
+
 	}
 	
 	/**
 	 * update email
 	 * @param ID
 	 * @param email
+	 * @throws SQLException 
 	 */
-	public static void setEmail(int ID, String email) {
-		try {
-			stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
-		} catch (SQLException e){
-			System.out.println(e.getMessage());
-		}
+	public static void setEmail(int ID, String email) throws SQLException {
+
+		stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
+
 		
 	}
 	
@@ -172,18 +157,15 @@ public class UsersConnection extends GolderConnection{
 	 * update major
 	 * @param ID
 	 * @param mj
+	 * @throws SQLException 
 	 */
-	public static void setMajor(int ID, String mj)  {
-		try {
-			stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
-		} catch (SQLException e){
-			System.out.println(e.getMessage());
-		}
-		
-	}
-	
+	public static void setMajor(int ID, String mj) throws SQLException  {
+
+		stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
 
 	
+
+	}
 	/*
 	 * test 
 	 

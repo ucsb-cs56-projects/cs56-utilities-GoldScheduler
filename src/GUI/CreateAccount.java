@@ -1,11 +1,8 @@
 package GUI;
-/**
- * @author Wesley Pollek
- * @author Forrest Sun
- * @version Feb 12 2015
- */
+
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +11,12 @@ import javax.swing.*;
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
 
-
+/**
+ * Register Panel
+ * @author Wesley Pollek
+ * @author Forrest Sun
+ * @version Feb 12 2015
+ */
 
 public class CreateAccount extends JPanel{
 	
@@ -37,8 +39,11 @@ public class CreateAccount extends JPanel{
     JButton backButton;
     JComboBox<String> majorList;
     
-    
-    public CreateAccount() {
+    /**
+     * Constructor
+     * @throws SQLException 
+     */
+    public CreateAccount() throws SQLException {
     	username= new JTextField(20);
     	username.addKeyListener(new KeyValidator());
         userLabel= new JLabel("Enter Username:");
@@ -65,13 +70,12 @@ public class CreateAccount extends JPanel{
         emailWrong.setForeground(Color.RED);
         
         createButton= new JButton("Create");
-        createButton.addActionListener(new LoginButtonValidator());
+        createButton.addActionListener(new CreateButtonValidator());
         backButton = new JButton ("Back");
         backButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				Golder.goToLogin();
 			}
         	
@@ -85,7 +89,7 @@ public class CreateAccount extends JPanel{
 
 
         majorList = new JComboBox<String>(majorStrings);
-        majorList.setSelectedIndex(1);
+        majorList.setSelectedIndex(0);
         
         //majorList.addActionListener(this);
         
@@ -93,10 +97,19 @@ public class CreateAccount extends JPanel{
         go();
     }
     
-    
-    class KeyValidator extends KeyAdapter {
+    /**
+     * Validate when hit enter
+     * @author Forrest Sun
+     *
+     */
+    private class KeyValidator extends KeyAdapter {
     	public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == 10) Validator();
+            if (e.getKeyCode() == 10)
+				try {
+					Validator();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
         }
     	
         public void keyTyped(KeyEvent e) {
@@ -108,25 +121,31 @@ public class CreateAccount extends JPanel{
         }
         
     }
+    
+    /**
+     * Validate when hit the button
+     * @author Forrest Sun
+     * @author Wesley Pollek
+     */
 
-    class LoginButtonValidator implements ActionListener{
+    private class CreateButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			Validator();
+			try {
+				Validator();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-    }
-    class NewUserButtonValidator implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			//public void NewUser();go to new user registration page;
-			
-		}
-
     }
     
+    /**
+     * Validator Check all the information in the TextArea
+     * Create account if no error
+     * @throws SQLException 
+     */
+    
 
-
-
-
-    public void Validator() {
+    public void Validator() throws SQLException {
     	int tmp;
     	boolean validInfo = true;
     	String userinfo = username.getText();
@@ -149,8 +168,9 @@ public class CreateAccount extends JPanel{
 	    if (emailInfo.equals("")) emailWrong.setText("*");
 
 	    else {
+	    	//TODO (or not) email checking. Now only allow a-z A-Z 0-9 _ - .
 		    Pattern pattern = 
-		    Pattern.compile("\\A\\w+@\\w+\\.\\w+\\Z");
+		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\Z");
 
 		    Matcher matcher = 
 		    pattern.matcher(emailInfo);
@@ -170,7 +190,9 @@ public class CreateAccount extends JPanel{
 	    
 	    
     }
-
+    /* Test fucntion
+      
+     
 	public static void main (String[] args){
 	    JFrame window = new JFrame();
 		CreateAccount frame = new CreateAccount();
@@ -180,7 +202,11 @@ public class CreateAccount extends JPanel{
 		window.setVisible(true);
 
 	}
-	
+	*/
+    
+    /**
+     * The graphic part
+     */
     public void go(){
 		GridLayout basegrid = new GridLayout(2, 1);
 		this.setLayout(basegrid);

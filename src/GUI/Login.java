@@ -1,16 +1,18 @@
 package GUI;
-/**
- * @author Wesley Pollek
- * @author Forrest Sun
- * @version Feb 10 2015
- */
+
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
 import connection.userInfo.UsersConnection;
 
+/**
+ * @author Wesley Pollek
+ * @author Forrest Sun
+ * @version Feb 10 2015
+ */
 
 public class Login extends JPanel{
     JTextField username;
@@ -39,7 +41,6 @@ public class Login extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				Golder.goToCreate();
 			}
         	
@@ -51,7 +52,12 @@ public class Login extends JPanel{
     
     class KeyValidator extends KeyAdapter {
     	public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == 10) Validator();
+            if (e.getKeyCode() == 10)
+				try {
+					Validator();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
         }
     	/*
         public void keyTyped(KeyEvent e) {
@@ -66,7 +72,11 @@ public class Login extends JPanel{
     
     class LoginButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			Validator();
+			try {
+				Validator();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
     }
     
@@ -75,14 +85,9 @@ public class Login extends JPanel{
 			//public void NewUser();go to new user registration page;
 		}
     }
-    /*
-    heres where we should implement go to newuser class
-    public void NewUser(){
-    	link to RegisterNewUser page
-    }
-    */
+
     
-    public void Validator() {
+    public void Validator() throws SQLException {
     	String userinfo = username.getText();
 	    char[] passinfo = password.getPassword();
 	    wrong.setText("Connecting...");
@@ -95,7 +100,7 @@ public class Login extends JPanel{
 	    	//heres where we would transfer to user home page
 	    }
     }
-    
+    /*
 	public static void main (String[] args){
 	    JFrame window = new JFrame();
 		Login frame = new Login();
@@ -104,7 +109,7 @@ public class Login extends JPanel{
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
 	}
-	
+	*/
     public void go(){
 		GridLayout basegrid = new GridLayout(3, 1);
 		this.setLayout(basegrid);
