@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.sql.*;
  
 public class SimpleSearch extends JFrame {
      
@@ -19,10 +18,13 @@ public class SimpleSearch extends JFrame {
     }
 
     public void showResults(){
+	//populates the page with search results 
         TextField text = new TextField(20);
-        text.setText("This worked");
-        text.setBounds(10, 90, 100, 20);
-        add(text);
+        public void actionPerformed(Action e) {
+	    text.setText("This worked");
+	    text.setBounds(10, 90, 100, 20);
+	    add(text);
+	}
     }
 
     public static void main(String args[]){
