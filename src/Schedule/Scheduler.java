@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Scheduler {
     ArrayList<Course> courseList;
     private JPanel panel;
+    private JPanel controlPanel;
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
     public Scheduler(ArrayList<Course> courseList, JPanel panel){
         this.courseList = courseList;
@@ -26,6 +27,9 @@ public class Scheduler {
     //Getter
     public JPanel getPanel(){
         return this.panel;
+    }
+    public JPanel getControl(){
+        return this.controlPanel;
     }
     
     /**
@@ -42,6 +46,8 @@ public class Scheduler {
         //No time conflict
         //TODO: Check for other restrictions?
         courseList.add(c);
+        this.schedulerGUI();
+        this.setControl();
         return true;
     }
     
@@ -484,6 +490,37 @@ public class Scheduler {
         }
         panel.setPreferredSize(new Dimension(600, 600));
         this.panel = panel;
+    }
+    
+    public void setControl(){
+        JPanel control = new JPanel();
+        control.setPreferredSize(new Dimension(300, 400));
+        control.setLayout(new GridLayout(10,2));
+        JPanel[][] panelHolder = new JPanel[10][2];
+        for(int m = 0; m < 10; m++) {
+            for(int n = 0; n < 2; n++) {
+                panelHolder[m][n] = new JPanel();
+                panelHolder[m][n].setBackground(Color.LIGHT_GRAY);
+                control.add(panelHolder[m][n]);
+            }
+        }
+        int slot = 0;
+        for(Course g:this.courseList){
+            JLabel title = new JLabel(g.title);
+            String [] colorList = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
+            JComboBox cMenu = new JComboBox(colorList);
+            cMenu.setSelectedIndex(0);
+            //cMenu.addActionListener(listener);
+            panelHolder[slot][0].add(title);
+            panelHolder[slot][1].add(cMenu);
+            JButton view = new JButton("View");
+            panelHolder[slot+1][0].add(view);
+            JButton delete = new JButton("Remove Course");
+            panelHolder[slot+1][1].add(delete);
+            slot+=2;
+        }
+        
+        this.controlPanel = control;
     }
     
 }
