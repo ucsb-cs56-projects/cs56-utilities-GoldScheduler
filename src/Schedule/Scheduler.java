@@ -1,10 +1,14 @@
-package Schedule;
+//package Schedule;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
-import Course.Course;
-import Course.Lecture;
+//import Course.Course;
+//import Course.Lecture;
+
+//import java.awt.ItemSelectable;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 
 
 
@@ -33,12 +37,14 @@ public class Scheduler {
      @return this returns the main panel that includes the schedule with classes
      */
     public JPanel getPanel(){
+        this.schedulerGUI();
         return this.panel;
     }
     /**
      @return this returns a control panel that allows you to delete, view, and change the color of classes
      */
     public JPanel getControl(){
+        this.setControl();
         return this.controlPanel;
     }
     
@@ -229,7 +235,9 @@ public class Scheduler {
         return slot;
     }
     
-    //TODO make param a color, right now I'll just use blue
+    /**
+     Updates the schedule panel to display all classes in ArrayList
+     */
     public void schedulerGUI(){
         GridLayout grid = new GridLayout(30, 6);
         JPanel panel = new JPanel();
@@ -502,6 +510,9 @@ public class Scheduler {
         this.panel = panel;
     }
     
+    /**
+     Updates control panel to display options for all classes in list
+     */
     public void setControl(){
         JPanel control = new JPanel();
         control.setPreferredSize(new Dimension(300, 400));
@@ -519,8 +530,38 @@ public class Scheduler {
             JLabel title = new JLabel(g.title);
             String [] colorList = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
             JComboBox cMenu = new JComboBox(colorList);
-            cMenu.setSelectedIndex(0);
+            if(g.getLect().col.equals(new Color(254,255,121))){
+               cMenu.setSelectedIndex(0);
+            } else if(g.getLect().col.equals(new Color(129,190,247))){
+                cMenu.setSelectedIndex(1);
+            } else if(g.getLect().col.equals(new Color(73,90,252))){
+                cMenu.setSelectedIndex(2);
+            } else if(g.getLect().col.equals(new Color(192,192,192))){
+                cMenu.setSelectedIndex(3);
+            }
+            else{
+                cMenu.setSelectedIndex(4);
+            }
             //cMenu.addActionListener(listener);
+            class ColorListener implements ActionListener{
+                public void actionPerformed(ActionEvent e){
+                    JComboBox comboBox = (JComboBox) e.getSource();
+                    String selectedItem = (String)comboBox.getSelectedItem();
+                    if(selectedItem.equals("Yellow"))
+                        g.setColor(new Color(254,255,121));
+                    if(selectedItem.equals("Light Blue"))
+                        g.setColor(new Color(129,190,247));
+                    if(selectedItem.equals("Blue"))
+                        g.setColor(new Color(73,90,252));
+                    if(selectedItem.equals("Light Gray"))
+                        g.setColor(new Color(192,192,192));
+                    if(selectedItem.equals("Gray"))
+                        g.setColor(new Color(150,150,150));
+                }
+
+            }
+            cMenu.addActionListener(new ColorListener());
+            
             panelHolder[slot][0].add(title);
             panelHolder[slot][1].add(cMenu);
             JButton view = new JButton("View");
@@ -529,9 +570,10 @@ public class Scheduler {
             panelHolder[slot+1][1].add(delete);
             slot+=2;
         }
-        
         this.controlPanel = control;
     }
+    
+    
     
 }
 
