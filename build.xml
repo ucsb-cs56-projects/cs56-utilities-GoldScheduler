@@ -14,6 +14,7 @@
 	  <exclude  name="**/*Test.java" />
       <classpath>
         <pathelement location="build"/>
+      	<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>	
       </classpath>
     </javac>
   </target>

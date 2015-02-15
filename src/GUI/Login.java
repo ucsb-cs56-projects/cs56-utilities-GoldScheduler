@@ -110,6 +110,13 @@ public class Login extends JPanel{
 		window.setVisible(true);
 	}
 	*/
+    
+    public void clean() {
+    	username.setText("");
+    	password.setText("");
+    }
+    
+    
     public void go(){
 		GridLayout basegrid = new GridLayout(3, 1);
 		this.setLayout(basegrid);

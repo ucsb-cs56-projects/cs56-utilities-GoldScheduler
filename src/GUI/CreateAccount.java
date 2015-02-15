@@ -89,7 +89,7 @@ public class CreateAccount extends JPanel{
 
 
         majorList = new JComboBox<String>(majorStrings);
-        majorList.setSelectedIndex(0);
+        
         
         //majorList.addActionListener(this);
         
@@ -203,6 +203,14 @@ public class CreateAccount extends JPanel{
 
 	}
 	*/
+    
+    public void clean() {
+    	username.setText("");
+    	password.setText("");
+    	password2.setText("");
+    	email.setText("");
+    	majorList.setSelectedIndex(0);
+    }
     
     /**
      * The graphic part
