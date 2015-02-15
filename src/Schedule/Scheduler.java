@@ -22,9 +22,8 @@ public class Scheduler {
     private JPanel controlPanel;
     
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
-    public Scheduler(ArrayList<Course> courseList, JPanel panel){
+    public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
-        this.panel = panel;
     }
     //No-arg constructor. Generates an empty schedule
     public Scheduler(){
@@ -541,38 +540,46 @@ public class Scheduler {
         int slot = 0;
         for(Course g:this.courseList){
             JLabel title = new JLabel(g.title);
-            String [] colorList = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
+            String [] colorList = { "Red", "Orange", "Yellow","Green", "Light Blue", "Blue","Purple"};
             JComboBox cMenu = new JComboBox(colorList);
             //Action listener
             class ColorListener implements ActionListener{
                 public void actionPerformed(ActionEvent e){
                     JComboBox comboBox = (JComboBox) e.getSource();
                     String selectedItem = (String)comboBox.getSelectedItem();
-                    if(selectedItem.equals("Yellow"))
-                        g.setColor(new Color(254,255,121));
+                    if(selectedItem.equals("Green"))
+                        g.setColor(new Color(169,226,195));
                     if(selectedItem.equals("Light Blue"))
                         g.setColor(new Color(129,190,247));
+                    if(selectedItem.equals("Yellow"))
+                        g.setColor(new Color(253,255,181));
                     if(selectedItem.equals("Blue"))
                         g.setColor(new Color(73,90,252));
-                    if(selectedItem.equals("Light Gray"))
-                        g.setColor(new Color(192,192,192));
-                    if(selectedItem.equals("Gray"))
-                        g.setColor(new Color(150,150,150));
+                    if(selectedItem.equals("Red"))
+                        g.setColor(new Color(183,62,62));
+                    if(selectedItem.equals("Orange"))
+                        g.setColor(new Color(249,194,164));
+                    if(selectedItem.equals("Purple"))
+                        g.setColor(new Color(137,109,143));
                 }
 
             }
             cMenu.addActionListener(new ColorListener());
-            if(g.getLect().col.equals(new Color(254,255,121))){
+            if(g.getLect().col.equals(new Color(183,62,62))){
                 cMenu.setSelectedIndex(0);
-            } else if(g.getLect().col.equals(new Color(129,190,247))){
+            } else if(g.getLect().col.equals(new Color(249,194,164))){
                 cMenu.setSelectedIndex(1);
-            } else if(g.getLect().col.equals(new Color(73,90,252))){
+            } else if(g.getLect().col.equals(new Color(253,255,181))){
                 cMenu.setSelectedIndex(2);
-            } else if(g.getLect().col.equals(new Color(192,192,192))){
+            } else if(g.getLect().col.equals(new Color(169,226,195))){
                 cMenu.setSelectedIndex(3);
+            } else if(g.getLect().col.equals(new Color(129,190,247))){
+                cMenu.setSelectedIndex(4);
+            } else if(g.getLect().col.equals(new Color(73,90,252))){
+                cMenu.setSelectedIndex(5);
             }
             else{
-                cMenu.setSelectedIndex(4);
+                cMenu.setSelectedIndex(6);
             }
             
             panelHolder[slot][0].add(title);

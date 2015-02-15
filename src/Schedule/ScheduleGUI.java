@@ -42,7 +42,7 @@ public class ScheduleGUI{
         Lecture l = new Lecture("COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159", new Color(73,90,252));
         Course c = new Course("CMPSC 48", "COMP SCI PROJECT", "Computer Science Project", "CMPSC", 4.0, b, e, d, l);
         //Make course r
-        Lecture q = new Lecture("CONRAD, P", 930, 1045, a, "PHELP 3526", "09191", new Color(254,255,121));
+        Lecture q = new Lecture("CONRAD, P", 930, 1045, a, "PHELP 3526", "09191", new Color(169,226,195));
         Course r = new Course("CMPSC 56", "ADV APP PROGRAM", "Advanced Applications Programming",
                               "CMPSC", 4.0, b, d, e, q);
         //Make course w
