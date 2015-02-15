@@ -1,8 +1,11 @@
-//package Schedule;
+package Schedule;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import Course.Course;
+import Course.Lecture;
+
 
 
 /**
@@ -13,6 +16,7 @@ public class Scheduler {
     ArrayList<Course> courseList;
     private JPanel panel;
     private JPanel controlPanel;
+    
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
     public Scheduler(ArrayList<Course> courseList, JPanel panel){
         this.courseList = courseList;
@@ -22,12 +26,18 @@ public class Scheduler {
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
         this.panel = new JPanel();
+        this.controlPanel = new JPanel();
     }
     
-    //Getter
+    /**
+     @return this returns the main panel that includes the schedule with classes
+     */
     public JPanel getPanel(){
         return this.panel;
     }
+    /**
+     @return this returns a control panel that allows you to delete, view, and change the color of classes
+     */
     public JPanel getControl(){
         return this.controlPanel;
     }

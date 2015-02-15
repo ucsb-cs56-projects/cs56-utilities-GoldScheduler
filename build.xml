@@ -72,9 +72,17 @@
       </classpath>		
 	</java>		
   </target>		
-  		
+  	
+    <target name="compileCourse" depends="init" description="compile Course code">
+        <javac srcdir="src/Course" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+            <classpath>
+                <pathelement location="build"/>
+            </classpath>
+        </javac>
+    </target>
+
         
-  <target name="compileSchedule" depends="init" description="compile Schedule code">		
+  <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">		
       <javac srcdir="src/Schedule" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">		
           <classpath>		
               <pathelement location="build"/>		

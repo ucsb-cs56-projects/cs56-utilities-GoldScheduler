@@ -1,6 +1,4 @@
-//package Schedule;
-
-
+package Course;
 //Course will just store all the data retrieved from the database, so the program doesn't
 //have to consistently communicate with the database.
 public class Course{
