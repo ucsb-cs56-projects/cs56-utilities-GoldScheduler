@@ -1,4 +1,4 @@
-package Schedule;
+//package Schedule;
 //import java.awt.Container;
 //import java.awt.FlowLayout;
 //import java.awt.event.ActionEvent;
@@ -9,8 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
-import Course.Course;
-import Course.Lecture;
+//import Course.Course;
+//import Course.Lecture;
 
 /**
  *This class will display schedule. Mostly just used for testing
@@ -29,8 +29,10 @@ public class ScheduleGUI{
         
         JPanel sPanel = new JPanel();
         JPanel bp1 = new JPanel();
+        JPanel buttonP = new JPanel();
         mainPanel.add(sPanel, BorderLayout.WEST);
         mainPanel.add(bp1, BorderLayout.EAST);
+        mainPanel.add(buttonP, BorderLayout.NORTH);
         
         //Make course c
         char [] a = {'M','W'};
@@ -50,7 +52,6 @@ public class ScheduleGUI{
                               "ENGL", 4.0, b, d, d, v);
         //Make schedule
         Scheduler s = new Scheduler();
- 
         //Add courses
         s.add(c);
         s.add(r);
@@ -59,6 +60,27 @@ public class ScheduleGUI{
         //Display it
         bp1.add(s.getControl());
         sPanel.add(s.getPanel());
+        
+        JButton refresh = new JButton("Refresh page");
+        refresh.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                sPanel.removeAll();
+                sPanel.revalidate();
+                sPanel.repaint();
+                bp1.removeAll();
+                bp1.revalidate();
+                bp1.repaint();
+                mainPanel.removeAll();
+                mainPanel.revalidate();
+                mainPanel.repaint();
+                bp1.add(s.getControl());
+                sPanel.add(s.getPanel());
+                mainPanel.add(sPanel, BorderLayout.WEST);
+                mainPanel.add(bp1, BorderLayout.EAST);
+                mainPanel.add(buttonP, BorderLayout.NORTH);
+            }
+        });
+        buttonP.add(refresh);
         frame.add(mainPanel);
         frame. setVisible(true);
     }

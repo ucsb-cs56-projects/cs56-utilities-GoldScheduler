@@ -68,6 +68,19 @@ public class Scheduler {
     }
     
     /**
+     @param the course that needs to be removed
+     @return whether or not the course was removed
+     */
+    public boolean remove(Object o){
+        if(!(o instanceof Course))
+            return false;
+        this.courseList.remove(o);
+        this.schedulerGUI();
+        this.setControl();
+        return true;
+    }
+    
+    /**
      @param Course to be checked for time conflict
      @param Course to be checked against
      @return true if there is time conflict and false if not
@@ -530,19 +543,7 @@ public class Scheduler {
             JLabel title = new JLabel(g.title);
             String [] colorList = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
             JComboBox cMenu = new JComboBox(colorList);
-            if(g.getLect().col.equals(new Color(254,255,121))){
-               cMenu.setSelectedIndex(0);
-            } else if(g.getLect().col.equals(new Color(129,190,247))){
-                cMenu.setSelectedIndex(1);
-            } else if(g.getLect().col.equals(new Color(73,90,252))){
-                cMenu.setSelectedIndex(2);
-            } else if(g.getLect().col.equals(new Color(192,192,192))){
-                cMenu.setSelectedIndex(3);
-            }
-            else{
-                cMenu.setSelectedIndex(4);
-            }
-            //cMenu.addActionListener(listener);
+            //Action listener
             class ColorListener implements ActionListener{
                 public void actionPerformed(ActionEvent e){
                     JComboBox comboBox = (JComboBox) e.getSource();
@@ -561,6 +562,18 @@ public class Scheduler {
 
             }
             cMenu.addActionListener(new ColorListener());
+            if(g.getLect().col.equals(new Color(254,255,121))){
+                cMenu.setSelectedIndex(0);
+            } else if(g.getLect().col.equals(new Color(129,190,247))){
+                cMenu.setSelectedIndex(1);
+            } else if(g.getLect().col.equals(new Color(73,90,252))){
+                cMenu.setSelectedIndex(2);
+            } else if(g.getLect().col.equals(new Color(192,192,192))){
+                cMenu.setSelectedIndex(3);
+            }
+            else{
+                cMenu.setSelectedIndex(4);
+            }
             
             panelHolder[slot][0].add(title);
             panelHolder[slot][1].add(cMenu);
@@ -568,8 +581,16 @@ public class Scheduler {
             panelHolder[slot+1][0].add(view);
             JButton delete = new JButton("Remove Course");
             panelHolder[slot+1][1].add(delete);
+            delete.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    courseList.remove(g);
+                }
+            });
+            
             slot+=2;
         }
+        JButton refresh = new JButton("refresh");
+        
         this.controlPanel = control;
     }
     
