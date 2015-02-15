@@ -3,6 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+//import Course.Course;
+//import Course.Lecture;
+
+//import java.awt.ItemSelectable;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+
 
 
 /**
@@ -12,6 +19,8 @@ import java.util.ArrayList;
 public class Scheduler {
     ArrayList<Course> courseList;
     private JPanel panel;
+    private JPanel controlPanel;
+    
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
     public Scheduler(ArrayList<Course> courseList, JPanel panel){
         this.courseList = courseList;
@@ -21,11 +30,22 @@ public class Scheduler {
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
         this.panel = new JPanel();
+        this.controlPanel = new JPanel();
     }
     
-    //Getter
+    /**
+     @return this returns the main panel that includes the schedule with classes
+     */
     public JPanel getPanel(){
+        this.schedulerGUI();
         return this.panel;
+    }
+    /**
+     @return this returns a control panel that allows you to delete, view, and change the color of classes
+     */
+    public JPanel getControl(){
+        this.setControl();
+        return this.controlPanel;
     }
     
     /**
@@ -42,6 +62,8 @@ public class Scheduler {
         //No time conflict
         //TODO: Check for other restrictions?
         courseList.add(c);
+        this.schedulerGUI();
+        this.setControl();
         return true;
     }
     
@@ -213,7 +235,9 @@ public class Scheduler {
         return slot;
     }
     
-    //TODO make param a color, right now I'll just use blue
+    /**
+     Updates the schedule panel to display all classes in ArrayList
+     */
     public void schedulerGUI(){
         GridLayout grid = new GridLayout(30, 6);
         JPanel panel = new JPanel();
@@ -485,6 +509,71 @@ public class Scheduler {
         panel.setPreferredSize(new Dimension(600, 600));
         this.panel = panel;
     }
+    
+    /**
+     Updates control panel to display options for all classes in list
+     */
+    public void setControl(){
+        JPanel control = new JPanel();
+        control.setPreferredSize(new Dimension(300, 400));
+        control.setLayout(new GridLayout(10,2));
+        JPanel[][] panelHolder = new JPanel[10][2];
+        for(int m = 0; m < 10; m++) {
+            for(int n = 0; n < 2; n++) {
+                panelHolder[m][n] = new JPanel();
+                panelHolder[m][n].setBackground(Color.LIGHT_GRAY);
+                control.add(panelHolder[m][n]);
+            }
+        }
+        int slot = 0;
+        for(Course g:this.courseList){
+            JLabel title = new JLabel(g.title);
+            String [] colorList = {"Yellow", "Light Blue", "Blue", "Light Gray", "Gray"};
+            JComboBox cMenu = new JComboBox(colorList);
+            if(g.getLect().col.equals(new Color(254,255,121))){
+               cMenu.setSelectedIndex(0);
+            } else if(g.getLect().col.equals(new Color(129,190,247))){
+                cMenu.setSelectedIndex(1);
+            } else if(g.getLect().col.equals(new Color(73,90,252))){
+                cMenu.setSelectedIndex(2);
+            } else if(g.getLect().col.equals(new Color(192,192,192))){
+                cMenu.setSelectedIndex(3);
+            }
+            else{
+                cMenu.setSelectedIndex(4);
+            }
+            //cMenu.addActionListener(listener);
+            class ColorListener implements ActionListener{
+                public void actionPerformed(ActionEvent e){
+                    JComboBox comboBox = (JComboBox) e.getSource();
+                    String selectedItem = (String)comboBox.getSelectedItem();
+                    if(selectedItem.equals("Yellow"))
+                        g.setColor(new Color(254,255,121));
+                    if(selectedItem.equals("Light Blue"))
+                        g.setColor(new Color(129,190,247));
+                    if(selectedItem.equals("Blue"))
+                        g.setColor(new Color(73,90,252));
+                    if(selectedItem.equals("Light Gray"))
+                        g.setColor(new Color(192,192,192));
+                    if(selectedItem.equals("Gray"))
+                        g.setColor(new Color(150,150,150));
+                }
+
+            }
+            cMenu.addActionListener(new ColorListener());
+            
+            panelHolder[slot][0].add(title);
+            panelHolder[slot][1].add(cMenu);
+            JButton view = new JButton("View");
+            panelHolder[slot+1][0].add(view);
+            JButton delete = new JButton("Remove Course");
+            panelHolder[slot+1][1].add(delete);
+            slot+=2;
+        }
+        this.controlPanel = control;
+    }
+    
+    
     
 }
 
