@@ -1,4 +1,4 @@
-//package Schedule;
+package Schedule;
 //import java.awt.Container;
 //import java.awt.FlowLayout;
 //import java.awt.event.ActionEvent;
@@ -9,8 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
-//import Course.Course;
-//import Course.Lecture;
+import Course.Course;
+import Course.Lecture;
 
 /**
  *This class will display schedule. Mostly just used for testing

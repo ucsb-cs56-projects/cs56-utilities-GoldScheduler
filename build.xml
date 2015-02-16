@@ -72,19 +72,18 @@
 		<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>		
       </classpath>		
 	</java>		
-  </target>		
-  	
-    <target name="compileCourse" depends="init" description="compile Course code">
-        <javac srcdir="src/Course" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-            <classpath>
-                <pathelement location="build"/>
-            </classpath>
-        </javac>
-    </target>
+  </target>
 
-        
-  <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">		
-      <javac srcdir="src/Schedule" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">		
+<target name="compileCourse" depends="init" description="compile Course code">
+    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+        <classpath>
+            <pathelement location="build"/>
+        </classpath>
+    </javac>
+</target>
+
+  <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">
+      <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
           <classpath>		
               <pathelement location="build"/>		
               <pathelement location="lib/junit-4.10.jar"/>		
@@ -92,14 +91,20 @@
       </javac>		
   </target>
   
-  <target name="runScheduleGui" depends="init,compileSchedule" description="run the ScheduleGUI program">
-      <java fork="true" classname="ScheduleGUI" classpath="build" />		
+  
+  <target name="runScheduleGui" depends="compileSchedule" description="run GUI for Scheduler class">
+      <java fork="true" classname="Schedule.ScheduleGUI" classpath="build">
+          <classpath>
+              <pathelement location="build"/>
+          </classpath>
+      </java>		
   </target>
   
   <target name="compileSearch" depends="init" description="compile Search code">
       <javac srcdir="src/Search" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
           <classpath>
               <pathelement location="build"/>
+              <pathelement location="build/Course"/>
               <pathelement location="lib/junit-4.10.jar"/>
           </classpath>
       </javac>

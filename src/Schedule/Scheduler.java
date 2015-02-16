@@ -1,10 +1,10 @@
-//package Schedule;
+package Schedule;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
-//import Course.Course;
-//import Course.Lecture;
+import Course.Course;
+import Course.Lecture;
 
 //import java.awt.ItemSelectable;
 //import java.awt.event.ActionEvent;
