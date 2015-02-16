@@ -111,7 +111,7 @@ public class Course{
         JLabel fullTitle = new JLabel(this.fullTitle);
         JLabel units =  new JLabel(myUnits);
         JLabel department =  new JLabel(this.dept);
-        JLabel time = new JLabel(this.lectInfo.timeStartString() + " - " + this.lectInfo.timeStartString());
+        JLabel time = new JLabel(this.lectInfo.timeStartString() + " - " + this.lectInfo.timeEndString());
         JLabel day = new JLabel(this.lectInfo.dayString());
         JLabel location = new JLabel(this.lectInfo.location);
 
