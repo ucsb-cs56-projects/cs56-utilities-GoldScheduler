@@ -57,4 +57,31 @@ public class Lecture{
             return (this.timeEnd/100)-12 + ":" + min + " PM";
         }
     }
+    
+    public String dayString(){
+        String s = "";
+        for(int i=0; i<days.length; i++){
+            switch(days[i]){
+                case 'M':
+                    s+="Monday";
+                    break;
+                case 'T':
+                    s+="Tuesday";
+                    break;
+                case 'W':
+                    s+="Wednesday";
+                    break;
+                case 'R':
+                    s+="Thursday";
+                    break;
+                default:
+                    s+="Friday";
+                    break;
+            }
+            if(i!=days.length-1){
+                s+=", ";
+            }
+        }
+        return s;
+    }
 }
