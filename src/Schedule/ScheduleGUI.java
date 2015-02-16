@@ -26,8 +26,6 @@ public class ScheduleGUI{
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        //JPanel buttonP = new JPanel();
-        //mainPanel.add(buttonP, BorderLayout.NORTH);
         
         //Make course c
         char [] a = {'M','W'};
@@ -61,18 +59,6 @@ public class ScheduleGUI{
         
         //Display it
         mainPanel.add(s.getMain(), BorderLayout.SOUTH);
-        /*JButton refresh = new JButton("Refresh page");
-        refresh.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                mainPanel.removeAll();
-                mainPanel.revalidate();
-                mainPanel.repaint();
-                mainPanel.add(s.getMain(), BorderLayout.SOUTH);
-                mainPanel.add(buttonP, BorderLayout.NORTH);
-            }
-        });
-        
-        buttonP.add(refresh);*/
         frame.add(mainPanel);
         frame. setVisible(true);
     }

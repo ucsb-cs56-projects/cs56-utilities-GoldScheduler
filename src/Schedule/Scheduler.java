@@ -22,7 +22,7 @@ public class Scheduler {
     private JPanel panel;
     private JPanel controlPanel;
     
-    //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule?
+    //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule
     public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
     }
@@ -48,6 +48,9 @@ public class Scheduler {
         return this.controlPanel;
     }
     
+    /**
+     @return this returns the main panel that holds both the control and the schedule panels
+     */
     public JPanel getMain(){
         this.setMain();
         return this.mainPanel;
@@ -89,9 +92,7 @@ public class Scheduler {
      @param Course to be checked against
      @return true if there is time conflict and false if not
      */
-    //Also, not sure if this should be somewhere else or re-written
-    //This is just a temporary location. Make static?
-    public boolean timeConflict(Course c, Course d){
+    public static boolean timeConflict(Course c, Course d){
        //First, check if c starts before d
         if(c.getLect().timeStart<=d.getLect().timeStart){
             //Check if they start at the same time
@@ -119,7 +120,7 @@ public class Scheduler {
      @param day character you want converted to column it belongs in
      @return the column that corresponds to the day
      */
-    public int daySlot(char day){
+    public static int daySlot(char day){
         int slot;
         switch(day){
             case 'M':
@@ -251,6 +252,10 @@ public class Scheduler {
         }
         return slot;
     }
+    
+    /**
+     Updates the main panel, so the display reflects current status. Simply holds both the control and schedule panels
+     */
     public void setMain(){
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -268,14 +273,10 @@ public class Scheduler {
         GridLayout grid = new GridLayout(30, 6);
         JPanel panel = new JPanel();
         panel.setLayout(grid);
-        //So apparently, you can't select a specific cell that you'd like to fill, so
-        //instead you just make a bunch of blank ones and keep references to them.
-        //That's what this is.
         JPanel[][] panelHolder = new JPanel[30][6];
         for(int m = 0; m < 30; m++) {
             for(int n = 0; n < 6; n++) {
                 panelHolder[m][n] = new JPanel();
-                //TODO
                 if(n==0||m==0)
                     panelHolder[m][n].setBackground(Color.white);
                 else if(m%2==1)
@@ -612,6 +613,21 @@ public class Scheduler {
                     mainPanel.revalidate();
                     mainPanel.repaint();
                     mainPanel.add(g.getPanel(), BorderLayout.NORTH);
+                    JPanel buttonPanel = new JPanel();
+                    JButton back = new JButton("Back");
+                    buttonPanel.add(back);
+                    buttonPanel.setBackground(new Color(112,179,223));
+                    mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+                    back.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e){
+                            mainPanel.removeAll();
+                            mainPanel.revalidate();
+                            mainPanel.repaint();
+                            mainPanel.add(getPanel(), BorderLayout.WEST);
+                            mainPanel.add(getControl(), BorderLayout.EAST);
+                        }
+                    });
+
                 }
             });
             
@@ -631,7 +647,6 @@ public class Scheduler {
             
             slot+=2;
         }
-        //JButton refresh = new JButton("refresh");
         
         this.controlPanel = control;
     }
