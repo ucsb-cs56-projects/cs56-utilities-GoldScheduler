@@ -172,3 +172,5 @@ class Scraper(object):
 					time = time.replace("n","")
 					courseTimes[course].append(time)
 		return courseTimes
+
+
