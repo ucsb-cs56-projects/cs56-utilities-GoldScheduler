@@ -621,6 +621,11 @@ public class Scheduler {
             delete.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     courseList.remove(g);
+                    mainPanel.removeAll();
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
+                    mainPanel.add(getPanel(), BorderLayout.WEST);
+                    mainPanel.add(getControl(), BorderLayout.EAST);
                 }
             });
             
