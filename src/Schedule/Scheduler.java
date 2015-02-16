@@ -616,7 +616,7 @@ public class Scheduler {
                     JPanel buttonPanel = new JPanel();
                     JButton back = new JButton("Back");
                     buttonPanel.add(back);
-                    buttonPanel.setBackground(new Color(112,179,223));
+                    buttonPanel.setBackground(Color.LIGHT_GRAY);
                     mainPanel.add(buttonPanel, BorderLayout.SOUTH);
                     back.addActionListener(new ActionListener(){
                         public void actionPerformed(ActionEvent e){

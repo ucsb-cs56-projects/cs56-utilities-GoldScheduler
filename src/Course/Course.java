@@ -54,8 +54,9 @@ public class Course{
      */
     public JPanel getPanel(){
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(600, 600));
-        int countRows = 4;
+        panel.setPreferredSize(new Dimension(500, 600));
+        Color myColor = this.lectInfo.col;
+        int countRows = 7;
         for(int i = 0; i<this.preReqs.length; i++){
             countRows++;
         }
@@ -85,86 +86,119 @@ public class Course{
             }
         }
         
-        
         JLabel t = new JLabel("Title: ");
         JLabel ft = new JLabel("Full Title: ");
         JLabel u = new JLabel("Units: ");
         JLabel d = new JLabel("Department: ");
+        JLabel ti = new JLabel("Time: ");
+        JLabel dayList = new JLabel("Days: ");
+        JLabel l = new JLabel("Location: ");
+        Font font = t.getFont();
+        Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+        t.setFont(boldFont);
+        ft.setFont(boldFont);
+        u.setFont(boldFont);
+        d.setFont(boldFont);
+        ti.setFont(boldFont);
+        dayList.setFont(boldFont);
+        l.setFont(boldFont);
+        
+        
         String myUnits = "" + this.units;
         
+        JLabel code = new JLabel(this.courseID);
         JLabel title = new JLabel(this.title);
         JLabel fullTitle = new JLabel(this.fullTitle);
         JLabel units =  new JLabel(myUnits);
         JLabel department =  new JLabel(this.dept);
+        JLabel time = new JLabel(this.lectInfo.timeStartString() + " - " + this.lectInfo.timeStartString());
+        JLabel day = new JLabel(this.lectInfo.dayString());
+        JLabel location = new JLabel(this.lectInfo.location);
+
         
         panelHolder[0][0].add(t, BorderLayout.EAST);
-        panelHolder[0][0].setBackground(new Color(193,228,242));
+        panelHolder[0][0].setBackground(myColor);
         panelHolder[0][1].add(title, BorderLayout.WEST);
-        panelHolder[0][1].setBackground(new Color(193,228,242));
+        panelHolder[0][1].setBackground(myColor);
         panelHolder[1][0].add(ft, BorderLayout.EAST);
-        panelHolder[1][0].setBackground(new Color(193,228,242));
+        panelHolder[1][0].setBackground(myColor);
         panelHolder[1][1].add(fullTitle, BorderLayout.WEST);
-        panelHolder[1][1].setBackground(new Color(193,228,242));
+        panelHolder[1][1].setBackground(myColor);
         panelHolder[2][0].add(u, BorderLayout.EAST);
-        panelHolder[2][0].setBackground(new Color(193,228,242));
+        panelHolder[2][0].setBackground(myColor);
         panelHolder[2][1].add(units, BorderLayout.WEST);
-        panelHolder[2][1].setBackground(new Color(193,228,242));
+        panelHolder[2][1].setBackground(myColor);
         panelHolder[3][0].add(d, BorderLayout.EAST);
-        panelHolder[3][0].setBackground(new Color(193,228,242));
+        panelHolder[3][0].setBackground(myColor);
         panelHolder[3][1].add(department, BorderLayout.WEST);
-        panelHolder[3][1].setBackground(new Color(193,228,242));
+        panelHolder[3][1].setBackground(myColor);
+        panelHolder[4][0].add(ti, BorderLayout.EAST);
+        panelHolder[4][0].setBackground(myColor);
+        panelHolder[4][1].add(time, BorderLayout.WEST);
+        panelHolder[4][1].setBackground(myColor);
+        panelHolder[5][0].add(dayList, BorderLayout.EAST);
+        panelHolder[5][0].setBackground(myColor);
+        panelHolder[5][1].add(day, BorderLayout.WEST);
+        panelHolder[5][1].setBackground(myColor);
+        panelHolder[6][0].add(l, BorderLayout.EAST);
+        panelHolder[6][0].setBackground(myColor);
+        panelHolder[6][1].add(location, BorderLayout.WEST);
+        panelHolder[6][1].setBackground(myColor);
         
         JLabel p = new JLabel("PreRequisites: ");
         JLabel g = new JLabel("May apply to GE Requirements: ");
         JLabel r = new JLabel("Restrictions: ");
+        p.setFont(boldFont);
+        g.setFont(boldFont);
+        r.setFont(boldFont);
         
-        int newCount = 4;
+        int newCount = 7;
         JLabel temp;
-        panelHolder[4][0].add(p, BorderLayout.EAST);
-        panelHolder[4][0].setBackground(new Color(193,228,242));
+        panelHolder[7][0].add(p, BorderLayout.EAST);
+        panelHolder[7][0].setBackground(myColor);
         if(this.preReqs.length==0){
             temp = new JLabel("None");
-            panelHolder[4][1].add(temp, BorderLayout.WEST);
-            panelHolder[4][1].setBackground(new Color(193,228,242));
+            panelHolder[7][1].add(temp, BorderLayout.WEST);
+            panelHolder[7][1].setBackground(myColor);
             newCount++;
         }
         else{
             for(Course c:this.preReqs){
                 temp = new JLabel(c.courseID);
                 panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(new Color(193,228,242));
+                panelHolder[newCount][1].setBackground(myColor);
                 newCount++;
             }
         }
         panelHolder[newCount][0].add(g, BorderLayout.EAST);
-        panelHolder[newCount][0].setBackground(new Color(193,228,242));
+        panelHolder[newCount][0].setBackground(myColor);
         if(this.geFulfill.length==0){
             temp = new JLabel("None");
             panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(new Color(193,228,242));
+            panelHolder[newCount][1].setBackground(myColor);
             newCount++;
         }
         else{
             for(String s:this.geFulfill){
                 temp = new JLabel(s);
                 panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(new Color(193,228,242));
+                panelHolder[newCount][1].setBackground(myColor);
                 newCount++;
             }
         }
         panelHolder[newCount][0].add(r, BorderLayout.EAST);
-        panelHolder[newCount][0].setBackground(new Color(193,228,242));
+        panelHolder[newCount][0].setBackground(myColor);
         if(this.restrictions.length==0){
             temp = new JLabel("None");
             panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(new Color(193,228,242));
+            panelHolder[newCount][1].setBackground(myColor);
             newCount++;
         }
         else{
             for(String s:this.restrictions){
                 temp = new JLabel(s);
                 panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(new Color(193,228,242));
+                panelHolder[newCount][1].setBackground(myColor);
                 newCount++;
             }
         }
