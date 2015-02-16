@@ -174,3 +174,20 @@ class Scraper(object):
 		return courseTimes
 
 
+	# xpath to units of course //*[@id="tab-sections"]/table/tr[2]/td[5]/text()
+	def getCourseUnitsAndProfessors(self,courseList):
+		dept = "CMPSC"
+		courseUnitsAndProfessors = dict()
+		for course in courseList:
+			if course == "CMPSC 8":
+				courseUnitsAndProfessors[course] = "Costanzo, C*Buoni, M J, 4"
+			else:
+				newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept)+1:]) + "/#sections"
+				self.resetURL(newURL)
+				units = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[5]/text()')
+				professor = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[4]/a[2]/text()')
+				if professor == '[]':
+					professor = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[4]/span/a[2]/text()')
+				courseUnitsAndProfessors[course] = professor + units
+			print course + " " + courseUnitsAndProfessors[course]
+		return courseUnitsAndProfessors
