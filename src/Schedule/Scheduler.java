@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 public class Scheduler {
     ArrayList<Course> courseList;
+    private JPanel mainPanel;
     private JPanel panel;
     private JPanel controlPanel;
     
@@ -47,6 +48,10 @@ public class Scheduler {
         return this.controlPanel;
     }
     
+    public JPanel getMain(){
+        this.setMain();
+        return this.mainPanel;
+    }
     /**
      @param the course that needs to be added
      @return whether or not the course was added
@@ -246,6 +251,15 @@ public class Scheduler {
         }
         return slot;
     }
+    public void setMain(){
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        
+        mainPanel.add(this.getPanel(), BorderLayout.WEST);
+        mainPanel.add(this.getControl(), BorderLayout.EAST);
+        this.mainPanel = mainPanel;
+    }
+
     
     /**
      Updates the schedule panel to display all classes in ArrayList
@@ -586,6 +600,16 @@ public class Scheduler {
             panelHolder[slot][1].add(cMenu);
             JButton view = new JButton("View");
             panelHolder[slot+1][0].add(view);
+            view.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    mainPanel.removeAll();
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
+                    mainPanel.add(g.getPanel(), BorderLayout.NORTH);
+                }
+            });
+            
+            
             JButton delete = new JButton("Remove Course");
             panelHolder[slot+1][1].add(delete);
             delete.addActionListener(new ActionListener(){
@@ -596,7 +620,7 @@ public class Scheduler {
             
             slot+=2;
         }
-        JButton refresh = new JButton("refresh");
+        //JButton refresh = new JButton("refresh");
         
         this.controlPanel = control;
     }
