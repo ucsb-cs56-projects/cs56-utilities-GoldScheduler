@@ -22,12 +22,12 @@ public class ScheduleGUI{
         //Make frame
         JFrame frame = new JFrame();
         frame. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-        frame. setSize(925,700);
+        frame. setSize(910,627);
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        JPanel buttonP = new JPanel();
-        mainPanel.add(buttonP, BorderLayout.NORTH);
+        //JPanel buttonP = new JPanel();
+        //mainPanel.add(buttonP, BorderLayout.NORTH);
         
         //Make course c
         char [] a = {'M','W'};
@@ -61,7 +61,7 @@ public class ScheduleGUI{
         
         //Display it
         mainPanel.add(s.getMain(), BorderLayout.SOUTH);
-        JButton refresh = new JButton("Refresh page");
+        /*JButton refresh = new JButton("Refresh page");
         refresh.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 mainPanel.removeAll();
@@ -72,7 +72,7 @@ public class ScheduleGUI{
             }
         });
         
-        buttonP.add(refresh);
+        buttonP.add(refresh);*/
         frame.add(mainPanel);
         frame. setVisible(true);
     }

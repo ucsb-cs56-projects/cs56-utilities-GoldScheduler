@@ -541,7 +541,7 @@ public class Scheduler {
      */
     public void setControl(){
         JPanel control = new JPanel();
-        control.setPreferredSize(new Dimension(300, 400));
+        control.setPreferredSize(new Dimension(300, 300));
         control.setLayout(new GridLayout(10,2));
         JPanel[][] panelHolder = new JPanel[10][2];
         for(int m = 0; m < 10; m++) {
@@ -557,7 +557,25 @@ public class Scheduler {
             String [] colorList = { "Red", "Orange", "Yellow","Green", "Light Blue", "Blue","Purple"};
             JComboBox cMenu = new JComboBox(colorList);
             //Action listener
-            class ColorListener implements ActionListener{
+
+            if(g.getLect().col.equals(new Color(183,62,62))){
+                cMenu.setSelectedIndex(0);
+            } else if(g.getLect().col.equals(new Color(249,194,164))){
+                cMenu.setSelectedIndex(1);
+            } else if(g.getLect().col.equals(new Color(253,255,181))){
+                cMenu.setSelectedIndex(2);
+            } else if(g.getLect().col.equals(new Color(169,226,195))){
+                cMenu.setSelectedIndex(3);
+            } else if(g.getLect().col.equals(new Color(129,190,247))){
+                cMenu.setSelectedIndex(4);
+            } else if(g.getLect().col.equals(new Color(73,90,252))){
+                cMenu.setSelectedIndex(5);
+            }
+            else{
+                cMenu.setSelectedIndex(6);
+            }
+            
+            cMenu.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     JComboBox comboBox = (JComboBox) e.getSource();
                     String selectedItem = (String)comboBox.getSelectedItem();
@@ -575,26 +593,14 @@ public class Scheduler {
                         g.setColor(new Color(249,194,164));
                     if(selectedItem.equals("Purple"))
                         g.setColor(new Color(137,109,143));
+                    mainPanel.removeAll();
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
+                    mainPanel.add(getPanel(), BorderLayout.WEST);
+                    mainPanel.add(getControl(), BorderLayout.EAST);
                 }
 
-            }
-            cMenu.addActionListener(new ColorListener());
-            if(g.getLect().col.equals(new Color(183,62,62))){
-                cMenu.setSelectedIndex(0);
-            } else if(g.getLect().col.equals(new Color(249,194,164))){
-                cMenu.setSelectedIndex(1);
-            } else if(g.getLect().col.equals(new Color(253,255,181))){
-                cMenu.setSelectedIndex(2);
-            } else if(g.getLect().col.equals(new Color(169,226,195))){
-                cMenu.setSelectedIndex(3);
-            } else if(g.getLect().col.equals(new Color(129,190,247))){
-                cMenu.setSelectedIndex(4);
-            } else if(g.getLect().col.equals(new Color(73,90,252))){
-                cMenu.setSelectedIndex(5);
-            }
-            else{
-                cMenu.setSelectedIndex(6);
-            }
+            });
             
             panelHolder[slot][0].add(title);
             panelHolder[slot][1].add(cMenu);
