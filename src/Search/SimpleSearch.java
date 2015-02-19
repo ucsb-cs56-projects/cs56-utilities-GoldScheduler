@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
+import Schedule.Scheduler;
+
 
 
 /**
@@ -21,8 +23,13 @@ public class SimpleSearch{
     private JPanel cDisplay;
     private JTextField searchField;
     private JButton searchButton;
+    private Scheduler schedule;
     
-
+    private JPanel sDisplay;
+    
+    public SimpleSearch(){
+        this.schedule = new Scheduler();
+    }
     /**
      Initializes the display
      */
@@ -174,13 +181,13 @@ public class SimpleSearch{
             JButton view = new JButton("View");
             //Action listener
             class viewListener implements ActionListener{
-                Course c1;
-                SimpleSearch p;
-                String keyword;
-		public viewListener(Course cIn1, SimpleSearch p, String keyword){
+                private Course c1;
+                private SimpleSearch p;
+                private String keyword;
+                public viewListener(Course cIn1, SimpleSearch p, String keyword){
                     this.c1 = cIn1;
                     this.p = p;
-		    this.keyword = keyword; 
+                    this.keyword = keyword;
                }
                 public void actionPerformed(ActionEvent e){
                     this.p.display.removeAll();
@@ -194,10 +201,10 @@ public class SimpleSearch{
                     this.p.display.add(buttonPanel, BorderLayout.SOUTH);
                     class backListener implements ActionListener{
                         private SimpleSearch outer;
-			private String keyW;
+                        private String keyW;
                         public backListener(SimpleSearch outerIn, String keyW){
                             this.outer = outerIn;
-			    this.keyW = keyW;
+                            this.keyW = keyW;
                         }
                         public void actionPerformed(ActionEvent e){
                             this.outer.display.removeAll();
@@ -231,8 +238,23 @@ public class SimpleSearch{
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
             //TODO Add button
-            
-
+            JButton addToSchedule = new JButton("Add");
+            class addListener implements ActionListener{
+                private Scheduler sch;
+                private Course c;
+                
+                private JPanel display;
+                public addListener(Scheduler sch, Course c){
+                    this.sch = sch;
+                    this.c = c;
+                }
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    this.sch.add(c);
+                }
+            }
+            addToSchedule.addActionListener(new addListener(this.schedule,c));
+            panelNum[1][4].add(addToSchedule);
             
             
             panels[n].add(coursePanel);
@@ -302,6 +324,31 @@ public class SimpleSearch{
         
         
         return resultList;
+        
+    }
+    
+    /**
+     @return returns the schedule.
+     */
+    public Scheduler getSchedule(){
+        return this.schedule;
+    }
+    
+    /**
+     sets the schedule to an empty one.
+    */
+    public void resetSchedule(){
+        this.schedule = new Scheduler();
+    }
+    
+    /** 
+     this is a temporary method to test the add button and view the schedule
+     */
+    public JPanel displaySchedule(){
+        Scheduler s = this.schedule;
+        JPanel display = new JPanel();
+        display.add(s.getMain());
+        return display;
         
     }
 }
