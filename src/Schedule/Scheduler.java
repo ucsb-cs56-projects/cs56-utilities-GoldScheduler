@@ -553,12 +553,11 @@ public class Scheduler {
             }
         }
         int slot = 0;
-        for(Course g:this.courseList){
+        for(int idx = 0; idx<this.courseList.size(); idx++){
+            Course g = this.courseList.get(idx);
             JLabel title = new JLabel(g.title);
             String [] colorList = { "Red", "Orange", "Yellow","Green", "Light Blue", "Blue","Purple"};
             JComboBox cMenu = new JComboBox(colorList);
-            //Action listener
-
             if(g.getLect().col.equals(new Color(183,62,62))){
                 cMenu.setSelectedIndex(0);
             } else if(g.getLect().col.equals(new Color(249,194,164))){
@@ -575,75 +574,104 @@ public class Scheduler {
             else{
                 cMenu.setSelectedIndex(6);
             }
-            
-            cMenu.addActionListener(new ActionListener(){
+            //Action listener
+            class menuListener implements ActionListener{
+                private Course c;
+                private Scheduler sch;
+                public menuListener(Course cIn, Scheduler schIn){
+                    this.c = cIn;
+                    this.sch = schIn;
+                }
                 public void actionPerformed(ActionEvent e){
                     JComboBox comboBox = (JComboBox) e.getSource();
                     String selectedItem = (String)comboBox.getSelectedItem();
                     if(selectedItem.equals("Green"))
-                        g.setColor(new Color(169,226,195));
+                        this.c.setColor(new Color(169,226,195));
                     if(selectedItem.equals("Light Blue"))
-                        g.setColor(new Color(129,190,247));
+                        this.c.setColor(new Color(129,190,247));
                     if(selectedItem.equals("Yellow"))
-                        g.setColor(new Color(253,255,181));
+                        this.c.setColor(new Color(253,255,181));
                     if(selectedItem.equals("Blue"))
-                        g.setColor(new Color(73,90,252));
+                        this.c.setColor(new Color(73,90,252));
                     if(selectedItem.equals("Red"))
-                        g.setColor(new Color(183,62,62));
+                        this.c.setColor(new Color(183,62,62));
                     if(selectedItem.equals("Orange"))
-                        g.setColor(new Color(249,194,164));
+                        this.c.setColor(new Color(249,194,164));
                     if(selectedItem.equals("Purple"))
-                        g.setColor(new Color(137,109,143));
-                    mainPanel.removeAll();
-                    mainPanel.revalidate();
-                    mainPanel.repaint();
-                    mainPanel.add(getPanel(), BorderLayout.WEST);
-                    mainPanel.add(getControl(), BorderLayout.EAST);
+                        this.c.setColor(new Color(137,109,143));
+                    this.sch.mainPanel.removeAll();
+                    this.sch.mainPanel.revalidate();
+                    this.sch.mainPanel.repaint();
+                    this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
+                    this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
                 }
-
-            });
+                
+            }
+            cMenu.addActionListener(new menuListener(g,this));
             
             panelHolder[slot][0].add(title);
             panelHolder[slot][1].add(cMenu);
             JButton view = new JButton("View");
             panelHolder[slot+1][0].add(view);
-            view.addActionListener(new ActionListener(){
+            
+            //Action listener
+            class viewListener implements ActionListener{
+                Course c1;
+                Scheduler sch1;
+                public viewListener(Course cIn1, Scheduler schIn1){
+                    this.c1 = cIn1;
+                    this.sch1 = schIn1;
+                }
                 public void actionPerformed(ActionEvent e){
-                    mainPanel.removeAll();
-                    mainPanel.revalidate();
-                    mainPanel.repaint();
-                    mainPanel.add(g.getPanel(), BorderLayout.NORTH);
+                    this.sch1.mainPanel.removeAll();
+                    this.sch1.mainPanel.revalidate();
+                    this.sch1.mainPanel.repaint();
+                    this.sch1.mainPanel.add(this.c1.getPanel(), BorderLayout.NORTH);
                     JPanel buttonPanel = new JPanel();
                     JButton back = new JButton("Back");
                     buttonPanel.add(back);
                     buttonPanel.setBackground(Color.LIGHT_GRAY);
-                    mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-                    back.addActionListener(new ActionListener(){
-                        public void actionPerformed(ActionEvent e){
-                            mainPanel.removeAll();
-                            mainPanel.revalidate();
-                            mainPanel.repaint();
-                            mainPanel.add(getPanel(), BorderLayout.WEST);
-                            mainPanel.add(getControl(), BorderLayout.EAST);
+                    this.sch1.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+                    class backListener implements ActionListener{
+                        private Scheduler outer;
+                        public backListener(Scheduler outerIn){
+                            this.outer = outerIn;
                         }
-                    });
-
+                        public void actionPerformed(ActionEvent e){
+                            this.outer.mainPanel.removeAll();
+                            this.outer.mainPanel.revalidate();
+                            this.outer.mainPanel.repaint();
+                            this.outer.mainPanel.add(this.outer.getPanel(), BorderLayout.WEST);
+                            this.outer.mainPanel.add(this.outer.getControl(), BorderLayout.EAST);
+                        }
+                    }
+                    back.addActionListener(new backListener(this.sch1));
                 }
-            });
+            }
+            
+            view.addActionListener(new viewListener(g,this));
             
             
             JButton delete = new JButton("Remove Course");
             panelHolder[slot+1][1].add(delete);
-            delete.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    courseList.remove(g);
-                    mainPanel.removeAll();
-                    mainPanel.revalidate();
-                    mainPanel.repaint();
-                    mainPanel.add(getPanel(), BorderLayout.WEST);
-                    mainPanel.add(getControl(), BorderLayout.EAST);
+            //Action listener
+            class deleteListener implements ActionListener{
+                private Scheduler sch;
+                private Course c;
+                public deleteListener(Course c, Scheduler sch){
+                    this.c = c;
+                    this.sch = sch;
                 }
-            });
+                public void actionPerformed(ActionEvent e){
+                    this.sch.courseList.remove(this.c);
+                    this.sch.mainPanel.removeAll();
+                    this.sch.mainPanel.revalidate();
+                    this.sch.mainPanel.repaint();
+                    this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
+                    this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
+                }
+            }
+            delete.addActionListener(new deleteListener(g,this));
             
             slot+=2;
         }
