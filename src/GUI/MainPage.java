@@ -42,12 +42,12 @@ public class MainPage extends JPanel{
 	this.add(control, BorderLayout.WEST);
 	//TODO display features in display panel
     }
-    public static void main(String[]args){
+    /* public static void main(String[]args){
 	JFrame frame = new JFrame("test");
 	
 	frame.setSize(1080,720);
 	frame.setContentPane(new MainPage());
 	frame.setVisible(true);
 	frame.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-    }
+	}*/
 }
