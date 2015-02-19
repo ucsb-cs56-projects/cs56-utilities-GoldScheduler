@@ -130,7 +130,11 @@
   </target>
   
   <target name="runSearch" depends="init,compileSearch" description="run the Search program">
-      <java fork="true" classname="SearchGUI" classpath="build" />
+      <java fork="true" classname="Search.SearchGUI" classpath="build">
+          <classpath>
+              <pathelement location="build"/>
+          </classpath>
+      </java>
   </target>
 
 

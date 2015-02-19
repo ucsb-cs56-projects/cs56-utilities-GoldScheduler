@@ -1,9 +1,12 @@
+package Search;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import Course.Course;
+import Course.Lecture;
 
 public class AdvancedSearch extends JPanel {
-    JLabel searchLabel;
+   /* JLabel searchLabel;
     JComboBox searchDropMenu;
     JComboBox searchDropMenu2;
     String[] searchOptions = {"Department", "Professor", "General Education"};
@@ -36,5 +39,6 @@ public class AdvancedSearch extends JPanel {
     public static void main(String[] args){
 	new AdvancedSearch();
     }
-
+*/
+}
    
