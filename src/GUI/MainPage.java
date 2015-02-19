@@ -34,6 +34,15 @@ public class MainPage extends JPanel{
 	viewSched = new JButton("View My Schedule");
 	changeInfo = new JButton("Edit User Information");
 	logout = new JButton("Log out");
+        logout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Golder.goToLogin();
+			}
+        	
+        });
+
        	buttons[0].add(search);
 	buttons[1].add(viewSched);
 	buttons[2].add(changeInfo);
