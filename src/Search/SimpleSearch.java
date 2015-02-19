@@ -176,10 +176,12 @@ public class SimpleSearch{
             class viewListener implements ActionListener{
                 Course c1;
                 SimpleSearch p;
-                public viewListener(Course cIn1, SimpleSearch p){
+                String keyword;
+		public viewListener(Course cIn1, SimpleSearch p, String keyword){
                     this.c1 = cIn1;
                     this.p = p;
-                }
+		    this.keyword = keyword; 
+               }
                 public void actionPerformed(ActionEvent e){
                     this.p.display.removeAll();
                     this.p.display.revalidate();
@@ -192,22 +194,24 @@ public class SimpleSearch{
                     this.p.display.add(buttonPanel, BorderLayout.SOUTH);
                     class backListener implements ActionListener{
                         private SimpleSearch outer;
-                        public backListener(SimpleSearch outerIn){
+			private String keyW;
+                        public backListener(SimpleSearch outerIn, String keyW){
                             this.outer = outerIn;
+			    this.keyW = keyW;
                         }
                         public void actionPerformed(ActionEvent e){
                             this.outer.display.removeAll();
                             this.outer.display.revalidate();
                             this.outer.display.repaint();
                             this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-                            this.outer.display.add(this.outer.getCourses(key), BorderLayout.SOUTH);
+                            this.outer.display.add(this.outer.getCourses(this.keyW), BorderLayout.SOUTH);
                         }
                     }
-                    back.addActionListener(new backListener(this.p));
+                    back.addActionListener(new backListener(this.p,this.keyword));
                 }
             }
             
-            view.addActionListener(new viewListener(c,this));
+            view.addActionListener(new viewListener(c,this, key));
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
 
