@@ -1,4 +1,4 @@
-CMPSC 8 Costanzo, C*Buoni, M J, 4
+CMPSC 8 ['Costanzo, C*Buoni, M J']['4.0']
 CMPSC CS10 ['Conrad, P T']['1.0 - 6.0']
 CMPSC 16 ['Koc, C K']['4.0']
 CMPSC CS20 ['Conrad, P T']['1.0 - 6.0']

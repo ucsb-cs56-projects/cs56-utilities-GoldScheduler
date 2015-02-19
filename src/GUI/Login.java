@@ -2,8 +2,10 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.sql.SQLException;
-
+import java.io.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import connection.userInfo.UsersConnection;
@@ -13,6 +15,7 @@ import connection.userInfo.UsersConnection;
  * @author Forrest Sun
  * @version Feb 10 2015
  */
+
 
 public class Login extends JPanel{
     JTextField username;
@@ -33,8 +36,8 @@ public class Login extends JPanel{
         password.addKeyListener(new KeyValidator());
         passLabel= new JLabel("Enter Password:");
         loginButton= new JButton("Login");
-        loginButton.addActionListener(new LoginButtonValidator());
-        forpass = new JButton ("Forgot Password?");
+        loginButton.addActionListener(new LoginButtonValidator());        
+	forpass = new JButton ("Forgot Password?");
         wrong = new JLabel();
         createAcc = new JButton("Create Account");
         createAcc.addActionListener(new ActionListener() {
@@ -95,10 +98,8 @@ public class Login extends JPanel{
 	    if(ID == -3) wrong.setText("No Connection");
 	    else if (ID==-2) wrong.setText("Incorrect Password");
 	    else if (ID==-1) wrong.setText("Not a Valid Username");
-	    else {
-	    	wrong.setText("Welcome! " + userinfo + "!");
-	    	//heres where we would transfer to user home page
-	    }
+	    else Golder.goToMain();
+	    wrong.setText("");
     }
     /*
 	public static void main (String[] args){
@@ -139,6 +140,8 @@ public class Login extends JPanel{
 			innerpanel.add(spot[m][k]);
 		    }
 		}
+		//	BufferedImage pic = ImageIO.read(this.getClass().getResource("theLogo.png"));
+		//	JLabel logo = new JLabel(new ImageIcon(pic));
 		spot[1][0].add(userLabel);
 		spot[1][1].add(username);
 		spot[2][0].add(passLabel);
@@ -147,6 +150,7 @@ public class Login extends JPanel{
 		spot[3][1].add(forpass);
 		spot[3][2].add(createAcc);
 		spot[0][0].add(wrong);
-		rows[1].add(innerpanel);
+		//	rows[0].add(logo);
+		rows[2].add(innerpanel);
     }
 }

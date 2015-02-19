@@ -17,8 +17,10 @@ for line in f:
 		dept = m.group(2)
 		dscp = m.group(1)
 
-		#print("INSERT INTO depts (department, description) VALUES ('%s','%s');" % (dept, dscp.replace("(","").replace(")","")))
-		cursor.execute("INSERT INTO depts (department, full_name) VALUES ('%s','%s');" % (dept.replace("(","").replace(")",""), dscp))
+		#print("INSERT INTO depts (department, description) VALUES ('%s','%s','%s');" % (dept, dscp.replace("(","").replace(")","")))
+		
+		dept = dept.replace("(","").replace(")","")
+		cursor.execute("INSERT INTO depts (department, department_no_space, description) VALUES ('%s','%s','%s');" % (dept, dept.replace(" ",""), dscp))
 
 		
 

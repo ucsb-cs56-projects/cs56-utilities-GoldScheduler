@@ -34,6 +34,15 @@ public class MainPage extends JPanel{
 	viewSched = new JButton("View My Schedule");
 	changeInfo = new JButton("Edit User Information");
 	logout = new JButton("Log out");
+        logout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Golder.goToLogin();
+			}
+        	
+        });
+
        	buttons[0].add(search);
 	buttons[1].add(viewSched);
 	buttons[2].add(changeInfo);
@@ -42,12 +51,12 @@ public class MainPage extends JPanel{
 	this.add(control, BorderLayout.WEST);
 	//TODO display features in display panel
     }
-    public static void main(String[]args){
+    /* public static void main(String[]args){
 	JFrame frame = new JFrame("test");
 	
 	frame.setSize(1080,720);
 	frame.setContentPane(new MainPage());
 	frame.setVisible(true);
 	frame.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-    }
+	}*/
 }

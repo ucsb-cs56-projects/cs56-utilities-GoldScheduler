@@ -35,7 +35,22 @@ PRIMARY KEY (course_name)
 CREATE TABLE depts
 (
 department varchar(20),
+department_no_space varchar(20),
 description varchar(255),
 
 PRIMARY KEY (department)
 );
+
+CREATE TABLE spring_15
+(
+id bigint NOT NULL AUTO_INCREMENT,
+corresponding_id bigint,
+course_name varchar(20) NOT NULL,
+instructor_name varchar(20) NOT NULL,
+week TINYINT,
+start_time SMALLINT,
+end_time SMALLINT,
+
+PRIMARY KEY (id),
+FOREIGN KEY (corresponding_id) REFERENCES spring_15(id)
+)
