@@ -20,6 +20,9 @@ public class CourseConnection extends GolderConnection{
 	 * get an array of String of all Majors
 	 */
 	
+	/*
+	 * List All Majors
+	 */
 	public static String[] getMajor() throws SQLException {
 		String [] m = null;
 		
@@ -47,15 +50,20 @@ public class CourseConnection extends GolderConnection{
 		return m;
 	}
 	
-	
+	/**
+	 * Simple Search Support
+	 * @param s Search String
+	 * @return All courses contain s
+	 * @throws SQLException
+	 */
 	public static ArrayList<Course> SearchFullTitle(String s) throws SQLException{
-		ResultSet rsL;
-		Statement stmt2 = conn.createStatement();
+
 		
 		ArrayList<Course> ca = new ArrayList<Course>();
 
 		
-		if (stmt.execute(String.format("SELECT * FROM `courses` WHERE description LIKE '%%%s%%';", s))) {
+		if (stmt.execute(String.format("SELECT * FROM `spring_15`INNER JOIN `courses` ON spring_15.course_name=courses.course_name WHERE spring_15.corresponding_id = 0 AND (courses.description LIKE '%%%s%%' OR courses.course_name LIKE '%%%s%%');", s, s))) {
+
 				rs = stmt.getResultSet();
 		        
 		        
@@ -64,35 +72,24 @@ public class CourseConnection extends GolderConnection{
 		        while (rs.next()) {
 		        	
 		        	
-		        	
-		        	
-			        if (stmt2.execute(String.format("SELECT * FROM `spring_15` WHERE course_name = '%s' AND corresponding_id = 0;", rs.getString("course_name")))) {
-			        	
-				        
-			        	
-			        	rsL= stmt2.getResultSet();
-			        	
 
-			        	
-			        	while (rsL.next()) {
 			        		
-			        		Lecture q = new Lecture(rsL.getString("instructor_name"), rsL.getInt("start_time"),  rsL.getInt("end_time"), deCodeWeek(rsL.getInt("week")), "", rsL.getString("id"), new Color(169,226,195));
+			        		Lecture q = new Lecture(rs.getString("instructor_name"), rs.getInt("start_time"),  rs.getInt("end_time"), deCodeWeek(rs.getInt("week")), "", rs.getString("id"), new Color(169,226,195));
 			                Course r = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
 			                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
-			                		deCodeGEFill(rs.getInt(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(12), rs.getInt(13), rs.getString(14), rs.getInt(15), rs.getInt(16))
+			                		deCodeGEFill(rs.getInt(12), rs.getString(13), rs.getInt(14), rs.getInt(15), rs.getInt(16), rs.getInt(17), rs.getInt(18), rs.getInt(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23))
 			                		, q);
 			        		
 			        		ca.add(r);
-			        	}
-			        	rsL.close();
-			        }
-			        
+			        	
+
 		        }
 		        
+
 		}
 			
 		
-		stmt2.close();
+
 		
 		return ca;
 		
@@ -155,6 +152,7 @@ public class CourseConnection extends GolderConnection{
 	private static String[] deCodeGEFill(int b, String c, int d, int e, int f, int g, int h, int ethnic, int euro, String quantitative, int world_culture, int writ) {
 		
 		int count = 0;
+		
 		
 		count = b + d + e + f + g + h + ethnic + euro + world_culture +writ;
 		
