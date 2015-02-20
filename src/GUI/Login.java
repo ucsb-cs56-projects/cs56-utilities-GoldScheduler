@@ -28,7 +28,7 @@ public class Login extends JPanel{
     JButton createAcc;
     
     
-    public Login() {
+    public Login(){
     	username= new JTextField(20);
     	username.addKeyListener(new KeyValidator());
         userLabel= new JLabel("Enter Username:");
@@ -116,13 +116,14 @@ public class Login extends JPanel{
     	username.setText("");
     	password.setText("");
     }
-    
-    
+	
+
+
     public void go(){
-		GridLayout basegrid = new GridLayout(3, 1);
+		GridLayout basegrid = new GridLayout(2, 1);
 		this.setLayout(basegrid);
-		JPanel[] rows = new JPanel[3];
-		for(int i=0;i<3; i++){
+		JPanel[] rows = new JPanel[2];
+		for(int i=0;i<2; i++){
 			rows[i]= new JPanel();
 			rows[i].setOpaque(true);
 			rows[i].setBackground(Color.BLUE);
@@ -140,8 +141,14 @@ public class Login extends JPanel{
 			innerpanel.add(spot[m][k]);
 		    }
 		}
-		//	BufferedImage pic = ImageIO.read(this.getClass().getResource("theLogo.png"));
-		//	JLabel logo = new JLabel(new ImageIcon(pic));
+		BufferedImage pic;
+		Image rpic;
+		JLabel logo=new JLabel();
+		try{
+		    pic = ImageIO.read(new File("src/GUI/theLogo.png"));
+		    rpic = pic.getScaledInstance(400,303, Image.SCALE_SMOOTH);
+		    logo = new JLabel(new ImageIcon(rpic));
+		}catch(IOException e){System.out.println("no image");}
 		spot[1][0].add(userLabel);
 		spot[1][1].add(username);
 		spot[2][0].add(passLabel);
@@ -150,7 +157,7 @@ public class Login extends JPanel{
 		spot[3][1].add(forpass);
 		spot[3][2].add(createAcc);
 		spot[0][0].add(wrong);
-		//	rows[0].add(logo);
-		rows[2].add(innerpanel);
+	       	rows[0].add(logo);
+		rows[1].add(innerpanel);
     }
 }
