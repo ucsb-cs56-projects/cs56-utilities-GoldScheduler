@@ -155,7 +155,7 @@ public class CourseConnection extends GolderConnection{
 	private static String[] deCodeGEFill(int b, String c, int d, int e, int f, int g, int h, int ethnic, int euro, String quantitative, int world_culture, int writ) {
 		
 		int count = 0;
-		System.out.println(""+ b + d + e + f + g + h + ethnic + euro + world_culture +writ);
+		
 		count = b + d + e + f + g + h + ethnic + euro + world_culture +writ;
 		
 		if (!c.equals("0")) count ++;
