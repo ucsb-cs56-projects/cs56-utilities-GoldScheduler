@@ -61,8 +61,6 @@ public class SimpleSearch{
     public void setControl(){
         JPanel controlPanel = new JPanel();
         //Probably want the control panel to be a horizontal row of buttons
-        //TODO:
-        //controlPanel.setPreferredSize(new Dimension(,));
         controlPanel.setPreferredSize(new Dimension(500,33));
         controlPanel.setLayout(new GridLayout(1, 3));
         JPanel[] panelHolder = new JPanel[3];
@@ -73,9 +71,6 @@ public class SimpleSearch{
         }
 
         //Make components
-        //Temporarily excluding welcome label
-        //Easy fix: change layout num for control panel and add it
-        //JLabel label1 = new JLabel("Welcome to GOLDER!");
         JLabel searchLabel = new JLabel("Enter course:");
         searchField = new JTextField(20);
         searchButton = new JButton("Submit");
@@ -90,7 +85,6 @@ public class SimpleSearch{
             }
             //populates the page with search results
             //Calls set courses function
-            //TextField text = new TextField(20);
             public void actionPerformed(ActionEvent e) {
                 String keyword = this.text.getText();
                 this.s.display.removeAll();
@@ -260,8 +254,6 @@ public class SimpleSearch{
             panels[n].add(coursePanel);
             
         }
-        //TODO Display courses (courses.add();)
-        //TODO Add panel to display
         this.cDisplay = courses;
 
     }

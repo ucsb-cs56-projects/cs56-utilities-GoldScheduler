@@ -1,167 +1,404 @@
 <project default="compile">
 
-  <!-- build.xml for Golder, W15, CS48
-       name: Group 3-->
+    
 
-  <property environment="env"/> <!-- load the environment variables -->
+    <!-- build.xml for Golder, W15, CS48
 
-  <target name="init" description="compile">
-	<mkdir dir="build" />
-  </target>
-  
-  <target name="compile" depends="init" description="compile">
-    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-	  <exclude  name="**/*Test.java" />
-	  <exclude  name="Schedule/*.java" />
-      <classpath>
-        <pathelement location="build"/>
-      	<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>	
-      </classpath>
-    </javac>
-  </target>
+     name: Group 3-->
 
-  <target name="run" depends="compile" description="run">
-     <java fork="true" classname="GUI.Golder" classpath="build">
-	  <classpath>
-        <pathelement location="build"/>
-		<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-      </classpath>
-	</java>
-  </target>
+    
 
-  <target name="compileConnectUser" depends="init" description="compile Connect test">
-    <javac srcdir="src/connection/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-      <classpath>
-        <pathelement location="build"/>
-      </classpath>
-    </javac>
-  </target>
+    <property environment="env"/> <!-- load the environment variables -->
 
-  <target name="compileLogin" depends="init,compileConnectUser" description="compile Login test">
-    <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-	  <include name="Login.java" />
-      <classpath>
-        <pathelement location="build"/>
-        <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-      </classpath>
-    </javac>
-  </target>
-  
-  <target name="runLogin" depends="compileLogin" description="run Login">
-    <java fork="true" classname="GUI.Login" classpath="build">
-	  <classpath>
-        <pathelement location="build"/>
-		<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-      </classpath>
-	</java>
-  </target>
+    <property name="webRoot" value="cs/student/hanna/public_html/cs48" />
 
-  <target name="compileMainPage" depends="init,compileConnectUser" description="compile MainPage test">
-    <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-	  <include name="MainPage.java" />
-      <classpath>
-        <pathelement location="build"/>
-        <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-      </classpath>
-    </javac>
-  </target>
-  
-  <target name="runMainPage" depends="compileMainPage" description="run Main Page">
-    <java fork="true" classname="GUI.MainPage" classpath="build">
-	  <classpath>
-        <pathelement location="build"/>
-		<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-      </classpath>
-	</java>
-  </target>
-  <target name="compileCreateAccount" depends="init,compileConnectUser" description="compile Create Account test">		
-    <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">		
-	  <include name="CreateAccount.java" />		
-      <classpath>		
-        <pathelement location="build"/>		
-        <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>		
-      </classpath>		
-    </javac>		
-  </target>		
-  		
-    <target name="runCA" depends="compileCreateAccount" description="run Create Account">		
-    <java fork="true" classname="GUI.CreateAccount" classpath="build">		
-	  <classpath>		
-        <pathelement location="build"/>		
-		<pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>		
-      </classpath>		
-	</java>		
-  </target>
+    <property name="webBaseURL" value="http://www.cs.ucsb.edu/~hanna/cs48" />
 
-<target name="compileCourse" depends="init" description="compile Course code">
-    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-        <classpath>
-            <pathelement location="build"/>
-        </classpath>
-    </javac>
-</target>
+    <property name="projectName" value="Golder" />
 
-  <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">
-      <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-          <classpath>		
-              <pathelement location="build"/>		
-              <pathelement location="lib/junit-4.10.jar"/>		
-          </classpath>		
-      </javac>		
-  </target>
-  
-  
-  <target name="runScheduleGui" depends="compileSchedule" description="run GUI for Scheduler class">
-      <java fork="true" classname="Schedule.ScheduleGUI" classpath="build">
-          <classpath>
-              <pathelement location="build"/>
-          </classpath>
-      </java>		
-  </target>
-  
-  <target name="compileSearch" depends="init" description="compile Search code">
-      <javac srcdir="src/Search" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
-          <classpath>
-              <pathelement location="build"/>
-              <pathelement location="build/Course"/>
-              <pathelement location="lib/junit-4.10.jar"/>
-          </classpath>
-      </javac>
-  </target>
-  
-  <target name="runSearch" depends="init,compileSearch" description="run the Search program">
-      <java fork="true" classname="Search.SearchGUI" classpath="build">
-          <classpath>
-              <pathelement location="build"/>
-          </classpath>
-      </java>
-  </target>
+    <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
 
+    <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
+    
 
+    <target name="init" description="compile">
 
- <target name="clean" description="delete unnecessary files and directories">
-    <delete dir="build" quiet="true" />
-  </target>
+        <mkdir dir="build" />
 
+    </target>
 
-<target name="testSchedule" depends="compileSchedule" description="Runs all files ending in Test.java">		
-    		
-    <junit haltonerror="no" haltonfailure="no">		
-        <classpath>		
-            <pathelement location="lib/junit-4.10.jar"/>		
-            <pathelement location="build"/>		
-        </classpath>		
-        		
-        <batchtest fork="yes">		
-            <fileset dir="src/Schedule">		
-                <!-- this will pick up every class with a name ending in Test -->		
-                <include name="*Test.java"/>		
-            </fileset>		
-        </batchtest>		
-        		
-        <formatter type="plain" usefile="false" />		
-        		
-    </junit>		
-</target>
- 
+    
+
+    <target name="compile" depends="init" description="compile">
+
+        <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+            <exclude  name="**/*Test.java" />
+
+            <exclude  name="Schedule/*.java" />
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </javac>
+
+    </target>
+
+    
+
+    <target name="run" depends="compile" description="run">
+
+        <java fork="true" classname="GUI.Golder" classpath="build">
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </java>
+
+    </target>
+
+    
+
+    <target name="javadoc" depends="compile, init" description="publish javadoc">
+
+        <delete dir="javadoc" quiet="true" />
+
+        <javadoc  destdir="javadoc" author="true" version="true" use="true" >
+
+            <fileset dir="src" includes="**/*.java"/>
+
+        </javadoc>
+
+        
+
+        <!-- delete the old javadoc -->
+
+        <delete quiet="true" dir="${javadocDest}" />
+
+        
+
+        <!-- copy everything you just made to the javadoc destination,
+
+         and then make it readable -->
+
+        <copy todir="${javadocDest}" >
+
+            <fileset dir="javadoc"/>
+
+        </copy>
+
+        
+
+        <!-- Note: this only does the chmod command on the javadoc
+
+         subdirectory and its contents.  You MIGHT have to MANUALLY do the
+
+         chmod on the parent directories.  However, you should only need to do
+
+         that once.
+
+         -->
+
+        <chmod dir="${javadocDest}" perm="755"  type="dir" includes="**" />
+
+        <chmod dir="${javadocDest}" perm="755"  type="file" includes="**/*" />
+
+        <echo>Javadoc deployed to ${javadocURL}</echo>
+
+        <echo> or if not on CSIL, try file://${javadocDest}/index.html</echo>
+
+    </target>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <target name="compileConnectUser" depends="init" description="compile Connect test">
+
+        <javac srcdir="src/connection/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+            </classpath>
+
+        </javac>
+
+    </target>
+
+    
+
+    <target name="compileLogin" depends="init,compileConnectUser" description="compile Login test">
+
+        <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+            <include name="Login.java" />
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </javac>
+
+    </target>
+
+    
+
+    <target name="runLogin" depends="compileLogin" description="run Login">
+
+        <java fork="true" classname="GUI.Login" classpath="build">
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </java>
+
+    </target>
+
+    
+
+    <target name="compileMainPage" depends="init,compileConnectUser" description="compile MainPage test">
+
+        <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+            <include name="MainPage.java" />
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </javac>
+
+    </target>
+
+    
+
+    <target name="runMainPage" depends="compileMainPage" description="run Main Page">
+
+        <java fork="true" classname="GUI.MainPage" classpath="build">
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </java>
+
+    </target>
+
+    <target name="compileCreateAccount" depends="init,compileConnectUser" description="compile Create Account test">
+
+        <javac srcdir="src/GUI/" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+            <include name="CreateAccount.java" />
+
+            <classpath>
+
+                <pathelement location="build"/>
+
+                <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+            </classpath>
+
+        </javac>
+
+    </target>
+
+  	
+
+        <target name="runCA" depends="compileCreateAccount" description="run Create Account">
+
+            <java fork="true" classname="GUI.CreateAccount" classpath="build">
+
+                <classpath>
+
+                    <pathelement location="build"/>
+
+                    <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+
+                </classpath>
+
+            </java>
+
+        </target>
+
+        
+
+        <target name="compileCourse" depends="init" description="compile Course code">
+
+            <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+                <classpath>
+
+                    <pathelement location="build"/>
+
+                </classpath>
+
+            </javac>
+
+        </target>
+
+        
+
+        <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">
+
+            <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+                <classpath>
+
+                    <pathelement location="build"/>
+
+                    <pathelement location="lib/junit-4.10.jar"/>
+
+                </classpath>
+
+            </javac>
+
+        </target>
+
+        
+
+        
+
+        <target name="runScheduleGui" depends="compileSchedule" description="run GUI for Scheduler class">
+
+            <java fork="true" classname="Schedule.ScheduleGUI" classpath="build">
+
+                <classpath>
+
+                    <pathelement location="build"/>
+
+                </classpath>
+
+            </java>
+
+        </target>
+
+        
+
+        <target name="compileSearch" depends="init" description="compile Search code">
+
+            <javac srcdir="src/Search" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+
+                <classpath>
+
+                    <pathelement location="build"/>
+
+                    <pathelement location="build/Course"/>
+
+                    <pathelement location="lib/junit-4.10.jar"/>
+
+                </classpath>
+
+            </javac>
+
+        </target>
+
+        
+
+        <target name="runSearch" depends="init,compileSearch" description="run the Search program">
+
+            <java fork="true" classname="Search.SearchGUI" classpath="build">
+
+                <classpath>
+
+                    <pathelement location="build"/>
+
+                </classpath>
+
+            </java>
+
+        </target>
+
+        
+
+        
+
+        
+
+        <target name="clean" description="delete unnecessary files and directories">
+
+            <delete dir="build" quiet="true" />
+
+        </target>
+
+        
+
+        
+
+        <target name="testSchedule" depends="compileSchedule" description="Runs all files ending in Test.java">	
+
+            
+
+            <junit haltonerror="no" haltonfailure="no">	
+
+                <classpath>	
+
+                    <pathelement location="lib/junit-4.10.jar"/>	
+
+                    <pathelement location="build"/>	
+
+                </classpath>	
+
+                
+
+                <batchtest fork="yes">	
+
+                    <fileset dir="src/Schedule">	
+
+                        <!-- this will pick up every class with a name ending in Test -->	
+
+                        <include name="*Test.java"/>	
+
+                    </fileset>	
+
+                </batchtest>	
+
+                
+
+                <formatter type="plain" usefile="false" />	
+
+                
+
+            </junit>	
+
+        </target>
+
+        
+
 </project>
