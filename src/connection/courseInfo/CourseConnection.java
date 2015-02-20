@@ -150,11 +150,11 @@ public class CourseConnection extends GolderConnection{
 		
 	}
 	
-	
+	/*
 	public static void main(String[] args) throws SQLException {
 
 		for (Course t : SearchFullTitle("computer"))  System.out.println(t.courseID);
 	}
-	
+	*/
 	
 }

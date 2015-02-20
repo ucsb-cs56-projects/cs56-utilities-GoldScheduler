@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
 import Schedule.Scheduler;
-
+import connection.courseInfo.CourseConnection;;
 
 
 /**
@@ -278,9 +278,30 @@ public class SimpleSearch{
      Communicates with the database using a desired keyword
      @param key A string that contains a keyword that will be used to talk to the database
      @return An arrayList of courses, which are the results.
+     * @throws SQLException 
      */
     //TODO DATABASE!!!!
-    public ArrayList<Course> getResults(String key){
+    public ArrayList<Course> getResults(String key) {
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	try {
+			return CourseConnection.SearchFullTitle(key);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+    	
+    	
+    	
+    	
+    	/*
         ArrayList<Course> resultList = new ArrayList<Course>();
 
 
@@ -316,7 +337,7 @@ public class SimpleSearch{
         
         
         return resultList;
-        
+        */
     }
     
     /**
