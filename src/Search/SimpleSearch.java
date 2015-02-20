@@ -30,6 +30,10 @@ public class SimpleSearch{
     public SimpleSearch(){
         this.schedule = new Scheduler();
     }
+    
+    public SimpleSearch(Scheduler s){
+        this.schedule = s;
+    }
     /**
      Initializes the display
      */

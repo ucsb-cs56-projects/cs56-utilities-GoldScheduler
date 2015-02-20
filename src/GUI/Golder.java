@@ -1,6 +1,7 @@
 package GUI;
 
-
+//import java.awt.*;
+import javax.swing.*;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -18,38 +19,40 @@ public class Golder {
     
     static Login l;
     static CreateAccount ca;
-    static MainPage m;
+    static JPanel m;
 
     public static void main (String[] args) throws SQLException{
-	window = new JFrame("GOLDER");
-	window.setSize(910,627);
-	window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-	window.setVisible(true);
-	    
-	//TODO Add a picture while Loading
-	
-	
-	l = new Login();
-	ca = new CreateAccount();
-	m = new MainPage();
-	goToLogin();
+        window = new JFrame("GOLDER");
+        window.setSize(910,627);
+        window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
+        window.setVisible(true);
+        
+        //TODO Add a picture while Loading
+        
+        
+        l = new Login();
+        ca = new CreateAccount();
+        //m = new MainPage();
+        MainPage mainp = new MainPage();
+        m = mainp.getDisplay();
+        goToLogin();
     }
     
     public static void goToLogin() {
-	window.setContentPane(l);
-	l.clean();
-	window.validate();
+        window.setContentPane(l);
+        l.clean();
+        window.validate();
     }
     
     public static void goToCreate() {
-	window.setContentPane(ca);
-	ca.clean();
-	window.validate();
+        window.setContentPane(ca);
+        ca.clean();
+        window.validate();
     }
     
     public static void goToMain() {
-	window.setContentPane(m);
-	window.validate();
+        window.setContentPane(m);
+        window.validate();
     }
     
 }
