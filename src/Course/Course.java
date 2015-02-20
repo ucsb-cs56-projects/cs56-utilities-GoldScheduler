@@ -15,7 +15,7 @@ public class Course{
     public final String title;
     public final String fullTitle;
     public final String dept;
-    public final double units;
+    public final String units;
     public final Course[] preReqs;
     public final String[] restrictions;
     public final String[] geFulfill;
@@ -23,7 +23,7 @@ public class Course{
     private JButton view;
     
     
-    public Course(String courseID, String title, String fullTitle, String dept, double units,
+    public Course(String courseID, String title, String fullTitle, String dept, String units,
                   Course[] preReqs, String[] restrictions, String[] geFulfill, Lecture lectInfo){
         this.courseID = courseID;
         this.title = title;

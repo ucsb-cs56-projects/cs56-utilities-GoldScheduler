@@ -78,7 +78,7 @@ public class CourseConnection extends GolderConnection{
 			        		
 			        		Lecture q = new Lecture(rsL.getString("instructor_name"), rsL.getInt("start_time"),  rsL.getInt("end_time"), deCodeWeek(rsL.getInt("week")), "", "", new Color(169,226,195));
 			                Course r = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
-			                		rs.getString("department"), rs.getInt("units"), new Course [0], new String [0], new String[0], q);
+			                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], new String[0], q);
 			        		
 			        		ca.add(r);
 			        	}
@@ -155,6 +155,7 @@ public class CourseConnection extends GolderConnection{
 
 		for (Course t : SearchFullTitle("computer"))  System.out.println(t.courseID);
 	}
+	
 	*/
 	
 }
