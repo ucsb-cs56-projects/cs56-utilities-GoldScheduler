@@ -13,43 +13,43 @@ import javax.swing.JFrame;
  * @version Feb 12 2015
  */
 public class Golder {
-	
-	static JFrame window;
-	
-	static Login l;
-	static CreateAccount ca;
-        static MainPage m;
+    
+    static JFrame window;
+    
+    static Login l;
+    static CreateAccount ca;
+    static MainPage m;
 
-	public static void main (String[] args) throws SQLException{
-	    window = new JFrame("GOLDER");
-	    window.setSize(910,627);
-	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-		window.setVisible(true);
+    public static void main (String[] args) throws SQLException{
+	window = new JFrame("GOLDER");
+	window.setSize(910,627);
+	window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
+	window.setVisible(true);
 	    
-		//TODO Add a picture while Loading
-		
-		
-		l = new Login();
-		ca = new CreateAccount();
-		m = new MainPage();
-		goToLogin();
-	}
+	//TODO Add a picture while Loading
 	
-	public static void goToLogin() {
-		window.setContentPane(l);
-		l.clean();
-		window.validate();
-	}
 	
-	public static void goToCreate() {
-		window.setContentPane(ca);
-		ca.clean();
-		window.validate();
-	}
-	
-        public static void goToMain() {
-		window.setContentPane(m);
-       		window.validate();
-	}
-	
+	l = new Login();
+	ca = new CreateAccount();
+	m = new MainPage();
+	goToLogin();
+    }
+    
+    public static void goToLogin() {
+	window.setContentPane(l);
+	l.clean();
+	window.validate();
+    }
+    
+    public static void goToCreate() {
+	window.setContentPane(ca);
+	ca.clean();
+	window.validate();
+    }
+    
+    public static void goToMain() {
+	window.setContentPane(m);
+	window.validate();
+    }
+    
 }
