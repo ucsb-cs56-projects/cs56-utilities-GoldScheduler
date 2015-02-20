@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import javax.swing.*;
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
@@ -26,6 +29,7 @@ public class MainPage extends JPanel{
     JButton changeInfo;
     JButton logout;
     public MainPage(){
+	display =new JPanel();
         control=new JPanel();
         buttons = new JPanel[4];
         control.setLayout(new GridLayout(4,0));
@@ -81,7 +85,7 @@ public class MainPage extends JPanel{
                         this.outer.removeAll();
                         this.outer.revalidate();
                         this.outer.repaint();
-                        this.outer.add(new MainPage(), BorderLayout.NORTH);
+                        this.outer.add(new MainPage());
                     }
                 }
                 back.addActionListener(new backListener(this.p));
@@ -90,14 +94,23 @@ public class MainPage extends JPanel{
         }
         
         viewSched.addActionListener(new schedListener(this, mySchedule));
-        
+	BufferedImage pic;
+	Image rpic;
+	JLabel logo=new JLabel();
+        try{
+	      pic = ImageIO.read(new File("src/GUI/theLogo.png"));
+	      rpic = pic.getScaledInstance(400,303, Image.SCALE_SMOOTH);
+	      logo = new JLabel(new ImageIcon(rpic));
+	}catch(IOException e){System.out.println("no image");}
+	display.add(logo);
         buttons[0].add(search);
         buttons[1].add(viewSched);
         buttons[2].add(changeInfo);
         buttons[3].add(logout);
         this.setLayout(new BorderLayout());
         this.add(control, BorderLayout.WEST);
-        //TODO display features in display panel
+        this.add(display, BorderLayout.EAST);
+	
         }
     /* public static void main(String[]args){
     JFrame frame = new JFrame("test");
