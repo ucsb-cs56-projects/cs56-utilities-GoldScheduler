@@ -99,7 +99,7 @@ public class Login extends JPanel{
 	    else if (ID==-2) wrong.setText("Incorrect Password");
 	    else if (ID==-1) wrong.setText("Not a Valid Username");
 	    else Golder.goToMain();
-	    wrong.setText("");
+	    
     }
     /*
 	public static void main (String[] args){
@@ -113,6 +113,7 @@ public class Login extends JPanel{
 	*/
     
     public void clean() {
+    	wrong.setText("");
     	username.setText("");
     	password.setText("");
     }
