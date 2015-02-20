@@ -125,13 +125,20 @@ public class SimpleSearch{
      Sets the course display according to a keyword
      */
     public void setCourses(String key){
+        this.setCourses(this.getResults(key));
+    }
+
+    /**
+     Sets the course display according to an ArrayList of Courses
+     */
+    public void setCourses(ArrayList<Course> list){
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(500,567));
         //Call getResults
-        ArrayList<Course> courseList = this.getResults(key);
+        ArrayList<Course> courseList = list;
         int numResults = courseList.size();
         //Sets up panel as a grid by how many courses there are
-        courses.setLayout(new GridLayout(numResults, 1));
+        //courses.setLayout(new GridLayout(numResults, 1));
         JPanel[] panels = new JPanel[numResults];
         for(int index = 0 ; index<numResults; index++){
             panels[index] = new JPanel();
@@ -143,7 +150,7 @@ public class SimpleSearch{
         for(int n = 0; n<numResults; n++){
             Course c = courseList.get(n);
             JPanel coursePanel = new JPanel();
-            coursePanel.setPreferredSize(new Dimension(500,100));
+            coursePanel.setPreferredSize(new Dimension(910,100));
             //rows: 1. title
             //      2. header
             //      3. Lecture info
@@ -162,10 +169,11 @@ public class SimpleSearch{
             for(int y = 0 ; y<rows; y++){
                 for(int x = 0; x<columns; x++){
                     panelNum[y][x] = new JPanel();
-                    panelNum[y][x].setBackground(new Color(184,194,247));
+                    panelNum[y][x].setBackground(new Color(217,220,245));
                     coursePanel.add(panelNum[y][x]);
                 }
             }
+            
             //Row 1: Title and view button
             //JLabel t = new JLabel(c.title);
             JLabel t = new JLabel(c.courseID);
@@ -177,12 +185,12 @@ public class SimpleSearch{
             class viewListener implements ActionListener{
                 private Course c1;
                 private SimpleSearch p;
-                private String keyword;
-                public viewListener(Course cIn1, SimpleSearch p, String keyword){
+                private ArrayList<Course> cList;
+                public viewListener(Course cIn1, SimpleSearch p, ArrayList<Course> cList){
                     this.c1 = cIn1;
                     this.p = p;
-                    this.keyword = keyword;
-               }
+                    this.cList = cList;
+                }
                 public void actionPerformed(ActionEvent e){
                     this.p.display.removeAll();
                     this.p.display.revalidate();
@@ -195,27 +203,28 @@ public class SimpleSearch{
                     this.p.display.add(buttonPanel, BorderLayout.SOUTH);
                     class backListener implements ActionListener{
                         private SimpleSearch outer;
-                        private String keyW;
-                        public backListener(SimpleSearch outerIn, String keyW){
+                        private ArrayList<Course> cList1;
+                        public backListener(SimpleSearch outerIn, ArrayList<Course> cList1){
                             this.outer = outerIn;
-                            this.keyW = keyW;
+                            this.cList1 = cList1;
                         }
                         public void actionPerformed(ActionEvent e){
                             this.outer.display.removeAll();
                             this.outer.display.revalidate();
                             this.outer.display.repaint();
                             this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-                            this.outer.display.add(this.outer.getCourses(this.keyW), BorderLayout.SOUTH);
+                            this.outer.display.add(this.outer.getCourses(this.cList1), BorderLayout.SOUTH);
                         }
                     }
-                    back.addActionListener(new backListener(this.p,this.keyword));
+                    back.addActionListener(new backListener(this.p,this.cList));
+                    this.p.display.add(buttonPanel, BorderLayout.SOUTH);
                 }
             }
             
-            view.addActionListener(new viewListener(c,this, key));
+            view.addActionListener(new viewListener(c,this, list));
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
-
+            
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
             JLabel times = new JLabel("Times");
@@ -255,9 +264,10 @@ public class SimpleSearch{
             
         }
         this.cDisplay = courses;
-
+        
     }
 
+    
     /**
      @return sets panel to a blank panel and returns it
      */
@@ -270,6 +280,14 @@ public class SimpleSearch{
      */
     public JPanel getCourses(String key){
         this.setCourses(key);
+        return this.cDisplay;
+    }
+    
+    /**
+     @return Calls the setCourses using an arrayList of Courses and returns the resulting panel
+     */
+    public JPanel getCourses(ArrayList<Course> list){
+        this.setCourses(list);
         return this.cDisplay;
     }
     
