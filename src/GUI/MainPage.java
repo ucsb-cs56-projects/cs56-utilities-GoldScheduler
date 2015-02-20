@@ -44,7 +44,43 @@ public class MainPage extends JPanel{
         
         
         search= new JButton("Search");
-        viewSched = new JButton("View My Schedule");
+        class searchListener implements ActionListener{
+            private MainPage p;
+            private SimpleSearch s;
+            public searchListener(MainPage p, SimpleSearch s){
+                this.p = p;
+                this.s = s;
+            }
+            @Override
+            public void actionPerformed(ActionEvent e){
+                this.p.removeAll();
+                this.p.revalidate();
+                this.p.repaint();
+                this.p.add(this.s.getDisplay(), BorderLayout.NORTH);
+                JPanel buttonPanel = new JPanel();
+                JButton back = new JButton("Back");
+                buttonPanel.add(back);
+                buttonPanel.setBackground(Color.LIGHT_GRAY);
+                this.p.add(buttonPanel, BorderLayout.SOUTH);
+                class backListener implements ActionListener{
+                    private MainPage outer;
+                    public backListener(MainPage outerIn){
+                        this.outer = outerIn;
+                    }
+                    public void actionPerformed(ActionEvent e){
+                        this.outer.removeAll();
+                        this.outer.revalidate();
+                        this.outer.repaint();
+                        this.outer.add(new MainPage());
+                    }
+                }
+                back.addActionListener(new backListener(this.p));
+
+            }
+        }
+        search.addActionListener(new searchListener(this, new SimpleSearch()));
+        
+        
         changeInfo = new JButton("Edit User Information");
         logout = new JButton("Log out");
         logout.addActionListener(new ActionListener() {
@@ -56,6 +92,7 @@ public class MainPage extends JPanel{
         	
         });
         
+        viewSched = new JButton("View My Schedule");
         class schedListener implements ActionListener{
             private MainPage p;
             private Scheduler s;

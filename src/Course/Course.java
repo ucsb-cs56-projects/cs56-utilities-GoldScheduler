@@ -54,7 +54,7 @@ public class Course{
      */
     public JPanel getPanel(){
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(500, 600));
+        panel.setPreferredSize(new Dimension(500, 575));
         Color myColor = this.lectInfo.col;
         int countRows = 7;
         for(int i = 0; i<this.preReqs.length; i++){

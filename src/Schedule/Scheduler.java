@@ -17,7 +17,7 @@ import Course.Lecture;
  *It will also has a panel instance that will be used for displayins
  */
 public class Scheduler {
-    ArrayList<Course> courseList;
+    private ArrayList<Course> courseList;
     private JPanel mainPanel;
     private JPanel panel;
     private JPanel controlPanel;
