@@ -302,11 +302,8 @@ public class SimpleSearch{
     public ArrayList<Course> getResults(String key) {
     	
     	
-    	
-    	
-    	
-    	
-    	
+    	//Course Code is not the real course code. It's my course code :)
+    	//Location is empty String. preReqs is empty Course array. restrictions is empty String array
     	
     	try {
 			return CourseConnection.SearchFullTitle(key);

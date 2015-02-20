@@ -76,7 +76,7 @@ public class CourseConnection extends GolderConnection{
 			        	
 			        	while (rsL.next()) {
 			        		
-			        		Lecture q = new Lecture(rsL.getString("instructor_name"), rsL.getInt("start_time"),  rsL.getInt("end_time"), deCodeWeek(rsL.getInt("week")), "", "", new Color(169,226,195));
+			        		Lecture q = new Lecture(rsL.getString("instructor_name"), rsL.getInt("start_time"),  rsL.getInt("end_time"), deCodeWeek(rsL.getInt("week")), "", rsL.getString("id"), new Color(169,226,195));
 			                Course r = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
 			                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
 			                		deCodeGEFill(rs.getInt(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(12), rs.getInt(13), rs.getString(14), rs.getInt(15), rs.getInt(16))
@@ -98,7 +98,7 @@ public class CourseConnection extends GolderConnection{
 		
 	}
 	
-	public static char [] deCodeWeek(int w) {
+	private static char [] deCodeWeek(int w) {
 		
 		boolean [] d = new boolean[7];
 		
@@ -152,7 +152,7 @@ public class CourseConnection extends GolderConnection{
 		
 	}
 	
-	public static String[] deCodeGEFill(int b, String c, int d, int e, int f, int g, int h, int ethnic, int euro, String quantitative, int world_culture, int writ) {
+	private static String[] deCodeGEFill(int b, String c, int d, int e, int f, int g, int h, int ethnic, int euro, String quantitative, int world_culture, int writ) {
 		
 		int count = 0;
 		System.out.println(""+ b + d + e + f + g + h + ethnic + euro + world_culture +writ);
