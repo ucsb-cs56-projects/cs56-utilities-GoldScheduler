@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
+import Course.*;
+import Search.*;
+import Schedule.*;
+
 /**
 * Register Panel
 * @author Wesley Pollek
