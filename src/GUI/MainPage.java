@@ -8,10 +8,7 @@ import javax.swing.*;
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
 import Course.*;
-<<<<<<< HEAD
-=======
 import Search.*;
->>>>>>> 92f78825a4c1fc5bdeeb173f8fcaaf4857ea7b76
 import Schedule.*;
 
 /**
