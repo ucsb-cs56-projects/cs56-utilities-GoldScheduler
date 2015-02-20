@@ -20,16 +20,24 @@ import Schedule.*;
 * @author Forrest Sun
 * @version Feb 12 2015
 */
-public class MainPage extends JPanel{
-    JPanel control;
-    JPanel[] buttons;
-    JPanel display;
-    JButton search;
-    JButton viewSched;
-    JButton changeInfo;
-    JButton logout;
+public class MainPage {
+    public JPanel main;
+    private JPanel control;
+    private JPanel[] buttons;
+    private JPanel display;
+    private JButton search;
+    private JButton viewSched;
+    private JButton changeInfo;
+    private JButton logout;
+    private Scheduler mySchedule;
+    
     public MainPage(){
-	display =new JPanel();
+        mySchedule = new Scheduler();
+    }
+    
+    public void setDisplay(){
+        main = new JPanel();
+        display =new JPanel();
         control=new JPanel();
         buttons = new JPanel[4];
         control.setLayout(new GridLayout(4,0));
@@ -40,7 +48,6 @@ public class MainPage extends JPanel{
         //Get saved schedule or make new
         //if(saved schedule)...
         //else
-        Scheduler mySchedule = new Scheduler();
         
         
         search= new JButton("Search");
@@ -53,43 +60,43 @@ public class MainPage extends JPanel{
             }
             @Override
             public void actionPerformed(ActionEvent e){
-                this.p.removeAll();
-                this.p.revalidate();
-                this.p.repaint();
-                this.p.add(this.s.getDisplay(), BorderLayout.NORTH);
+                this.p.main.removeAll();
+                this.p.main.revalidate();
+                this.p.main.repaint();
+                this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
                 JPanel buttonPanel = new JPanel();
                 JButton back = new JButton("Back");
                 buttonPanel.add(back);
                 buttonPanel.setBackground(Color.LIGHT_GRAY);
-                this.p.add(buttonPanel, BorderLayout.SOUTH);
+                this.p.main.add(buttonPanel, BorderLayout.SOUTH);
                 class backListener implements ActionListener{
                     private MainPage outer;
                     public backListener(MainPage outerIn){
                         this.outer = outerIn;
                     }
                     public void actionPerformed(ActionEvent e){
-                        this.outer.removeAll();
-                        this.outer.revalidate();
-                        this.outer.repaint();
-                        this.outer.add(new MainPage());
+                        this.outer.main.removeAll();
+                        this.outer.main.revalidate();
+                        this.outer.main.repaint();
+                        this.outer.main.add(this.outer.getDisplay());
                     }
                 }
                 back.addActionListener(new backListener(this.p));
-
+                
             }
         }
-        search.addActionListener(new searchListener(this, new SimpleSearch()));
+        search.addActionListener(new searchListener(this, new SimpleSearch(mySchedule)));
         
         
         changeInfo = new JButton("Edit User Information");
         logout = new JButton("Log out");
         logout.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Golder.goToLogin();
-			}
-        	
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Golder.goToLogin();
+            }
+            
         });
         
         viewSched = new JButton("View My Schedule");
@@ -104,51 +111,55 @@ public class MainPage extends JPanel{
             
             @Override
             public void actionPerformed(ActionEvent e){
-                this.p.removeAll();
-                this.p.revalidate();
-                this.p.repaint();
-                this.p.add(this.s.getMain(), BorderLayout.NORTH);
+                this.p.main.removeAll();
+                this.p.main.revalidate();
+                this.p.main.repaint();
+                this.p.main.add(this.s.getMain(), BorderLayout.NORTH);
                 JPanel buttonPanel = new JPanel();
                 JButton back = new JButton("Back");
                 buttonPanel.add(back);
                 buttonPanel.setBackground(Color.LIGHT_GRAY);
-                this.p.add(buttonPanel, BorderLayout.SOUTH);
+                this.p.main.add(buttonPanel, BorderLayout.SOUTH);
                 class backListener implements ActionListener{
                     private MainPage outer;
                     public backListener(MainPage outerIn){
                         this.outer = outerIn;
                     }
                     public void actionPerformed(ActionEvent e){
-                        this.outer.removeAll();
-                        this.outer.revalidate();
-                        this.outer.repaint();
-                        this.outer.add(new MainPage());
+                        this.outer.main.removeAll();
+                        this.outer.main.revalidate();
+                        this.outer.main.repaint();
+                        this.outer.main.add(this.outer.getDisplay());
                     }
                 }
                 back.addActionListener(new backListener(this.p));
-
+                
             }
         }
         
         viewSched.addActionListener(new schedListener(this, mySchedule));
-	BufferedImage pic;
-	Image rpic;
-	JLabel logo=new JLabel();
+        BufferedImage pic;
+        Image rpic;
+        JLabel logo=new JLabel();
         try{
-	      pic = ImageIO.read(new File("src/GUI/theLogo.png"));
-	      rpic = pic.getScaledInstance(400,303, Image.SCALE_SMOOTH);
-	      logo = new JLabel(new ImageIcon(rpic));
-	}catch(IOException e){System.out.println("no image");}
-	display.add(logo);
+            pic = ImageIO.read(new File("src/GUI/theLogo.png"));
+            rpic = pic.getScaledInstance(400,303, Image.SCALE_SMOOTH);
+            logo = new JLabel(new ImageIcon(rpic));
+        }catch(IOException e){System.out.println("no image");}
+        display.add(logo);
         buttons[0].add(search);
         buttons[1].add(viewSched);
         buttons[2].add(changeInfo);
         buttons[3].add(logout);
-        this.setLayout(new BorderLayout());
-        this.add(control, BorderLayout.WEST);
-        this.add(display, BorderLayout.EAST);
-	
-        }
+        this.main.setLayout(new BorderLayout());
+        this.main.add(control, BorderLayout.WEST);
+        this.main.add(display, BorderLayout.EAST);
+    }
+    
+    public JPanel getDisplay(){
+        this.setDisplay();
+        return this.main;
+    }
     /* public static void main(String[]args){
     JFrame frame = new JFrame("test");
 	
