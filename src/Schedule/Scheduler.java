@@ -359,6 +359,7 @@ public class Scheduler {
             int start = g.getLect().timeStart;
             int end = g.getLect().timeEnd;
             Lecture lect = g.getLect();
+            Lecture sect = g.getSect();
             //Find how many panels needed
             int numPanels = 0;
             if(end-start==50){
@@ -532,7 +533,30 @@ public class Scheduler {
                     panelHolder[row+3][column].setBackground(lect.col);
                 }
             }
+            //Add section. There will only be one
+            JLabel sectionLabelTitle = new JLabel();
+            sectionLabelTitle.setText(g.courseID);
+            sectionLabelTitle.setBackground(sect.col);
+            sectionLabelTitle.setOpaque(true);
+            
+            JLabel sectionLabelTime = new JLabel();
+            sectionLabelTime.setText(sect.timeStartString() + " - " + sect.timeEndString());
+            sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
+            sectionLabelTime.setBackground(sect.col);
+            sectionLabelTime.setOpaque(true);
+            
+            row = this.timeSlot(sect.timeStart)-1;
+            column = this.daySlot(sect.days[0]);
+            //Labels
+            panelHolder[row][column].add(sectionLabelTitle);
+            panelHolder[row+1][column].add(sectionLabelTime);
+            //Background
+            panelHolder[row][column].setBackground(sect.col);
+            panelHolder[row+1][column].setBackground(sect.col);
+            
+            
         }
+        
         panel.setPreferredSize(new Dimension(600, 600));
         this.panel = panel;
     }

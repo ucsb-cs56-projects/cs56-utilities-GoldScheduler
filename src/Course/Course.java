@@ -20,11 +20,13 @@ public class Course{
     public final String[] restrictions;
     public final String[] geFulfill;
     private Lecture lectInfo;
+    private Lecture sectInfo;
     private JButton view;
     
     
     public Course(String courseID, String title, String fullTitle, String dept, String units,
-                  Course[] preReqs, String[] restrictions, String[] geFulfill, Lecture lectInfo){
+                  Course[] preReqs, String[] restrictions, String[] geFulfill, Lecture lectInfo,
+                  Lecture sectInfo){
         this.courseID = courseID;
         this.title = title;
         this.fullTitle = fullTitle;
@@ -34,6 +36,7 @@ public class Course{
         this.restrictions = restrictions;
         this.geFulfill = geFulfill;
         this.lectInfo = lectInfo;
+        this.sectInfo = sectInfo;
     }
     //Methods for only private member variable
     public Lecture getLect(){
@@ -42,9 +45,16 @@ public class Course{
     public void setLect(Lecture lectInfo){
         this.lectInfo = lectInfo;
     }
+    public Lecture getSect(){
+        return this.sectInfo;
+    }
+    public void setSect(Lecture sectInfo){
+        this.sectInfo = sectInfo;
+    }
     
     public void setColor(Color c){
         lectInfo.col = c;
+        sectInfo.col = c;
     }
     public JButton getView(){
         return this.view;
@@ -56,7 +66,7 @@ public class Course{
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(500, 575));
         Color myColor = this.lectInfo.col;
-        int countRows = 7;
+        int countRows = 9;
         for(int i = 0; i<this.preReqs.length; i++){
             countRows++;
         }
@@ -93,6 +103,8 @@ public class Course{
         JLabel ti = new JLabel("Time: ");
         JLabel dayList = new JLabel("Days: ");
         JLabel l = new JLabel("Location: ");
+        JLabel sectTime = new JLabel("Section Time: ");
+        JLabel sectLoc = new JLabel("Section Location: ");
         Font font = t.getFont();
         Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
         t.setFont(boldFont);
@@ -102,6 +114,8 @@ public class Course{
         ti.setFont(boldFont);
         dayList.setFont(boldFont);
         l.setFont(boldFont);
+        sectTime.setFont(boldFont);
+        sectLoc.setFont(boldFont);
         
         
         String myUnits = "" + this.units;
@@ -114,6 +128,8 @@ public class Course{
         JLabel time = new JLabel(this.lectInfo.timeStartString() + " - " + this.lectInfo.timeEndString());
         JLabel day = new JLabel(this.lectInfo.dayString());
         JLabel location = new JLabel(this.lectInfo.location);
+        JLabel sTime = new JLabel(this.sectInfo.timeStartString()+ " - " + this.sectInfo.timeEndString());
+        JLabel sLoc = new JLabel(this.sectInfo.location);
 
         
         panelHolder[0][0].add(t, BorderLayout.EAST);
@@ -144,6 +160,15 @@ public class Course{
         panelHolder[6][0].setBackground(myColor);
         panelHolder[6][1].add(location, BorderLayout.WEST);
         panelHolder[6][1].setBackground(myColor);
+        panelHolder[7][0].add(sectTime, BorderLayout.EAST);
+        panelHolder[7][0].setBackground(myColor);
+        panelHolder[7][1].add(sTime, BorderLayout.WEST);
+        panelHolder[7][1].setBackground(myColor);
+        panelHolder[8][0].add(sectLoc, BorderLayout.EAST);
+        panelHolder[8][0].setBackground(myColor);
+        panelHolder[8][1].add(sLoc, BorderLayout.WEST);
+        panelHolder[8][1].setBackground(myColor);
+        
         
         JLabel p = new JLabel("PreRequisites: ");
         JLabel g = new JLabel("May apply to GE Requirements: ");

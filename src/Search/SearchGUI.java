@@ -21,11 +21,5 @@ public class SearchGUI {
         mainPanel.add(s.getDisplay(), BorderLayout.SOUTH);
         frame.add(mainPanel);
         frame. setVisible(true);
-        
-        /*JFrame frame2 = new JFrame();
-        frame2. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-        frame2. setSize(910,627);
-        frame2.add(s.displaySchedule());
-        frame2. setVisible(true);*/
     }
 }

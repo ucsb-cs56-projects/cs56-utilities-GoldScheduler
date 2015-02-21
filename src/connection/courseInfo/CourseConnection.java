@@ -70,9 +70,9 @@ public class CourseConnection extends GolderConnection{
 		        
 		        
 		        while (rs.next()) {
+		        	//TODO Fix contructor. Add Lecture object representing section to list of arguments. It should be the last one
 		        	
-		        	
-
+/*
 			        		
 			        		Lecture q = new Lecture(rs.getString("instructor_name"), rs.getInt("start_time"),  rs.getInt("end_time"), deCodeWeek(rs.getInt("week")), "", rs.getString("id"), new Color(169,226,195));
 			                Course r = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
@@ -81,7 +81,7 @@ public class CourseConnection extends GolderConnection{
 			                		, q);
 			        		
 			        		ca.add(r);
-			        	
+			        	*/
 
 		        }
 		        

@@ -160,12 +160,4 @@ public class MainPage {
         this.setDisplay();
         return this.main;
     }
-    /* public static void main(String[]args){
-    JFrame frame = new JFrame("test");
-	
-	frame.setSize(1080,720);
-	frame.setContentPane(new MainPage());
-	frame.setVisible(true);
-	frame.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-	}*/
 }

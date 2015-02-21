@@ -1,6 +1,4 @@
 package GUI;
-
-//import java.awt.*;
 import javax.swing.*;
 import java.sql.SQLException;
 
@@ -32,7 +30,6 @@ public class Golder {
         
         l = new Login();
         ca = new CreateAccount();
-        //m = new MainPage();
         MainPage mainp = new MainPage();
         m = mainp.getDisplay();
         goToLogin();
