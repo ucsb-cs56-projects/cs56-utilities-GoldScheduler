@@ -1,9 +1,11 @@
 package Search;
+import Schedule.*;
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import Course.Course;
-import Course.Lecture;package Search;
+import Course.Lecture;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -12,24 +14,32 @@ import Course.Lecture;
 
 public class AdvancedSearch extends JPanel {
     private JPanel display;
-    private Jpanel control;
+    private JPanel control;
     private Scheduler schedule;
     
     String[] searchOptions = {"Department", "Professor", "General Education"};
 
     public AdvancedSearch(){
-	this.schedule = new Scheduler();
+	   this.schedule = new Scheduler();
     }
     public AdvancedSearch(Scheduler s){
-	this.schedule = s;
+	   this.schedule = s;
     }
 
+
+    public JPanel getControl() {
+        return this.control;
+    }
+
+    public ArrayList<Course> getCourses() {
+        return this.schedule.getCourses();
+    }
     /**
     Initializes the display
     */
     public void setDisplay(){
 	//Initialize panel
-	Jpanel panel = new JPanel();
+	JPanel panel = new JPanel();
 	panel.setPreferredSize(new Dimension(910,600));
 	panel.setLayout(new BorderLayout());
 
@@ -64,29 +74,32 @@ public class AdvancedSearch extends JPanel {
         }
 
 	//make components
-       	JLabel searchLabel = new JLabel("Choose an option");
-	JRadioButton radioButtons = new JRadioButton[3];
-	for(int i=0;i<3;i++){
-	    radioButtons[i] = new JRadioButton(searchOptions[i]);
-	}
+        JLabel searchLabel = new JLabel("Choose an option");
+        JRadioButton [] radioButtons = new JRadioButton[3];
+
+        for(int i=0;i<3;i++){
+	       radioButtons[i] = new JRadioButton(searchOptions[i]);
+        }
+    }
+
 	class populateOptions implements ActionListener{
 	    private JRadioButton button;
 	    private AdvancedSearch a;
 
-	    public populateOptions(JRadioButton button, AdvancedSearch a;){
-		this.button = button;
-		this.a = a;
+	    public populateOptions(JRadioButton button, AdvancedSearch a){
+		  this.button = button;
+		  this.a = a;
 	    }
 
 	    //populates the next menu with items related to that search option 
 	    public void actionPerformed(ActionEvent e){
-		"Stub";
+		//"Stub";
 	    }
-	}
-	panelHolder[0].add(searchLabel);
+
+        /*panelHolder[0].add(searchLabel);
         for(int i=0; i<3; i++){
-	    panelHolder[1].add(radioButtons[i]);
-	}
+	       panelHolder[1].add(radioButtons[i]);
+        }*/
     }
 }
 			  	       	       		    		      	       

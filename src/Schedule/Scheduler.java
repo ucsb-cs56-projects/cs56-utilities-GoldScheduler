@@ -22,6 +22,11 @@ public class Scheduler {
     private JPanel panel;
     private JPanel controlPanel;
     
+
+    public ArrayList<Course> getCourses() {
+        return this.courseList;
+    }
+
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule
     public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
