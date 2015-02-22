@@ -23,9 +23,13 @@ public class Scheduler {
     private JPanel controlPanel;
     
 
-    public ArrayList<Course> getCourses() {
+    /*
+     I intentionally did not put a method to get the courseList, as there should be no reason that
+     we should need it outside of this class
+     public ArrayList<Course> getCourses() {
         return this.courseList;
     }
+     */
 
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule
     public Scheduler(ArrayList<Course> courseList){
@@ -112,9 +116,22 @@ public class Scheduler {
                     return true;
             }
         }
+        else if(c.getSect().timeStart<=d.getSect().timeStart){
+            //Check if they start at the same time
+            if(c.getSect().timeStart==d.getSect().timeStart)
+                return true;
+            else{
+                //c starts first, so we need d to start at the same time or
+                //after c.timeEnd
+                if(d.getSect().timeStart>=c.getSect().timeEnd)
+                    return false;
+                else
+                    return true;
+            }
+        }
         else{
             //c.timeStart>d.timeStart, so it must start later
-            if(c.getLect().timeStart>=d.getLect().timeEnd)
+            if(c.getSect().timeStart>=d.getSect().timeEnd)
                 return false;
             else
                 return true;

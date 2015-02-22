@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
 import Schedule.Scheduler;
-import connection.courseInfo.CourseConnection;;
+import connection.courseInfo.CourseConnection;
 
 
 /**
