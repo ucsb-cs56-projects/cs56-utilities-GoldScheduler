@@ -131,11 +131,20 @@
       </javac>
   </target>
   
-  <target name="runSearch" depends="init,compileSearch" description="run the Search program">
+  <target name="runSearch" depends="init,compileSearch" description="run the Simple Search program">
       <java fork="true" classname="Search.SearchGUI" classpath="build">
           <classpath>
               <pathelement location="build"/>
 			  <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+          </classpath>
+      </java>
+  </target>
+  
+  <target name="runASearch" depends="init,compileSearch" description="run the Advanced Search program">
+      <java fork="true" classname="Search.AdvancedSearchGUI" classpath="build">
+          <classpath>
+              <pathelement location="build"/>
+              <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
           </classpath>
       </java>
   </target>
