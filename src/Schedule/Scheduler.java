@@ -131,7 +131,9 @@ public class Scheduler {
         }
         else{
             //c.timeStart>d.timeStart, so it must start later
-            if(c.getSect().timeStart>=d.getSect().timeEnd)
+            if(c.getLect().timeStart>=d.getLect().timeEnd)
+                return false;
+            else if(c.getSect().timeStart>=d.getSect().timeEnd)
                 return false;
             else
                 return true;
