@@ -14,6 +14,8 @@ import Course.*;
 import Search.*;
 import Schedule.*;
 
+import connection.userInfo.User;
+
 /**
 * Register Panel
 * @author Wesley Pollek
@@ -31,8 +33,14 @@ public class MainPage {
     private JButton logout;
     private Scheduler mySchedule;
     
-    public MainPage(){
+    private User u;
+    /**
+     * 
+     * @param u
+     */
+    public MainPage(User u){
         mySchedule = new Scheduler();
+        this.u = u;
     }
     
     /** 
@@ -157,7 +165,13 @@ public class MainPage {
             
         }
     }
-
-
+    
+    void setUser(User u) {
+    	this.u=u;
+    }
+    
+    void clean() {
+    	//TODO anything need to be cleaned up before another user login?
+    }
 
 }

@@ -1,8 +1,11 @@
 package GUI;
 import javax.swing.*;
+
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+
+import connection.userInfo.User;
 
 
 /**
@@ -13,11 +16,12 @@ import javax.swing.JFrame;
  */
 public class Golder {
     
-    static JFrame window;
+    public static JFrame window;
     
     static Login l;
     static CreateAccount ca;
     static JPanel m;
+    static MainPage mainp;
 
     public static void main (String[] args) throws SQLException{
         window = new JFrame("GOLDER");
@@ -30,7 +34,7 @@ public class Golder {
         
         l = new Login();
         ca = new CreateAccount();
-        MainPage mainp = new MainPage();
+        mainp = new MainPage(null);
         m = mainp.getDisplay();
         goToLogin();
     }
@@ -47,7 +51,9 @@ public class Golder {
         window.validate();
     }
     
-    public static void goToMain() {
+    public static void goToMain(User u) {
+    	mainp.setUser(u);
+    	mainp.clean();
         window.setContentPane(m);
         window.validate();
     }

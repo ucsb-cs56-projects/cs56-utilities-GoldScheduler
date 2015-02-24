@@ -5,9 +5,11 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.io.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
 
 /**
@@ -98,7 +100,10 @@ public class Login extends JPanel{
 	    if(ID == -3) wrong.setText("No Connection");
 	    else if (ID==-2) wrong.setText("Incorrect Password");
 	    else if (ID==-1) wrong.setText("Not a Valid Username");
-	    else Golder.goToMain();
+	    else {
+	    	User u = connection.userInfo.UsersConnection.getInfo(ID);
+	    	Golder.goToMain(u);
+	    }
 	    
     }
     /*

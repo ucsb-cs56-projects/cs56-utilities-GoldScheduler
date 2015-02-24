@@ -41,7 +41,7 @@ public class CourseConnection extends GolderConnection{
 		        
 		        for (int i = 1; i < m.length; i++) {
 		        	rs.next();
-		        	m[i] = rs.getString(2) + " (" + rs.getString(1) + ")";
+		        	m[i] = rs.getString(3) + " (" + rs.getString(1) + ")";
 		        }
 		        
 		    }

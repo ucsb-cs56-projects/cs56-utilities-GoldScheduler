@@ -125,6 +125,22 @@ public class UsersConnection extends GolderConnection{
 
 
 		return u;
+	}
+	
+	public static User getInfo(String userName, String password) throws SQLException{
+		
+		User u = null;
+			
+			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND user_password='%s';", userName, password))) {
+		        rs = stmt.getResultSet();
+		        if (rs.isLast()) 
+			        return null;
+		        rs.next();
+		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
+		    }
+
+
+		return u;
 	}	
 	
 	/**

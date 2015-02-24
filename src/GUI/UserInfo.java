@@ -19,7 +19,19 @@ import connection.userInfo.UsersConnection;
  * @version Feb 12 2015
  */
 
-public class CreateAccount extends JPanel{
+public class UserInfo extends JPanel{
+	
+	static private UserInfo hahaha;
+	
+	static {
+		try {
+			hahaha = new UserInfo();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 	
 	JTextField username;
     JLabel userLabel;
@@ -30,54 +42,77 @@ public class CreateAccount extends JPanel{
     JPasswordField password2;
     JLabel passLabel2;
     JLabel pass2Wrong;
+    JPasswordField password1;
+    JLabel passLabel1;
+    JLabel pass1Wrong;
     JTextField email;
     JLabel emailLabel;
     JLabel emailWrong;
 
     JLabel majorLabel;
 
-    JButton createButton;
+    JButton changeButton;
     JButton backButton;
     JComboBox<String> majorList;
+    
+    JLabel update;
+    
+    private User u;
     
     /**
      * Constructor
      * @throws SQLException 
      */
-    public CreateAccount() throws SQLException {
+    private UserInfo() throws SQLException {
+    	
+    	update = new JLabel();
+    	update.setForeground(Color.RED);
+    	
     	username= new JTextField(20);
-    	username.addKeyListener(new KeyValidator());
-        userLabel= new JLabel("Enter Username:");
-        userWrong = new JLabel("*");
+
+    	username.setEditable(false);
+        userLabel= new JLabel("Username:");
+        userWrong = new JLabel();
         userWrong.setForeground(Color.RED);
 
         
         password= new JPasswordField(20);
-        password.addKeyListener(new KeyValidator());
         passLabel= new JLabel("Enter Password:");
-        passWrong = new JLabel("*");
+        passWrong = new JLabel();
         passWrong.setForeground(Color.RED);
         
+        password1= new JPasswordField(20);
+        passLabel1= new JLabel("New Password:");
+        pass1Wrong = new JLabel();
+        pass1Wrong.setForeground(Color.RED);
+        
         password2= new JPasswordField(20);
-        password2.addKeyListener(new KeyValidator());
-        passLabel2= new JLabel("Enter Password again:");
-        pass2Wrong = new JLabel("*");
+        passLabel2= new JLabel("New Password again:");
+        pass2Wrong = new JLabel();
         pass2Wrong.setForeground(Color.RED);
         
         email= new JTextField(20);
-        email.addKeyListener(new KeyValidator());
-        emailLabel= new JLabel("Enter email:");
+        emailLabel= new JLabel("Email:");
         emailWrong = new JLabel();
         emailWrong.setForeground(Color.RED);
         
-        createButton= new JButton("Create");
-        createButton.addActionListener(new CreateButtonValidator());
+        changeButton= new JButton("Submit");
+        changeButton.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			try {
+    				Validator();
+    			} catch (SQLException e1) {
+    				e1.printStackTrace();
+    			}
+    		}
+        });
+        
         backButton = new JButton ("Back");
         backButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Golder.goToLogin();
+				//TODO goto mainpage
 			}
         	
         });
@@ -92,35 +127,43 @@ public class CreateAccount extends JPanel{
         majorList = new JComboBox<String>(majorStrings);
         
         
-        //majorList.addActionListener(this);
+        
         
 
         go();
     }
     
-    /**
-     * Validate when hit enter
-     * @author Forrest Sun
-     *
-     */
-    private class KeyValidator extends KeyAdapter {
-    	public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == 10)
-				try {
-					Validator();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-        }
-    	
-        public void keyTyped(KeyEvent e) {
-            // Do something for the keyTyped event
-        }
-        
-        public void keyPressed(KeyEvent e) {
-            // Do something for the keyPressed event
-        }
-        
+    void init() throws SQLException {
+    	if (u!=null) {
+	    	username.setText(u.getUsername());
+	    	userWrong.setText("");
+	    	
+	    	passWrong.setText("*You must enter password to update your information");
+	    	
+	    	email.setText(u.getEmail());
+	        
+	    	pass1Wrong.setText("");
+	    	pass2Wrong.setText("");
+	    	emailWrong.setText("");
+	    	majorList.setSelectedItem(u.getMajor());
+	    	
+	    	password.setText("");
+	    	password1.setText("");
+	    	password2.setText("");
+    	}
+    }
+    
+    void init(User user) throws SQLException {
+    	u = user;
+    	init();
+    }
+    
+    void setUser(User u) {
+    	this.u=u;
+    }
+    
+    public static UserInfo getUserPanel() {
+    	return hahaha;
     }
     
     /**
@@ -129,15 +172,7 @@ public class CreateAccount extends JPanel{
      * @author Wesley Pollek
      */
 
-    private class CreateButtonValidator implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			try {
-				Validator();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
-    }
+    
     
     /**
      * Validator Check all the information in the TextArea
@@ -147,26 +182,35 @@ public class CreateAccount extends JPanel{
     
 
     public void Validator() throws SQLException {
-    	int tmp;
+    	
+    	update.setText("");
+    	
+    	
+    	
+    	
     	boolean validInfo = true;
-    	String userinfo = username.getText();
+    	
     	String passinfo = new String(password.getPassword());
     	
+    	if (passinfo.equals("")) {passWrong.setText("*You must enter password to update your information"); validInfo=false;}
+    	else if (!passinfo.equals(u.getPassword())) { passWrong.setText("*Wrong password"); validInfo=false;}
+    	else passWrong.setText("");
+    	
+    		
     	
     	
-    	if (userinfo.equals("")) { userWrong.setText("*Please enter a valid username"); validInfo=false;}
-    	else if ((tmp = UsersConnection.getID(userinfo, passinfo)) > 0 || tmp == -2) { userWrong.setText("*Username is in use"); validInfo=false;}
-    	else userWrong.setText("*"); 
     	
-	    if (passinfo.length() < 4) { passWrong.setText("*Password must at least 4 charactor"); validInfo=false;}
-	    else passWrong.setText("*");
+    	
+    	String passinfo1 = new String(password1.getPassword());
+	    if (!passinfo1.equals("") && passinfo1.length() < 4) {pass1Wrong.setText("Password must at least 4 charactor"); validInfo=false;}
+	    else pass1Wrong.setText("");
 	    
 	    String passinfo2 = new String(password2.getPassword());
-	    if (passinfo2.equals(passinfo)) pass2Wrong.setText("*");
+	    if (passinfo2.equals(passinfo1)) pass2Wrong.setText("");
 	    else {pass2Wrong.setText("*Password does not match"); validInfo=false;}
 	    
 	    String emailInfo = email.getText();
-	    if (emailInfo.equals("")) emailWrong.setText("*");
+	    if (emailInfo.equals("") || emailInfo.equals(u.getEmail())) emailWrong.setText("");
 
 	    else {
 	    	//TODO (or not) email checking. Now only allow a-z A-Z 0-9 _ - .
@@ -182,37 +226,42 @@ public class CreateAccount extends JPanel{
 	    	
 	    }
 	    
+	    
+
 
 	    if (validInfo) {
-	    	UsersConnection.Register(userinfo, passinfo, emailInfo, (String)majorList.getSelectedItem());
-	    	User u = connection.userInfo.UsersConnection.getInfo(userinfo,passinfo);
-	    	if (u==null) throw new RuntimeException("Null User");
-	    	Golder.goToMain(u);
+
+	    	if (!emailInfo.equals("") && !emailInfo.equals(u.getEmail())) u.setEmail(emailInfo);
+	    	if (!passinfo1.equals("")) u.setPassword(passinfo1);
+	    	if (!majorList.getSelectedItem().equals(u.getMajor())) u.setMajor((String) majorList.getSelectedItem());
+	    	
+	    	init();
+	    	update.setText("Your information is up-dated");
+	    	passWrong.setText("");
 	    }
-	    
-	    
+    	
+
+
     }
-    /* Test fucntion
-      
+    /** Test fucntion
+     *       
+     * @param args
+     * @throws SQLException
+     */
      
-	public static void main (String[] args){
+	public static void main (String[] args) throws SQLException{
 	    JFrame window = new JFrame();
-		CreateAccount frame = new CreateAccount();
+		UserInfo frame = getUserPanel();
+		frame.init(connection.userInfo.UsersConnection.getInfo(8));
 		window.setContentPane(frame);
 		window.setSize(1080,720);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
 
 	}
-	*/
+	
     
-    public void clean() {
-    	username.setText("");
-    	password.setText("");
-    	password2.setText("");
-    	email.setText("");
-    	majorList.setSelectedIndex(0);
-    }
+
     
     /**
      * The graphic part
@@ -227,11 +276,11 @@ public class CreateAccount extends JPanel{
 			rows[i].setBackground(Color.BLUE);
 			this.add(rows[i]);
 		}
-		GridLayout innergrid = new GridLayout(7, 5);
+		GridLayout innergrid = new GridLayout(8, 5);
 		JPanel innerpanel = new JPanel();
 		innerpanel.setLayout(innergrid);
 		JPanel[][] spot= new JPanel[10][5];
-		for(int m=0;m<7;m++){
+		for(int m=0;m<8;m++){
 		    for (int k=0;k<5;k++){
 			spot[m][k]=new JPanel();
 			spot[m][k].setBackground(Color.YELLOW);
@@ -239,13 +288,16 @@ public class CreateAccount extends JPanel{
 			innerpanel.add(spot[m][k]);
 		    }
 		}
+		
+		spot[0][1].add(update);
+		
 		spot[1][1].add(userLabel);
 		spot[1][2].add(username);
 		spot[1][3].add(userWrong);
 		
-		spot[2][1].add(passLabel);
-		spot[2][2].add(password);
-		spot[2][3].add(passWrong);
+		spot[2][1].add(passLabel1);
+		spot[2][2].add(password1);
+		spot[2][3].add(pass1Wrong);
 		
 		spot[3][1].add(passLabel2);
 		spot[3][2].add(password2);
@@ -259,8 +311,14 @@ public class CreateAccount extends JPanel{
 		spot[5][1].add(majorLabel);
 		spot[5][2].add(majorList);
 
-		spot[6][1].add(createButton);
-		spot[6][2].add(backButton);
+		
+		
+		spot[6][1].add(passLabel);
+		spot[6][2].add(password);
+		spot[6][3].add(passWrong);
+		
+		spot[7][1].add(changeButton);
+		spot[7][2].add(backButton);
 
 		rows[1].add(innerpanel);
 
