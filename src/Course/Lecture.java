@@ -1,8 +1,11 @@
 package Course;
 import java.awt.Color;
-//Lecture will include all of the information that we could potentially want to change
-//If that's the case, we could just create a new instance of Lecture, so all of these
-//are public and final to make things easy
+
+/**
+* Lecture will include all of the information that we could potentially want to change
+*If that's the case, we could just create a new instance of Lecture, so all of these
+*are public and final to make things easy
+ */
 public class Lecture{
     public final String professor;
     //Time can be represented by military time, 4 digits
@@ -12,7 +15,6 @@ public class Lecture{
     public final String location;
     public final String courseCode;
     public Color col;
-    //TODO make section
     
     
     public Lecture(String professor, int timeStart, int timeEnd, char[] days, String location, String courseCode, Color col){
@@ -24,7 +26,9 @@ public class Lecture{
         this.courseCode = courseCode;
         this.col = col;
     }
-    //Returns the times as strings
+    /**
+     @return The time start as a string
+     */
     public String timeStartString(){
         String min = "";
         if(this.timeStart%100==0)
@@ -41,6 +45,9 @@ public class Lecture{
             return (this.timeStart/100)-12 + ":" + min + " PM";
         }
     }
+    /**
+     @return The time end as a string
+     */
     public String timeEndString(){
         String min = "";
         if(this.timeEnd%100==0)
@@ -58,6 +65,9 @@ public class Lecture{
         }
     }
     
+    /**
+     @return The day list as a string
+     */
     public String dayString(){
         String s = "";
         for(int i=0; i<days.length; i++){

@@ -10,6 +10,17 @@ import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 
 
+//TODOs:
+//*Note: these comments are also in the code. This is just to give us an idea
+//of that still needs to be done
+
+//1. make scrollable
+//2. No results to show?
+//3. 4+. Section info
+//4. Auto-generated catch block
+//5. Loading screen while searching
+
+
 /**
  This class will implement the simple search function, which takes a keyword
  from a textbar and searches the database for matches.
@@ -64,7 +75,6 @@ public class SimpleSearch{
      */
     public void setControl(){
         JPanel controlPanel = new JPanel();
-        //Probably want the control panel to be a horizontal row of buttons
         controlPanel.setPreferredSize(new Dimension(500,33));
         controlPanel.setLayout(new GridLayout(1, 3));
         JPanel[] panelHolder = new JPanel[3];
@@ -78,26 +88,6 @@ public class SimpleSearch{
         JLabel searchLabel = new JLabel("Enter course:");
         searchField = new JTextField(20);
         searchButton = new JButton("Submit");
-        //Action listener for showing results
-        class showResults implements ActionListener{
-            private JTextField text;
-            private SimpleSearch s;
-    
-            public showResults(JTextField text, SimpleSearch s){
-                this.text = text;
-                this.s = s;
-            }
-            //populates the page with search results
-            //Calls set courses function
-            public void actionPerformed(ActionEvent e) {
-                String keyword = this.text.getText();
-                this.s.display.removeAll();
-                this.s.display.revalidate();
-                this.s.display.repaint();
-                this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
-                this.s.display.add(this.s.getCourses(keyword), BorderLayout.SOUTH);
-            }
-        }
         searchButton.addActionListener(new showResults(this.searchField, this));
         //Add components
         panelHolder[0].add(searchLabel);
@@ -185,45 +175,6 @@ public class SimpleSearch{
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
             t.setFont(boldFont);
             JButton view = new JButton("View");
-            //Action listener
-            class viewListener implements ActionListener{
-                private Course c1;
-                private SimpleSearch p;
-                private ArrayList<Course> cList;
-                public viewListener(Course cIn1, SimpleSearch p, ArrayList<Course> cList){
-                    this.c1 = cIn1;
-                    this.p = p;
-                    this.cList = cList;
-                }
-                public void actionPerformed(ActionEvent e){
-                    this.p.display.removeAll();
-                    this.p.display.revalidate();
-                    this.p.display.repaint();
-                    this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
-                    JPanel buttonPanel = new JPanel();
-                    JButton back = new JButton("Back");
-                    buttonPanel.add(back);
-                    buttonPanel.setBackground(Color.LIGHT_GRAY);
-                    this.p.display.add(buttonPanel, BorderLayout.SOUTH);
-                    class backListener implements ActionListener{
-                        private SimpleSearch outer;
-                        private ArrayList<Course> cList1;
-                        public backListener(SimpleSearch outerIn, ArrayList<Course> cList1){
-                            this.outer = outerIn;
-                            this.cList1 = cList1;
-                        }
-                        public void actionPerformed(ActionEvent e){
-                            this.outer.display.removeAll();
-                            this.outer.display.revalidate();
-                            this.outer.display.repaint();
-                            this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-                            this.outer.display.add(this.outer.getCourses(this.cList1), BorderLayout.SOUTH);
-                        }
-                    }
-                    back.addActionListener(new backListener(this.p,this.cList));
-                    this.p.display.add(buttonPanel, BorderLayout.SOUTH);
-                }
-            }
             
             view.addActionListener(new viewListener(c,this, list));
             panelNum[0][0].add(t);
@@ -234,8 +185,6 @@ public class SimpleSearch{
             JLabel times = new JLabel("Times");
             JLabel inst = new JLabel("Instructor");
             JLabel loc = new JLabel("Location");
-            //Font font = d.getFont();
-            //Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
             d.setFont(boldFont);
             times.setFont(boldFont);
             inst.setFont(boldFont);
@@ -244,22 +193,7 @@ public class SimpleSearch{
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
-            //TODO Add button
             JButton addToSchedule = new JButton("Add");
-            class addListener implements ActionListener{
-                private Scheduler sch;
-                private Course c;
-                
-                private JPanel display;
-                public addListener(Scheduler sch, Course c){
-                    this.sch = sch;
-                    this.c = c;
-                }
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    this.sch.add(c);
-                }
-            }
             addToSchedule.addActionListener(new addListener(this.schedule,c));
             panelNum[1][4].add(addToSchedule);
             
@@ -339,6 +273,84 @@ public class SimpleSearch{
         return display;
         
     }
-}
+    
+    
+    //ACTION LISTENER CLASSES
+    class viewListener implements ActionListener{
+        private Course c1;
+        private SimpleSearch p;
+        private ArrayList<Course> cList;
+        public viewListener(Course cIn1, SimpleSearch p, ArrayList<Course> cList){
+            this.c1 = cIn1;
+            this.p = p;
+            this.cList = cList;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.p.display.removeAll();
+            this.p.display.revalidate();
+            this.p.display.repaint();
+            this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+            class backListener implements ActionListener{
+                private SimpleSearch outer;
+                private ArrayList<Course> cList1;
+                public backListener(SimpleSearch outerIn, ArrayList<Course> cList1){
+                    this.outer = outerIn;
+                    this.cList1 = cList1;
+                }
+                public void actionPerformed(ActionEvent e){
+                    this.outer.display.removeAll();
+                    this.outer.display.revalidate();
+                    this.outer.display.repaint();
+                    this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
+                    this.outer.display.add(this.outer.getCourses(this.cList1), BorderLayout.SOUTH);
+                }
+            }
+            back.addActionListener(new backListener(this.p,this.cList));
+            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+        }
+    }
+    
+    class showResults implements ActionListener{
+        private JTextField text;
+        private SimpleSearch s;
         
+        public showResults(JTextField text, SimpleSearch s){
+            this.text = text;
+            this.s = s;
+        }
+        //populates the page with search results
+        //Calls set courses function
+        public void actionPerformed(ActionEvent e) {
+            String keyword = this.text.getText();
+            this.s.display.removeAll();
+            this.s.display.revalidate();
+            this.s.display.repaint();
+             //TODO Loading screen while searching
+            this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
+            this.s.display.add(this.s.getCourses(keyword), BorderLayout.SOUTH);
+        }
+    }
+
+    class addListener implements ActionListener{
+        private Scheduler sch;
+        private Course c;
+        
+        private JPanel display;
+        public addListener(Scheduler sch, Course c){
+            this.sch = sch;
+            this.c = c;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            this.sch.add(c);
+        }
+    }
+    
+}
+
 

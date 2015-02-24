@@ -35,6 +35,9 @@ public class MainPage {
         mySchedule = new Scheduler();
     }
     
+    /** 
+     Sets the main display and allows the user to travel between pages
+     */
     public void setDisplay(){
         main = new JPanel();
         display =new JPanel();
@@ -51,40 +54,6 @@ public class MainPage {
         
         
         search= new JButton("Search");
-        class searchListener implements ActionListener{
-            private MainPage p;
-            private SimpleSearch s;
-            public searchListener(MainPage p, SimpleSearch s){
-                this.p = p;
-                this.s = s;
-            }
-            @Override
-            public void actionPerformed(ActionEvent e){
-                this.p.main.removeAll();
-                this.p.main.revalidate();
-                this.p.main.repaint();
-                this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
-                JPanel buttonPanel = new JPanel();
-                JButton back = new JButton("Back");
-                buttonPanel.add(back);
-                buttonPanel.setBackground(Color.LIGHT_GRAY);
-                this.p.main.add(buttonPanel, BorderLayout.SOUTH);
-                class backListener implements ActionListener{
-                    private MainPage outer;
-                    public backListener(MainPage outerIn){
-                        this.outer = outerIn;
-                    }
-                    public void actionPerformed(ActionEvent e){
-                        this.outer.main.removeAll();
-                        this.outer.main.revalidate();
-                        this.outer.main.repaint();
-                        this.outer.main.add(this.outer.getDisplay());
-                    }
-                }
-                back.addActionListener(new backListener(this.p));
-                
-            }
-        }
         search.addActionListener(new searchListener(this, new SimpleSearch(mySchedule)));
         
         
@@ -100,43 +69,6 @@ public class MainPage {
         });
         
         viewSched = new JButton("View My Schedule");
-        class schedListener implements ActionListener{
-            private MainPage p;
-            private Scheduler s;
-            
-            public schedListener(MainPage p, Scheduler s){
-                this.p = p;
-                this.s = s;
-            }
-            
-            @Override
-            public void actionPerformed(ActionEvent e){
-                this.p.main.removeAll();
-                this.p.main.revalidate();
-                this.p.main.repaint();
-                this.p.main.add(this.s.getMain(), BorderLayout.NORTH);
-                JPanel buttonPanel = new JPanel();
-                JButton back = new JButton("Back");
-                buttonPanel.add(back);
-                buttonPanel.setBackground(Color.LIGHT_GRAY);
-                this.p.main.add(buttonPanel, BorderLayout.SOUTH);
-                class backListener implements ActionListener{
-                    private MainPage outer;
-                    public backListener(MainPage outerIn){
-                        this.outer = outerIn;
-                    }
-                    public void actionPerformed(ActionEvent e){
-                        this.outer.main.removeAll();
-                        this.outer.main.revalidate();
-                        this.outer.main.repaint();
-                        this.outer.main.add(this.outer.getDisplay());
-                    }
-                }
-                back.addActionListener(new backListener(this.p));
-                
-            }
-        }
-        
         viewSched.addActionListener(new schedListener(this, mySchedule));
         BufferedImage pic;
         Image rpic;
@@ -160,4 +92,72 @@ public class MainPage {
         this.setDisplay();
         return this.main;
     }
+    
+    
+    
+    //ACTION LISTENER CLASSES
+    
+    class searchListener implements ActionListener{
+        private MainPage p;
+        private SimpleSearch s;
+        public searchListener(MainPage p, SimpleSearch s){
+            this.p = p;
+            this.s = s;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            this.p.main.removeAll();
+            this.p.main.revalidate();
+            this.p.main.repaint();
+            this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.p.main.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.p));
+        }
+    }
+    
+    class backListener implements ActionListener{
+        private MainPage outer;
+        public backListener(MainPage outerIn){
+            this.outer = outerIn;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.outer.main.removeAll();
+            this.outer.main.revalidate();
+            this.outer.main.repaint();
+            this.outer.main.add(this.outer.getDisplay());
+        }
+    }
+
+    
+    class schedListener implements ActionListener{
+        private MainPage p;
+        private Scheduler s;
+        
+        public schedListener(MainPage p, Scheduler s){
+            this.p = p;
+            this.s = s;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e){
+            this.p.main.removeAll();
+            this.p.main.revalidate();
+            this.p.main.repaint();
+            this.p.main.add(this.s.getMain(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.p.main.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.p));
+            
+        }
+    }
+
+
+
 }

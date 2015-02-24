@@ -10,6 +10,22 @@ import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 
+
+//TODOs:
+//*Note: these comments are also in the code. This is just to give us an idea
+//of that still needs to be done
+
+//1. What if there are no results to show?
+//2. Pick new colors
+//3. Section info display
+//4. Count rows for display
+//5. Database - Based on the option selected return a list of profesors, departments, or GE requirements
+//6. Database - Currently stole the method from the simple search, but it will need to be re-implemented
+//for a different set of arguments
+//7. String optionString = WHICH BUTTON WAS CLICKED
+//8. Loading screen while searching
+//9. Make scrollable
+
 public class AdvancedSearch{
     private JPanel display;
     private JPanel control;
@@ -159,45 +175,6 @@ public class AdvancedSearch{
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
             t.setFont(boldFont);
             JButton view = new JButton("View");
-            //Action listener
-            class viewListener implements ActionListener{
-                private Course c1;
-                private AdvancedSearch p;
-                private ArrayList<Course> cList;
-                public viewListener(Course cIn1, AdvancedSearch p, ArrayList<Course> cList){
-                    this.c1 = cIn1;
-                    this.p = p;
-                    this.cList = cList;
-                }
-                public void actionPerformed(ActionEvent e){
-                    this.p.display.removeAll();
-                    this.p.display.revalidate();
-                    this.p.display.repaint();
-                    this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
-                    JPanel buttonPanel = new JPanel();
-                    JButton back = new JButton("Back");
-                    buttonPanel.add(back);
-                    buttonPanel.setBackground(Color.LIGHT_GRAY);
-                    this.p.display.add(buttonPanel, BorderLayout.SOUTH);
-                    class backListener implements ActionListener{
-                        private AdvancedSearch outer;
-                        private ArrayList<Course> cList1;
-                        public backListener(AdvancedSearch outerIn, ArrayList<Course> cList1){
-                            this.outer = outerIn;
-                            this.cList1 = cList1;
-                        }
-                        public void actionPerformed(ActionEvent e){
-                            this.outer.display.removeAll();
-                            this.outer.display.revalidate();
-                            this.outer.display.repaint();
-                            this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-                            this.outer.display.add(this.outer.getCourses(this.cList1), BorderLayout.SOUTH);
-                        }
-                    }
-                    back.addActionListener(new backListener(this.p,this.cList));
-                    this.p.display.add(buttonPanel, BorderLayout.SOUTH);
-                }
-            }
             view.addActionListener(new viewListener(c,this, list));
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
@@ -207,8 +184,6 @@ public class AdvancedSearch{
             JLabel times = new JLabel("Times");
             JLabel inst = new JLabel("Instructor");
             JLabel loc = new JLabel("Location");
-            //Font font = d.getFont();
-            //Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
             d.setFont(boldFont);
             times.setFont(boldFont);
             inst.setFont(boldFont);
@@ -217,22 +192,7 @@ public class AdvancedSearch{
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
-            //TODO Add button
             JButton addToSchedule = new JButton("Add");
-            class addListener implements ActionListener{
-                private Scheduler sch;
-                private Course c;
-                
-                private JPanel display;
-                public addListener(Scheduler sch, Course c){
-                    this.sch = sch;
-                    this.c = c;
-                }
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    this.sch.add(c);
-                }
-            }
             addToSchedule.addActionListener(new addListener(this.schedule,c));
             panelNum[1][4].add(addToSchedule);
             
@@ -257,8 +217,8 @@ public class AdvancedSearch{
     */
     public void setControl(){
         JPanel controlPanel = new JPanel();
-        //int len = this.searchOptions.length;
-        int len = 3;
+        int len = this.searchOptions.length;
+        //int len = 3;
         //Probably want the control panel to be a horizontal row of buttons
         controlPanel.setPreferredSize(new Dimension(500,66));
         controlPanel.setLayout(new GridLayout(2, len));
@@ -276,63 +236,8 @@ public class AdvancedSearch{
         panelHolder[0][0].add(label);
         
         //make buttons
-        //JLabel searchLabel = new JLabel("Choose an option");
         JRadioButton [] radioButtons = new JRadioButton[len];
         ButtonGroup options = new ButtonGroup();
-        
-        class radioListener implements ActionListener{
-            //private JRadioButton button;
-            private JPanel p;
-            private AdvancedSearch a;
-            
-            public radioListener(JPanel p, AdvancedSearch a){
-               // this.button = button;
-                this.p = p;
-                this.a = a;
-            }
-            //populates the next menu with items related to that search option
-            public void actionPerformed(ActionEvent e){
-                //TODO
-                //String optionString = WHICH BUTTON WAS CLICKED
-                String optionString = "Department";
-                String [] menuList = getList(optionString);
-                JComboBox cMenu = new JComboBox(menuList);
-                //Action listener
-                class menuListener implements ActionListener{
-                    //private JPanel p;
-                    private AdvancedSearch a;
-                    private String optionString;
-                    public menuListener(AdvancedSearch a, String optionString){
-                        this.a = a;
-                        this.optionString = optionString;
-                    }
-                    public void actionPerformed(ActionEvent e){
-                        ArrayList<Course> result = new ArrayList<Course>();
-                        JComboBox comboBox = (JComboBox) e.getSource();
-                        String selectedItem = (String)comboBox.getSelectedItem();
-                        if(this.optionString == "Department"){
-                            result = a.getDeptResults(selectedItem);
-                        }
-                        if(this.optionString == "Professor"){
-                            result = a.getProfResults(selectedItem);
-                        }
-                        if(this.optionString == "General Education"){
-                            result = a.getGEResults(selectedItem);
-                        }
-                        this.a.cDisplay.removeAll();
-                        this.a.cDisplay.revalidate();
-                        this.a.cDisplay.repaint();
-                        this.a.cDisplay.add(getCourses(result), BorderLayout.SOUTH);
-                    }
-                }
-                cMenu.addActionListener(new menuListener(this.a, optionString));
-                this.p.removeAll();
-                this.p.revalidate();
-                this.p.repaint();
-                this.p.add(cMenu);
-            }
-        }
-         
         for(int i=0;i<len;i++){
             radioButtons[i] = new JRadioButton(this.searchOptions[i]);
             options.add(radioButtons[i]);
@@ -349,6 +254,7 @@ public class AdvancedSearch{
 
     //GETTING RESULTS
     //TODO based on the option selected return a list of profesors, departments, or GE requirements
+    //Database
     public String[] getList(String s){
         String [] m= {"a","b", "c"};
         return m;
@@ -424,9 +330,119 @@ public class AdvancedSearch{
         return courseList;
 
     }
+    
+    
+    //ACTION LISTENER CLASSES
+    class viewListener implements ActionListener{
+        private Course c1;
+        private AdvancedSearch p;
+        private ArrayList<Course> cList;
+        public viewListener(Course cIn1, AdvancedSearch p, ArrayList<Course> cList){
+            this.c1 = cIn1;
+            this.p = p;
+            this.cList = cList;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.p.display.removeAll();
+            this.p.display.revalidate();
+            this.p.display.repaint();
+            this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.p,this.cList));
+            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+        }
+    }
+    class backListener implements ActionListener{
+        private AdvancedSearch outer;
+        private ArrayList<Course> cList1;
+        public backListener(AdvancedSearch outerIn, ArrayList<Course> cList1){
+            this.outer = outerIn;
+            this.cList1 = cList1;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.outer.display.removeAll();
+            this.outer.display.revalidate();
+            this.outer.display.repaint();
+            this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
+            this.outer.display.add(this.outer.getCourses(this.cList1), BorderLayout.SOUTH);
+        }
+    }
+
+    class radioListener implements ActionListener{
+        //private JRadioButton button;
+        private JPanel p;
+        private AdvancedSearch a;
+        
+        public radioListener(JPanel p, AdvancedSearch a){
+            this.p = p;
+            this.a = a;
+        }
+        //populates the next menu with items related to that search option
+        public void actionPerformed(ActionEvent e){
+            //TODO
+            //String optionString = WHICH BUTTON WAS CLICKED
+            String optionString = "Department";
+            String [] menuList = getList(optionString);
+            JComboBox cMenu = new JComboBox(menuList);
+            cMenu.addActionListener(new menuListener(this.a, optionString));
+            this.p.removeAll();
+            this.p.revalidate();
+            this.p.repaint();
+            this.p.add(cMenu);
+        }
+    }
+
+    class menuListener implements ActionListener{
+        private AdvancedSearch a;
+        private String optionString;
+        public menuListener(AdvancedSearch a, String optionString){
+            this.a = a;
+            this.optionString = optionString;
+        }
+        public void actionPerformed(ActionEvent e){
+            ArrayList<Course> result = new ArrayList<Course>();
+            JComboBox comboBox = (JComboBox) e.getSource();
+            String selectedItem = (String)comboBox.getSelectedItem();
+            if(this.optionString == "Department"){
+                result = a.getDeptResults(selectedItem);
+            }
+            if(this.optionString == "Professor"){
+                result = a.getProfResults(selectedItem);
+            }
+            if(this.optionString == "General Education"){
+                result = a.getGEResults(selectedItem);
+            }
+            this.a.cDisplay.removeAll();
+            this.a.cDisplay.revalidate();
+            this.a.cDisplay.repaint();
+            //TODO Loading screen while searching
+            this.a.cDisplay.add(getCourses(result), BorderLayout.SOUTH);
+        }
+    }
+    
+    class addListener implements ActionListener{
+        private Scheduler sch;
+        private Course c;
+        
+        private JPanel display;
+        public addListener(Scheduler sch, Course c){
+            this.sch = sch;
+            this.c = c;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            this.sch.add(c);
+        }
+    }
+
+    
 }
 
-			       
-			       
-    
+
+
+
    

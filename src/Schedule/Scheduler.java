@@ -10,7 +10,12 @@ import Course.Lecture;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 
+//TODOs:
 
+//1. Check for other restrictions?
+//2. Error not a valid day
+//3. Error for time slot
+//4. Are there any classes that are just one day a week?
 
 /**
  *This class should just take care of adding and removing courses to and from a schedule
@@ -72,6 +77,8 @@ public class Scheduler {
         if(c==null)
             return false;
         for(Course d: this.courseList){
+            //This is bad, I know! timeConflict is a static method, so it shouldn't be called
+            //using this, but will leave it for now in case we decide to change that later
             if(this.timeConflict(c,d)==true)
                 return false;
         }
@@ -100,6 +107,8 @@ public class Scheduler {
      @param Course to be checked for time conflict
      @param Course to be checked against
      @return true if there is time conflict and false if not
+     Currently a static method because I thought this would be the 
+     best implementation. Checks lecture and section.
      */
     public static boolean timeConflict(Course c, Course d){
        //First, check if c starts before d
@@ -622,39 +631,6 @@ public class Scheduler {
             else{
                 cMenu.setSelectedIndex(6);
             }
-            //Action listener
-            class menuListener implements ActionListener{
-                private Course c;
-                private Scheduler sch;
-                public menuListener(Course cIn, Scheduler schIn){
-                    this.c = cIn;
-                    this.sch = schIn;
-                }
-                public void actionPerformed(ActionEvent e){
-                    JComboBox comboBox = (JComboBox) e.getSource();
-                    String selectedItem = (String)comboBox.getSelectedItem();
-                    if(selectedItem.equals("Green"))
-                        this.c.setColor(new Color(169,226,195));
-                    if(selectedItem.equals("Light Blue"))
-                        this.c.setColor(new Color(129,190,247));
-                    if(selectedItem.equals("Yellow"))
-                        this.c.setColor(new Color(253,255,181));
-                    if(selectedItem.equals("Blue"))
-                        this.c.setColor(new Color(73,90,252));
-                    if(selectedItem.equals("Red"))
-                        this.c.setColor(new Color(183,62,62));
-                    if(selectedItem.equals("Orange"))
-                        this.c.setColor(new Color(249,194,164));
-                    if(selectedItem.equals("Purple"))
-                        this.c.setColor(new Color(137,109,143));
-                    this.sch.mainPanel.removeAll();
-                    this.sch.mainPanel.revalidate();
-                    this.sch.mainPanel.repaint();
-                    this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
-                    this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
-                }
-                
-            }
             cMenu.addActionListener(new menuListener(g,this));
             
             panelHolder[slot][0].add(title);
@@ -662,63 +638,12 @@ public class Scheduler {
             JButton view = new JButton("View");
             panelHolder[slot+1][0].add(view);
             
-            //Action listener
-            class viewListener implements ActionListener{
-                Course c1;
-                Scheduler sch1;
-                public viewListener(Course cIn1, Scheduler schIn1){
-                    this.c1 = cIn1;
-                    this.sch1 = schIn1;
-                }
-                public void actionPerformed(ActionEvent e){
-                    this.sch1.mainPanel.removeAll();
-                    this.sch1.mainPanel.revalidate();
-                    this.sch1.mainPanel.repaint();
-                    this.sch1.mainPanel.add(this.c1.getPanel(), BorderLayout.NORTH);
-                    JPanel buttonPanel = new JPanel();
-                    JButton back = new JButton("Back");
-                    buttonPanel.add(back);
-                    buttonPanel.setBackground(Color.LIGHT_GRAY);
-                    this.sch1.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-                    class backListener implements ActionListener{
-                        private Scheduler outer;
-                        public backListener(Scheduler outerIn){
-                            this.outer = outerIn;
-                        }
-                        public void actionPerformed(ActionEvent e){
-                            this.outer.mainPanel.removeAll();
-                            this.outer.mainPanel.revalidate();
-                            this.outer.mainPanel.repaint();
-                            this.outer.mainPanel.add(this.outer.getPanel(), BorderLayout.WEST);
-                            this.outer.mainPanel.add(this.outer.getControl(), BorderLayout.EAST);
-                        }
-                    }
-                    back.addActionListener(new backListener(this.sch1));
-                }
-            }
             
             view.addActionListener(new viewListener(g,this));
             
             
             JButton delete = new JButton("Remove Course");
             panelHolder[slot+1][1].add(delete);
-            //Action listener
-            class deleteListener implements ActionListener{
-                private Scheduler sch;
-                private Course c;
-                public deleteListener(Course c, Scheduler sch){
-                    this.c = c;
-                    this.sch = sch;
-                }
-                public void actionPerformed(ActionEvent e){
-                    this.sch.courseList.remove(this.c);
-                    this.sch.mainPanel.removeAll();
-                    this.sch.mainPanel.revalidate();
-                    this.sch.mainPanel.repaint();
-                    this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
-                    this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
-                }
-            }
             delete.addActionListener(new deleteListener(g,this));
             
             slot+=2;
@@ -727,6 +652,97 @@ public class Scheduler {
         this.controlPanel = control;
     }
     
+    
+    //ACTION LISTENER CLASSES
+    
+    class menuListener implements ActionListener{
+        private Course c;
+        private Scheduler sch;
+        public menuListener(Course cIn, Scheduler schIn){
+            this.c = cIn;
+            this.sch = schIn;
+        }
+        public void actionPerformed(ActionEvent e){
+            JComboBox comboBox = (JComboBox) e.getSource();
+            String selectedItem = (String)comboBox.getSelectedItem();
+            if(selectedItem.equals("Green"))
+                this.c.setColor(new Color(169,226,195));
+            if(selectedItem.equals("Light Blue"))
+                this.c.setColor(new Color(129,190,247));
+            if(selectedItem.equals("Yellow"))
+                this.c.setColor(new Color(253,255,181));
+            if(selectedItem.equals("Blue"))
+                this.c.setColor(new Color(73,90,252));
+            if(selectedItem.equals("Red"))
+                this.c.setColor(new Color(183,62,62));
+            if(selectedItem.equals("Orange"))
+                this.c.setColor(new Color(249,194,164));
+            if(selectedItem.equals("Purple"))
+                this.c.setColor(new Color(137,109,143));
+            this.sch.mainPanel.removeAll();
+            this.sch.mainPanel.revalidate();
+            this.sch.mainPanel.repaint();
+            this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
+            this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
+        }
+        
+    }
+    
+    class deleteListener implements ActionListener{
+        private Scheduler sch;
+        private Course c;
+        public deleteListener(Course c, Scheduler sch){
+            this.c = c;
+            this.sch = sch;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.sch.courseList.remove(this.c);
+            this.sch.mainPanel.removeAll();
+            this.sch.mainPanel.revalidate();
+            this.sch.mainPanel.repaint();
+            this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
+            this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
+        }
+    }
+    
+    class viewListener implements ActionListener{
+        Course c1;
+        Scheduler sch1;
+        public viewListener(Course cIn1, Scheduler schIn1){
+            this.c1 = cIn1;
+            this.sch1 = schIn1;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.sch1.mainPanel.removeAll();
+            this.sch1.mainPanel.revalidate();
+            this.sch1.mainPanel.repaint();
+            this.sch1.mainPanel.add(this.c1.getPanel(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setPreferredSize(new Dimension(900,33));
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.sch1.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.sch1));
+        }
+    }
+    
+    
+    class backListener implements ActionListener{
+        private Scheduler outer;
+        public backListener(Scheduler outerIn){
+            this.outer = outerIn;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.outer.mainPanel.removeAll();
+            this.outer.mainPanel.revalidate();
+            this.outer.mainPanel.repaint();
+            this.outer.mainPanel.add(this.outer.getPanel(), BorderLayout.WEST);
+            this.outer.mainPanel.add(this.outer.getControl(), BorderLayout.EAST);
+        }
+    }
+
+
     
     
 }

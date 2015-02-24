@@ -22,7 +22,7 @@ public class ScheduleGUI{
         //Make frame
         JFrame frame = new JFrame();
         frame. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-        frame. setSize(910,627);
+        frame. setSize(910,650);
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());

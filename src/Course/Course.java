@@ -5,12 +5,16 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import java.util.ArrayList;
-//Course will just store all the data retrieved from the database, so the program doesn't
-//have to consistently communicate with the database.
+/**
+ *Course will just store all the data retrieved from the database, so the program doesn't
+ *have to consistently communicate with the database.
+ */
 public class Course{
-    //All instace variables are public and final, as per Forrest's suggestion
-    //Except lecture because I think for functionality we should be able to change
-    //the lecture time, professor, etc.
+    /*All instace variables are public and final, as per Forrest's suggestion
+    Except lecture because I think for functionality we should be able to change
+    the lecture time, professor, etc.
+     For section: profesor will represent TA
+     */
     public final String courseID;
     public final String title;
     public final String fullTitle;
@@ -64,35 +68,18 @@ public class Course{
      */
     public JPanel getPanel(){
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(500, 575));
+        panel.setPreferredSize(new Dimension(500, 600));
         Color myColor = this.lectInfo.col;
         int countRows = 9;
-        for(int i = 0; i<this.preReqs.length; i++){
-            countRows++;
-        }
-        for(int i = 0; i<this.restrictions.length; i++){
-            countRows++;
-        }
-        for(int i = 0; i<this.geFulfill.length; i++){
-            countRows++;
-        }
-        if(this.preReqs.length ==0){
-            countRows++;
-        }
-        if(this.restrictions.length ==0){
-            countRows++;
-        }
-        if(this.geFulfill.length ==0){
-            countRows++;
-        }
+        countRows+=3;
         panel.setLayout(new GridLayout(countRows,2));
         JPanel[][] panelHolder = new JPanel[countRows][2];
         for(int m = 0; m<countRows; m++){
             for(int n= 0; n<2; n++){
                 panelHolder[m][n] = new JPanel();
                 panelHolder[m][n].setLayout(new BorderLayout());
-                //panelHolder[m][n].setBackground(new Color(193,228,242));
                 panel.add(panelHolder[m][n]);
+                panelHolder[m][n].setBackground(myColor);
             }
         }
         
@@ -133,41 +120,23 @@ public class Course{
 
         
         panelHolder[0][0].add(t, BorderLayout.EAST);
-        panelHolder[0][0].setBackground(myColor);
         panelHolder[0][1].add(title, BorderLayout.WEST);
-        panelHolder[0][1].setBackground(myColor);
         panelHolder[1][0].add(ft, BorderLayout.EAST);
-        panelHolder[1][0].setBackground(myColor);
         panelHolder[1][1].add(fullTitle, BorderLayout.WEST);
-        panelHolder[1][1].setBackground(myColor);
         panelHolder[2][0].add(u, BorderLayout.EAST);
-        panelHolder[2][0].setBackground(myColor);
         panelHolder[2][1].add(units, BorderLayout.WEST);
-        panelHolder[2][1].setBackground(myColor);
         panelHolder[3][0].add(d, BorderLayout.EAST);
-        panelHolder[3][0].setBackground(myColor);
         panelHolder[3][1].add(department, BorderLayout.WEST);
-        panelHolder[3][1].setBackground(myColor);
         panelHolder[4][0].add(ti, BorderLayout.EAST);
-        panelHolder[4][0].setBackground(myColor);
         panelHolder[4][1].add(time, BorderLayout.WEST);
-        panelHolder[4][1].setBackground(myColor);
         panelHolder[5][0].add(dayList, BorderLayout.EAST);
-        panelHolder[5][0].setBackground(myColor);
         panelHolder[5][1].add(day, BorderLayout.WEST);
-        panelHolder[5][1].setBackground(myColor);
         panelHolder[6][0].add(l, BorderLayout.EAST);
-        panelHolder[6][0].setBackground(myColor);
         panelHolder[6][1].add(location, BorderLayout.WEST);
-        panelHolder[6][1].setBackground(myColor);
         panelHolder[7][0].add(sectTime, BorderLayout.EAST);
-        panelHolder[7][0].setBackground(myColor);
         panelHolder[7][1].add(sTime, BorderLayout.WEST);
-        panelHolder[7][1].setBackground(myColor);
         panelHolder[8][0].add(sectLoc, BorderLayout.EAST);
-        panelHolder[8][0].setBackground(myColor);
         panelHolder[8][1].add(sLoc, BorderLayout.WEST);
-        panelHolder[8][1].setBackground(myColor);
         
         
         JLabel p = new JLabel("PreRequisites: ");
@@ -177,14 +146,14 @@ public class Course{
         g.setFont(boldFont);
         r.setFont(boldFont);
         
-        int newCount = 7;
+        int newCount = 9;
         JLabel temp;
-        panelHolder[7][0].add(p, BorderLayout.EAST);
-        panelHolder[7][0].setBackground(myColor);
+        panelHolder[9][0].add(p, BorderLayout.EAST);
+        panelHolder[9][0].setBackground(myColor);
         if(this.preReqs.length==0){
             temp = new JLabel("None");
-            panelHolder[7][1].add(temp, BorderLayout.WEST);
-            panelHolder[7][1].setBackground(myColor);
+            panelHolder[9][1].add(temp, BorderLayout.WEST);
+            panelHolder[9][1].setBackground(myColor);
             newCount++;
         }
         else{
