@@ -71,7 +71,7 @@ public class SimpleSearch{
     
     /**
      Sets the display panel and then returns it.
-     @return the display panel that includes a control panel that you can type a keyword into
+     Creates the display panel that includes a control panel that you can type a keyword into
      */
     public void setControl(){
         JPanel controlPanel = new JPanel();

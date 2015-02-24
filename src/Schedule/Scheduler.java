@@ -70,7 +70,7 @@ public class Scheduler {
         return this.mainPanel;
     }
     /**
-     @param the course that needs to be added
+     @param c the course that needs to be added
      @return whether or not the course was added
      */
     public boolean add(Course c){
@@ -91,7 +91,7 @@ public class Scheduler {
     }
     
     /**
-     @param the course that needs to be removed
+     @param o the course that needs to be removed
      @return whether or not the course was removed
      */
     public boolean remove(Object o){
@@ -104,8 +104,8 @@ public class Scheduler {
     }
     
     /**
-     @param Course to be checked for time conflict
-     @param Course to be checked against
+     @param c Course to be checked for time conflict
+     @param d Course to be checked against
      @return true if there is time conflict and false if not
      Currently a static method because I thought this would be the 
      best implementation. Checks lecture and section.
