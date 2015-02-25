@@ -29,6 +29,7 @@ public class MainPage {
     private JPanel display;
     private JButton search;
     private JButton viewSched;
+	private JButton save; // Added new button for saving schedule
     private JButton changeInfo;
     private JButton logout;
     private Scheduler mySchedule;
@@ -50,7 +51,7 @@ public class MainPage {
         main = new JPanel();
         display =new JPanel();
         control=new JPanel();
-        buttons = new JPanel[4];
+        buttons = new JPanel[4]; 
         control.setLayout(new GridLayout(4,0));
         for(int i=0;i<4;i++){
             buttons[i]= new JPanel();
@@ -78,6 +79,8 @@ public class MainPage {
         
         viewSched = new JButton("View My Schedule");
         viewSched.addActionListener(new schedListener(this, mySchedule));
+
+
         BufferedImage pic;
         Image rpic;
         JLabel logo=new JLabel();
@@ -165,6 +168,7 @@ public class MainPage {
             
         }
     }
+
     
     void setUser(User u) {
     	this.u=u;
