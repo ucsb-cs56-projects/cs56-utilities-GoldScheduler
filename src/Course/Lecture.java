@@ -15,9 +15,11 @@ public class Lecture{
     public final String location;
     public final String courseCode;
     public Color col;
+    public final int id;
     
     
-    public Lecture(String professor, int timeStart, int timeEnd, char[] days, String location, String courseCode, Color col){
+    public Lecture(int id, String professor, int timeStart, int timeEnd, char[] days, String location, String courseCode, Color col){
+    	this.id = id;
         this.professor = professor;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;

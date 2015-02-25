@@ -62,7 +62,7 @@ public class CourseConnection extends GolderConnection{
 		ArrayList<Course> ca = new ArrayList<Course>();
 
 		
-		if (stmt.execute(String.format("SELECT * FROM `spring_15`INNER JOIN `courses` ON spring_15.course_name=courses.course_name WHERE spring_15.corresponding_id = 0 AND (courses.description LIKE '%%%s%%' OR courses.course_name LIKE '%%%s%%');", s, s))) {
+		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name WHERE courses.description LIKE '%%%s%%' OR courses.course_name LIKE '%%%s%%';", s, s))) {
 
 				rs = stmt.getResultSet();
 		        
@@ -72,25 +72,25 @@ public class CourseConnection extends GolderConnection{
 		        while (rs.next()) {
 		        	//TODO Fix contructor. Add Lecture object representing section to list of arguments. It should be the last one
 		        	
-/*
+/**/
 			        		
-			        		Lecture q = new Lecture(rs.getString("instructor_name"), rs.getInt("start_time"),  rs.getInt("end_time"), deCodeWeek(rs.getInt("week")), "", rs.getString("id"), new Color(169,226,195));
+			        		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(169,226,195));
+			        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+			        		
 			                Course r = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
 			                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
-			                		deCodeGEFill(rs.getInt(12), rs.getString(13), rs.getInt(14), rs.getInt(15), rs.getInt(16), rs.getInt(17), rs.getInt(18), rs.getInt(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23))
-			                		, q);
+			                		deCodeGEFill(rs.getInt(18), rs.getString(19), rs.getInt(20), rs.getInt(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25), rs.getInt(26), rs.getString(27), rs.getInt(28), rs.getInt(29))
+			                		, le, se);
 			        		
 			        		ca.add(r);
-			        	*/
+			        		
+			        		System.out.println(ca.size());
 
 		        }
 		        
 
 		}
-			
-		
 
-		
 		return ca;
 		
 	}
