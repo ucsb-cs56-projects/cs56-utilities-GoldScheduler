@@ -147,7 +147,7 @@
   </target>
 
 <target name="compileCourse" depends="init" description="compile Course code">
-    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+    <javac srcdir="src/Course" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
         <classpath>
             <pathelement location="build"/>
         </classpath>
@@ -155,7 +155,7 @@
 </target>
 
   <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">
-      <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+      <javac srcdir="src/Schedule" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
           <classpath>		
               <pathelement location="build"/>		
               <pathelement location="lib/junit-4.10.jar"/>	
@@ -174,8 +174,8 @@
       </java>		
   </target>
   
-  <target name="compileSearch" depends="init" description="compile Search code">
-      <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
+  <target name="compileSearch" depends="init, compileSchedule, compileCourse, compileConnectUser" description="compile Search code">
+      <javac srcdir="src/Search" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
           <classpath>
               <pathelement location="build"/>
               <pathelement location="build/Course"/>
