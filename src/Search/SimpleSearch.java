@@ -16,9 +16,8 @@ import connection.courseInfo.CourseConnection;
 
 //1. make scrollable
 //2. No results to show?
-//3. 4+. Section info
-//4. Auto-generated catch block
-//5. Loading screen while searching
+//3. Auto-generated catch block
+//4. Loading screen while searching
 
 
 /**
@@ -128,9 +127,13 @@ public class SimpleSearch{
     public void setCourses(ArrayList<Course> list){
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(500,567));
+        courses.setBackground(new Color(184,194,247));
         //Call getResults
         ArrayList<Course> courseList = list;
         int numResults = courseList.size();
+        if(numResults == 0){
+            this.setCourses();
+        }
         //Sets up panel as a grid by how many courses there are
         //courses.setLayout(new GridLayout(numResults, 1));
         JPanel[] panels = new JPanel[numResults];
@@ -150,10 +153,9 @@ public class SimpleSearch{
             //rows: 1. title
             //      2. header
             //      3. Lecture info
-            //TODO! 4+. Section info
+            //      4+. Section info
             //columns: 5
             //(Days, times, instrucors, location, addButton)
-            //TODO Count rows
             int rows = 3;
             int columns = 5;
             //for one section
@@ -197,9 +199,6 @@ public class SimpleSearch{
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
-            //JButton addToSchedule = new JButton("Add");
-            //addToSchedule.addActionListener(new addListener(this.schedule,c));
-            //panelNum[1][4].add(addToSchedule);
             
             //Row 3: Lecture info
             JLabel lectDay = new JLabel(thisLecture.dayStringShort());

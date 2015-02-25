@@ -17,14 +17,11 @@ import connection.courseInfo.CourseConnection;
 
 //1. What if there are no results to show?
 //2. Pick new colors
-//3. Section info display
-//4. Count rows for display
-//5. Database - Based on the option selected return a list of profesors, departments, or GE requirements
-//6. Database - Currently stole the method from the simple search, but it will need to be re-implemented
+//3. Database - Based on the option selected return a list of profesors
+//4. Database - Currently stole the method from the simple search, but it will need to be re-implemented
 //for a different set of arguments
-//7. String optionString = WHICH BUTTON WAS CLICKED
-//8. Loading screen while searching
-//9. Make scrollable
+//5. Loading screen while searching
+//6. Make scrollable
 
 public class AdvancedSearch{
     private JPanel display;
@@ -128,9 +125,13 @@ public class AdvancedSearch{
     public void setCourses(ArrayList<Course> list){
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(900,533));
+        courses.setBackground(new Color(184,194,247));
         //Call getResults
         ArrayList<Course> courseList = list;
         int numResults = courseList.size();
+        if(numResults == 0){
+            this.setCourses();
+        }
         //Sets up panel as a grid by how many courses there are
         //courses.setLayout(new GridLayout(numResults, 1));
         JPanel[] panels = new JPanel[numResults];
@@ -150,10 +151,9 @@ public class AdvancedSearch{
             //rows: 1. title
             //      2. header
             //      3. Lecture info
-            //TODO! 4+. Section info
+            //      4+. Section info
             //columns: 5
             //(Days, times, instrucors, location, addButton)
-            //TODO Count rows
             int rows = 3;
             int columns = 5;
             rows++;
@@ -195,9 +195,6 @@ public class AdvancedSearch{
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
-            //JButton addToSchedule = new JButton("Add");
-            //addToSchedule.addActionListener(new addListener(this.schedule,c));
-            //panelNum[1][4].add(addToSchedule);
             
             //Row 3: Lecture info
             JLabel lectDay = new JLabel(thisLecture.dayStringShort());
@@ -253,19 +250,28 @@ public class AdvancedSearch{
         //int len = 3;
         //Probably want the control panel to be a horizontal row of buttons
         controlPanel.setPreferredSize(new Dimension(500,66));
-        controlPanel.setLayout(new GridLayout(2, len));
-        JPanel[][] panelHolder = new JPanel[2][len];
+        controlPanel.setLayout(new GridLayout(2, 1));
+        JPanel[] panelHolder = new JPanel[2];
         for(int i = 0; i<2; i++){
-            for(int j = 0; j<len; j++){
-                panelHolder[i][j] = new JPanel();
-                panelHolder[i][j].setBackground(new Color(184,194,247));
-                controlPanel.add(panelHolder[i][j]);
-            }
+            panelHolder[i] = new JPanel();
+            panelHolder[i].setBackground(new Color(184,194,247));
+            controlPanel.add(panelHolder[i]);
         }
+        panelHolder[1].setLayout(new GridLayout(1,len));
+        JPanel[] bottomHolder = new JPanel[len];
+        for(int j = 0; j<len; j++){
+            bottomHolder[j] = new JPanel();
+            bottomHolder[j].setBackground(new Color(184,194,247));
+            panelHolder[1].add(bottomHolder[j]);
+        }
+        
         
         //make labels
         JLabel label = new JLabel("Select an option to search by:");
-        panelHolder[0][0].add(label);
+        panelHolder[0].add(label);
+        JPanel menuPanel = new JPanel();
+        menuPanel.setBackground(new Color(184,194,247));
+        panelHolder[0].add(menuPanel);
         
         //make buttons
         JRadioButton [] radioButtons = new JRadioButton[len];
@@ -273,8 +279,9 @@ public class AdvancedSearch{
         for(int i=0;i<len;i++){
             radioButtons[i] = new JRadioButton(this.searchOptions[i]);
             options.add(radioButtons[i]);
-            radioButtons[i].addActionListener(new radioListener(panelHolder[0][len-1], this));
-            panelHolder[1][i].add(radioButtons[i]);
+            radioButtons[i].addActionListener(new radioListener(menuPanel, this,
+                                                                radioButtons[i].getText()));
+            bottomHolder[i].add(radioButtons[i]);
         }
         
         
@@ -285,11 +292,60 @@ public class AdvancedSearch{
     
 
     //GETTING RESULTS
-    //TODO based on the option selected return a list of profesors, departments, or GE requirements
+    //TODO based on the option selected return a list of profesors
     //Database
     public String[] getList(String s){
-        String [] m= {"a","b", "c"};
-        return m;
+        if(s=="Department"){
+            String [] m=  {"------","Anthropology (ANTH)", "Art (Creative Studies) (ART)",
+                "Art History (ARTHI)", "Art Studio (ARTST)",
+                "Asian American Studies (AS AM)", "Astronomy (ASTRO)",
+                "Biology (Creative Studies) (BIOL)",
+                "Biomolecular Science and Engineering (BMSE)",
+                "Black Studies (BL ST)", "Chemical Engineering (CH E)",
+                "Chemistry and Biochemistry (CHEM)", "Chicano Studies (CH ST)",
+                "Chinese (CHIN)", "Classics (CLASS)", "Communication (COMM)",
+                "Comparative Literature (C LIT)", "Computer Science (CMPSC)",
+                "Counseling, Clinical, School Psychology (CNCSP)",
+                "Dance (DANCE)", "Dynamical Neuroscience (DYNS)",
+                "Earth Science (EARTH)", "East Asian Cultural Studies (EACS)",
+                "Ecology, Evolution & Marine Biology (EEMB)",
+                "Economics (ECON)", "Education (ED)",
+                "Electrical Computer Engineering (ECE)",
+                "Engineering Sciences (ENGR)", "English (ENGL)",
+                "Environmental Science & Management (ESM)",
+                "Environmental Studies (ENV S)", "Exercise & Sport Studies (ESS)",
+                "Exercise Sport (ES)", "Feminist Studies (FEMST)",
+                "Film and Media Studies (FAMST)", "Film Studies (FLMST)",
+                "French (FR)", "General Studies (Creative Studies) (GEN S)",
+                "Geography (GEOG)", "Geological Sciences (GEOL)", "German (GER)",
+                "Global Peace and Security (GPS)", "Global Studies (GLOBL)",
+                "Greek (GREEK)", "Hebrew (HEB)", "History (HIST)",
+                "Interdisciplinary (INT)", "Italian (ITAL)", "Japanese (JAPAN)",
+                "Korean (KOR)", "Latin (LATIN)",
+                "Latin American and Iberian Studies (LAIS)", "Linguistics (LING)",
+                "Literature (Creative Studies) (LIT)", "Marine Science (MARSC)",
+                "Materials (MATRL)", "Mathematics (MATH)", "Mechanical Engineering (ME)",
+                "Media Arts and Technology (MAT)", "Medieval Studies (ME ST)",
+                "Middle East Studies (MES)", "Military Science (MS)",
+                "Music (MUS)", "Music Performance Laboratories (MUS A)", "Philosophy (PHIL)",
+                "Physical Activities (PA)", "Physics (PHYS)", "Political Science (POL S)",
+                "Portuguese (PORT)", "Psychology (PSY)", "Religious Studies (RG ST)",
+                "Renaissance Studies (RENST)", "Slavic (SLAV)", "Sociology (SOC)",
+                "Spanish (SPAN)", "Speech & Hearing Sciences (SHS)",
+                "Statistics & Applied Probability (PSTAT)", "Technology Management (TMP)",
+                "Theater (THTR)", "Writing (WRIT)"};
+            return m;
+        }
+        else if(s=="Professor"){
+            String [] m=  {"------","a","b", "c"};
+            return m;
+        }
+        else { //s==GE
+           String [] m= {"------","A1","A2", "AMHI", "AMI", "B", "C", "C1", "C2", "C3", "CSB", "CU", "CUC", "CUD", "D", "D1", "D2", "D3", "D4", "E", "E1", "E2", "ETH", "EUR",
+               "F", "F1", "F2A", "F2B", "G", "H", "MAJ", "MG", "MUD", "MUG", "NWC", "QNT", "SUB",
+               "UG", "UPU", "USB", "USR", "WRT"};
+            return m;
+        }
     }
     
     /*
@@ -405,22 +461,20 @@ public class AdvancedSearch{
     }
 
     class radioListener implements ActionListener{
-        //private JRadioButton button;
         private JPanel p;
         private AdvancedSearch a;
+        private String optionString;
         
-        public radioListener(JPanel p, AdvancedSearch a){
+        public radioListener(JPanel p, AdvancedSearch a, String optionString){
             this.p = p;
             this.a = a;
+            this.optionString = optionString;
         }
         //populates the next menu with items related to that search option
         public void actionPerformed(ActionEvent e){
-            //TODO
-            //String optionString = WHICH BUTTON WAS CLICKED
-            String optionString = "Department";
             String [] menuList = getList(optionString);
             JComboBox cMenu = new JComboBox(menuList);
-            cMenu.addActionListener(new menuListener(this.a, optionString));
+            cMenu.addActionListener(new menuListener(this.a, this.optionString));
             this.p.removeAll();
             this.p.revalidate();
             this.p.repaint();
