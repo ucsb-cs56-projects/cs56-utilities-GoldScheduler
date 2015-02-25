@@ -40,6 +40,14 @@ public class Login extends JPanel{
         loginButton= new JButton("Login");
         loginButton.addActionListener(new LoginButtonValidator());        
 	forpass = new JButton ("Forgot Password?");
+	forpass.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Golder.goToForgot();
+			}
+        	
+        });
         wrong = new JLabel();
         createAcc = new JButton("Create Account");
         createAcc.addActionListener(new ActionListener() {

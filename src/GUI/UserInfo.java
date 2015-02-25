@@ -13,7 +13,7 @@ import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
 
 /**
- * Register Panel
+ * Change User Info Panel
  * @author Wesley Pollek
  * @author Forrest Sun
  * @version Feb 12 2015
@@ -33,7 +33,7 @@ public class UserInfo extends JPanel{
 		}
 	}
 	
-	JTextField username;
+    JTextField username;
     JLabel userLabel;
     JLabel userWrong;
     JPasswordField password;
@@ -78,7 +78,7 @@ public class UserInfo extends JPanel{
         
         password= new JPasswordField(20);
         passLabel= new JLabel("Enter Password:");
-        passWrong = new JLabel();
+        passWrong = new JLabel("<html> *You must enter password <br>to update your information</html>");
         passWrong.setForeground(Color.RED);
         
         password1= new JPasswordField(20);
@@ -138,7 +138,7 @@ public class UserInfo extends JPanel{
 	    	username.setText(u.getUsername());
 	    	userWrong.setText("");
 	    	
-	    	passWrong.setText("*You must enter password to update your information");
+		//	passWrong.setText("*You must enter password to update your information");
 	    	
 	    	email.setText(u.getEmail());
 	        
