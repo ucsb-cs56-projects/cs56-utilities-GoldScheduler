@@ -28,6 +28,7 @@ public class MainPage {
     private JPanel[] buttons;
     private JPanel display;
     private JButton search;
+    private JButton advancedSearch;
     private JButton viewSched;
 	private JButton save; // Added new button for saving schedule
     private JButton changeInfo;
@@ -49,21 +50,28 @@ public class MainPage {
      */
     public void setDisplay(){
         main = new JPanel();
+        main.setBackground(new Color(217,221,235));
         display =new JPanel();
+        display.setBackground(new Color(217,221,235));
         control=new JPanel();
-        buttons = new JPanel[4]; 
-        control.setLayout(new GridLayout(4,0));
-        for(int i=0;i<4;i++){
+        control.setBackground(new Color(217,221,235));
+        buttons = new JPanel[5];
+        control.setLayout(new GridLayout(5,0));
+        for(int i=0;i<5;i++){
             buttons[i]= new JPanel();
             control.add(buttons[i]);
+            buttons[i].setBackground(new Color(217,221,235));
         }
         //Get saved schedule or make new
         //if(saved schedule)...
         //else
         
         
-        search= new JButton("Search");
+        search= new JButton("Keyword Search");
         search.addActionListener(new searchListener(this, new SimpleSearch(mySchedule)));
+        
+        advancedSearch= new JButton("Search");
+        advancedSearch.addActionListener(new advSearchListener(this, new AdvancedSearch(mySchedule)));
         
         
         changeInfo = new JButton("Edit User Information");
@@ -91,9 +99,10 @@ public class MainPage {
         }catch(IOException e){System.out.println("no image");}
         display.add(logo);
         buttons[0].add(search);
-        buttons[1].add(viewSched);
-        buttons[2].add(changeInfo);
-        buttons[3].add(logout);
+        buttons[1].add(advancedSearch);
+        buttons[2].add(viewSched);
+        buttons[3].add(changeInfo);
+        buttons[4].add(logout);
         this.main.setLayout(new BorderLayout());
         this.main.add(control, BorderLayout.WEST);
         this.main.add(display, BorderLayout.EAST);
@@ -112,6 +121,28 @@ public class MainPage {
         private MainPage p;
         private SimpleSearch s;
         public searchListener(MainPage p, SimpleSearch s){
+            this.p = p;
+            this.s = s;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            this.p.main.removeAll();
+            this.p.main.revalidate();
+            this.p.main.repaint();
+            this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.p.main.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.p));
+        }
+    }
+    
+    class advSearchListener implements ActionListener{
+        private MainPage p;
+        private AdvancedSearch s;
+        public advSearchListener(MainPage p, AdvancedSearch s){
             this.p = p;
             this.s = s;
         }
