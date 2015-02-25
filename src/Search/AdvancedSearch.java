@@ -143,8 +143,10 @@ public class AdvancedSearch{
         //Puts them into a display
         for(int n = 0; n<numResults; n++){
             Course c = courseList.get(n);
+            Lecture thisLecture = c.getLect();
+            Lecture thisSection = c.getSect();
             JPanel coursePanel = new JPanel();
-            coursePanel.setPreferredSize(new Dimension(910,100));
+            coursePanel.setPreferredSize(new Dimension(910,150));
             //rows: 1. title
             //      2. header
             //      3. Lecture info
@@ -154,6 +156,7 @@ public class AdvancedSearch{
             //TODO Count rows
             int rows = 3;
             int columns = 5;
+            rows++;
             //int numSections = ;
             //for(int i = 0; i<numSections; i++){
             //rows++;
@@ -192,9 +195,38 @@ public class AdvancedSearch{
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
+            //JButton addToSchedule = new JButton("Add");
+            //addToSchedule.addActionListener(new addListener(this.schedule,c));
+            //panelNum[1][4].add(addToSchedule);
+            
+            //Row 3: Lecture info
+            JLabel lectDay = new JLabel(thisLecture.dayStringShort());
+            JLabel lectTime = new JLabel(thisLecture.timeString());
+            JLabel lectInstructor = new JLabel(thisLecture.professor);
+            JLabel lectLocation = new JLabel(thisLecture.location);
+            lectDay.setFont(boldFont);
+            lectTime.setFont(boldFont);
+            lectInstructor.setFont(boldFont);
+            lectLocation.setFont(boldFont);
+            panelNum[2][0].add(lectDay);
+            panelNum[2][1].add(lectTime);
+            panelNum[2][2].add(lectInstructor);
+            panelNum[2][3].add(lectLocation);
+            
+            //Row 4+: Section Info
+            JLabel sectDay = new JLabel(thisSection.dayStringShort());
+            JLabel sectTime = new JLabel(thisSection.timeString());
+            JLabel sectInstructor = new JLabel("N/A");
+            JLabel sectLocation = new JLabel(thisSection.location);
+            panelNum[3][0].add(sectDay);
+            panelNum[3][1].add(sectTime);
+            panelNum[3][2].add(sectInstructor);
+            panelNum[3][3].add(sectLocation);
             JButton addToSchedule = new JButton("Add");
             addToSchedule.addActionListener(new addListener(this.schedule,c));
-            panelNum[1][4].add(addToSchedule);
+            panelNum[3][4].add(addToSchedule);
+
+
             
             
             panels[n].add(coursePanel);

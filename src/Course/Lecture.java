@@ -65,6 +65,11 @@ public class Lecture{
         }
     }
     
+    
+    public String timeString(){
+        return this.timeStartString() + " - " + this.timeEndString();
+    }
+    
     /**
      @return The day list as a string
      */
@@ -94,4 +99,32 @@ public class Lecture{
         }
         return s;
     }
+    
+    public String dayStringShort(){
+        String s = "";
+        for(int i=0; i<days.length; i++){
+            switch(days[i]){
+                case 'M':
+                    s+="M";
+                    break;
+                case 'T':
+                    s+="T";
+                    break;
+                case 'W':
+                    s+="W";
+                    break;
+                case 'R':
+                    s+="T";
+                    break;
+                default:
+                    s+="F";
+                    break;
+            }
+            if(i!=days.length-1){
+                s+=", ";
+            }
+        }
+        return s;
+    }
+
 }
