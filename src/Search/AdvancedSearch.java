@@ -28,6 +28,8 @@ public class AdvancedSearch{
     private JPanel control;
     private JPanel cDisplay;
     private Scheduler schedule;
+    private final Color darkerColor = new Color(235,215,128);
+    private final Color lighterColor = new Color(236,226,178);
     
     private String[] searchOptions = {"Department", "Professor", "General Education"};
 
@@ -105,7 +107,7 @@ public class AdvancedSearch{
         //TODO: No results to show?
         JPanel blank = new JPanel();
         blank.setPreferredSize(new Dimension(900,533));
-        blank.setBackground(new Color(184,194,247));
+        blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }
     
@@ -125,7 +127,7 @@ public class AdvancedSearch{
     public void setCourses(ArrayList<Course> list){
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(900,533));
-        courses.setBackground(new Color(184,194,247));
+        courses.setBackground(this.darkerColor);
         //Call getResults
         ArrayList<Course> courseList = list;
         int numResults = courseList.size();
@@ -137,7 +139,7 @@ public class AdvancedSearch{
         JPanel[] panels = new JPanel[numResults];
         for(int index = 0 ; index<numResults; index++){
             panels[index] = new JPanel();
-            panels[index].setBackground(new Color(184,194,247));
+            panels[index].setBackground(this.darkerColor);
             courses.add(panels[index]);
         }
         
@@ -166,7 +168,7 @@ public class AdvancedSearch{
             for(int y = 0 ; y<rows; y++){
                 for(int x = 0; x<columns; x++){
                     panelNum[y][x] = new JPanel();
-                    panelNum[y][x].setBackground(new Color(217,220,245));
+                    panelNum[y][x].setBackground(this.lighterColor);
                     coursePanel.add(panelNum[y][x]);
                 }
             }
@@ -254,14 +256,14 @@ public class AdvancedSearch{
         JPanel[] panelHolder = new JPanel[2];
         for(int i = 0; i<2; i++){
             panelHolder[i] = new JPanel();
-            panelHolder[i].setBackground(new Color(184,194,247));
+            panelHolder[i].setBackground(this.darkerColor);
             controlPanel.add(panelHolder[i]);
         }
         panelHolder[1].setLayout(new GridLayout(1,len));
         JPanel[] bottomHolder = new JPanel[len];
         for(int j = 0; j<len; j++){
             bottomHolder[j] = new JPanel();
-            bottomHolder[j].setBackground(new Color(184,194,247));
+            bottomHolder[j].setBackground(this.darkerColor);
             panelHolder[1].add(bottomHolder[j]);
         }
         
@@ -270,7 +272,7 @@ public class AdvancedSearch{
         JLabel label = new JLabel("Select an option to search by:");
         panelHolder[0].add(label);
         JPanel menuPanel = new JPanel();
-        menuPanel.setBackground(new Color(184,194,247));
+        menuPanel.setBackground(darkerColor);
         panelHolder[0].add(menuPanel);
         
         //make buttons

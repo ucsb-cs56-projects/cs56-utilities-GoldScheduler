@@ -34,6 +34,8 @@ public class SimpleSearch{
     private JTextField searchField;
     private JButton searchButton;
     private Scheduler schedule;
+    private final Color darkerColor = new Color(165,188,238);
+    private final Color lighterColor = new Color(201,212,237);
     
     private JPanel sDisplay;
     
@@ -79,7 +81,7 @@ public class SimpleSearch{
         JPanel[] panelHolder = new JPanel[3];
         for(int i = 0; i<3; i++){
             panelHolder[i] = new JPanel();
-            panelHolder[i].setBackground(new Color(184,194,247));
+            panelHolder[i].setBackground(darkerColor);
             controlPanel.add(panelHolder[i]);
         }
 
@@ -110,7 +112,7 @@ public class SimpleSearch{
         //TODO: No results to show?
         JPanel blank = new JPanel();
         blank.setPreferredSize(new Dimension(500,567));
-        blank.setBackground(new Color(184,194,247));
+        blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }
     
@@ -127,7 +129,7 @@ public class SimpleSearch{
     public void setCourses(ArrayList<Course> list){
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(500,567));
-        courses.setBackground(new Color(184,194,247));
+        courses.setBackground(this.darkerColor);
         //Call getResults
         ArrayList<Course> courseList = list;
         int numResults = courseList.size();
@@ -139,7 +141,7 @@ public class SimpleSearch{
         JPanel[] panels = new JPanel[numResults];
         for(int index = 0 ; index<numResults; index++){
             panels[index] = new JPanel();
-            panels[index].setBackground(new Color(184,194,247));
+            panels[index].setBackground(this.darkerColor);
             courses.add(panels[index]);
         }
         
@@ -169,7 +171,7 @@ public class SimpleSearch{
             for(int y = 0 ; y<rows; y++){
                 for(int x = 0; x<columns; x++){
                     panelNum[y][x] = new JPanel();
-                    panelNum[y][x].setBackground(new Color(217,220,245));
+                    panelNum[y][x].setBackground(this.lighterColor);
                     coursePanel.add(panelNum[y][x]);
                 }
             }
