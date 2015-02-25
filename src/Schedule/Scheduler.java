@@ -687,6 +687,21 @@ public class Scheduler {
         }
         
     }
+
+	//WIP listener for save button
+	//Forrest and Jonathan will complete
+
+	//TODO: find out where to add an instance of:
+	//      JButton save = new JButton("Save");
+	class SaveListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		//TODO: write code that saves course IDs for the user
+
+		}
+	
+	}
     
     class deleteListener implements ActionListener{
         private Scheduler sch;
@@ -720,6 +735,7 @@ public class Scheduler {
             JPanel buttonPanel = new JPanel();
             buttonPanel.setPreferredSize(new Dimension(900,33));
             JButton back = new JButton("Back");
+
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
             this.sch1.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
