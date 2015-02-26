@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import Course.Course;
 import Course.Lecture;
 
+/**
+ A class to keep track of course conflicts and why the course could not be added
+ Eg. Reason and Course that it conflicted with
+ */
 public class CourseConflict{
     private Course courseInfo;
     private int error;

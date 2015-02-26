@@ -8,13 +8,13 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.swing.*;
+
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
+import connection.userInfo.User;
 import Course.*;
 import Search.*;
 import Schedule.*;
-
-import connection.userInfo.User;
 
 /**
 * Register Panel
@@ -37,7 +37,6 @@ public class MainPage {
     
     private User u;
     /**
-     * 
      * @param u
      */
     public MainPage(User u){
@@ -64,7 +63,6 @@ public class MainPage {
         }
         //Get saved schedule or make new
         //if(saved schedule)...
-        //else
         
         
         search= new JButton("Keyword Search");
@@ -113,7 +111,16 @@ public class MainPage {
         return this.main;
     }
     
+    //USER
     
+    void setUser(User u) {
+        this.u=u;
+    }
+    
+    void clean() {
+        //TODO anything need to be cleaned up before another user login?
+    }
+
     
     //ACTION LISTENER CLASSES
     
@@ -131,7 +138,7 @@ public class MainPage {
             this.p.main.repaint();
             this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
-            JButton back = new JButton("Back");
+            JButton back = new JButton("Main Page");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
             this.p.main.add(buttonPanel, BorderLayout.SOUTH);
@@ -153,7 +160,7 @@ public class MainPage {
             this.p.main.repaint();
             this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
-            JButton back = new JButton("Back");
+            JButton back = new JButton("Main Page");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
             this.p.main.add(buttonPanel, BorderLayout.SOUTH);
@@ -166,6 +173,7 @@ public class MainPage {
         public backListener(MainPage outerIn){
             this.outer = outerIn;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.outer.main.removeAll();
             this.outer.main.revalidate();
@@ -191,7 +199,7 @@ public class MainPage {
             this.p.main.repaint();
             this.p.main.add(this.s.getMain(), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
-            JButton back = new JButton("Back");
+            JButton back = new JButton("Main Page");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
             this.p.main.add(buttonPanel, BorderLayout.SOUTH);
@@ -199,14 +207,4 @@ public class MainPage {
             
         }
     }
-
-    
-    void setUser(User u) {
-    	this.u=u;
-    }
-    
-    void clean() {
-    	//TODO anything need to be cleaned up before another user login?
-    }
-
 }
