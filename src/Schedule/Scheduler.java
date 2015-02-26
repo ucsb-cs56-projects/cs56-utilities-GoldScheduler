@@ -26,6 +26,9 @@ public class Scheduler {
     private JPanel mainPanel;
     private JPanel panel;
     private JPanel controlPanel;
+    private ArrayList<Course> cantAdd;
+    private int conflicts;
+    private JPanel conflictPanel;
     
 
     /*
@@ -43,8 +46,10 @@ public class Scheduler {
     //No-arg constructor. Generates an empty schedule
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
+        this.cantAdd = new ArrayList<Course>();
         this.panel = new JPanel();
         this.controlPanel = new JPanel();
+        this.conflicts = 0;
     }
     
     /**
@@ -79,8 +84,11 @@ public class Scheduler {
         for(Course d: this.courseList){
             //This is bad, I know! timeConflict is a static method, so it shouldn't be called
             //using this, but will leave it for now in case we decide to change that later
-            if(this.timeConflict(c,d)==true)
+            if(this.timeConflict(c,d)==true){
+                cantAdd.add(c);
+                conflicts++;
                 return false;
+            }
         }
         //No time conflict
         //TODO: Check for other restrictions?
@@ -425,7 +433,7 @@ public class Scheduler {
             day1Location.setOpaque(true);
             
             JLabel day1Time = new JLabel();
-            day1Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+            day1Time.setText(lect.timeString());
             day1Time.setFont(day1Time.getFont().deriveFont(10f));
             day1Time.setBackground(lect.col);
             day1Time.setOpaque(true);
@@ -445,7 +453,7 @@ public class Scheduler {
                 day2Location.setOpaque(true);
                 
                 JLabel day2Time = new JLabel();
-                day2Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day2Time.setText(lect.timeString());
                 day2Time.setFont(day2Time.getFont().deriveFont(10f));
                 day2Time.setBackground(lect.col);
                 day2Time.setOpaque(true);
@@ -502,7 +510,7 @@ public class Scheduler {
                 day3Location.setOpaque(true);
                 
                 JLabel day3Time = new JLabel();
-                day3Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day3Time.setText(lect.timeString());
                 day3Time.setFont(day1Time.getFont().deriveFont(10f));
                 day3Time.setBackground(lect.col);
                 day3Time.setOpaque(true);
@@ -541,7 +549,7 @@ public class Scheduler {
                 day4Location.setOpaque(true);
                 
                 JLabel day4Time = new JLabel();
-                day4Time.setText(lect.timeStartString() + " - " + lect.timeEndString());
+                day4Time.setText(lect.timeString());
                 day4Time.setFont(day4Time.getFont().deriveFont(10f));
                 day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
@@ -573,7 +581,7 @@ public class Scheduler {
             sectionLabelTitle.setOpaque(true);
             
             JLabel sectionLabelTime = new JLabel();
-            sectionLabelTime.setText(sect.timeStartString() + " - " + sect.timeEndString());
+            sectionLabelTime.setText(sect.timeString());
             sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
             sectionLabelTime.setBackground(sect.col);
             sectionLabelTime.setOpaque(true);
@@ -600,9 +608,9 @@ public class Scheduler {
     public void setControl(){
         JPanel control = new JPanel();
         control.setPreferredSize(new Dimension(300, 300));
-        control.setLayout(new GridLayout(10,2));
-        JPanel[][] panelHolder = new JPanel[10][2];
-        for(int m = 0; m < 10; m++) {
+        control.setLayout(new GridLayout(11,2));
+        JPanel[][] panelHolder = new JPanel[11][2];
+        for(int m = 0; m < 11; m++) {
             for(int n = 0; n < 2; n++) {
                 panelHolder[m][n] = new JPanel();
                 panelHolder[m][n].setBackground(Color.LIGHT_GRAY);
@@ -648,9 +656,121 @@ public class Scheduler {
             
             slot+=2;
         }
-        
+        if(conflicts>0){
+            JButton otherCourses = new JButton("Conflicts: "+ conflicts);
+            panelHolder[10][0].add(otherCourses);
+            otherCourses.addActionListener(new conflictListener(this));
+        }
         this.controlPanel = control;
     }
+    
+    public JPanel getConflict(){
+        this.setConflict();
+        return this.conflictPanel;
+    }
+    
+    public void setConflict(){
+        Color darkerColor = new Color(161,161,161);
+        Color lighterColor = new Color(181,181,181);
+        JPanel courses = new JPanel();
+        courses.setPreferredSize(new Dimension(500,600));
+        courses.setBackground(darkerColor);
+        ArrayList<Course> courseList = this.cantAdd;
+        int numResults = courseList.size();
+        //Sets up panel as a grid by how many courses there are
+        //courses.setLayout(new GridLayout(numResults, 1));
+        JPanel[] panels = new JPanel[numResults];
+        for(int index = 0 ; index<numResults; index++){
+            panels[index] = new JPanel();
+            panels[index].setBackground(darkerColor);
+            courses.add(panels[index]);
+        }
+        
+        //Puts them into a display
+        for(int n = 0; n<numResults; n++){
+            Course c = courseList.get(n);
+            Lecture thisLecture = c.getLect();
+            Lecture thisSection = c.getSect();
+            JPanel coursePanel = new JPanel();
+            coursePanel.setPreferredSize(new Dimension(910,125));
+            int rows = 3;
+            int columns = 4;
+            rows++;
+            //int numSections = ;
+            //for(int i = 0; i<numSections; i++){
+            //rows++;
+            //}
+            coursePanel.setLayout(new GridLayout(rows, columns));
+            JPanel[][] panelNum = new JPanel[rows][columns];
+            for(int y = 0 ; y<rows; y++){
+                for(int x = 0; x<columns; x++){
+                    panelNum[y][x] = new JPanel();
+                    panelNum[y][x].setBackground(lighterColor);
+                    coursePanel.add(panelNum[y][x]);
+                }
+            }
+            
+            //Row 1: Title and view button
+            //JLabel t = new JLabel(c.title);
+            JLabel t = new JLabel(c.courseID);
+            Font font = t.getFont();
+            Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+            t.setFont(boldFont);
+            JButton view = new JButton("View");
+            view.addActionListener(new viewListener(c,this));
+            JButton removeButton = new JButton("Remove");
+            removeButton.addActionListener(new removeListener(c, this));
+            panelNum[0][0].add(t);
+            panelNum[0][1].add(view);
+            panelNum[0][2].add(removeButton);
+            
+            //Row 2: Header
+            JLabel d = new JLabel("Day(s)");
+            JLabel times = new JLabel("Times");
+            JLabel inst = new JLabel("Instructor");
+            JLabel loc = new JLabel("Location");
+            d.setFont(boldFont);
+            times.setFont(boldFont);
+            inst.setFont(boldFont);
+            loc.setFont(boldFont);
+            panelNum[1][0].add(d);
+            panelNum[1][1].add(times);
+            panelNum[1][2].add(inst);
+            panelNum[1][3].add(loc);
+            
+            //Row 3: Lecture info
+            JLabel lectDay = new JLabel(thisLecture.dayStringShort());
+            JLabel lectTime = new JLabel(thisLecture.timeString());
+            JLabel lectInstructor = new JLabel(thisLecture.professor);
+            JLabel lectLocation = new JLabel(thisLecture.location);
+            lectDay.setFont(boldFont);
+            lectTime.setFont(boldFont);
+            lectInstructor.setFont(boldFont);
+            lectLocation.setFont(boldFont);
+            panelNum[2][0].add(lectDay);
+            panelNum[2][1].add(lectTime);
+            panelNum[2][2].add(lectInstructor);
+            panelNum[2][3].add(lectLocation);
+            
+            
+            //Row 4+: Section Info
+            JLabel sectDay = new JLabel(thisSection.dayStringShort());
+            JLabel sectTime = new JLabel(thisSection.timeString());
+            JLabel sectInstructor = new JLabel("N/A");
+            JLabel sectLocation = new JLabel(thisSection.location);
+            panelNum[3][0].add(sectDay);
+            panelNum[3][1].add(sectTime);
+            panelNum[3][2].add(sectInstructor);
+            panelNum[3][3].add(sectLocation);
+            
+            
+            panels[n].add(coursePanel);
+            
+        }
+        this.conflictPanel = courses;
+        
+    }
+
     
     
     //ACTION LISTENER CLASSES
@@ -687,7 +807,7 @@ public class Scheduler {
         }
         
     }
-
+    
 	//WIP listener for save button
 	//Forrest and Jonathan will complete
 
@@ -757,8 +877,45 @@ public class Scheduler {
             this.outer.mainPanel.add(this.outer.getControl(), BorderLayout.EAST);
         }
     }
+    
+    class conflictListener implements ActionListener{
+        Scheduler sch1;
+        public conflictListener(Scheduler schIn1){
+            this.sch1 = schIn1;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.sch1.mainPanel.removeAll();
+            this.sch1.mainPanel.revalidate();
+            this.sch1.mainPanel.repaint();
+            this.sch1.mainPanel.add(sch1.getConflict(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setPreferredSize(new Dimension(900,33));
+            JButton back = new JButton("Back");
+            
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.sch1.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.sch1));
+        }
+    }
 
+    class removeListener implements ActionListener{
+        private Scheduler sch;
+        private Course c;
+        public removeListener(Course c, Scheduler sch){
+            this.c = c;
+            this.sch = sch;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.sch.cantAdd.remove(this.c);
+            conflicts--;
+            this.sch.mainPanel.removeAll();
+            this.sch.mainPanel.revalidate();
+            this.sch.mainPanel.repaint();
+            this.sch.mainPanel.add(this.sch.getConflict(), BorderLayout.NORTH);
+        }
 
+    }
     
     
 }
