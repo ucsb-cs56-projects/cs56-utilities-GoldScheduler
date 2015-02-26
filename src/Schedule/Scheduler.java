@@ -133,6 +133,14 @@ public class Scheduler {
                     return true;
             }
         }
+        //d starts before c
+        else if (c.getLect().timeStart>d.getLect().timeStart){
+            if(c.getLect().timeStart>=d.getLect().timeEnd)
+                return false;
+            else
+                return true;
+        }
+        
         else if(c.getSect().timeStart<=d.getSect().timeStart){
             //Check if they start at the same time
             if(c.getSect().timeStart==d.getSect().timeStart)
@@ -146,9 +154,8 @@ public class Scheduler {
                     return true;
             }
         }
-        else{
-            //c.timeStart>d.timeStart, so it must start later
-            if(c.getLect().timeStart>=d.getLect().timeEnd)
+        else{ //(c.getSect().timeStart> d.getSect().timeStart){
+            if(c.getSect().timeStart>=d.getSect().timeEnd)
                 return false;
             else if(c.getSect().timeStart>=d.getSect().timeEnd)
                 return false;
