@@ -26,7 +26,7 @@ public class Scheduler {
     private JPanel mainPanel;
     private JPanel panel;
     private JPanel controlPanel;
-    private ArrayList<Course> cantAdd;
+    private ArrayList<CourseConflict> cantAdd;
     private int conflicts;
     private JPanel conflictPanel;
     
@@ -46,7 +46,7 @@ public class Scheduler {
     //No-arg constructor. Generates an empty schedule
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
-        this.cantAdd = new ArrayList<Course>();
+        this.cantAdd = new ArrayList<CourseConflict>();
         this.panel = new JPanel();
         this.controlPanel = new JPanel();
         this.conflicts = 0;
@@ -84,14 +84,21 @@ public class Scheduler {
         for(Course d: this.courseList){
             //This is bad, I know! timeConflict is a static method, so it shouldn't be called
             //using this, but will leave it for now in case we decide to change that later
-            if(this.timeConflict(c,d)==true){
-                cantAdd.add(c);
+            if(c.courseID==d.courseID){
+                CourseConflict myConflict = new CourseConflict(c, d, 2);
+                cantAdd.add(myConflict);
+                conflicts++;
+                return false;
+            }
+            else if(this.timeConflict(c,d)==true){
+                CourseConflict myConflict = new CourseConflict(c, d, 1);
+                cantAdd.add(myConflict);
                 conflicts++;
                 return false;
             }
         }
         //No time conflict
-        //TODO: Check for other restrictions?
+        //Different course id
         courseList.add(c);
         this.schedulerGUI();
         this.setControl();
@@ -154,7 +161,7 @@ public class Scheduler {
                     return true;
             }
         }
-        else{ //(c.getSect().timeStart> d.getSect().timeStart){
+        else{
             if(c.getSect().timeStart>=d.getSect().timeEnd)
                 return false;
             else if(c.getSect().timeStart>=d.getSect().timeEnd)
@@ -682,7 +689,7 @@ public class Scheduler {
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(500,600));
         courses.setBackground(darkerColor);
-        ArrayList<Course> courseList = this.cantAdd;
+        ArrayList<CourseConflict> courseList = this.cantAdd;
         int numResults = courseList.size();
         //Sets up panel as a grid by how many courses there are
         //courses.setLayout(new GridLayout(numResults, 1));
@@ -695,7 +702,7 @@ public class Scheduler {
         
         //Puts them into a display
         for(int n = 0; n<numResults; n++){
-            Course c = courseList.get(n);
+            Course c = courseList.get(n).getCourse();
             Lecture thisLecture = c.getLect();
             Lecture thisSection = c.getSect();
             JPanel coursePanel = new JPanel();
@@ -726,10 +733,13 @@ public class Scheduler {
             JButton view = new JButton("View");
             view.addActionListener(new viewListener(c,this));
             JButton removeButton = new JButton("Remove");
-            removeButton.addActionListener(new removeListener(c, this));
+            removeButton.addActionListener(new removeListener(courseList.get(n), this));
+            JLabel errorLabel = new JLabel(courseList.get(n).getErrorString());
+            errorLabel.setForeground(Color.RED);
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
             panelNum[0][2].add(removeButton);
+            panelNum[0][3].add(errorLabel);
             
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
@@ -908,8 +918,8 @@ public class Scheduler {
 
     class removeListener implements ActionListener{
         private Scheduler sch;
-        private Course c;
-        public removeListener(Course c, Scheduler sch){
+        private CourseConflict c;
+        public removeListener(CourseConflict c, Scheduler sch){
             this.c = c;
             this.sch = sch;
         }
