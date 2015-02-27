@@ -390,7 +390,93 @@ public class SimpleSearch{
             this.sch.add(c);
         }
     }
-    
+
+    class nextViewListener implements ActionListener{
+	private Course c1;
+	private SimpleSearch s;
+	private ArrayList<Course> cList;
+	public nextViewListener(Course cIn1, SimpleSearch s, 
+				ArrayList<Course> cList){
+	    this.c1 = cIn1;
+	    this.s = s;
+	    this.cList = cList;
+	}
+	@Override
+	    public void actionPerformed(ActionEvent e){
+	    this.s.display.removeAll();
+	    this.s.display.repaint();
+	    this.s.display.add(this.c1.getPanel(), BorderLayout.North);
+	    Jpanel buttonPanel = new JPanel();
+	    JButton next = new JButton("Next");
+	    buttonPanel.add(next);
+	    buttonPanel.setBackground(Color.LIGHT_GRAY);
+	    this.s.display.add(buttonPanel, BorderLayout.SOUTH);
+      
+	    class nextListener implements ActionListener{
+		private SimpleSearch outer;
+		private ArrayList<Course> nextList;
+		public nextListener(SimpleSearch outerIn, 
+				    ArrayList<Course> nextList){
+		    this.outer = outerIn;
+		    this.nextList = nextList;
+        }        
+		public void actionPerformed(ActionEvent e){
+		    this.outer.display.removeAll();
+		    this.outer.display.revalidate();
+		    this.outer.display.repaint();
+		    this.outer.display.add(this.outer.getControl(), 
+					   BorderLayout.NORTH);
+		    this.outer.display.add(this.outer.getCourses(this.cList1), 
+					   BorderLayout.SOUTH);
+		}
+	    }
+	    next.addActionListener(new nextListener(this.s, this.cList));
+	    this.s.display.add(buttonPanel, BorderLayout.South);
+	}
+    }
+    class prevViewListener implements ActionListener{
+        private Course c1;
+        private SimpleSearch q;
+        private ArrayList<Course> cList;
+        public prevViewListener(Course cIn1, SimpleSearch q,
+                                ArrayList<Course> cList){
+            this.c1 = cIn1;
+            this.q = q;
+            this.cList = cList;
+        }
+        @Override
+            public void actionPerformed(ActionEvent e){
+            this.q.display.removeAll();
+            this.q.display.repaint();
+            this.q.display.add(this.c1.getPanel(), BorderLayout.North);
+            Jpanel buttonPanel = new JPanel();
+            JButton prev = new JButton("Previous");
+            buttonPanel.add(prev);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.q.display.add(buttonPanel, BorderLayout.SOUTH);
+
+            class prevListener implements ActionListener{
+                private SimpleSearch outer;
+                private ArrayList<Course> prevList;
+                public prevListener(SimpleSearch outerIn,
+                                    ArrayList<Course> prevList){
+                    this.outer = outerIn;
+                    this.prevList = prevList;
+		}
+                public void actionPerformed(ActionEvent e){
+                    this.outer.display.removeAll();
+                    this.outer.display.revalidate();
+		    this.outer.display.repaint();
+                    this.outer.display.add(this.outer.getControl(),
+                                           BorderLayout.NORTH);
+                    this.outer.display.add(this.outer.getCourses(this.cList1),
+                                           BorderLayout.SOUTH);
+                }
+            }
+            next.addActionListener(new nextListener(this.q, this.cList));
+            this.q.display.add(buttonPanel, BorderLayout.South);
+        }
+    }
 }
 
 
