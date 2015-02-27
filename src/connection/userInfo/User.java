@@ -1,7 +1,10 @@
 package connection.userInfo;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+
+import Course.Course;
 
 //import Course
 
@@ -39,6 +42,7 @@ public class User {
 	public String getPassword(){return this.password;}
 	public String getEmail(){return this.email;}
 	public String getMajor(){return this.major;}
+	public int getID(){return this.id;}
 
 	public void setPassword(String password) throws SQLException{
 		this.password=password;
@@ -55,11 +59,22 @@ public class User {
 		UsersConnection.setMajor(id, major);
 	}
 	
-	public void addNewSchedule() {
-		
+
+	public void addCourse(Course c) throws SQLException {
+		UsersConnection.saveCourse(this, c);
 	}
 	
+	public void deleteCourse(Course c) throws SQLException {
+		UsersConnection.deleteCourse(this, c);
+	}
 	
+	public ArrayList<Course> getSchedule() throws SQLException {
+		return UsersConnection.getSchedule(this);
+	}
+	
+	public void deleteSchedule() throws SQLException {
+		UsersConnection.deleteSchedule(this);
+	}
 	
 	/*
 	public void addCourse(Schedule s, Course c) {

@@ -87,6 +87,56 @@ public class CourseConnection extends GolderConnection{
 	}
 	
 	/**
+	 * 
+	 * @param lectureId
+	 * @param sectionId
+	 * @return
+	 * @throws SQLException
+	 */
+	
+	public static Course getCourse(int lectureId, int sectionId) throws SQLException {
+		Course c = null;
+
+		
+		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name WHERE spring_15_lecture.id = %s AND spring_15_section.id = %s;", lectureId, sectionId))) {
+
+				rs = stmt.getResultSet();
+				
+				rs.next();
+				
+				Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(169,226,195));
+        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+        		
+                c = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
+                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
+                		deCodeGEFill(rs.getInt(18), rs.getString(19), rs.getInt(20), rs.getInt(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25), rs.getInt(26), rs.getString(27), rs.getInt(28), rs.getInt(29))
+                		, le, se);
+		}
+		return c;
+	}
+	
+	public static Course getCourse(int lectureId, int sectionId,int lectureColor, int sectionColor) throws SQLException {
+		Course c = null;
+
+		
+		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name WHERE spring_15_lecture.id = %s AND spring_15_section.id = %s;", lectureId, sectionId))) {
+
+				rs = stmt.getResultSet();
+				
+				rs.next();
+				
+				Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(lectureColor));
+        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(sectionColor));
+        		
+                c = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
+                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
+                		deCodeGEFill(rs.getInt(18), rs.getString(19), rs.getInt(20), rs.getInt(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25), rs.getInt(26), rs.getString(27), rs.getInt(28), rs.getInt(29))
+                		, le, se);
+		}
+		return c;
+	}
+	
+	/**
 	 * Simple Search Support
 	 * @param s Search String
 	 * @return All courses contain s
@@ -210,12 +260,12 @@ public class CourseConnection extends GolderConnection{
 		
 	}
 	
-	
+	/*
 	public static void main(String[] args) throws SQLException {
 
 		for (String t : getProfessor())  System.out.println(t);
 	}
-	/*
+	
 	*/
 	
 }

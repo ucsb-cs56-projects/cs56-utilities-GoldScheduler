@@ -2,6 +2,7 @@ package connection.userInfo;
 
 import java.awt.Color;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import connection.GolderConnection;
 import Course.*;
@@ -189,20 +190,108 @@ public class UsersConnection extends GolderConnection{
 	//TODO
 	public static void saveCourse(User u, Course c) throws SQLException {
 		
-		int i = c.getLect().id;
-		c.getLect().col.getRGB();
+		int userId = u.getID();
+		int lectureID = c.getLect().id;
+		int lectureColor = c.getLect().col.getRGB();
+		int sectionID = c.getSect().id;
+		int sectionColor = c.getSect().col.getRGB();
+		
+		try {
+			stmt.executeUpdate(String.format("INSERT INTO `student_schedule` (user_id,lecture_id,lecture_color,section_id,section_color) VALUES (%s,%s,%s,%s,%s);", 
+					userId, lectureID, lectureColor, sectionID,sectionColor));
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 		
 	}
 	
+	/**
+	 * 
+	 * @param u
+	 * @param c
+	 * @throws SQLException
+	 */
+	
+	public static void deleteCourse(User u, Course c) throws SQLException {
+		
+		int userId = u.getID();
+		int lectureID = c.getLect().id;
+		int sectionID = c.getSect().id;
+		
+		try {
+			stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s AND lecture_id=%s AND section_id=%s;", 
+					userId, lectureID, sectionID));
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	
+	public static ArrayList<Course> getSchedule(User u) throws SQLException {
+		ArrayList<Course> ca = new ArrayList<Course>();
+		if (stmt.execute(String.format("SELECT * FROM `student_schedule` WHERE user_id = %s;", u.getID()))) {
+
+			rs = stmt.getResultSet();
+			rs.last();
+			int [][] m = new int[rs.getRow()][4];
+			rs.beforeFirst();
+			
+			for  (int i = 0; i < m.length; i++) {
+				rs.next();
+				m[i][0] = rs.getInt("lecture_id");
+				m[i][1] = rs.getInt("section_id");
+				m[i][2] = rs.getInt("lecture_color");
+				m[i][3] = rs.getInt("section_color");
+
+        	}
+			for  (int i = 0; i < m.length; i++) 
+				ca.add(connection.courseInfo.CourseConnection.getCourse(m[i][0],m[i][1],m[i][2],m[i][3]));
+		}
+		return ca;
+	}
+	
+	/**
+	 * 
+	 * @param u
+	 * @throws SQLException
+	 */
+	
+	public static void deleteSchedule(User u) throws SQLException {
+		stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s;", u.getID()));
+	}
 	
 	/*
 	 * test 
 	 
 	
-	public static void main(String[] args) {
-		System.out.println(check());
+	public static void main(String[] args) throws SQLException {
+		User u = getInfo(1);
+		
+		ArrayList<Course> a = connection.courseInfo.CourseConnection.SearchFullTitle("computer");
+		//System.out.println(a.size());
+		for (Course c : a)
+			saveCourse(u,c);
+		
+		
+		
+		ArrayList<Course> ca = getSchedule(u);
+		//System.out.println(ca.size());
+		for (Course c : ca) {
+			System.out.println(c.courseID);
+		}
+		
+		deleteSchedule(u);
+		
+		
 	}
-	*/
 	
+	 */
 
 }
