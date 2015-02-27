@@ -12,7 +12,7 @@ import Course.Lecture;
 
 //TODOs:
 
-//1. Check for other restrictions?
+//1. Check for other restrictions...
 //2. Error not a valid day
 //3. Error for time slot
 //4. Are there any classes that are just one day a week?
@@ -30,19 +30,12 @@ public class Scheduler {
     private int conflicts;
     private JPanel conflictPanel;
     
-
-    /*
-     I intentionally did not put a method to get the courseList, as there should be no reason that
-     we should need it outside of this class
-     public ArrayList<Course> getCourses() {
-        return this.courseList;
-    }
-     */
-
+    //CONSTRUCTORS
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule
     public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
     }
+    
     //No-arg constructor. Generates an empty schedule
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
@@ -52,28 +45,7 @@ public class Scheduler {
         this.conflicts = 0;
     }
     
-    /**
-     @return this returns the main panel that includes the schedule with classes
-     */
-    public JPanel getPanel(){
-        this.schedulerGUI();
-        return this.panel;
-    }
-    /**
-     @return this returns a control panel that allows you to delete, view, and change the color of classes
-     */
-    public JPanel getControl(){
-        this.setControl();
-        return this.controlPanel;
-    }
-    
-    /**
-     @return this returns the main panel that holds both the control and the schedule panels
-     */
-    public JPanel getMain(){
-        this.setMain();
-        return this.mainPanel;
-    }
+    //EDITS COURSELIST
     /**
      @param c the course that needs to be added
      @return whether or not the course was added
@@ -97,8 +69,9 @@ public class Scheduler {
                 return false;
             }
         }
-        //No time conflict
-        //Different course id
+        /*No time conflict
+         *Different course id
+         */
         courseList.add(c);
         this.schedulerGUI();
         this.setControl();
@@ -118,196 +91,15 @@ public class Scheduler {
         return true;
     }
     
+
+    //MAIN PANEL
     /**
-     @param c Course to be checked for time conflict
-     @param d Course to be checked against
-     @return true if there is time conflict and false if not
-     Currently a static method because I thought this would be the 
-     best implementation. Checks lecture and section.
+     @return this returns the main panel that holds both the control and the schedule panels
      */
-    public static boolean timeConflict(Course c, Course d){
-       //First, check if c starts before d
-        if(c.getLect().timeStart<=d.getLect().timeStart){
-            //Check if they start at the same time
-            if(c.getLect().timeStart==d.getLect().timeStart)
-                return true;
-            else{
-                //c starts first, so we need d to start at the same time or
-                //after c.timeEnd
-                if(d.getLect().timeStart>=c.getLect().timeEnd)
-                    return false;
-                else
-                    return true;
-            }
-        }
-        //d starts before c
-        else if (c.getLect().timeStart>d.getLect().timeStart){
-            if(c.getLect().timeStart>=d.getLect().timeEnd)
-                return false;
-            else
-                return true;
-        }
-        
-        else if(c.getSect().timeStart<=d.getSect().timeStart){
-            //Check if they start at the same time
-            if(c.getSect().timeStart==d.getSect().timeStart)
-                return true;
-            else{
-                //c starts first, so we need d to start at the same time or
-                //after c.timeEnd
-                if(d.getSect().timeStart>=c.getSect().timeEnd)
-                    return false;
-                else
-                    return true;
-            }
-        }
-        else{
-            if(c.getSect().timeStart>=d.getSect().timeEnd)
-                return false;
-            else if(c.getSect().timeStart>=d.getSect().timeEnd)
-                return false;
-            else
-                return true;
-        }
+    public JPanel getMain(){
+        this.setMain();
+        return this.mainPanel;
     }
-    
-    /**
-     @param day character you want converted to column it belongs in
-     @return the column that corresponds to the day
-     */
-    public static int daySlot(char day){
-        int slot;
-        switch(day){
-            case 'M':
-                slot = 1;
-                break;
-            case 'T':
-                slot=2;
-                break;
-            case 'W':
-                slot = 3;
-                break;
-            case 'R':
-                slot=4;
-                break;
-            case 'F':
-                slot = 5;
-                break;
-            default:
-                slot = 0;
-                break;
-        }
-        if(slot==0){
-            //TODO: Error not a valid day
-        }
-        return slot;
-    }
-    
-    /**
-     @param time the time you want converted to an int of which row it belongs in
-     @return the row that a particular time belongs in. If it is something:30, it will return the row\
-     corresponding to where the 30 is.
-     */
-    public int timeSlot(int time){
-        int slot;
-        switch(time){
-            case 800:
-                slot=1;
-                break;
-            case 830:
-                slot=2;
-                break;
-            case 900:
-                slot=3;
-                break;
-            case 930:
-                slot=4;
-                break;
-            case 1000:
-                slot=5;
-                break;
-            case 1030:
-                slot=6;
-                break;
-            case 1100:
-                slot=7;
-                break;
-            case 1130:
-                slot=8;
-                break;
-            case 1200:
-                slot=9;
-                break;
-            case 1230:
-                slot=10;
-                break;
-            case 1300:
-                slot=11;
-                break;
-            case 1330:
-                slot=12;
-                break;
-            case 1400:
-                slot=13;
-                break;
-            case 1430:
-                slot=14;
-                break;
-            case 1500:
-                slot=15;
-                break;
-            case 1530:
-                slot=16;
-                break;
-            case 1600:
-                slot=17;
-                break;
-            case 1630:
-                slot=18;
-                break;
-            case 1700:
-                slot=19;
-                break;
-            case 1730:
-                slot=20;
-                break;
-            case 1800:
-                slot=21;
-                break;
-            case 1830:
-                slot=22;
-                break;
-            case 1900:
-                slot=23;
-                break;
-            case 1930:
-                slot=24;
-                break;
-            case 2000:
-                slot=25;
-                break;
-            case 2030:
-                slot=26;
-                break;
-            case 2100:
-                slot=27;
-                break;
-            case 2130:
-                slot=28;
-                break;
-            case 2200:
-                slot=29;
-                break;
-            default:
-                slot=0;
-                break;
-        }
-        if(slot==0){
-            //TODO: ERROR
-        }
-        return slot;
-    }
-    
     /**
      Updates the main panel, so the display reflects current status. Simply holds both the control and schedule panels
      */
@@ -318,6 +110,15 @@ public class Scheduler {
         mainPanel.add(this.getPanel(), BorderLayout.WEST);
         mainPanel.add(this.getControl(), BorderLayout.EAST);
         this.mainPanel = mainPanel;
+    }
+    
+    //SCHEDULE PANEL
+    /**
+     @return this returns the main panel that includes the schedule with classes
+     */
+    public JPanel getPanel(){
+        this.schedulerGUI();
+        return this.panel;
     }
 
     
@@ -616,6 +417,16 @@ public class Scheduler {
         this.panel = panel;
     }
     
+    
+    //CONTROL PANEL
+    /**
+     @return this returns a control panel that allows you to delete, view, and change the color of classes
+     */
+    public JPanel getControl(){
+        this.setControl();
+        return this.controlPanel;
+    }
+    
     /**
      Updates control panel to display options for all classes in list
      */
@@ -678,11 +489,18 @@ public class Scheduler {
         this.controlPanel = control;
     }
     
+    
+    //CONFLICT METHODS
+    /**
+     @return a Panel displaying course conflicts
+     */
     public JPanel getConflict(){
         this.setConflict();
         return this.conflictPanel;
     }
-    
+    /**
+     Sets the conflict panel
+     */
     public void setConflict(){
         Color darkerColor = new Color(161,161,161);
         Color lighterColor = new Color(181,181,181);
@@ -692,14 +510,12 @@ public class Scheduler {
         ArrayList<CourseConflict> courseList = this.cantAdd;
         int numResults = courseList.size();
         //Sets up panel as a grid by how many courses there are
-        //courses.setLayout(new GridLayout(numResults, 1));
         JPanel[] panels = new JPanel[numResults];
         for(int index = 0 ; index<numResults; index++){
             panels[index] = new JPanel();
             panels[index].setBackground(darkerColor);
             courses.add(panels[index]);
         }
-        
         //Puts them into a display
         for(int n = 0; n<numResults; n++){
             Course c = courseList.get(n).getCourse();
@@ -710,10 +526,10 @@ public class Scheduler {
             int rows = 3;
             int columns = 4;
             rows++;
-            //int numSections = ;
-            //for(int i = 0; i<numSections; i++){
-            //rows++;
-            //}
+            /*int numSections = ;
+            for(int i = 0; i<numSections; i++){
+            rows++;
+            }*/
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -723,9 +539,7 @@ public class Scheduler {
                     coursePanel.add(panelNum[y][x]);
                 }
             }
-            
             //Row 1: Title and view button
-            //JLabel t = new JLabel(c.title);
             JLabel t = new JLabel(c.courseID);
             Font font = t.getFont();
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
@@ -780,12 +594,9 @@ public class Scheduler {
             panelNum[3][2].add(sectInstructor);
             panelNum[3][3].add(sectLocation);
             
-            
             panels[n].add(coursePanel);
-            
         }
         this.conflictPanel = courses;
-        
     }
 
     
@@ -847,6 +658,7 @@ public class Scheduler {
             this.c = c;
             this.sch = sch;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.sch.courseList.remove(this.c);
             this.sch.mainPanel.removeAll();
@@ -864,6 +676,7 @@ public class Scheduler {
             this.c1 = cIn1;
             this.sch1 = schIn1;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.sch1.mainPanel.removeAll();
             this.sch1.mainPanel.revalidate();
@@ -886,6 +699,7 @@ public class Scheduler {
         public backListener(Scheduler outerIn){
             this.outer = outerIn;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.outer.mainPanel.removeAll();
             this.outer.mainPanel.revalidate();
@@ -900,6 +714,7 @@ public class Scheduler {
         public conflictListener(Scheduler schIn1){
             this.sch1 = schIn1;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.sch1.mainPanel.removeAll();
             this.sch1.mainPanel.revalidate();
@@ -923,6 +738,7 @@ public class Scheduler {
             this.c = c;
             this.sch = sch;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.sch.cantAdd.remove(this.c);
             conflicts--;
@@ -934,6 +750,198 @@ public class Scheduler {
 
     }
     
+    
+    //STATIC
+    /**
+     @param c Course to be checked for time conflict
+     @param d Course to be checked against
+     @return true if there is time conflict and false if not
+     Currently a static method because I thought this would be the
+     best implementation. Checks lecture and section.
+     */
+    public static boolean timeConflict(Course c, Course d){
+        //First, check if c starts before d
+        if(c.getLect().timeStart<=d.getLect().timeStart){
+            //Check if they start at the same time
+            if(c.getLect().timeStart==d.getLect().timeStart)
+                return true;
+            else{
+                //c starts first, so we need d to start at the same time or
+                //after c.timeEnd
+                if(d.getLect().timeStart>=c.getLect().timeEnd)
+                    return false;
+                else
+                    return true;
+            }
+        }
+        //d starts before c
+        else if (c.getLect().timeStart>d.getLect().timeStart){
+            if(c.getLect().timeStart>=d.getLect().timeEnd)
+                return false;
+            else
+                return true;
+        }
+        
+        else if(c.getSect().timeStart<=d.getSect().timeStart){
+            //Check if they start at the same time
+            if(c.getSect().timeStart==d.getSect().timeStart)
+                return true;
+            else{
+                //c starts first, so we need d to start at the same time or
+                //after c.timeEnd
+                if(d.getSect().timeStart>=c.getSect().timeEnd)
+                    return false;
+                else
+                    return true;
+            }
+        }
+        else{
+            if(c.getSect().timeStart>=d.getSect().timeEnd)
+                return false;
+            else if(c.getSect().timeStart>=d.getSect().timeEnd)
+                return false;
+            else
+                return true;
+        }
+    }
+    
+    /**
+     @param day character you want converted to column it belongs in
+     @return the column that corresponds to the day
+     */
+    public static int daySlot(char day){
+        int slot;
+        switch(day){
+            case 'M':
+                slot = 1;
+                break;
+            case 'T':
+                slot=2;
+                break;
+            case 'W':
+                slot = 3;
+                break;
+            case 'R':
+                slot=4;
+                break;
+            case 'F':
+                slot = 5;
+                break;
+            default:
+                slot = 0;
+                break;
+        }
+        if(slot==0){
+            //TODO: Error not a valid day
+        }
+        return slot;
+    }
+    
+    /**
+     @param time the time you want converted to an int of which row it belongs in
+     @return the row that a particular time belongs in. If it is something:30, it will return the row\
+     corresponding to where the 30 is.
+     */
+    public static int timeSlot(int time){
+        int slot;
+        switch(time){
+            case 800:
+                slot=1;
+                break;
+            case 830:
+                slot=2;
+                break;
+            case 900:
+                slot=3;
+                break;
+            case 930:
+                slot=4;
+                break;
+            case 1000:
+                slot=5;
+                break;
+            case 1030:
+                slot=6;
+                break;
+            case 1100:
+                slot=7;
+                break;
+            case 1130:
+                slot=8;
+                break;
+            case 1200:
+                slot=9;
+                break;
+            case 1230:
+                slot=10;
+                break;
+            case 1300:
+                slot=11;
+                break;
+            case 1330:
+                slot=12;
+                break;
+            case 1400:
+                slot=13;
+                break;
+            case 1430:
+                slot=14;
+                break;
+            case 1500:
+                slot=15;
+                break;
+            case 1530:
+                slot=16;
+                break;
+            case 1600:
+                slot=17;
+                break;
+            case 1630:
+                slot=18;
+                break;
+            case 1700:
+                slot=19;
+                break;
+            case 1730:
+                slot=20;
+                break;
+            case 1800:
+                slot=21;
+                break;
+            case 1830:
+                slot=22;
+                break;
+            case 1900:
+                slot=23;
+                break;
+            case 1930:
+                slot=24;
+                break;
+            case 2000:
+                slot=25;
+                break;
+            case 2030:
+                slot=26;
+                break;
+            case 2100:
+                slot=27;
+                break;
+            case 2130:
+                slot=28;
+                break;
+            case 2200:
+                slot=29;
+                break;
+            default:
+                slot=0;
+                break;
+        }
+        if(slot==0){
+            //TODO: ERROR
+        }
+        return slot;
+    }
+
     
 }
 

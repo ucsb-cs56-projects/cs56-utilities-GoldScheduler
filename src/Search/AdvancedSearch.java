@@ -12,11 +12,8 @@ import connection.courseInfo.CourseConnection;
 
 
 //TODOs:
-//*Note: these comments are also in the code. This is just to give us an idea
-//of that still needs to be done
 
 //1. What if there are no results to show?
-//2. Pick new colors
 //3. Database - Based on the option selected return a list of profesors
 //4. Database - Currently stole the method from the simple search, but it will need to be re-implemented
 //for a different set of arguments
@@ -104,7 +101,6 @@ public class AdvancedSearch{
      */
     //TODO Pick new colors?
     public void setCourses(){
-        //TODO: No results to show?
         JPanel blank = new JPanel();
         blank.setPreferredSize(new Dimension(900,533));
         blank.setBackground(this.darkerColor);
@@ -132,10 +128,16 @@ public class AdvancedSearch{
         ArrayList<Course> courseList = list;
         int numResults = courseList.size();
         if(numResults == 0){
-            this.setCourses();
+            courses.setPreferredSize(new Dimension(500,567));
+            courses.setBackground(this.darkerColor);
+            JLabel noResults = new JLabel("There are no courses that match what you're looking for");
+            Font font = noResults.getFont();
+            Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+            noResults.setFont(boldFont);
+            courses.add(noResults);
+            this.cDisplay = courses;
         }
         //Sets up panel as a grid by how many courses there are
-        //courses.setLayout(new GridLayout(numResults, 1));
         JPanel[] panels = new JPanel[numResults];
         for(int index = 0 ; index<numResults; index++){
             panels[index] = new JPanel();
@@ -150,19 +152,21 @@ public class AdvancedSearch{
             Lecture thisSection = c.getSect();
             JPanel coursePanel = new JPanel();
             coursePanel.setPreferredSize(new Dimension(910,150));
-            //rows: 1. title
-            //      2. header
-            //      3. Lecture info
-            //      4+. Section info
-            //columns: 5
-            //(Days, times, instrucors, location, addButton)
-            int rows = 3;
+            /*rows: 1. title
+                    2. header
+                    3. Lecture info
+                    4+. Section info
+            columns: 5
+            (Days, times, instrucors, location, addButton)
+             */
+            int rows = 4;
             int columns = 5;
-            rows++;
-            //int numSections = ;
-            //for(int i = 0; i<numSections; i++){
-            //rows++;
-            //}
+             /*
+             int numSections = ;
+             for(int i = 0; i<numSections; i++){
+                rows++;
+             }
+             */
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -172,9 +176,8 @@ public class AdvancedSearch{
                     coursePanel.add(panelNum[y][x]);
                 }
             }
-            
+        
             //Row 1: Title and view button
-            //JLabel t = new JLabel(c.title);
             JLabel t = new JLabel(c.courseID);
             Font font = t.getFont();
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
@@ -224,12 +227,8 @@ public class AdvancedSearch{
             JButton addToSchedule = new JButton("Add");
             addToSchedule.addActionListener(new addListener(this.schedule,c));
             panelNum[3][4].add(addToSchedule);
-
-
-            
             
             panels[n].add(coursePanel);
-            
         }
         this.cDisplay = courses;
         
@@ -237,6 +236,9 @@ public class AdvancedSearch{
     
     
     //CONTROL
+    /**
+     Calls setControl for a blank panel to display
+     */
     public JPanel getControl() {
         this.setControl();
         return this.control;
@@ -249,10 +251,9 @@ public class AdvancedSearch{
     public void setControl(){
         JPanel controlPanel = new JPanel();
         int len = this.searchOptions.length;
-        //int len = 3;
-        //Probably want the control panel to be a horizontal row of buttons
         controlPanel.setPreferredSize(new Dimension(500,66));
         controlPanel.setLayout(new GridLayout(2, 1));
+        //Made two panels because top one won't be broken down as much
         JPanel[] panelHolder = new JPanel[2];
         for(int i = 0; i<2; i++){
             panelHolder[i] = new JPanel();
@@ -266,7 +267,6 @@ public class AdvancedSearch{
             bottomHolder[j].setBackground(this.darkerColor);
             panelHolder[1].add(bottomHolder[j]);
         }
-        
         
         //make labels
         JLabel label = new JLabel("Select an option to search by:");
@@ -285,9 +285,6 @@ public class AdvancedSearch{
                                                                 radioButtons[i].getText()));
             bottomHolder[i].add(radioButtons[i]);
         }
-        
-        
-        
         this.control = controlPanel;
     }
     
@@ -364,12 +361,6 @@ public class AdvancedSearch{
         }
     }
     
-    /*
-     public ArrayList<Course> getCourses() {
-     return this.schedule.getCourses();
-     }
-     */
-    
     public ArrayList<Course> getDeptResults(String key){
         return getResults(key, "Department");
     }
@@ -382,10 +373,11 @@ public class AdvancedSearch{
 
 
 
-    //TODO: Currently stole the method from the simple search, but it will need to be re-implemented
-    //for a different set of arguments
-    //Also will not work because the contrustor needs to be fixed in connection
-    //Option will represent what capegory to search through Department, Professor, or GE Req
+    /*TODO: Currently stole the method from the simple search, but it will need to be re-implemented
+    for a different set of arguments
+    Also will not work because the contrustor needs to be fixed in connection
+    Option will represent what capegory to search through Department, Professor, or GE Req
+     */
     public ArrayList<Course> getResults(String key, String option){
         //Course Code is not the real course code. It's my course code :)
         //Location is empty String. preReqs is empty Course array. restrictions is empty String array
@@ -397,40 +389,7 @@ public class AdvancedSearch{
         }
         return null;
          */
-        //Make course c
-        char [] a = {'M','W'};
-        Course [] b = {};
-        String [] d = {};
-        
-        char[] sectDay = {'T'};
-        char[] sectDay2 = {'R'};
-        
-        Lecture newSect = new Lecture(0, "PREBLE, E", 1800, 1850, sectDay, "PHELP 3525", "00000", new Color(129,190,247));
-        Lecture newSect1 = new Lecture(0, "PREBLE, E", 1100, 1150, sectDay, "PHELP 3525", "00000", new Color(73,90,252));
-        Lecture newSect2 = new Lecture(0, "PREBLE, E", 900, 950, sectDay, "PHELP 3525", "00000", new Color(169,226,195));
-        Lecture newSect3 = new Lecture(0, "PREBLE, E", 1900, 1950, sectDay, "PHELP 3525", "00000", new Color(129,190,247));
-        //Make course pre
-        Lecture newLect = new Lecture(0, "CONRAD, P", 900, 950, a, "PHELP 1110", "93874", new Color(129,190,247));
-        Course pre = new Course("CMPSC 8", "INTRO TO COMP SCI", "Introduction to Computer Science", "CMPSC", "4.0", b, d, d, newLect, newSect);
-        Course [] cs = {pre};
-        String [] e = {"CMPSC"};
-        Lecture l = new Lecture(0, "COSTANZO, M", 1400, 1515, a, "PHELP 1160", "09159", new Color(73,90,252));
-        Course c = new Course("CMPSC 48", "COMP SCI PROJECT", "Computer Science Project", "CMPSC", "4.0", cs, e, d, l, newSect1);
-        //Make course r
-        Lecture q = new Lecture(0, "CONRAD, P", 930, 1045, a, "PHELP 3526", "09191", new Color(169,226,195));
-        Course r = new Course("CMPSC 56", "ADV APP PROGRAM", "Advanced Applications Programming",
-                              "CMPSC", "4.0", b, d, e, q,newSect2);
-        //Make course w
-        char [] n = {'T','R'};
-        String [] engl = {"A2 - English & Reading Composition"};
-        Lecture v = new Lecture(0, "RALEY, M", 1730, 1845, n, "BRDA 1610", "19372", new Color(129,190,247));
-        Course w = new Course("ENGL 10", "INTRO TO LIT STUDY", "Introduction to Literary Study",
-                              "ENGL", "4.0", b, d, engl, v, newSect3);
         ArrayList<Course> courseList = new ArrayList<Course>();
-        courseList.add(pre);
-        courseList.add(c);
-        courseList.add(r);
-        courseList.add(w);
         return courseList;
 
     }
@@ -446,6 +405,7 @@ public class AdvancedSearch{
             this.p = p;
             this.cList = cList;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.p.display.removeAll();
             this.p.display.revalidate();
@@ -460,6 +420,7 @@ public class AdvancedSearch{
             this.p.display.add(buttonPanel, BorderLayout.SOUTH);
         }
     }
+    
     class backListener implements ActionListener{
         private AdvancedSearch outer;
         private ArrayList<Course> cList1;
@@ -467,6 +428,7 @@ public class AdvancedSearch{
             this.outer = outerIn;
             this.cList1 = cList1;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.outer.display.removeAll();
             this.outer.display.revalidate();
@@ -486,7 +448,7 @@ public class AdvancedSearch{
             this.a = a;
             this.optionString = optionString;
         }
-        //populates the next menu with items related to that search option
+        @Override
         public void actionPerformed(ActionEvent e){
             String [] menuList = getList(optionString);
             JComboBox cMenu = new JComboBox(menuList);
@@ -505,6 +467,7 @@ public class AdvancedSearch{
             this.a = a;
             this.optionString = optionString;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             ArrayList<Course> result = new ArrayList<Course>();
             JComboBox comboBox = (JComboBox) e.getSource();

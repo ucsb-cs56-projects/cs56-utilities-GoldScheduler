@@ -11,13 +11,10 @@ import connection.courseInfo.CourseConnection;
 
 
 //TODOs:
-//*Note: these comments are also in the code. This is just to give us an idea
-//of that still needs to be done
 
 //1. make scrollable
-//2. No results to show?
-//3. Auto-generated catch block
-//4. Loading screen while searching
+//2. Auto-generated catch block
+//3. Loading screen while searching
 
 
 /**
@@ -27,25 +24,31 @@ import connection.courseInfo.CourseConnection;
 public class SimpleSearch{
     //TODO make scrollable
      
-    //Initializing Components
+    /*
+     Initializing components
+     */
     private JPanel display;
     private JPanel control;
     private JPanel cDisplay;
     private JTextField searchField;
     private JButton searchButton;
     private Scheduler schedule;
+    private JPanel sDisplay;
     private final Color darkerColor = new Color(165,188,238);
     private final Color lighterColor = new Color(201,212,237);
     
-    private JPanel sDisplay;
-    
+    //CONSTRUCOTRS
     public SimpleSearch(){
         this.schedule = new Scheduler();
     }
-    
+    /**
+     Constructor to use saved schedule
+     */
     public SimpleSearch(Scheduler s){
         this.schedule = s;
     }
+    
+    //MAIN DISPLAY
     /**
      Initializes the display
      */
@@ -56,12 +59,10 @@ public class SimpleSearch{
         panel.setLayout(new BorderLayout());
         
         //Make control panel
-        
         panel.add(this.getControl(), BorderLayout.NORTH);
         panel.add(this.getCourses(), BorderLayout.SOUTH);
         this.display = panel;
     }
-    
     /**
      @return returns the full set display with both the control and course panels
      */
@@ -70,6 +71,8 @@ public class SimpleSearch{
         return this.display;
     }
     
+    
+    //CONTROL DISPLAY
     /**
      Sets the display panel and then returns it.
      Creates the display panel that includes a control panel that you can type a keyword into
@@ -84,7 +87,6 @@ public class SimpleSearch{
             panelHolder[i].setBackground(darkerColor);
             controlPanel.add(panelHolder[i]);
         }
-
         //Make components
         JLabel searchLabel = new JLabel("Enter course:");
         searchField = new JTextField(20);
@@ -105,11 +107,12 @@ public class SimpleSearch{
         return this.control;
     }
 
+    
+    //COURSE DISPLAY
     /**
      Sets courses to a blank screen
      */
     public void setCourses(){
-        //TODO: No results to show?
         JPanel blank = new JPanel();
         blank.setPreferredSize(new Dimension(500,567));
         blank.setBackground(this.darkerColor);
@@ -130,21 +133,25 @@ public class SimpleSearch{
         JPanel courses = new JPanel();
         courses.setPreferredSize(new Dimension(500,567));
         courses.setBackground(this.darkerColor);
-        //Call getResults
         ArrayList<Course> courseList = list;
         int numResults = courseList.size();
         if(numResults == 0){
-            this.setCourses();
+            courses.setPreferredSize(new Dimension(500,567));
+            courses.setBackground(this.darkerColor);
+            JLabel noResults = new JLabel("There are no courses that match what you're looking for");
+            Font font = noResults.getFont();
+            Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+            noResults.setFont(boldFont);
+            courses.add(noResults);
+            this.cDisplay = courses;
         }
         //Sets up panel as a grid by how many courses there are
-        //courses.setLayout(new GridLayout(numResults, 1));
         JPanel[] panels = new JPanel[numResults];
         for(int index = 0 ; index<numResults; index++){
             panels[index] = new JPanel();
             panels[index].setBackground(this.darkerColor);
             courses.add(panels[index]);
         }
-        
         //Puts them into a display
         for(int n = 0; n<numResults; n++){
             Course c = courseList.get(n);
@@ -152,20 +159,24 @@ public class SimpleSearch{
             Lecture thisSection = c.getSect();
             JPanel coursePanel = new JPanel();
             coursePanel.setPreferredSize(new Dimension(910,125));
-            //rows: 1. title
-            //      2. header
-            //      3. Lecture info
-            //      4+. Section info
-            //columns: 5
-            //(Days, times, instrucors, location, addButton)
-            int rows = 3;
+            /*rows: 1. title
+                  2. header
+                  3. Lecture info
+                  4+. Section info
+            columns: 5
+            (Days, times, instrucors, location, addButton)
+             */
+            int rows = 4;
             int columns = 5;
-            //for one section
-            rows++;
-            //int numSections = ;
-            //for(int i = 0; i<numSections; i++){
-            //rows++;
-            //}
+            /*
+             Right now works for one section per course.
+             TODO: Check if course name matches then put them together
+             
+             int numSections = ;
+             for(int i = 0; i<numSections; i++){
+                rows++;
+             }
+             */
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -177,7 +188,6 @@ public class SimpleSearch{
             }
             
             //Row 1: Title and view button
-            //JLabel t = new JLabel(c.title);
             JLabel t = new JLabel(c.courseID);
             Font font = t.getFont();
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
@@ -230,15 +240,11 @@ public class SimpleSearch{
             addToSchedule.addActionListener(new addListener(this.schedule,c));
             panelNum[3][4].add(addToSchedule);
             
-            
             panels[n].add(coursePanel);
-            
         }
         this.cDisplay = courses;
-        
     }
 
-    
     /**
      @return sets panel to a blank panel and returns it
      */
@@ -263,14 +269,14 @@ public class SimpleSearch{
     }
     
     
+    //RESULTS
     /**
      Communicates with the database using a desired keyword
      @param key A string that contains a keyword that will be used to talk to the database
      @return An arrayList of courses, which are the results.
-     * @throws SQLException 
+     @throws SQLException
      */
     public ArrayList<Course> getResults(String key) {
-    	
     	//Course Code is not the real course code. It's my course code :)
     	//Location is empty String. preReqs is empty Course array. restrictions is empty String array
     	try {
@@ -282,6 +288,7 @@ public class SimpleSearch{
 		return null;
     }
     
+    //SCHEDULE
     /**
      @return returns the schedule.
      */
@@ -318,6 +325,7 @@ public class SimpleSearch{
             this.p = p;
             this.cList = cList;
         }
+        @Override
         public void actionPerformed(ActionEvent e){
             this.p.display.removeAll();
             this.p.display.revalidate();
@@ -356,8 +364,7 @@ public class SimpleSearch{
             this.text = text;
             this.s = s;
         }
-        //populates the page with search results
-        //Calls set courses function
+        @Override
         public void actionPerformed(ActionEvent e) {
             String keyword = this.text.getText();
             this.s.display.removeAll();
