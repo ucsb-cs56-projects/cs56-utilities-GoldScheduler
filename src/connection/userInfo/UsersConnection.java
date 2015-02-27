@@ -1,10 +1,10 @@
 package connection.userInfo;
 
+import java.awt.Color;
 import java.sql.SQLException;
 
 import connection.GolderConnection;
-
-//import Course;
+import Course.*;
 
 /**
  * Database Connection For User Information
@@ -179,9 +179,22 @@ public class UsersConnection extends GolderConnection{
 
 		stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
 
-	
-
 	}
+	
+	/**
+	 * Save the User Data
+	 * @param u
+	 * @param c
+	 */
+	//TODO
+	public static void saveCourse(User u, Course c) throws SQLException {
+		
+		int i = c.getLect().id;
+		c.getLect().col.getRGB();
+		
+	}
+	
+	
 	/*
 	 * test 
 	 

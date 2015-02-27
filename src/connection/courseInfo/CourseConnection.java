@@ -20,8 +20,10 @@ public class CourseConnection extends GolderConnection{
 	 * get an array of String of all Majors
 	 */
 	
-	/*
-	 * List All Majors
+	/**
+	 * 
+	 * @return an array list of Majors
+	 * @throws SQLException
 	 */
 	public static String[] getMajor() throws SQLException {
 		String [] m = null;
@@ -37,7 +39,7 @@ public class CourseConnection extends GolderConnection{
 		        
 		        rs.beforeFirst();
 		        
-		        m[0] = "";
+		        m[0] = "------";
 		        
 		        for (int i = 1; i < m.length; i++) {
 		        	rs.next();
@@ -48,6 +50,40 @@ public class CourseConnection extends GolderConnection{
  	
 		
 		return m;
+	}
+	
+	/**
+	 * 
+	 * @return An array list of professors
+	 * @throws SQLException
+	 */
+	
+	public static String[] getProfessor() throws SQLException {
+		String [] m = null;
+		
+
+		
+		if (stmt.execute(String.format("SELECT DISTINCT instructor_name FROM `spring_15_lecture`;"))) {
+	        rs = stmt.getResultSet();
+	        
+	        rs.last();
+	        
+	        m = new String[rs.getRow()];
+	        
+	        rs.beforeFirst();
+	        
+	        m[0] = "------";
+	        
+	        for (int i = 1; i < m.length; i++) {
+	        	rs.next();
+	        	if (!rs.getString(1).equals("TBA")) m[i] = rs.getString(1);
+	        	else --i;
+	        }
+	    }
+	
+	
+		return m;
+		
 	}
 	
 	/**
@@ -70,9 +106,6 @@ public class CourseConnection extends GolderConnection{
 		        
 		        
 		        while (rs.next()) {
-		        	//TODO Fix contructor. Add Lecture object representing section to list of arguments. It should be the last one
-		        	
-/**/
 			        		
 			        		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(169,226,195));
 			        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
@@ -83,11 +116,8 @@ public class CourseConnection extends GolderConnection{
 			                		, le, se);
 			        		
 			        		ca.add(r);
-			        		
-			        		System.out.println(ca.size());
 
 		        }
-		        
 
 		}
 
@@ -180,12 +210,12 @@ public class CourseConnection extends GolderConnection{
 		
 	}
 	
-	/*
+	
 	public static void main(String[] args) throws SQLException {
 
-		for (Course t : SearchFullTitle("computer"))  System.out.println(t.courseID);
+		for (String t : getProfessor())  System.out.println(t);
 	}
-	
+	/*
 	*/
 	
 }

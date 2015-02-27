@@ -294,11 +294,19 @@ public class AdvancedSearch{
     
 
     //GETTING RESULTS
-    //TODO based on the option selected return a list of profesors
-    //Database
+    //TODO handle the SQLException
+    //if it throws SQLException, the return value would be null
     public String[] getList(String s){
         if(s=="Department"){
-            String [] m=  {"------","Anthropology (ANTH)", "Art (Creative Studies) (ART)",
+        	
+            String[] m;
+			try {
+				m = connection.courseInfo.CourseConnection.getMajor();
+			} catch (SQLException e) {
+				m = new String[0];
+			}
+            	/*
+            	{"------","Anthropology (ANTH)", "Art (Creative Studies) (ART)",
                 "Art History (ARTHI)", "Art Studio (ARTST)",
                 "Asian American Studies (AS AM)", "Astronomy (ASTRO)",
                 "Biology (Creative Studies) (BIOL)",
@@ -336,10 +344,16 @@ public class AdvancedSearch{
                 "Spanish (SPAN)", "Speech & Hearing Sciences (SHS)",
                 "Statistics & Applied Probability (PSTAT)", "Technology Management (TMP)",
                 "Theater (THTR)", "Writing (WRIT)"};
+                */
             return m;
         }
         else if(s=="Professor"){
-            String [] m=  {"------","a","b", "c"};
+            String[] m;
+			try {
+				m = connection.courseInfo.CourseConnection.getProfessor();
+			} catch (SQLException e) {
+				m = new String[0];
+			}
             return m;
         }
         else { //s==GE

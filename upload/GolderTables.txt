@@ -67,3 +67,21 @@ end_time SMALLINT,
 PRIMARY KEY (id),
 FOREIGN KEY (corresponding_id) REFERENCES spring_15_lecture(id)
 )
+
+CREATE TABLE depts
+(
+department varchar(20),
+department_no_space varchar(20),
+description varchar(255),
+
+PRIMARY KEY (department)
+);
+
+CREATE TABLE student_schedule
+(
+user_id bigint NOT NULL,
+lecture_id bigint NOT NULL,
+lecture_color int,
+section_id bigint, 
+section_color int
+)
