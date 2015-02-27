@@ -3,6 +3,8 @@ package connection.courseInfo;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -98,42 +100,83 @@ public class CourseConnection extends GolderConnection{
 		Course c = null;
 
 		
-		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name WHERE spring_15_lecture.id = %s AND spring_15_section.id = %s;", lectureId, sectionId))) {
+		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` "
+				+ "INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id "
+				+ "INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name "
+				+ "LEFT JOIN `b_reqs` ON spring_15_lecture.course_name=b_reqs.coursename "
+				+ "LEFT JOIN `c_reqs` ON spring_15_lecture.course_name=c_reqs.coursename "
+				+ "LEFT JOIN `d_reqs` ON spring_15_lecture.course_name=d_reqs.coursename "
+				+ "LEFT JOIN `e_reqs` ON spring_15_lecture.course_name=e_reqs.coursename "
+				+ "LEFT JOIN `f_reqs` ON spring_15_lecture.course_name=f_reqs.coursename "
+				+ "LEFT JOIN `g_reqs` ON spring_15_lecture.course_name=g_reqs.coursename "
+				+ "LEFT JOIN `h_reqs` ON spring_15_lecture.course_name=h_reqs.coursename "				
+				+ "LEFT JOIN `ethnic_reqs` ON spring_15_lecture.course_name=ethnic_reqs.coursename "
+				+ "LEFT JOIN `euro_reqs` ON spring_15_lecture.course_name=euro_reqs.coursename "
+				+ "LEFT JOIN `quantitative_reqs` ON spring_15_lecture.course_name=quantitative_reqs.coursename "
+				+ "LEFT JOIN `world_culture_reqs` ON spring_15_lecture.course_name=world_culture_reqs.coursename "
+				+ "LEFT JOIN `writ_reqs` ON spring_15_lecture.course_name=writ_reqs.coursename "
+				+ "WHERE spring_15_lecture.id = %s AND spring_15_section.id = %s;", lectureId, sectionId))) {
 
 				rs = stmt.getResultSet();
 				
 				rs.next();
 				
 				Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(169,226,195));
-        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), "TBA", rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
         		
-                c = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
+                c = new Course(rs.getString("spring_15_lecture.course_name"), rs.getString("full_title"), rs.getString("full_title"),
                 		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
-                		deCodeGEFill(rs.getInt(18), rs.getString(19), rs.getInt(20), rs.getInt(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25), rs.getInt(26), rs.getString(27), rs.getInt(28), rs.getInt(29))
+                		deCodeGEFill(rs.getString(17), rs.getString(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22), rs.getString(23), rs.getString(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getString(28))
                 		, le, se);
 		}
 		return c;
 	}
+	/**
+	 * get course with color
+	 * @param lectureId
+	 * @param sectionId
+	 * @param lectureColor
+	 * @param sectionColor
+	 * @return
+	 * @throws SQLException
+	 */
 	
 	public static Course getCourse(int lectureId, int sectionId,int lectureColor, int sectionColor) throws SQLException {
-		Course c = null;
+Course c = null;
 
 		
-		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name WHERE spring_15_lecture.id = %s AND spring_15_section.id = %s;", lectureId, sectionId))) {
+		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` "
+				+ "INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id "
+				+ "INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name "
+				+ "LEFT JOIN `b_reqs` ON spring_15_lecture.course_name=b_reqs.coursename "
+				+ "LEFT JOIN `c_reqs` ON spring_15_lecture.course_name=c_reqs.coursename "
+				+ "LEFT JOIN `d_reqs` ON spring_15_lecture.course_name=d_reqs.coursename "
+				+ "LEFT JOIN `e_reqs` ON spring_15_lecture.course_name=e_reqs.coursename "
+				+ "LEFT JOIN `f_reqs` ON spring_15_lecture.course_name=f_reqs.coursename "
+				+ "LEFT JOIN `g_reqs` ON spring_15_lecture.course_name=g_reqs.coursename "
+				+ "LEFT JOIN `h_reqs` ON spring_15_lecture.course_name=h_reqs.coursename "				
+				+ "LEFT JOIN `ethnic_reqs` ON spring_15_lecture.course_name=ethnic_reqs.coursename "
+				+ "LEFT JOIN `euro_reqs` ON spring_15_lecture.course_name=euro_reqs.coursename "
+				+ "LEFT JOIN `quantitative_reqs` ON spring_15_lecture.course_name=quantitative_reqs.coursename "
+				+ "LEFT JOIN `world_culture_reqs` ON spring_15_lecture.course_name=world_culture_reqs.coursename "
+				+ "LEFT JOIN `writ_reqs` ON spring_15_lecture.course_name=writ_reqs.coursename "
+				+ "WHERE spring_15_lecture.id = %s AND spring_15_section.id = %s;", lectureId, sectionId))) {
 
 				rs = stmt.getResultSet();
 				
 				rs.next();
 				
 				Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(lectureColor));
-        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(sectionColor));
+        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), "TBA", rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(sectionColor));
         		
-                c = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
+                c = new Course(rs.getString("spring_15_lecture.course_name"), rs.getString("full_title"), rs.getString("full_title"),
                 		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
-                		deCodeGEFill(rs.getInt(18), rs.getString(19), rs.getInt(20), rs.getInt(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25), rs.getInt(26), rs.getString(27), rs.getInt(28), rs.getInt(29))
+                		deCodeGEFill(rs.getString(17), rs.getString(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22), rs.getString(23), rs.getString(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getString(28))
                 		, le, se);
 		}
 		return c;
+		
+		
 	}
 	
 	/**
@@ -148,7 +191,22 @@ public class CourseConnection extends GolderConnection{
 		ArrayList<Course> ca = new ArrayList<Course>();
 
 		
-		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name WHERE courses.description LIKE '%%%s%%' OR courses.course_name LIKE '%%%s%%';", s, s))) {
+		if (stmt.execute(String.format("SELECT * FROM `spring_15_section` "
+				+ "INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id "
+				+ "INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name "
+				+ "LEFT JOIN `b_reqs` ON spring_15_lecture.course_name=b_reqs.coursename "
+				+ "LEFT JOIN `c_reqs` ON spring_15_lecture.course_name=c_reqs.coursename "
+				+ "LEFT JOIN `d_reqs` ON spring_15_lecture.course_name=d_reqs.coursename "
+				+ "LEFT JOIN `e_reqs` ON spring_15_lecture.course_name=e_reqs.coursename "
+				+ "LEFT JOIN `f_reqs` ON spring_15_lecture.course_name=f_reqs.coursename "
+				+ "LEFT JOIN `g_reqs` ON spring_15_lecture.course_name=g_reqs.coursename "
+				+ "LEFT JOIN `h_reqs` ON spring_15_lecture.course_name=h_reqs.coursename "				
+				+ "LEFT JOIN `ethnic_reqs` ON spring_15_lecture.course_name=ethnic_reqs.coursename "
+				+ "LEFT JOIN `euro_reqs` ON spring_15_lecture.course_name=euro_reqs.coursename "
+				+ "LEFT JOIN `quantitative_reqs` ON spring_15_lecture.course_name=quantitative_reqs.coursename "
+				+ "LEFT JOIN `world_culture_reqs` ON spring_15_lecture.course_name=world_culture_reqs.coursename "
+				+ "LEFT JOIN `writ_reqs` ON spring_15_lecture.course_name=writ_reqs.coursename "
+				+ "WHERE courses.full_title LIKE '%%%s%%' OR courses.course_name LIKE '%%%s%%';", s, s))) {
 
 				rs = stmt.getResultSet();
 		        
@@ -158,11 +216,11 @@ public class CourseConnection extends GolderConnection{
 		        while (rs.next()) {
 			        		
 			        		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(169,226,195));
-			        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), rs.getString("spring_15_section.instructor_name"), rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+			        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), "TBA", rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
 			        		
-			                Course r = new Course(rs.getString("course_name"), rs.getString("description"), rs.getString("description"),
+			                Course r = new Course(rs.getString("courses.course_name"), rs.getString("courses.full_title"), rs.getString("courses.full_title"),
 			                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
-			                		deCodeGEFill(rs.getInt(18), rs.getString(19), rs.getInt(20), rs.getInt(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25), rs.getInt(26), rs.getString(27), rs.getInt(28), rs.getInt(29))
+			                		deCodeGEFill(rs.getString(17), rs.getString(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22), rs.getString(23), rs.getString(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getString(28))
 			                		, le, se);
 			        		
 			        		ca.add(r);
@@ -174,6 +232,76 @@ public class CourseConnection extends GolderConnection{
 		return ca;
 		
 	}
+	
+	
+	public static ArrayList<Course> getResults(String key, String option) throws SQLException{
+		if (option.equals("Department")){
+			Pattern pattern = 
+				    Pattern.compile("\\A.+\\((.+)\\)\\Z");
+
+			Matcher matcher = 
+				    pattern.matcher(key);
+				    
+			if (matcher.find()) key = matcher.group(1);
+
+			option = "department='"+key+'\'';
+		}
+		else if (option.equals("Professor"))
+			option = "spring_15_lecture.instructor_name='"+key+'\'';
+		else if (option.equals("General Education")) {
+			option = "0";
+		}
+		
+		
+		ArrayList<Course> ca = new ArrayList<Course>();
+
+		
+		if (stmt.execute("SELECT * FROM `spring_15_section` "
+				+ "INNER JOIN `spring_15_lecture` ON spring_15_section.corresponding_id=spring_15_lecture.id "
+				+ "INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name "
+				+ "LEFT JOIN `b_reqs` ON spring_15_lecture.course_name=b_reqs.coursename "
+				+ "LEFT JOIN `c_reqs` ON spring_15_lecture.course_name=c_reqs.coursename "
+				+ "LEFT JOIN `d_reqs` ON spring_15_lecture.course_name=d_reqs.coursename "
+				+ "LEFT JOIN `e_reqs` ON spring_15_lecture.course_name=e_reqs.coursename "
+				+ "LEFT JOIN `f_reqs` ON spring_15_lecture.course_name=f_reqs.coursename "
+				+ "LEFT JOIN `g_reqs` ON spring_15_lecture.course_name=g_reqs.coursename "
+				+ "LEFT JOIN `h_reqs` ON spring_15_lecture.course_name=h_reqs.coursename "				
+				+ "LEFT JOIN `ethnic_reqs` ON spring_15_lecture.course_name=ethnic_reqs.coursename "
+				+ "LEFT JOIN `euro_reqs` ON spring_15_lecture.course_name=euro_reqs.coursename "
+				+ "LEFT JOIN `quantitative_reqs` ON spring_15_lecture.course_name=quantitative_reqs.coursename "
+				+ "LEFT JOIN `world_culture_reqs` ON spring_15_lecture.course_name=world_culture_reqs.coursename "
+				+ "LEFT JOIN `writ_reqs` ON spring_15_lecture.course_name=writ_reqs.coursename "
+				+ "WHERE " + option)) {
+
+				rs = stmt.getResultSet();
+		        
+		        
+		        
+		        
+		        while (rs.next()) {
+			        		
+			        		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"), rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"), deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"), new Color(169,226,195));
+			        		Lecture se = new Lecture(rs.getInt("spring_15_section.id"), "TBA", rs.getInt("spring_15_section.start_time"),  rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")), "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+			        		
+			                Course r = new Course(rs.getString("courses.course_name"), rs.getString("courses.full_title"), rs.getString("courses.full_title"),
+			                		rs.getString("department"), rs.getString("units"), new Course [0], new String [0], 
+			                		deCodeGEFill(rs.getString(17), rs.getString(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22), rs.getString(23), rs.getString(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getString(28))
+			                		, le, se);
+			        		
+			        		ca.add(r);
+
+		        }
+
+		}
+
+		return ca;
+	}
+	
+	/**
+	 * 
+	 * @param w
+	 * @return
+	 */
 	
 	private static char [] deCodeWeek(int w) {
 		
@@ -229,43 +357,50 @@ public class CourseConnection extends GolderConnection{
 		
 	}
 	
-	private static String[] deCodeGEFill(int b, String c, int d, int e, int f, int g, int h, int ethnic, int euro, String quantitative, int world_culture, int writ) {
+	private static String[] deCodeGEFill(String b, String c, String d, String e, String f, String g, String h, String ethnic, String euro, String quantitative, String world_culture, String writ) {
+		
 		
 		int count = 0;
 		
 		
-		count = b + d + e + f + g + h + ethnic + euro + world_culture +writ;
-		
-		if (!c.equals("0")) count ++;
-		if (!quantitative.equals("0")) count ++;
+		if (b != null) count ++;
+		if (c != null) count ++;
+		if (d != null) count ++;
+		if (e != null) count ++;
+		if (f != null) count ++;
+		if (g != null) count ++;
+		if (h != null) count ++;
+		if (ethnic != null) count ++;
+		if (euro != null) count ++;
+		if (quantitative != null) count ++;
+		if (world_culture != null) count ++;
+		if (writ != null) count ++;
 		
 		String [] req = new String[count];
 		
-		if (b == 1) {req[req.length-count] = "B"; count--;}
-		if (c.equals("1")) {req[req.length-count] = "C"; count--;}
-		else if (!c.equals("0")) {req[req.length-count] = "C (must take both this course and " + c + " to statisfy)"; count--;}
-		if (d == 1) {req[req.length-count] = "D"; count--;}
-		if (e == 1) {req[req.length-count] = "E"; count--;}
-		if (f == 1) {req[req.length-count] = "F"; count--;}
-		if (g == 1) {req[req.length-count] = "G"; count--;}
-		if (h == 1) {req[req.length-count] = "H"; count--;}
-		if (ethnic == 1) {req[req.length-count] = "ethnic".toUpperCase(); count--;}
-		if (euro == 1) {req[req.length-count] = "euro".toUpperCase(); count--;}
-		if (quantitative.equals("1")) {req[req.length-count] = "QUANTITATIVE"; count--;}
-		else if (!quantitative.equals("0")) {req[req.length-count] = "QUANTITATIVE (must take both this course and " + c + " to statisfy)"; count--;}
-		if (world_culture == 1) {req[req.length-count] = "world_culture".toUpperCase(); count--;}
-		if (writ == 1) {req[req.length-count] = "writ".toUpperCase(); count--;}
+		if (b != null) {req[req.length-count] = "B"; count--;}
+		if (c != null) {req[req.length-count] = "C"; count--;}
+		if (d != null) {req[req.length-count] = "D"; count--;}
+		if (e != null) {req[req.length-count] = "E"; count--;}
+		if (f != null) {req[req.length-count] = "F"; count--;}
+		if (g != null) {req[req.length-count] = "G"; count--;}
+		if (h != null) {req[req.length-count] = "H"; count--;}
+		if (ethnic != null) {req[req.length-count] = "ethnic".toUpperCase(); count--;}
+		if (euro != null) {req[req.length-count] = "euro".toUpperCase(); count--;}
+		if (quantitative != null) {req[req.length-count] = "QUANTITATIVE"; count--;}
+		if (world_culture != null) {req[req.length-count] = "world_culture".toUpperCase(); count--;}
+		if (writ != null) {req[req.length-count] = "writ".toUpperCase(); count--;}
 		
 		return req;
 		
 	}
 	
-	/*
+	/**/
 	public static void main(String[] args) throws SQLException {
 
-		for (String t : getProfessor())  System.out.println(t);
+		getCourse(1, 1);
 	}
 	
-	*/
+	
 	
 }

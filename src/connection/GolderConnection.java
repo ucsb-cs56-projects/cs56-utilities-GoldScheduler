@@ -28,11 +28,7 @@ public class GolderConnection {
 	public static Statement stmt;
 	public static ResultSet rs;
 	public static Connection conn;
-	
-	private static JFrame frame = new JFrame();
-	static {
-		frame.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-	}
+
 	
 
 	//initial
@@ -68,13 +64,13 @@ public class GolderConnection {
 		} catch (SQLException e) {
 			
 			int n = JOptionPane.showConfirmDialog(
-					frame,
+					null,
 				    "Do you want to reconnect?",
 				    "Connection Error",
 				    JOptionPane.YES_NO_OPTION,
 				    JOptionPane.ERROR_MESSAGE);
 			if (n == 0) connect();
-			else frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			else System.exit(1);
 		}
 
 	}

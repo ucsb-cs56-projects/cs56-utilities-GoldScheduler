@@ -2,8 +2,8 @@ ANTH5
 ASTRO1
 ASTRO2
 CLIT27
-CHEM1AandCHEM1AL-','(bothcoursesmustbetakentosatisfyrequirem
-CHEM2AandCHEM2AC-','(bothcoursesmustbetakentosatisfyrequirem
+CHEM1AandCHEM1AL
+CHEM2AandCHEM2AC
 CMPSC8
 COMM87
 EARTH1
@@ -52,9 +52,9 @@ MCDB27
 MCDB29
 PHIL183
 PHYS1
-PHYS6AandPHYS6AL-','(bothcoursesmustbetakentosatisfyrequirem
-PHYS6BandPHYS6BL-','(bothcoursesmustbetakentosatisfyrequirem
-PHYS6CandPHYS6CL-','(bothcoursesmustbetakentosatisfyrequirem
+PHYS6AandPHYS6AL
+PHYS6BandPHYS6BL
+PHYS6CandPHYS6CL
 PHYS10
 PHYS21
 PSTAT5A

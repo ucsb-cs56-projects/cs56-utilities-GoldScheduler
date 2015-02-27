@@ -389,7 +389,13 @@ public class AdvancedSearch{
         }
         return null;
          */
-        ArrayList<Course> courseList = new ArrayList<Course>();
+        ArrayList<Course> courseList = null;
+		try {
+			courseList = connection.courseInfo.CourseConnection.getResults(key, option);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return courseList;
 
     }
