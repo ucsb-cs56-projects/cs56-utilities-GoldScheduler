@@ -1,6 +1,10 @@
 package connection;
 
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,10 +20,10 @@ import javax.swing.JOptionPane;
  */
 
 class Config{
-	public static String host = "169.231.51.149";
-	public static String username = "cs48";
-	public static String password = "P@ssw0rd";
-	public static String table = "golder";
+	public static String host;
+	public static String username;
+	public static String password;
+	public static String table;
 }
 
 
@@ -33,6 +37,21 @@ public class GolderConnection {
 
 	//initial
 	static {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader("config/config.config"));
+
+			Config.host = br.readLine();
+			Config.username =  br.readLine();
+			Config.password = br.readLine();
+			Config.table = br.readLine();
+
+	        br.close();
+	    } catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		connect();
 	}
 	
