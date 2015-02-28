@@ -117,39 +117,32 @@ public class UserInfo extends JPanel{
         	
         });
         
-        majorLabel = new JLabel("Select Major:");
-        
-        
-        
+        majorLabel = new JLabel("Select Major:");        
         String[] majorStrings = CourseConnection.getMajor();
-
-
         majorList = new JComboBox<String>(majorStrings);
-        
-        
-        
-        
-
         go();
     }
     
     void init() throws SQLException {
+    	password.setText("");
+    	password1.setText("");
+    	password2.setText("");
+    	pass1Wrong.setText("");
+    	pass2Wrong.setText("");
+    	emailWrong.setText("");
+    	userWrong.setText("");
+    	
     	if (u!=null) {
+
 	    	username.setText(u.getUsername());
-	    	userWrong.setText("");
-	    	
-		//	passWrong.setText("*You must enter password to update your information");
+	    	passWrong.setText("<html> *You must enter password <br>to update your information</html>");
 	    	
 	    	email.setText(u.getEmail());
-	        
-	    	pass1Wrong.setText("");
-	    	pass2Wrong.setText("");
-	    	emailWrong.setText("");
 	    	majorList.setSelectedItem(u.getMajor());
-	    	
-	    	password.setText("");
-	    	password1.setText("");
-	    	password2.setText("");
+    	} else {
+    		username.setText("");
+    		email.setText("");
+    		majorList.setSelectedIndex(0);
     	}
     }
     
@@ -165,42 +158,25 @@ public class UserInfo extends JPanel{
     public static UserInfo getUserPanel() {
     	return hahaha;
     }
-    
-    /**
-     * Validate when hit the button
-     * @author Forrest Sun
-     * @author Wesley Pollek
-     */
-
-    
+        
     
     /**
      * Validator Check all the information in the TextArea
      * Create account if no error
      * @throws SQLException 
      */
-    
-
     public void Validator() throws SQLException {
     	
     	update.setText("");
-    	
-    	
-    	
-    	
+
     	boolean validInfo = true;
     	
     	String passinfo = new String(password.getPassword());
     	
-    	if (passinfo.equals("")) {passWrong.setText("*You must enter password to update your information"); validInfo=false;}
+    	if (passinfo.equals("")) {passWrong.setText("<html> *You must enter password <br>to update your information</html>"); validInfo=false;}
     	else if (!passinfo.equals(u.getPassword())) { passWrong.setText("*Wrong password"); validInfo=false;}
     	else passWrong.setText("");
-    	
-    		
-    	
-    	
-    	
-    	
+
     	String passinfo1 = new String(password1.getPassword());
 	    if (!passinfo1.equals("") && passinfo1.length() < 4) {pass1Wrong.setText("Password must at least 4 charactor"); validInfo=false;}
 	    else pass1Wrong.setText("");
@@ -225,10 +201,6 @@ public class UserInfo extends JPanel{
 	    	else emailWrong.setText("");
 	    	
 	    }
-	    
-	    
-
-
 	    if (validInfo) {
 
 	    	if (!emailInfo.equals("") && !emailInfo.equals(u.getEmail())) u.setEmail(emailInfo);
@@ -239,9 +211,6 @@ public class UserInfo extends JPanel{
 	    	update.setText("Your information is up-dated");
 	    	passWrong.setText("");
 	    }
-    	
-
-
     }
     /** Test fucntion
      *       
@@ -259,10 +228,6 @@ public class UserInfo extends JPanel{
 		window.setVisible(true);
 
 	}
-	
-    
-
-    
     /**
      * The graphic part
      */

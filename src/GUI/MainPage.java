@@ -40,7 +40,6 @@ public class MainPage {
      * @param u
      */
     public MainPage(User u){
-		if (u == null) System.out.println("User u in MainPage ctor is null");
         this.mySchedule = new Scheduler(u);
         this.u = u;
     }
