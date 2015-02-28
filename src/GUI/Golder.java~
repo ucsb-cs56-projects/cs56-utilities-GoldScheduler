@@ -36,6 +36,8 @@ public class Golder {
         l = new Login();
         ca = new CreateAccount();
         //fu = new ForgotUser();
+        mainp = new MainPage(null);
+        
         goToLogin();
     }
     
@@ -52,7 +54,7 @@ public class Golder {
     }
     
     public static void goToMain(User u) {
-	mainp = new MainPage(u);
+    	mainp.setUser(u);
     	mainp.clean();
         window.setContentPane(mainp.getDisplay());
         window.validate();
