@@ -659,13 +659,14 @@ public class Scheduler {
 	//WIP listener for save button
 	//Forrest and Jonathan will complete
 
+	//TODO: find out where to add an instance of:
+	//      JButton save = new JButton("Save");
 	class saveListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 		//TODO: write code that saves course IDs for the user
 			try {
-				if (Scheduler.this.currentUser == null) System.out.println("NULL"); // This currently prints NULL after an exception is thrown
+				if (Scheduler.this.currentUser == null) System.out.println("NULL");
 				Scheduler.this.currentUser.deleteSchedule(); // First delete the old schedule so there are no conflicts
 			} catch (SQLException ex) { // this exception is being caught everytime thus far
 				ex.printStackTrace();

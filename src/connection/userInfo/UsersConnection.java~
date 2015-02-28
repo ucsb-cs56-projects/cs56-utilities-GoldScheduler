@@ -195,6 +195,8 @@ public class UsersConnection extends GolderConnection{
 		int lectureColor = c.getLect().col.getRGB();
 		int sectionID = c.getSect().id;
 		int sectionColor = c.getSect().col.getRGB();
+		
+		
 			stmt.executeUpdate(String.format("INSERT INTO `student_schedule` (user_id,lecture_id,lecture_color,section_id,section_color) VALUES (%s,%s,%s,%s,%s);", 
 					userId, lectureID, lectureColor, sectionID,sectionColor));
 		
