@@ -487,10 +487,8 @@ public class SimpleSearch{
             this.sch.add(c);
         }
     }
-<<<<<<< HEAD
 
  /*   class nextViewListener implements ActionListener{
-=======
     /*
     class nextViewListener implements ActionListener{
 >>>>>>> 1a06e61d60c73c61ca30bec549b1a12033dab135
@@ -580,11 +578,7 @@ public class SimpleSearch{
             this.q.display.add(buttonPanel, BorderLayout.SOUTH);
         }
     }
-<<<<<<< HEAD
   */
-=======
-    */
->>>>>>> 1a06e61d60c73c61ca30bec549b1a12033dab135
 }
 
 
