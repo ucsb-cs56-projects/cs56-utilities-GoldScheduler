@@ -359,10 +359,11 @@ public class SimpleSearch{
     class showResults implements ActionListener{
         private JTextField text;
         private SimpleSearch s;
-        
+        private JLabel loadingLabel;
         public showResults(JTextField text, SimpleSearch s){
             this.text = text;
             this.s = s;
+	    this.loadingLabel = loadingLabel;
         }
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -371,7 +372,14 @@ public class SimpleSearch{
             this.s.display.revalidate();
             this.s.display.repaint();
              //TODO Loading screen while searching
-            this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
+            loadingLabel = new JLabel("Loading results...");
+	    this.s.display.add(loadingLabel);
+	    try{
+		Thread.sleep(5000);
+	    } catch(InterruptedException k){
+		k.printStackTrace();
+	    }
+	    this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
             this.s.display.add(this.s.getCourses(keyword), BorderLayout.SOUTH);
         }
     }
@@ -390,7 +398,7 @@ public class SimpleSearch{
             this.sch.add(c);
         }
     }
-
+    /*
     class nextViewListener implements ActionListener{
 	private Course c1;
 	private SimpleSearch s;
@@ -434,6 +442,7 @@ public class SimpleSearch{
 	    this.s.display.add(buttonPanel, BorderLayout.South);
 	}
     }
+    
     class prevViewListener implements ActionListener{
         private Course c1;
         private SimpleSearch q;
@@ -477,6 +486,7 @@ public class SimpleSearch{
             this.q.display.add(buttonPanel, BorderLayout.South);
         }
     }
+    */
 }
 
 
