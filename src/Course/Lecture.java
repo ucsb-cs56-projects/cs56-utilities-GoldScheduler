@@ -116,7 +116,7 @@ public class Lecture{
                     s+="W";
                     break;
                 case 'R':
-                    s+="T";
+                    s+="R";
                     break;
                 default:
                     s+="F";
