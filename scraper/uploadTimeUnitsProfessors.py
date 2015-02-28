@@ -97,7 +97,7 @@ for line in ftime:
 				et=int(wocao.group(3))*100;
 			
 
-			if wocao.group(4) == 'P':
+			if (wocao.group(4) == 'P' and et < 1200):
 				
 				if st < et:
 					st+=1200;
@@ -145,7 +145,7 @@ for line in ftime:
 
 		#TODO UPLOAD
 		#print course_name, instructor_name, corresponding_id, week, st, et, units;
-		#cursor.execute("INSERT INTO `spring_15_lecture` (course_name, instructor_name, week, start_time, end_time) VALUES ('%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et))
+		cursor.execute("INSERT INTO `spring_15_lecture` (course_name, instructor_name, week, start_time, end_time) VALUES ('%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et))
 		#print ("INSERT INTO spring_15 (corresponding_id, course_name, instructor_name, week, start_time, end_time) VALUES (0,'%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et));
 		#cursor.execute("UPDATE `courses` SET units=%s WHERE course_name='%s';" % (units,course_name));
 		
@@ -155,7 +155,7 @@ for line in ftime:
 		#print course_info
 		
 		
-		#cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s'" % course_name)
+		cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s'" % course_name)
 		#print("SELECT id FROM `spring_15` WHERE course_name='%s;'" % course_name)
 		course_info = cursor.fetchall()
 		
@@ -189,7 +189,7 @@ for line in ftime:
 			et=int(wocao.group(3))*100;
 		
 
-		if wocao.group(4) == 'P':
+		if (wocao.group(4) == 'P' and et < 1200):
 			
 			if st < et:
 				st+=1200;
@@ -203,7 +203,7 @@ for line in ftime:
 				
 	#print course_name, instructor_name, corresponding_id, week, st, et, units;
 	#print ("INSERT INTO spring_15 (corresponding_id, course_name, instructor_name, week, start_time, end_time) VALUES ('%s','%s',%s,%s,%s,%s);" % (corresponding_id, course_name, instructor_name, week,st,et))
-	cursor.execute("INSERT INTO `spring_15_section` (corresponding_id, course_name, instructor_name, week, start_time, end_time) VALUES ('%s','%s',%s,%s,%s,%s);" % (corresponding_id, course_name, instructor_name, week,st,et))
+	cursor.execute("INSERT INTO `spring_15_section` (corresponding_id, week, start_time, end_time) VALUES (%s,%s,%s,%s);" % (corresponding_id, week,st,et))
 
 	
 	

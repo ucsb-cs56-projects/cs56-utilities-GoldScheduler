@@ -265,7 +265,7 @@ public class UsersConnection extends GolderConnection{
 	/*
 	 * test 
 	 
-	*/
+	
 	public static void main(String[] args) throws SQLException {
 		User u = getInfo(1);
 		
@@ -286,6 +286,7 @@ public class UsersConnection extends GolderConnection{
 		
 		
 	}
+	*/
 	
 	 
 

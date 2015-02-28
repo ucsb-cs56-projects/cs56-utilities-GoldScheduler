@@ -397,12 +397,12 @@ Course c = null;
 		
 	}
 	
-	/**/
+	/*
 	public static void main(String[] args) throws SQLException {
 
 		getCourse(1, 1);
 	}
 	
-	
+	*/
 	
 }
