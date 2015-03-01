@@ -40,7 +40,7 @@ public class Lecture{
         if(this.timeStart<1200){
             return this.timeStart/100 + ":" + min + " AM";
         }
-        else if(this.timeStart==1200||this.timeStart==1230){
+        else if(this.timeStart==1200||this.timeStart==1230||this.timeStart==1250){
             return this.timeStart/100 + ":" + min + " PM";
         }
         else{
