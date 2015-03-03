@@ -39,8 +39,18 @@ public class MainPage {
     /**
      * @param u
      */
+
+    // Updated ctor to load a schedule if user already has one
     public MainPage(User u){
-        this.mySchedule = new Scheduler(u);
+    	try {
+    		if (u.getSchedule() == null)
+        		this.mySchedule = new Scheduler(u);
+        	else 
+        		this.mySchedule = new Scheduler(u,u.getSchedule());
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+        
         this.u = u;
     }
     
@@ -88,7 +98,7 @@ public class MainPage {
         });
         
         viewSched = new JButton("View My Schedule");
-        viewSched.addActionListener(new schedListener(this, mySchedule));
+        viewSched.addActionListener(new schedListener(this, this.mySchedule));
 
 
         BufferedImage pic;

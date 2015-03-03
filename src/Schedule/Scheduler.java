@@ -47,6 +47,15 @@ public class Scheduler {
         this.conflicts = 0;
 		this.setUser(user);
 	}
+
+    public Scheduler(User user, ArrayList<Course> courseList) {
+        this.courseList = courseList;
+        this.cantAdd = new ArrayList<CourseConflict>();
+        this.panel = new JPanel();
+        this.controlPanel = new JPanel();
+        this.conflicts = 0;
+        this.setUser(user);
+    }
     
     //No-arg constructor. Generates an empty schedule
     public Scheduler(){
