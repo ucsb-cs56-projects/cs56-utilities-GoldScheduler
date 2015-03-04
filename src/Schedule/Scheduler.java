@@ -503,10 +503,6 @@ public class Scheduler {
             JButton delete = new JButton("Remove Course");
             panelHolder[slot+1][1].add(delete);
             delete.addActionListener(new deleteListener(g,this));
-
-			JButton save = new JButton("Save Schedule");
-			panelHolder[10][1].add(save);
-			save.addActionListener(new saveListener()); // Save button addition
             
             slot+=2;
         }
@@ -515,6 +511,10 @@ public class Scheduler {
             panelHolder[10][0].add(otherCourses);
             otherCourses.addActionListener(new conflictListener(this));
         }
+        JButton save = new JButton("Save Schedule");
+        panelHolder[10][1].add(save);
+        save.addActionListener(new saveListener()); // Save button addition
+        
         this.controlPanel = control;
     }
     
