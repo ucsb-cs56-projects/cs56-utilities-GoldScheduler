@@ -139,7 +139,7 @@ public class SimpleSearch{
         JPanel courses = new JPanel();
         //courses.setPreferredSize(new Dimension(500,567));
         courses.setBackground(this.darkerColor);
-        courses.setLayout(new BorderLayout());
+        courses.setLayout(new BoxLayout(courses, BoxLayout.Y_AXIS));
         //Number of CourseIDS
         int numResults = courseList.size();
         if(numResults == 0){
@@ -259,7 +259,7 @@ public class SimpleSearch{
             }
         }
         for(int index = 0 ; index<numResults; index++){
-            courses.add(panels[index], BorderLayout.SOUTH);
+            courses.add(panels[index]);
         }
         this.cDisplay = courses;
     }
@@ -462,13 +462,16 @@ public class SimpleSearch{
             this.s.display.repaint();
              //TODO Loading screen while searching
             loadingLabel = new JLabel("Loading results...");
-	    this.s.display.add(loadingLabel);
-	    try{
-		Thread.sleep(5000);
-	    } catch(InterruptedException k){
-		k.printStackTrace();
-	    }
-	    this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
+            this.s.display.add(loadingLabel);
+            try{
+                Thread.sleep(5000);
+            } catch(InterruptedException k){
+                k.printStackTrace();
+            }
+            this.s.display.removeAll();
+            this.s.display.revalidate();
+            this.s.display.repaint();
+            this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
             this.s.display.add(this.s.getCourses(keyword), BorderLayout.SOUTH);
         }
     }
