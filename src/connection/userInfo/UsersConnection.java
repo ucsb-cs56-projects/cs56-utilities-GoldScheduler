@@ -128,6 +128,40 @@ public class UsersConnection extends GolderConnection{
 		return u;
 	}
 	
+	/**
+	 * Used to reset the password
+	 * @param userName
+	 * @param email
+	 * @param t
+	 * @return
+	 * @throws SQLException
+	 */
+	public static User getInfo(String userName, String email, int t) throws SQLException{
+		
+		User u = null;
+		
+
+			
+			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND email_address='%s';", userName, email))) {
+		        rs = stmt.getResultSet();
+		        if (rs.isLast()) 
+			        return null;
+		        rs.next();
+		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
+		    }
+
+
+		return u;
+	}
+	
+	
+	/**
+	 * Used to get the user with username and password
+	 * @param userName
+	 * @param password
+	 * @return
+	 * @throws SQLException
+	 */
 	public static User getInfo(String userName, String password) throws SQLException{
 		
 		User u = null;
