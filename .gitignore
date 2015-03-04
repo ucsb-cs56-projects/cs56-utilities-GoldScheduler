@@ -67,3 +67,6 @@ javadoc/
 
 # Eclipse 
 .classpath
+
+# EMACS
+*~
