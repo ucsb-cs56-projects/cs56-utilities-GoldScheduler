@@ -9,17 +9,13 @@ import Course.Course;
 import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
-
-
 //TODOs:
-
 //1. What if there are no results to show?
 //3. Database - Based on the option selected return a list of profesors
 //4. Database - Currently stole the method from the simple search, but it will need to be re-implemented
 //for a different set of arguments
 //5. Loading screen while searching
 //6. Make scrollable
-
 public class AdvancedSearch{
     private JPanel display;
     private JPanel control;
@@ -27,16 +23,14 @@ public class AdvancedSearch{
     private Scheduler schedule;
     private final Color darkerColor = new Color(235,215,128);
     private final Color lighterColor = new Color(236,226,178);
-    
     private String[] searchOptions = {"Department", "Professor", "General Education"};
-
+    //CONSTRUCOTRS
     public AdvancedSearch(){
 	   this.schedule = new Scheduler();
     }
     public AdvancedSearch(Scheduler s){
 	   this.schedule = s;
     }
-    
     /**
      @return returns the full set display with both the control and course panels
      */
@@ -44,7 +38,6 @@ public class AdvancedSearch{
         this.setDisplay();
         return this.display;
     }
-    
     /**
      Initializes the display
      */
@@ -53,13 +46,10 @@ public class AdvancedSearch{
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(910,600));
         panel.setLayout(new BorderLayout());
-        
         panel.add(this.getCourses(), BorderLayout.SOUTH);
         panel.add(this.getControl(), BorderLayout.NORTH);
         this.display = panel;
     }
-
-    
     //SCHEDULE
     /**
      This will get the schedule display
@@ -69,7 +59,6 @@ public class AdvancedSearch{
         JPanel display = new JPanel();
         display.add(s.getMain());
         return display;
-        
     }
     /**
      @return returns the schedule.
@@ -77,16 +66,12 @@ public class AdvancedSearch{
     public Scheduler getSchedule(){
         return this.schedule;
     }
-    
     /**
      sets the schedule to an empty one.
      */
     public void resetSchedule(){
         this.schedule = new Scheduler();
     }
-    
-    
-    
     //COURSE RESULTS
     /**
      Sets courses to a blank screen
@@ -97,14 +82,12 @@ public class AdvancedSearch{
         blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }
-    
     /**
      Sets course display according to an unsorted courseList
      */
     public void setCourses(ArrayList<Course> courseList){
-        this.setCoursesBy3DArray(AdvancedSearch.getGroupedResults(groupCourseIDResults(courseList)));
+        this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(SimpleSearch.groupCourseIDResults(courseList)));
     }
-    
     /**
      Sets the course display according to an ArrayList of Courses.
      @param courseList a 3D ArrayList sorted to make it easy to dispay the course results
@@ -249,7 +232,7 @@ public class AdvancedSearch{
      It is the result list
      */
     public JPanel getCourses(ArrayList<Course> list){
-        this.setCoursesBy3DArray(AdvancedSearch.getGroupedResults(groupCourseIDResults(list)));
+        this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(SimpleSearch.groupCourseIDResults(list)));
         return this.cDisplay;
     }
     /**
@@ -268,7 +251,6 @@ public class AdvancedSearch{
         this.setControl();
         return this.control;
     }
-    
     /**
      Sets the display panel and then returns it.
      Creates the display panel that includes a control panel that you can type a keyword into
@@ -292,14 +274,12 @@ public class AdvancedSearch{
             bottomHolder[j].setBackground(this.darkerColor);
             panelHolder[1].add(bottomHolder[j]);
         }
-        
         //make labels
         JLabel label = new JLabel("Select an option to search by:");
         panelHolder[0].add(label);
         JPanel menuPanel = new JPanel();
         menuPanel.setBackground(darkerColor);
         panelHolder[0].add(menuPanel);
-        
         //make buttons
         JRadioButton [] radioButtons = new JRadioButton[len];
         ButtonGroup options = new ButtonGroup();
@@ -312,61 +292,21 @@ public class AdvancedSearch{
         }
         this.control = controlPanel;
     }
-    
-    
-
     //GETTING RESULTS
     //TODO handle the SQLException
     //if it throws SQLException, the return value would be null
+    /**
+     @param s Indicates which option to populate the combobox with
+     @return a String array to select from that relates to the option chosen
+     */
     public String[] getList(String s){
         if(s=="Department"){
-        	
             String[] m;
 			try {
 				m = connection.courseInfo.CourseConnection.getMajor();
 			} catch (SQLException e) {
 				m = new String[0];
 			}
-            	/*
-            	{"------","Anthropology (ANTH)", "Art (Creative Studies) (ART)",
-                "Art History (ARTHI)", "Art Studio (ARTST)",
-                "Asian American Studies (AS AM)", "Astronomy (ASTRO)",
-                "Biology (Creative Studies) (BIOL)",
-                "Biomolecular Science and Engineering (BMSE)",
-                "Black Studies (BL ST)", "Chemical Engineering (CH E)",
-                "Chemistry and Biochemistry (CHEM)", "Chicano Studies (CH ST)",
-                "Chinese (CHIN)", "Classics (CLASS)", "Communication (COMM)",
-                "Comparative Literature (C LIT)", "Computer Science (CMPSC)",
-                "Counseling, Clinical, School Psychology (CNCSP)",
-                "Dance (DANCE)", "Dynamical Neuroscience (DYNS)",
-                "Earth Science (EARTH)", "East Asian Cultural Studies (EACS)",
-                "Ecology, Evolution & Marine Biology (EEMB)",
-                "Economics (ECON)", "Education (ED)",
-                "Electrical Computer Engineering (ECE)",
-                "Engineering Sciences (ENGR)", "English (ENGL)",
-                "Environmental Science & Management (ESM)",
-                "Environmental Studies (ENV S)", "Exercise & Sport Studies (ESS)",
-                "Exercise Sport (ES)", "Feminist Studies (FEMST)",
-                "Film and Media Studies (FAMST)", "Film Studies (FLMST)",
-                "French (FR)", "General Studies (Creative Studies) (GEN S)",
-                "Geography (GEOG)", "Geological Sciences (GEOL)", "German (GER)",
-                "Global Peace and Security (GPS)", "Global Studies (GLOBL)",
-                "Greek (GREEK)", "Hebrew (HEB)", "History (HIST)",
-                "Interdisciplinary (INT)", "Italian (ITAL)", "Japanese (JAPAN)",
-                "Korean (KOR)", "Latin (LATIN)",
-                "Latin American and Iberian Studies (LAIS)", "Linguistics (LING)",
-                "Literature (Creative Studies) (LIT)", "Marine Science (MARSC)",
-                "Materials (MATRL)", "Mathematics (MATH)", "Mechanical Engineering (ME)",
-                "Media Arts and Technology (MAT)", "Medieval Studies (ME ST)",
-                "Middle East Studies (MES)", "Military Science (MS)",
-                "Music (MUS)", "Music Performance Laboratories (MUS A)", "Philosophy (PHIL)",
-                "Physical Activities (PA)", "Physics (PHYS)", "Political Science (POL S)",
-                "Portuguese (PORT)", "Psychology (PSY)", "Religious Studies (RG ST)",
-                "Renaissance Studies (RENST)", "Slavic (SLAV)", "Sociology (SOC)",
-                "Spanish (SPAN)", "Speech & Hearing Sciences (SHS)",
-                "Statistics & Applied Probability (PSTAT)", "Technology Management (TMP)",
-                "Theater (THTR)", "Writing (WRIT)"};
-                */
             return m;
         }
         else if(s=="Professor"){
@@ -385,85 +325,6 @@ public class AdvancedSearch{
             return m;
         }
     }
-    
-    public ArrayList<Course> getDeptResults(String key){
-        return getResults(key, "Department");
-    }
-    public ArrayList<Course> getProfResults(String key){
-        return getResults(key, "Professor");
-    }
-    public ArrayList<Course> getGEResults(String key){
-        return getResults(key, "General Education");
-    }
-    //TODO Refactor if you can think of a better way to do it. This seems kind of excessive
-    /*NOTE: Because these are static methods, maybe we only need one of these. Currently, this
-     is copy and pasted, but maybe instead we can just call these functions from simpleSearch 
-     because it's in the same package
-     */
-    /**
-     @param fullResultsList an ArrayList of all the courses that satyisfy the user's specifications
-     @return a 2D ArrayList where courses with the same courseID are grouped together
-     */
-    public static ArrayList<ArrayList<Course>> groupCourseIDResults(ArrayList<Course> fullResultsList){
-        //TODO: Not sure if this is the most efficient way to do things
-        ArrayList<ArrayList<Course>> groupedResults = new ArrayList<ArrayList<Course>>();
-        ArrayList<String> nameList = new ArrayList<String>();
-        for(int i = 0; i< fullResultsList.size(); i++){
-            if(!(nameList.contains(fullResultsList.get(i).courseID))){
-                nameList.add(fullResultsList.get(i).courseID);
-                ArrayList<Course> newList = new ArrayList<Course>();
-                newList.add(fullResultsList.get(i));
-                groupedResults.add(newList);
-            }
-            else{
-                for(int j = 0; j<groupedResults.size(); j++){
-                    if(fullResultsList.get(i).courseID.equals(groupedResults.get(j).get(0).courseID)){
-                        groupedResults.get(j).add(fullResultsList.get(i));
-                    }
-                }
-            }
-        }
-        return groupedResults;
-    }
-    
-    /**
-     @param groupedCourseResults an ArrayList of grouped courses by courseID
-     @return a 2D ArrayList where courses with the same time are grouped together
-     */
-    public static ArrayList<ArrayList<Course>> groupLectResults(ArrayList<Course> groupedCourseIDResult){
-        //TODO: Might be better to use a hashcode, but for now I'll just use time
-        ArrayList<ArrayList<Course>> groupedResults = new ArrayList<ArrayList<Course>>();
-        ArrayList<String> timeList = new ArrayList<String>();
-        for(int i = 0; i< groupedCourseIDResult.size(); i++){
-            if(!(timeList.contains(groupedCourseIDResult.get(i).getLect().timeString()))){
-                timeList.add(groupedCourseIDResult.get(i).getLect().timeString());
-                ArrayList<Course> newList = new ArrayList<Course>();
-                newList.add(groupedCourseIDResult.get(i));
-                groupedResults.add(newList);
-            }
-            else{
-                for(int j = 0; j<groupedResults.size(); j++){
-                    if(groupedCourseIDResult.get(i).getLect().timeString().equals(groupedResults.get(j).get(0).getLect().timeString())){
-                        groupedResults.get(j).add(groupedCourseIDResult.get(i));
-                    }
-                }
-            }
-        }
-        
-        return groupedResults;
-    }
-    
-    /**
-     @param groupedCourseResults an ArrayList of grouped courses by courseID
-     @return a 3D ArrayList wher courses are grouped by courseID then by time
-     */
-    public static ArrayList<ArrayList<ArrayList<Course>>> getGroupedResults(ArrayList<ArrayList<Course>> groupedCourseIDResults){
-        ArrayList<ArrayList<ArrayList<Course>>> groupedResults = new ArrayList<ArrayList<ArrayList<Course>>>();
-        for(int i = 0; i<groupedCourseIDResults.size(); i++){
-            groupedResults.add(SimpleSearch.groupLectResults(groupedCourseIDResults.get(i)));
-        }
-        return groupedResults;
-    }
     /**
      @param key A keyword taken from the dropdown menu that represents what the user is looking for
      @param option The button clicked indicating which category the keyword belongs to
@@ -477,10 +338,7 @@ public class AdvancedSearch{
 			e.printStackTrace();
 		}
         return courseList;
-
     }
-    
-    
     //ACTION LISTENER CLASSES
     class viewListener implements ActionListener{
         private Course c1;
@@ -522,12 +380,10 @@ public class AdvancedSearch{
             this.outer.display.add(this.outer.getCoursesBy3DArray(this.cList1), BorderLayout.SOUTH);
         }
     }
-
     class radioListener implements ActionListener{
         private JPanel p;
         private AdvancedSearch a;
         private String optionString;
-        
         public radioListener(JPanel p, AdvancedSearch a, String optionString){
             this.p = p;
             this.a = a;
@@ -544,7 +400,6 @@ public class AdvancedSearch{
             this.p.add(cMenu);
         }
     }
-
     class menuListener implements ActionListener{
         private AdvancedSearch a;
         private String optionString;
@@ -557,27 +412,16 @@ public class AdvancedSearch{
             ArrayList<Course> result = new ArrayList<Course>();
             JComboBox comboBox = (JComboBox) e.getSource();
             String selectedItem = (String)comboBox.getSelectedItem();
-            if(this.optionString == "Department"){
-                result = a.getDeptResults(selectedItem);
-            }
-            if(this.optionString == "Professor"){
-                result = a.getProfResults(selectedItem);
-            }
-            if(this.optionString == "General Education"){
-                result = a.getGEResults(selectedItem);
-            }
+            result = getResults(selectedItem, this.optionString);
             this.a.cDisplay.removeAll();
             this.a.cDisplay.revalidate();
             this.a.cDisplay.repaint();
-            //TODO Loading screen while searching
             this.a.cDisplay.add(getCourses(result), BorderLayout.SOUTH);
         }
     }
-    
     class addListener implements ActionListener{
         private Scheduler sch;
         private Course c;
-        
         private JPanel display;
         public addListener(Scheduler sch, Course c){
             this.sch = sch;
@@ -588,8 +432,6 @@ public class AdvancedSearch{
             this.sch.add(c);
         }
     }
-
-    
 }
 
 

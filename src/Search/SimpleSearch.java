@@ -9,27 +9,22 @@ import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 //import connection.UserInfo.*;
-
-
 //TODOs:
-
 //1. make scrollable
 //2. Auto-generated catch block
 //3. Loading screen while searching
-
-
 /**
  This class will implement the simple search function, which takes a keyword
  from a textbar and searches the database for matches.
  */
 public class SimpleSearch{
     //TODO make scrollable
-     
     /*
      Initializing components
      */
     //private User user;
     private JPanel display;
+    private JScrollPane scrollableDisplay;
     private JPanel control;
     private JPanel cDisplay;
     private JTextField searchField;
@@ -38,7 +33,6 @@ public class SimpleSearch{
     private JPanel sDisplay;
     private final Color darkerColor = new Color(165,188,238);
     private final Color lighterColor = new Color(201,212,237);
-    
     //CONSTRUCOTRS
     public SimpleSearch(){
         this.schedule = new Scheduler();
@@ -49,7 +43,6 @@ public class SimpleSearch{
     public SimpleSearch(Scheduler s){
         this.schedule = s;
     }
-    
     //MAIN DISPLAY
     /**
      Initializes the display
@@ -57,12 +50,11 @@ public class SimpleSearch{
     public void setDisplay(){
         //Initialize panel
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(910,600));
         panel.setLayout(new BorderLayout());
-        
         //Make control panel
+        JScrollPane scrollSearch = new JScrollPane(this.getCourses());
         panel.add(this.getControl(), BorderLayout.NORTH);
-        panel.add(this.getCourses(), BorderLayout.SOUTH);
+        panel.add(scrollSearch, BorderLayout.SOUTH);
         this.display = panel;
     }
     /**
@@ -72,8 +64,10 @@ public class SimpleSearch{
         this.setDisplay();
         return this.display;
     }
-    
-    
+    public JScrollPane getScrollDisplay(){
+        this.scrollableDisplay = new JScrollPane(this.getDisplay());
+        return this.scrollableDisplay;
+    }
     //CONTROL DISPLAY
     /**
      Sets the display panel and then returns it.
@@ -100,7 +94,6 @@ public class SimpleSearch{
         panelHolder[2].add(searchButton);
         this.control = controlPanel;
     }
-
     /**
      @return returns the control panel with the textField and submit button
      */
@@ -108,8 +101,6 @@ public class SimpleSearch{
         this.setControl();
         return this.control;
     }
-
-    
     //COURSE DISPLAY
     /**
      Sets courses to a blank screen
@@ -133,7 +124,6 @@ public class SimpleSearch{
     public void setCourses(ArrayList<Course> courseList){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(courseList)));
     }
-    
     /**
      Sets the course display according to an ArrayList of Courses
      */
@@ -144,8 +134,8 @@ public class SimpleSearch{
         //Number of CourseIDS
         int numResults = courseList.size();
         if(numResults == 0){
-            //courses.setPreferredSize(new Dimension(500,567));
             courses.setBackground(this.darkerColor);
+            //courses.setPreferredSize(new Dimension(910,568));
             JLabel noResults = new JLabel("There are no courses that match what you're looking for");
             Font font = noResults.getFont();
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
@@ -186,7 +176,7 @@ public class SimpleSearch{
             }
             rows+= numLects;
             rows+= totalNumSects;
-            coursePanel.setPreferredSize(new Dimension(910,33*rows));
+            //coursePanel.setPreferredSize(new Dimension(910,33*rows));
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -239,8 +229,8 @@ public class SimpleSearch{
                 panelNum[currentRow][2].add(lectInstructor);
                 panelNum[currentRow][3].add(lectLocation);
                 currentRow++;
-                for(int j = 0; j<courseList.get(n).get(i).size(); j++){
-                    currentCourse = courseList.get(n).get(i).get(j);
+                for(Course c:courseList.get(n).get(i)){
+                    currentCourse = c;
                     thisLecture = currentCourse.getLect();
                     thisSection = currentCourse.getSect();
                     //Row 4+: Section Info
@@ -264,7 +254,6 @@ public class SimpleSearch{
         }
         this.cDisplay = courses;
     }
-
     /**
      @return sets panel to a blank panel and returns it
      */
@@ -279,7 +268,6 @@ public class SimpleSearch{
         this.setCourses(key);
         return this.cDisplay;
     }
-    
     /**
      @return Calls the setCourses using an arrayList of Courses and returns the resulting panel
      */
@@ -287,12 +275,10 @@ public class SimpleSearch{
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(list)));
         return this.cDisplay;
     }
-    
     public JPanel getCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> list){
         this.setCoursesBy3DArray(list);
         return this.cDisplay;
     }
-    
     //RESULTS
     /**
      Communicates with the database using a desired keyword
@@ -311,7 +297,6 @@ public class SimpleSearch{
 		}
 		return null;
     }
-    
     //TODO Refactor if you can think of a better way to do it. This seems kind of excessive
     /**
      @param fullResultsList an ArrayList of all the courses that satyisfy the user's specifications
@@ -338,7 +323,6 @@ public class SimpleSearch{
         }
         return groupedResults;
     }
-    
     /**
      @param groupedCourseResults an ArrayList of grouped courses by courseID
      @return a 2D ArrayList where courses with the same time are grouped together
@@ -362,10 +346,8 @@ public class SimpleSearch{
                 }
             }
         }
-
         return groupedResults;
     }
-    
     /**
      @param groupedCourseResults an ArrayList of grouped courses by courseID
      @return a 3D ArrayList wher courses are grouped by courseID then by time
@@ -377,7 +359,6 @@ public class SimpleSearch{
         }
         return groupedResults;
     }
-    
     //SCHEDULE
     /**
      @return returns the schedule.
@@ -385,14 +366,12 @@ public class SimpleSearch{
     public Scheduler getSchedule(){
         return this.schedule;
     }
-    
     /**
      sets the schedule to an empty one.
     */
     public void resetSchedule(){
         this.schedule = new Scheduler();
     }
-    
     /** 
      this is a temporary method to test the add button and view the schedule
      */
@@ -401,10 +380,7 @@ public class SimpleSearch{
         JPanel display = new JPanel();
         display.add(s.getMain());
         return display;
-        
     }
-    
-    
     //ACTION LISTENER CLASSES
     class viewListener implements ActionListener{
         private Course c1;
@@ -420,12 +396,13 @@ public class SimpleSearch{
             this.p.display.removeAll();
             this.p.display.revalidate();
             this.p.display.repaint();
-            this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
+            this.p.display.setLayout(new BoxLayout(this.p.display, BoxLayout.Y_AXIS));
+            this.p.display.add(this.c1.getPanel());
             JPanel buttonPanel = new JPanel();
             JButton back = new JButton("Back");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
-            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+            this.p.display.add(buttonPanel);
             class backListener implements ActionListener{
                 private SimpleSearch outer;
                 private ArrayList<ArrayList<ArrayList<Course>>> cList1;
@@ -437,50 +414,52 @@ public class SimpleSearch{
                     this.outer.display.removeAll();
                     this.outer.display.revalidate();
                     this.outer.display.repaint();
-                    this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-                    this.outer.display.add(this.outer.getCoursesBy3DArray(this.cList1), BorderLayout.SOUTH);
+                    this.outer.display.setLayout(new BoxLayout(this.outer.display, BoxLayout.Y_AXIS));
+                    this.outer.display.add(this.outer.getControl());
+                    this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)));
+                    this.outer.scrollableDisplay.removeAll();
+                    this.outer.scrollableDisplay.revalidate();
+                    this.outer.scrollableDisplay.repaint();
+                    this.outer.scrollableDisplay.add(this.outer.display);
                 }
             }
             back.addActionListener(new backListener(this.p,this.cList));
-            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+            this.p.display.add(buttonPanel);
+            this.p.scrollableDisplay.removeAll();
+            this.p.scrollableDisplay.revalidate();
+            this.p.scrollableDisplay.repaint();
+            this.p.scrollableDisplay.add(this.p.display);
+             
         }
     }
-    
     class showResults implements ActionListener{
         private JTextField text;
         private SimpleSearch s;
-        private JLabel loadingLabel;
         public showResults(JTextField text, SimpleSearch s){
             this.text = text;
             this.s = s;
-	    this.loadingLabel = loadingLabel;
         }
         @Override
         public void actionPerformed(ActionEvent e) {
             String keyword = this.text.getText();
+            //displayLoad loadingDisplay = new displayLoad(this.s);
+            //Thread displayThread = new Thread(loadingDisplay);
+            //displayThread.start();
             this.s.display.removeAll();
             this.s.display.revalidate();
             this.s.display.repaint();
-             //TODO Loading screen while searching
-            loadingLabel = new JLabel("Loading results...");
-            this.s.display.add(loadingLabel);
-            try{
-                Thread.sleep(5000);
-            } catch(InterruptedException k){
-                k.printStackTrace();
-            }
-            this.s.display.removeAll();
-            this.s.display.revalidate();
-            this.s.display.repaint();
-            this.s.display.add(this.s.getControl(), BorderLayout.NORTH);
-            this.s.display.add(this.s.getCourses(keyword), BorderLayout.SOUTH);
+            this.s.display.setLayout(new BoxLayout(this.s.display, BoxLayout.Y_AXIS));
+            this.s.display.add(this.s.getControl());
+            this.s.display.add(new JScrollPane(this.s.getCourses(keyword)));
+            this.s.scrollableDisplay.removeAll();
+            this.s.scrollableDisplay.revalidate();
+            this.s.scrollableDisplay.repaint();
+            this.s.scrollableDisplay.add(this.s.display);
         }
     }
-
     class addListener implements ActionListener{
         private Scheduler sch;
         private Course c;
-        
         private JPanel display;
         public addListener(Scheduler sch, Course c){
             this.sch = sch;
@@ -491,7 +470,23 @@ public class SimpleSearch{
             this.sch.add(c);
         }
     }
-
+    class displayLoad implements Runnable{
+        private SimpleSearch s;
+        public displayLoad(SimpleSearch s){
+            this.s = s;
+        }
+        public void run(){
+            this.s.display.removeAll();
+            this.s.display.revalidate();
+            this.s.display.repaint();
+            JLabel loadingLabel = new JLabel("Loading results...");
+            this.s.display.add(loadingLabel);
+            this.s.scrollableDisplay.removeAll();
+            this.s.scrollableDisplay.revalidate();
+            this.s.scrollableDisplay.repaint();
+            this.s.scrollableDisplay .add(this.s.display);
+        }
+    }
  /*   class nextViewListener implements ActionListener{
     /*
     class nextViewListener implements ActionListener{
