@@ -4,10 +4,14 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.imageio.ImageIO;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
+
 import javax.swing.*;
+
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
 import connection.userInfo.User;
@@ -33,6 +37,7 @@ public class MainPage {
     private JButton changeInfo;
     private JButton logout;
     private Scheduler mySchedule;
+    private UserInfo userpanel;
     private User u;
     /**
      * @param u
@@ -40,6 +45,8 @@ public class MainPage {
     // Updated ctor to load a schedule if user already has one
     public MainPage(User u){
     	try {
+    		userpanel = UserInfo.getUserPanel();
+    		userpanel.init(u);
 	    if (u.getSchedule() == null)
        		this.mySchedule = new Scheduler(u);
 	    else 
@@ -83,6 +90,25 @@ public class MainPage {
         
         
         changeInfo = new JButton("Edit User Information");
+        changeInfo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				MainPage.this.main.removeAll();
+				MainPage.this.main.revalidate();
+				MainPage.this.main.repaint();
+				MainPage.this.main.add(MainPage.this.userpanel, BorderLayout.NORTH);
+	            JPanel buttonPanel = new JPanel();
+	            JButton back = new JButton("Main Page");
+	            buttonPanel.add(back);
+	            buttonPanel.setBackground(Color.LIGHT_GRAY);
+	            MainPage.this.main.add(buttonPanel, BorderLayout.SOUTH);
+	            back.addActionListener(new backListener(MainPage.this));
+			}
+        	
+        });
+        
         logout = new JButton("Log out");
         logout.addActionListener(new ActionListener() {
             
@@ -125,6 +151,12 @@ public class MainPage {
     
     void setUser(User u) {
         this.u=u;
+        try {
+			userpanel.init(u);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     void clean() {

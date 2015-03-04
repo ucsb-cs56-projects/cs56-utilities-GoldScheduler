@@ -2,10 +2,14 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import connection.courseInfo.CourseConnection;
@@ -123,6 +127,8 @@ public class UserInfo extends JPanel{
         go();
     }
     
+    
+    
     void init() throws SQLException {
     	password.setText("");
     	password1.setText("");
@@ -220,9 +226,9 @@ public class UserInfo extends JPanel{
      
 	public static void main (String[] args) throws SQLException{
 	    JFrame window = new JFrame();
-		UserInfo frame = getUserPanel();
-		frame.init(connection.userInfo.UsersConnection.getInfo(8));
-		window.setContentPane(frame);
+		UserInfo userpanel = getUserPanel();
+		userpanel.init(connection.userInfo.UsersConnection.getInfo(8));
+		window.setContentPane(userpanel);
 		window.setSize(910,650);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
@@ -237,18 +243,21 @@ public class UserInfo extends JPanel{
 		GridLayout innergrid = new GridLayout(8, 5);
 		innergrid.preferredLayoutSize(this);
 		JPanel innerpanel = new JPanel();
-		this.add(innerpanel);
+		this.setBackground(new Color(217,221,235));
+		innerpanel.setBackground(new Color(217,221,235));
 		innerpanel.setLayout(innergrid);
 		JPanel[][] spot= new JPanel[8][4];
 		for(int m=0;m<8;m++){
 		    for (int k=0;k<3;k++){
 			spot[m][k]=new JPanel();
-			spot[m][k].setBackground(Color.cyan);
+			spot[m][k].setBackground(new Color(217,221,235));
 			spot[m][k].setOpaque(true);
 			innerpanel.add(spot[m][k]);
 		    }
 		}
-		
+
+		this.add(innerpanel);
+		innergrid.setVgap(25);
 		spot[0][0].add(update);
 		
 		spot[1][0].add(userLabel);
@@ -270,8 +279,7 @@ public class UserInfo extends JPanel{
 		
 		spot[5][0].add(majorLabel);
 		spot[5][1].add(majorList);
-		majorList.setMaximumSize(new Dimension(50,50));
-		System.out.println(majorList.getMaximumSize());
+
 
 		
 		
