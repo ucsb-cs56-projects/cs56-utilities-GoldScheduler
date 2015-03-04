@@ -19,11 +19,6 @@ import javax.swing.JOptionPane;
  * @version Feb 12 2014
  */
 
-
-/**
- * A class to hold the configuration information for a particular database
- */
-
 class Config{
 	public static String host;
 	public static String username;
@@ -32,9 +27,6 @@ class Config{
 }
 
 
-/**
- * A class that is used to establish a connection with the Golder Database
- */
 public class GolderConnection {
 	//variables
 	public static Statement stmt;
@@ -43,7 +35,7 @@ public class GolderConnection {
 
 	
 
-	// A static initialization for all the static variables
+	//initial
 	static {
 		BufferedReader br;
 		try {

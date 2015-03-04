@@ -9,13 +9,15 @@ import Course.*;
 
 /**
  * Database Connection For User Information
- * Registers and retrieves user info
  * @author Forrest Sun
  * @author Wesley Pollek
  * @version Feb 10 2015
  *
  */
 
+/**
+ * A class that is used to register and retrieve user information from the database
+ */
 public class UsersConnection extends GolderConnection{
 	
 	

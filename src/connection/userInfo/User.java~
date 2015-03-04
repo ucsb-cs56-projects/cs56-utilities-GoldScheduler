@@ -14,10 +14,6 @@ import Course.Course;
  * @version Feb 10 2015
  */
 
-
-/**
- * A class used to represent a particular user. Contains user information
- */
 public class User {
 	private int id;
 	private String username;
