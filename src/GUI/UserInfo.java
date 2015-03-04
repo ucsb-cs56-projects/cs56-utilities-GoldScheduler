@@ -223,7 +223,7 @@ public class UserInfo extends JPanel{
 		UserInfo frame = getUserPanel();
 		frame.init(connection.userInfo.UsersConnection.getInfo(8));
 		window.setContentPane(frame);
-		window.setSize(1080,720);
+		window.setSize(910,650);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
 
@@ -232,60 +232,57 @@ public class UserInfo extends JPanel{
      * The graphic part
      */
     public void go(){
-		GridLayout basegrid = new GridLayout(2, 1);
-		this.setLayout(basegrid);
-		JPanel[] rows = new JPanel[2];
-		for(int i=0;i<2; i++){
-			rows[i]= new JPanel();
-			rows[i].setOpaque(true);
-			rows[i].setBackground(Color.BLUE);
-			this.add(rows[i]);
-		}
+		
+		
 		GridLayout innergrid = new GridLayout(8, 5);
+		innergrid.preferredLayoutSize(this);
 		JPanel innerpanel = new JPanel();
+		this.add(innerpanel);
 		innerpanel.setLayout(innergrid);
-		JPanel[][] spot= new JPanel[10][5];
+		JPanel[][] spot= new JPanel[8][4];
 		for(int m=0;m<8;m++){
-		    for (int k=0;k<5;k++){
+		    for (int k=0;k<3;k++){
 			spot[m][k]=new JPanel();
-			spot[m][k].setBackground(Color.YELLOW);
+			spot[m][k].setBackground(Color.cyan);
 			spot[m][k].setOpaque(true);
 			innerpanel.add(spot[m][k]);
 		    }
 		}
 		
-		spot[0][1].add(update);
+		spot[0][0].add(update);
 		
-		spot[1][1].add(userLabel);
-		spot[1][2].add(username);
-		spot[1][3].add(userWrong);
+		spot[1][0].add(userLabel);
+		spot[1][1].add(username);
+		spot[1][2].add(userWrong);
 		
-		spot[2][1].add(passLabel1);
-		spot[2][2].add(password1);
-		spot[2][3].add(pass1Wrong);
+		spot[2][0].add(passLabel1);
+		spot[2][1].add(password1);
+		spot[2][2].add(pass1Wrong);
 		
-		spot[3][1].add(passLabel2);
-		spot[3][2].add(password2);
-		spot[3][3].add(pass2Wrong);
+		spot[3][0].add(passLabel2);
+		spot[3][1].add(password2);
+		spot[3][2].add(pass2Wrong);
 		
-		spot[4][1].add(emailLabel);
-		spot[4][2].add(email);
-		spot[4][3].add(emailWrong);
+		spot[4][0].add(emailLabel);
+		spot[4][1].add(email);
+		spot[4][2].add(emailWrong);
 		
 		
-		spot[5][1].add(majorLabel);
-		spot[5][2].add(majorList);
+		spot[5][0].add(majorLabel);
+		spot[5][1].add(majorList);
+		majorList.setMaximumSize(new Dimension(50,50));
+		System.out.println(majorList.getMaximumSize());
 
 		
 		
-		spot[6][1].add(passLabel);
-		spot[6][2].add(password);
-		spot[6][3].add(passWrong);
+		spot[6][0].add(passLabel);
+		spot[6][1].add(password);
+		spot[6][2].add(passWrong);
 		
 		spot[7][1].add(changeButton);
-		spot[7][2].add(backButton);
 
-		rows[1].add(innerpanel);
+		
+
 
     }
 }
