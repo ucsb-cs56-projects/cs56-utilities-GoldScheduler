@@ -727,45 +727,50 @@ public class Scheduler {
      best implementation. Checks lecture and section.
      */
     public static boolean timeConflict(Course c, Course d){
-        //First, check if c starts before d
-        if(c.getLect().timeStart<=d.getLect().timeStart){
+	for(char thisDay:c.getLect().days){
+	    char sectDay = c.getSect().days[0];
+	    for(char thisDay2:d.getLect().days){
+		if(thisDay==thisDay2){
+		    if(Scheduler.timeConflictHelper(c.getLect(), d.getLect())==true){
+			return true;
+		    }
+		}
+		else if(thisDay==d.getSect().days[0]){
+		    if(Scheduler.timeConflictHelper(c.getLect(), d.getSect())==true){
+		        return true;
+		    }
+		}
+		else if(sectDay==d.getLect().days[0]){
+		    if(Scheduler.timeConflictHelper(c.getSect(), d.getLect())==true){
+			return true;
+		    }
+		}
+		else if(sectDay==d.getSect().days[0]){
+		    if(Scheduler.timeConflictHelper(c.getSect(), d.getSect())==true){
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+    public static boolean timeConflictHelper(Lecture lect1, Lecture lect2){
+	if(lect1.timeStart<=lect2.timeStart){
             //Check if they start at the same time
-            if(c.getLect().timeStart==d.getLect().timeStart)
+            if(lect1.timeStart==lect2.timeStart)
                 return true;
             else{
                 //c starts first, so we need d to start at the same time or
                 //after c.timeEnd
-                if(d.getLect().timeStart>=c.getLect().timeEnd)
+                if(lect1.timeStart>=lect2.timeEnd)
                     return false;
                 else
                     return true;
             }
         }
         //d starts before c
-        else if (c.getLect().timeStart>d.getLect().timeStart){
-            if(c.getLect().timeStart>=d.getLect().timeEnd)
-                return false;
-            else
-                return true;
-        }
-        
-        else if(c.getSect().timeStart<=d.getSect().timeStart){
-            //Check if they start at the same time
-            if(c.getSect().timeStart==d.getSect().timeStart)
-                return true;
-            else{
-                //c starts first, so we need d to start at the same time or
-                //after c.timeEnd
-                if(d.getSect().timeStart>=c.getSect().timeEnd)
-                    return false;
-                else
-                    return true;
-            }
-        }
-        else{
-            if(c.getSect().timeStart>=d.getSect().timeEnd)
-                return false;
-            else if(c.getSect().timeStart>=d.getSect().timeEnd)
+        else {
+            if(lect2.timeStart>=lect1.timeEnd)
                 return false;
             else
                 return true;

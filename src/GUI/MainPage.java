@@ -90,6 +90,7 @@ public class MainPage {
         
         
         changeInfo = new JButton("Edit User Information");
+<<<<<<< HEAD
         changeInfo.addActionListener(new ActionListener() {
 
 			@Override
@@ -109,6 +110,10 @@ public class MainPage {
         	
         });
         
+=======
+	changeInfo.addActionListener(new changeInfoListener(this));
+	//changeInfo.addActionListener(new changeInfoListener(this, new UserInfo()));
+>>>>>>> e0df0c45dfcbff5ddce44619c1c15ed0fd9bc9e3
         logout = new JButton("Log out");
         logout.addActionListener(new ActionListener() {
             
@@ -249,4 +254,29 @@ public class MainPage {
             
         }
     }
+    //TODO:Implement UserInfo once finished
+    class changeInfoListener implements ActionListener{
+	private MainPage m; 
+	//private UserInfo updateInfo;
+	public changeInfoListener(MainPage m){
+	//public changeInfoListener(MainPage m, UserInfo updateInfo){
+	    this.m = m;
+	    //this.updateInfo = updateInfo;
+	}
+
+	public void actionPerformed(ActionEvent e){
+	    this.m.main.removeAll();
+	    this.m.main.revalidate();
+	    this.m.main.repaint();
+	    //this.p.main.add(this.p.
+	    JPanel buttonPanel = new JPanel();
+	    JButton back = new JButton("Main Page");
+	    buttonPanel.add(back);
+	    buttonPanel.setBackground(Color.LIGHT_GRAY);
+	    this.m.main.add(buttonPanel, BorderLayout.SOUTH);
+	    back.addActionListener(new backListener(this.m));
+	}
+    }
 }
+
+

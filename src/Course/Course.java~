@@ -27,18 +27,6 @@ public class Course{
     private Lecture sectInfo;
     private JButton view;
     
-	/**
-		*@param courseID String of courseID according to the UCSB course catalog
-		*@param title String of shorter title of the course e.g. CMPSC 8
-		*@param fullTitle String of full title of course e.g. Computer Science Project Course
-		*@param dept String of department that the course belongs to
-		*@param units Integer amount of units the course counts for
-		*@param preReqs String array of prerequisites for the course
-		*@param restrictions String array of restrictions of the course
-		*@param String array of the G.E. requirements that this course fulfills
-		*@param Lecture object that contains information about the course lecture
-		*@param Lecture object that contains information about the course section
-		*/
     
     public Course(String courseID, String title, String fullTitle, String dept, String units,
                   Course[] preReqs, String[] restrictions, String[] geFulfill, Lecture lectInfo,
@@ -68,10 +56,6 @@ public class Course{
         this.sectInfo = sectInfo;
     }
     
-	/**
-		* sets the color of the course as seen when the user views his/her schedule
-		*@param c Desired color to use for the course
-		*/
     public void setColor(Color c){
         lectInfo.col = c;
         sectInfo.col = c;
