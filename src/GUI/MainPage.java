@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.swing.*;
-
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.UsersConnection;
 import connection.userInfo.User;
@@ -30,27 +29,24 @@ public class MainPage {
     private JButton search;
     private JButton advancedSearch;
     private JButton viewSched;
-	private JButton save; // Added new button for saving schedule
+    private JButton save; // Added new button for saving schedule
     private JButton changeInfo;
     private JButton logout;
     private Scheduler mySchedule;
-    
     private User u;
     /**
      * @param u
      */
-
     // Updated ctor to load a schedule if user already has one
     public MainPage(User u){
     	try {
-    		if (u.getSchedule() == null)
-        		this.mySchedule = new Scheduler(u);
-        	else 
-        		this.mySchedule = new Scheduler(u,u.getSchedule());
+	    if (u.getSchedule() == null)
+       		this.mySchedule = new Scheduler(u);
+	    else 
+       		this.mySchedule = new Scheduler(u,u.getSchedule());
         } catch (SQLException e) {
-        	e.printStackTrace();
+	    e.printStackTrace();
         }
-        
         this.u = u;
     }
     

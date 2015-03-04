@@ -11,13 +11,10 @@ import connection.userInfo.*;
 //import java.awt.ItemSelectable;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
-
 //TODOs:
-
 //1. Check for other restrictions...
 //2. Error not a valid day
 //3. Error for time slot
-
 /**
  *This class should just take care of adding and removing courses to and from a schedule
  *It will also has a panel instance that will be used for displayins
@@ -30,21 +27,20 @@ public class Scheduler {
     private ArrayList<CourseConflict> cantAdd;
     private int conflicts;
     private JPanel conflictPanel;
-	private User currentUser;
-    
+    private User currentUser;
     //CONSTRUCTORS
     //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule
     public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
-    }
-	public Scheduler(User user) { // 1-arg ctor that sets the member variable currentUser equal to the parameter user
-		this.courseList = new ArrayList<Course>();
-        this.cantAdd = new ArrayList<CourseConflict>();
-        this.panel = new JPanel();
+    }	
+    public Scheduler(User user) { // 1-arg ctor that sets the member variable currentUser equal to the parameter user
+       	this.courseList = new ArrayList<Course>();
+      	this.cantAdd = new ArrayList<CourseConflict>();
+	this.panel = new JPanel();
         this.controlPanel = new JPanel();
         this.conflicts = 0;
-		this.setUser(user);
-	}
+       	this.setUser(user);
+    }
     public Scheduler(User user, ArrayList<Course> courseList) {
         this.courseList = courseList;
         this.cantAdd = new ArrayList<CourseConflict>();
@@ -61,9 +57,9 @@ public class Scheduler {
         this.controlPanel = new JPanel();
         this.conflicts = 0;
     }
-	public void setUser(User user) {
-		this.currentUser = user;
-	}
+    public void setUser(User user) {
+       	this.currentUser = user;
+    }
     //EDITS COURSELIST
     /**
      @param c the course that needs to be added
@@ -360,7 +356,7 @@ public class Scheduler {
                 day4Location.setOpaque(true);
                 JLabel day4Time = new JLabel();
                 day4Time.setText(lect.timeString());
-                day4Time.setFont(day4Time.getFont().deriveFont(10f));
+                day4Time.setFont(day4Time.getFont().deriveFont(6f));
                 day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
                 row = this.timeSlot(lect.timeStart)-1;
@@ -488,7 +484,7 @@ public class Scheduler {
         Color darkerColor = new Color(161,161,161);
         Color lighterColor = new Color(181,181,181);
         JPanel courses = new JPanel();
-        courses.setPreferredSize(new Dimension(500,600));
+        courses.setPreferredSize(new Dimension(500,575));
         courses.setBackground(darkerColor);
         ArrayList<CourseConflict> courseList = this.cantAdd;
         int numResults = courseList.size();
@@ -509,10 +505,6 @@ public class Scheduler {
             int rows = 3;
             int columns = 4;
             rows++;
-            /*int numSections = ;
-            for(int i = 0; i<numSections; i++){
-            rows++;
-            }*/
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -915,4 +907,3 @@ public class Scheduler {
         return slot;
     }
 }
-

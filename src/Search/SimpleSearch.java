@@ -10,9 +10,7 @@ import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 //import connection.UserInfo.*;
 //TODOs:
-//1. make scrollable
-//2. Auto-generated catch block
-//3. Loading screen while searching
+//1. Auto-generated catch block
 /**
  This class will implement the simple search function, which takes a keyword
  from a textbar and searches the database for matches.
@@ -33,7 +31,7 @@ public class SimpleSearch{
     private JPanel sDisplay;
     private final Color darkerColor = new Color(165,188,238);
     private final Color lighterColor = new Color(201,212,237);
-    //CONSTRUCOTRS
+    //CONSTRUCTORS
     public SimpleSearch(){
         this.schedule = new Scheduler();
     }
@@ -107,7 +105,7 @@ public class SimpleSearch{
      */
     public void setCourses(){
         JPanel blank = new JPanel();
-        blank.setPreferredSize(new Dimension(500,550));
+        blank.setPreferredSize(new Dimension(500,565));
         blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }
@@ -160,11 +158,11 @@ public class SimpleSearch{
                   2. header
                   3. Lecture info
                   4+. Section info
-            columns: 5
-            (Days, times, instrucors, location, addButton)
+            columns: 4
+            (Days, times, instrucors, [location], addButton)
              */
             int rows = 2;
-            int columns = 5;
+            int columns = 4;
             /*
              Right now works for one section per course.
              TODO: Check if course name matches then put them together
@@ -176,7 +174,7 @@ public class SimpleSearch{
             }
             rows+= numLects;
             rows+= totalNumSects;
-            //coursePanel.setPreferredSize(new Dimension(910,33*rows));
+            coursePanel.setPreferredSize(new Dimension(600,33*rows));
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -197,7 +195,7 @@ public class SimpleSearch{
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
             JLabel numCrs = new JLabel("Sections: " + totalNumSects);
-            panelNum[0][2].add(numCrs);
+            //panelNum[0][2].add(numCrs);
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
             JLabel times = new JLabel("Times");
@@ -210,7 +208,7 @@ public class SimpleSearch{
             panelNum[1][0].add(d);
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
-            panelNum[1][3].add(loc);
+            //panelNum[1][3].add(loc);
             //Row 3: Lecture info
             int currentRow = 2;
             for(int i = 0; i<numLects; i++){
@@ -227,7 +225,7 @@ public class SimpleSearch{
                 panelNum[currentRow][0].add(lectDay);
                 panelNum[currentRow][1].add(lectTime);
                 panelNum[currentRow][2].add(lectInstructor);
-                panelNum[currentRow][3].add(lectLocation);
+                //panelNum[currentRow][3].add(lectLocation);
                 currentRow++;
                 for(Course c:courseList.get(n).get(i)){
                     currentCourse = c;
@@ -241,10 +239,10 @@ public class SimpleSearch{
                     panelNum[currentRow][0].add(sectDay);
                     panelNum[currentRow][1].add(sectTime);
                     panelNum[currentRow][2].add(sectInstructor);
-                    panelNum[currentRow][3].add(sectLocation);
+                    //panelNum[currentRow][3].add(sectLocation);
                     JButton addToSchedule = new JButton("Add");
                     addToSchedule.addActionListener(new addListener(this.schedule,currentCourse));
-                    panelNum[currentRow][4].add(addToSchedule);
+                    panelNum[currentRow][3].add(addToSchedule);
                     currentRow++;
                 }
             }
