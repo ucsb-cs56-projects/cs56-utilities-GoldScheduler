@@ -120,14 +120,16 @@ public class SimpleSearch{
         blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }
-    
     /**
      Sets the course display according to a keyword
+     @param key Keyword indicating search requirements
      */
     public void setCourses(String key){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(this.getResults(key))));
     }
-
+    /**
+     Sets course display according to an unsorted courseList
+     */
     public void setCourses(ArrayList<Course> courseList){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(courseList)));
     }
@@ -137,7 +139,6 @@ public class SimpleSearch{
      */
     public void setCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> courseList){
         JPanel courses = new JPanel();
-        //courses.setPreferredSize(new Dimension(500,567));
         courses.setBackground(this.darkerColor);
         courses.setLayout(new BoxLayout(courses, BoxLayout.Y_AXIS));
         //Number of CourseIDS
@@ -494,7 +495,6 @@ public class SimpleSearch{
  /*   class nextViewListener implements ActionListener{
     /*
     class nextViewListener implements ActionListener{
->>>>>>> 1a06e61d60c73c61ca30bec549b1a12033dab135
 	private Course c1;
 	private SimpleSearch s;
 	private ArrayList<Course> cList;

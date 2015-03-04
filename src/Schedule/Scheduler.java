@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
-import connection.userInfo.*; // For saving schedule to database
+import connection.userInfo.*;
 
 //import java.awt.ItemSelectable;
 //import java.awt.event.ActionEvent;
@@ -17,7 +17,6 @@ import connection.userInfo.*; // For saving schedule to database
 //1. Check for other restrictions...
 //2. Error not a valid day
 //3. Error for time slot
-//4. Are there any classes that are just one day a week?
 
 /**
  *This class should just take care of adding and removing courses to and from a schedule
@@ -38,7 +37,6 @@ public class Scheduler {
     public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
     }
-
 	public Scheduler(User user) { // 1-arg ctor that sets the member variable currentUser equal to the parameter user
 		this.courseList = new ArrayList<Course>();
         this.cantAdd = new ArrayList<CourseConflict>();
@@ -47,7 +45,6 @@ public class Scheduler {
         this.conflicts = 0;
 		this.setUser(user);
 	}
-
     public Scheduler(User user, ArrayList<Course> courseList) {
         this.courseList = courseList;
         this.cantAdd = new ArrayList<CourseConflict>();
@@ -56,7 +53,6 @@ public class Scheduler {
         this.conflicts = 0;
         this.setUser(user);
     }
-    
     //No-arg constructor. Generates an empty schedule
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
@@ -65,11 +61,9 @@ public class Scheduler {
         this.controlPanel = new JPanel();
         this.conflicts = 0;
     }
-
 	public void setUser(User user) {
 		this.currentUser = user;
 	}
-    
     //EDITS COURSELIST
     /**
      @param c the course that needs to be added
@@ -102,7 +96,6 @@ public class Scheduler {
         this.setControl();
         return true;
     }
-    
     /**
      @param o the course that needs to be removed
      @return whether or not the course was removed
@@ -115,8 +108,6 @@ public class Scheduler {
         this.setControl();
         return true;
     }
-    
-
     //MAIN PANEL
     /**
      @return this returns the main panel that holds both the control and the schedule panels
@@ -136,7 +127,6 @@ public class Scheduler {
         mainPanel.add(this.getControl(), BorderLayout.EAST);
         this.mainPanel = mainPanel;
     }
-    
     //SCHEDULE PANEL
     /**
      @return this returns the main panel that includes the schedule with classes
@@ -145,8 +135,6 @@ public class Scheduler {
         this.schedulerGUI();
         return this.panel;
     }
-
-    
     /**
      Updates the schedule panel to display all classes in ArrayList
      */
@@ -209,12 +197,10 @@ public class Scheduler {
         holder = new JLabel();
         holder.setText(temp);
         labels.add(holder);
-        
         //Display labels
         for(int i=1; i<labels.size();i++){
             panelHolder[i][0].add(labels.get(i));
         }
-        
         JLabel m = new JLabel();
         m.setText("Monday");
         JLabel t = new JLabel();
@@ -235,7 +221,6 @@ public class Scheduler {
         panelHolder[0][3].add(w);
         panelHolder[0][4].add(r);
         panelHolder[0][5].add(f);
-        
         for(Course g:this.courseList){
             int start = g.getLect().timeStart;
             int end = g.getLect().timeEnd;
@@ -256,7 +241,6 @@ public class Scheduler {
                 //The class is not 50 minutes, 1hr and 15min, or 1hr and 50mins (Writing classes).
                 //Are there any other class lengths?
             }
-            
             int row;
             int column;
             //Title, location, time
@@ -265,40 +249,32 @@ public class Scheduler {
             day1Title.setText(g.courseID);
             day1Title.setBackground(lect.col);
             day1Title.setOpaque(true);
-            
             JLabel day1Location = new JLabel();
             day1Location.setText(lect.location);
             day1Location.setFont(day1Location.getFont().deriveFont(10f));
             day1Location.setBackground(lect.col);
             day1Location.setOpaque(true);
-            
             JLabel day1Time = new JLabel();
             day1Time.setText(lect.timeString());
             day1Time.setFont(day1Time.getFont().deriveFont(10f));
             day1Time.setBackground(lect.col);
             day1Time.setOpaque(true);
-            
-            //TODO: Are there any classes that are just one day a week?
             if(g.getLect().days.length>1){
                 //DAY 2
                 JLabel day2Title = new JLabel();
                 day2Title.setText(g.courseID);
                 day2Title.setBackground(lect.col);
                 day2Title.setOpaque(true);
-                
                 JLabel day2Location = new JLabel();
                 day2Location.setText(lect.location);
                 day2Location.setFont(day1Location.getFont().deriveFont(10f));
                 day2Location.setBackground(lect.col);
                 day2Location.setOpaque(true);
-                
                 JLabel day2Time = new JLabel();
                 day2Time.setText(lect.timeString());
                 day2Time.setFont(day2Time.getFont().deriveFont(10f));
                 day2Time.setBackground(lect.col);
                 day2Time.setOpaque(true);
-                
-                
                 row = this.timeSlot(lect.timeStart)-1;
                 column = 0;
                 if(numPanels>=2){
@@ -342,20 +318,16 @@ public class Scheduler {
                 day3Title.setText(g.courseID);
                 day3Title.setBackground(lect.col);
                 day3Title.setOpaque(true);
-                
                 JLabel day3Location = new JLabel();
                 day3Location.setText(lect.location);
                 day3Location.setFont(day3Location.getFont().deriveFont(10f));
                 day3Location.setBackground(lect.col);
                 day3Location.setOpaque(true);
-                
                 JLabel day3Time = new JLabel();
                 day3Time.setText(lect.timeString());
                 day3Time.setFont(day1Time.getFont().deriveFont(10f));
                 day3Time.setBackground(lect.col);
                 day3Time.setOpaque(true);
-                
-                
                 row = this.timeSlot(lect.timeStart)-1;
                 column = 0;
                if(numPanels>=2){
@@ -381,20 +353,16 @@ public class Scheduler {
                 day4Title.setText(g.courseID);
                 day4Title.setBackground(lect.col);
                 day4Title.setOpaque(true);
-                
                 JLabel day4Location = new JLabel();
                 day4Location.setText(lect.location);
                 day4Location.setFont(day4Location.getFont().deriveFont(10f));
                 day4Location.setBackground(lect.col);
                 day4Location.setOpaque(true);
-                
                 JLabel day4Time = new JLabel();
                 day4Time.setText(lect.timeString());
                 day4Time.setFont(day4Time.getFont().deriveFont(10f));
                 day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
-                
-                
                 row = this.timeSlot(lect.timeStart)-1;
                 column = 0;
                 if(numPanels>=2){
@@ -419,13 +387,11 @@ public class Scheduler {
             sectionLabelTitle.setText(g.courseID);
             sectionLabelTitle.setBackground(sect.col);
             sectionLabelTitle.setOpaque(true);
-            
             JLabel sectionLabelTime = new JLabel();
             sectionLabelTime.setText(sect.timeString());
             sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
             sectionLabelTime.setBackground(sect.col);
             sectionLabelTime.setOpaque(true);
-            
             row = this.timeSlot(sect.timeStart)-1;
             column = this.daySlot(sect.days[0]);
             //Labels
@@ -434,10 +400,7 @@ public class Scheduler {
             //Background
             panelHolder[row][column].setBackground(sect.col);
             panelHolder[row+1][column].setBackground(sect.col);
-            
-            
         }
-        
         panel.setPreferredSize(new Dimension(600, 600));
         this.panel = panel;
     }
@@ -451,7 +414,6 @@ public class Scheduler {
         this.setControl();
         return this.controlPanel;
     }
-    
     /**
      Updates control panel to display options for all classes in list
      */
@@ -495,15 +457,10 @@ public class Scheduler {
             panelHolder[slot][1].add(cMenu);
             JButton view = new JButton("View");
             panelHolder[slot+1][0].add(view);
-            
-            
             view.addActionListener(new viewListener(g,this));
-            
-            
             JButton delete = new JButton("Remove Course");
             panelHolder[slot+1][1].add(delete);
             delete.addActionListener(new deleteListener(g,this));
-            
             slot+=2;
         }
         if(conflicts>0){
@@ -514,11 +471,8 @@ public class Scheduler {
         JButton save = new JButton("Save Schedule");
         panelHolder[10][1].add(save);
         save.addActionListener(new saveListener()); // Save button addition
-        
         this.controlPanel = control;
     }
-    
-    
     //CONFLICT METHODS
     /**
      @return a Panel displaying course conflicts
@@ -583,7 +537,6 @@ public class Scheduler {
             panelNum[0][1].add(view);
             panelNum[0][2].add(removeButton);
             panelNum[0][3].add(errorLabel);
-            
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
             JLabel times = new JLabel("Times");
@@ -597,7 +550,6 @@ public class Scheduler {
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
             panelNum[1][3].add(loc);
-            
             //Row 3: Lecture info
             JLabel lectDay = new JLabel(thisLecture.dayStringShort());
             JLabel lectTime = new JLabel(thisLecture.timeString());
@@ -611,8 +563,6 @@ public class Scheduler {
             panelNum[2][1].add(lectTime);
             panelNum[2][2].add(lectInstructor);
             panelNum[2][3].add(lectLocation);
-            
-            
             //Row 4+: Section Info
             JLabel sectDay = new JLabel(thisSection.dayStringShort());
             JLabel sectTime = new JLabel(thisSection.timeString());
@@ -622,16 +572,11 @@ public class Scheduler {
             panelNum[3][1].add(sectTime);
             panelNum[3][2].add(sectInstructor);
             panelNum[3][3].add(sectLocation);
-            
             panels[n].add(coursePanel);
         }
         this.conflictPanel = courses;
     }
-
-    
-    
     //ACTION LISTENER CLASSES
-    
     class menuListener implements ActionListener{
         private Course c;
         private Scheduler sch;
@@ -662,12 +607,7 @@ public class Scheduler {
             this.sch.mainPanel.add(this.sch.getPanel(), BorderLayout.WEST);
             this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
         }
-        
     }
-    
-	//WIP listener for save button
-	//Forrest and Jonathan will complete
-
 	class saveListener implements ActionListener {
 
 		@Override
@@ -679,7 +619,6 @@ public class Scheduler {
 			} catch (SQLException ex) { // this exception is being caught everytime thus far
 				ex.printStackTrace();
 			}
-
 			for (int i = 0; i < courseList.size(); i++) {
 				try { // now save each course in the current schedule to the database
 					UsersConnection.saveCourse(Scheduler.this.currentUser,courseList.get(i));
@@ -687,11 +626,8 @@ public class Scheduler {
 					ex.printStackTrace();
 				}
 			}
-
 		}
-	
 	}
-    
     class deleteListener implements ActionListener{
         private Scheduler sch;
         private Course c;
@@ -709,7 +645,6 @@ public class Scheduler {
             this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
         }
     }
-    
     class viewListener implements ActionListener{
         Course c1;
         Scheduler sch1;
@@ -726,15 +661,12 @@ public class Scheduler {
             JPanel buttonPanel = new JPanel();
             buttonPanel.setPreferredSize(new Dimension(900,33));
             JButton back = new JButton("Back");
-
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
             this.sch1.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
             back.addActionListener(new backListener(this.sch1));
         }
     }
-    
-    
     class backListener implements ActionListener{
         private Scheduler outer;
         public backListener(Scheduler outerIn){
@@ -749,7 +681,6 @@ public class Scheduler {
             this.outer.mainPanel.add(this.outer.getControl(), BorderLayout.EAST);
         }
     }
-    
     class conflictListener implements ActionListener{
         Scheduler sch1;
         public conflictListener(Scheduler schIn1){
@@ -771,7 +702,6 @@ public class Scheduler {
             back.addActionListener(new backListener(this.sch1));
         }
     }
-
     class removeListener implements ActionListener{
         private Scheduler sch;
         private CourseConflict c;
@@ -788,10 +718,7 @@ public class Scheduler {
             this.sch.mainPanel.repaint();
             this.sch.mainPanel.add(this.sch.getConflict(), BorderLayout.NORTH);
         }
-
     }
-    
-    
     //STATIC
     /**
      @param c Course to be checked for time conflict
@@ -845,7 +772,6 @@ public class Scheduler {
                 return true;
         }
     }
-    
     /**
      @param day character you want converted to column it belongs in
      @return the column that corresponds to the day
@@ -877,7 +803,6 @@ public class Scheduler {
         }
         return slot;
     }
-    
     /**
      @param time the time you want converted to an int of which row it belongs in
      @return the row that a particular time belongs in. If it is something:30, it will return the row\
@@ -982,7 +907,5 @@ public class Scheduler {
         }
         return slot;
     }
-
-    
 }
 
