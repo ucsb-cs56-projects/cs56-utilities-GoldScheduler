@@ -13,7 +13,7 @@ import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
 
 /**
- * Register Panel
+ * Registration Panel
  * @author Wesley Pollek
  * @author Forrest Sun
  * @version Feb 12 2015
@@ -73,27 +73,19 @@ public class CreateAccount extends JPanel{
         createButton= new JButton("Create");
         createButton.addActionListener(new CreateButtonValidator());
         backButton = new JButton ("Back");
-        backButton.addActionListener(new ActionListener() {
 
+        backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Golder.goToLogin();
 			}
-        	
         });
         
         majorLabel = new JLabel("Select Major:");
         
-        
-        
         String[] majorStrings = CourseConnection.getMajor();
 
-
         majorList = new JComboBox<String>(majorStrings);
-        
-        
-        //majorList.addActionListener(this);
-        
 
         go();
     }
@@ -145,7 +137,6 @@ public class CreateAccount extends JPanel{
      * @throws SQLException 
      */
     
-
     public void Validator() throws SQLException {
     	int tmp;
     	boolean validInfo = true;
@@ -188,24 +179,12 @@ public class CreateAccount extends JPanel{
 	    	User u = connection.userInfo.UsersConnection.getInfo(userinfo,passinfo);
 	    	if (u==null) throw new RuntimeException("Null User");
 	    	Golder.goToMain(u);
-	    }
-	    
-	    
+	    }   
     }
-    /* Test fucntion
-      
-     
-	public static void main (String[] args){
-	    JFrame window = new JFrame();
-		CreateAccount frame = new CreateAccount();
-		window.setContentPane(frame);
-		window.setSize(1080,720);
-	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-		window.setVisible(true);
-
-	}
-	*/
     
+	/**
+	  * Method that empties all of the text boxes
+	  */
     public void clean() {
     	username.setText("");
     	password.setText("");
