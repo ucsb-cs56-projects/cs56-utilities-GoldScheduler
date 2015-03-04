@@ -26,7 +26,7 @@ public class Golder {
 
     public static void main (String[] args) throws SQLException{
         window = new JFrame("GOLDER");
-        window.setSize(910,670);
+        window.setSize(910,650);
         window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         window.setVisible(true);
         

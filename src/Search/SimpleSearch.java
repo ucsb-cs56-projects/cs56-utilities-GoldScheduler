@@ -107,7 +107,7 @@ public class SimpleSearch{
      */
     public void setCourses(){
         JPanel blank = new JPanel();
-        blank.setPreferredSize(new Dimension(500,567));
+        blank.setPreferredSize(new Dimension(500,550));
         blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }

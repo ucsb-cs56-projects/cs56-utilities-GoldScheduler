@@ -432,7 +432,7 @@ public class Scheduler {
         int slot = 0;
         for(int idx = 0; idx<this.courseList.size(); idx++){
             Course g = this.courseList.get(idx);
-            JLabel title = new JLabel(g.title);
+            JLabel title = new JLabel(g.courseID);
             String [] colorList = { "Red", "Orange", "Yellow","Green", "Light Blue", "Blue","Purple"};
             JComboBox cMenu = new JComboBox(colorList);
             if(g.getLect().col.equals(new Color(183,62,62))){
@@ -717,6 +717,13 @@ public class Scheduler {
             this.sch.mainPanel.revalidate();
             this.sch.mainPanel.repaint();
             this.sch.mainPanel.add(this.sch.getConflict(), BorderLayout.NORTH);
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setPreferredSize(new Dimension(900,33));
+            JButton back = new JButton("Back");
+            buttonPanel.add(back);
+            buttonPanel.setBackground(Color.LIGHT_GRAY);
+            this.sch.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+            back.addActionListener(new backListener(this.sch));
         }
     }
     //STATIC
