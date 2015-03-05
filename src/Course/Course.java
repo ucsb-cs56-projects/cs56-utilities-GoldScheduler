@@ -86,7 +86,7 @@ public class Course{
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(500, 600));
         Color myColor = this.lectInfo.col;
-        int countRows = 9;
+        int countRows = 8;
         countRows+=3;
         panel.setLayout(new GridLayout(countRows,2));
         JPanel[][] panelHolder = new JPanel[countRows][2];
@@ -147,12 +147,12 @@ public class Course{
         panelHolder[4][1].add(time, BorderLayout.WEST);
         panelHolder[5][0].add(dayList, BorderLayout.EAST);
         panelHolder[5][1].add(day, BorderLayout.WEST);
-        panelHolder[6][0].add(l, BorderLayout.EAST);
-        panelHolder[6][1].add(location, BorderLayout.WEST);
-        panelHolder[7][0].add(sectTime, BorderLayout.EAST);
-        panelHolder[7][1].add(sTime, BorderLayout.WEST);
-        panelHolder[8][0].add(sectLoc, BorderLayout.EAST);
-        panelHolder[8][1].add(sLoc, BorderLayout.WEST);
+        //panelHolder[6][0].add(l, BorderLayout.EAST);
+        //panelHolder[6][1].add(location, BorderLayout.WEST);
+        panelHolder[6][0].add(sectTime, BorderLayout.EAST);
+        panelHolder[6][1].add(sTime, BorderLayout.WEST);
+        panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
+        panelHolder[7][1].add(sLoc, BorderLayout.WEST);
         
         
         JLabel p = new JLabel("PreRequisites: ");

@@ -194,8 +194,8 @@ public class Scheduler {
         holder.setText(temp);
         labels.add(holder);
         //Display labels
-        for(int i=1; i<labels.size();i++){
-            panelHolder[i][0].add(labels.get(i));
+        for(int i=0; i<labels.size();i++){
+            panelHolder[i+1][0].add(labels.get(i));
         }
         JLabel m = new JLabel();
         m.setText("Monday");
