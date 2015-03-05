@@ -201,7 +201,7 @@ public class MainPage {
             this.p.main.removeAll();
             this.p.main.revalidate();
             this.p.main.repaint();
-            this.p.main.add(this.s.getDisplay(), BorderLayout.NORTH);
+            this.p.main.add(this.s.getScrollDisplay(), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
             JButton back = new JButton("Main Page");
             buttonPanel.add(back);

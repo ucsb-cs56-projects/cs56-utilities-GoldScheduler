@@ -16,7 +16,6 @@ import connection.courseInfo.CourseConnection;
  from a textbar and searches the database for matches.
  */
 public class SimpleSearch{
-    //TODO make scrollable
     /*
      Initializing components
      */
@@ -37,6 +36,7 @@ public class SimpleSearch{
     }
     /**
      Constructor to use saved schedule
+     @param s Saved schedule from database
      */
     public SimpleSearch(Scheduler s){
         this.schedule = s;
@@ -62,6 +62,9 @@ public class SimpleSearch{
         this.setDisplay();
         return this.display;
     }
+    /**
+     @return returns the full display in a scrollPane
+     */
     public JScrollPane getScrollDisplay(){
         this.scrollableDisplay = new JScrollPane(this.getDisplay());
         return this.scrollableDisplay;

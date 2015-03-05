@@ -10,14 +10,10 @@ import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 //TODOs:
-//1. What if there are no results to show?
-//3. Database - Based on the option selected return a list of profesors
-//4. Database - Currently stole the method from the simple search, but it will need to be re-implemented
-//for a different set of arguments
-//5. Loading screen while searching
-//6. Make scrollable
+//1. Loading screen while searching
 public class AdvancedSearch{
     private JPanel display;
+    private JScrollPane scrollableDisplay;
     private JPanel control;
     private JPanel cDisplay;
     private Scheduler schedule;
@@ -28,6 +24,9 @@ public class AdvancedSearch{
     public AdvancedSearch(){
 	   this.schedule = new Scheduler();
     }
+    /**
+     @param s Schedule saved in database
+     */
     public AdvancedSearch(Scheduler s){
 	   this.schedule = s;
     }
@@ -37,6 +36,13 @@ public class AdvancedSearch{
     public JPanel getDisplay(){
         this.setDisplay();
         return this.display;
+    }
+    /**
+     @return returns the full display in a scrollPane
+     */
+    public JScrollPane getScrollDisplay(){
+        this.scrollableDisplay = new JScrollPane(this.getDisplay());
+        return this.scrollableDisplay;
     }
     /**
      Initializes the display
@@ -258,7 +264,7 @@ public class AdvancedSearch{
     public void setControl(){
         JPanel controlPanel = new JPanel();
         int len = this.searchOptions.length;
-        controlPanel.setPreferredSize(new Dimension(500,66));
+        controlPanel.setPreferredSize(new Dimension(66,66));
         controlPanel.setLayout(new GridLayout(2, 1));
         //Made two panels because top one won't be broken down as much
         JPanel[] panelHolder = new JPanel[2];
@@ -354,14 +360,18 @@ public class AdvancedSearch{
             this.p.display.removeAll();
             this.p.display.revalidate();
             this.p.display.repaint();
-            this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
+            this.p.display.setLayout(new BoxLayout(this.p.display, BoxLayout.Y_AXIS));
+            this.p.display.add(this.c1.getPanel());
             JPanel buttonPanel = new JPanel();
             JButton back = new JButton("Back");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
-            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+            this.p.display.add(buttonPanel);
             back.addActionListener(new backListener(this.p,this.cList));
-            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
+            this.p.scrollableDisplay.removeAll();
+            this.p.scrollableDisplay.revalidate();
+            this.p.scrollableDisplay.repaint();
+            this.p.scrollableDisplay.add(this.p.display);
         }
     }
     class backListener implements ActionListener{
@@ -376,8 +386,13 @@ public class AdvancedSearch{
             this.outer.display.removeAll();
             this.outer.display.revalidate();
             this.outer.display.repaint();
-            this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-            this.outer.display.add(this.outer.getCoursesBy3DArray(this.cList1), BorderLayout.SOUTH);
+            this.outer.display.setLayout(new BoxLayout(this.outer.display, BoxLayout.Y_AXIS));
+            this.outer.display.add(this.outer.getControl());
+            this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)));
+            this.outer.scrollableDisplay.removeAll();
+            this.outer.scrollableDisplay.revalidate();
+            this.outer.scrollableDisplay.repaint();
+            this.outer.scrollableDisplay.add(this.outer.display);
         }
     }
     class radioListener implements ActionListener{
@@ -413,10 +428,17 @@ public class AdvancedSearch{
             JComboBox comboBox = (JComboBox) e.getSource();
             String selectedItem = (String)comboBox.getSelectedItem();
             result = getResults(selectedItem, this.optionString);
-            this.a.cDisplay.removeAll();
-            this.a.cDisplay.revalidate();
-            this.a.cDisplay.repaint();
-            this.a.cDisplay.add(getCourses(result), BorderLayout.SOUTH);
+            this.a.display.removeAll();
+            this.a.display.revalidate();
+            this.a.display.repaint();
+            this.a.display.setLayout(new BoxLayout(this.a.display, BoxLayout.Y_AXIS));
+            this.a.display.add(this.a.getControl());
+            this.a.display.add(new JScrollPane(getCourses(result)));
+            this.a.scrollableDisplay.removeAll();
+            this.a.scrollableDisplay.revalidate();
+            this.a.scrollableDisplay.repaint();
+            this.a.scrollableDisplay.add(this.a.display);
+            
         }
     }
     class addListener implements ActionListener{
