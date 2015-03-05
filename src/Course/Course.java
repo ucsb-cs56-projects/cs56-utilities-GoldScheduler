@@ -151,8 +151,8 @@ public class Course{
         //panelHolder[6][1].add(location, BorderLayout.WEST);
         panelHolder[6][0].add(sectTime, BorderLayout.EAST);
         panelHolder[6][1].add(sTime, BorderLayout.WEST);
-        panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
-        panelHolder[7][1].add(sLoc, BorderLayout.WEST);
+        //panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
+        //panelHolder[7][1].add(sLoc, BorderLayout.WEST);
         
         
         JLabel p = new JLabel("PreRequisites: ");
@@ -162,14 +162,14 @@ public class Course{
         g.setFont(boldFont);
         r.setFont(boldFont);
         
-        int newCount = 9;
+        int newCount = 7;
         JLabel temp;
-        panelHolder[9][0].add(p, BorderLayout.EAST);
-        panelHolder[9][0].setBackground(myColor);
+        panelHolder[newCount][0].add(p, BorderLayout.EAST);
+        panelHolder[newCount][0].setBackground(myColor);
         if(this.preReqs.length==0){
             temp = new JLabel("None");
-            panelHolder[9][1].add(temp, BorderLayout.WEST);
-            panelHolder[9][1].setBackground(myColor);
+            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+            panelHolder[newCount][1].setBackground(myColor);
             newCount++;
         }
         else{
