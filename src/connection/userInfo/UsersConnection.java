@@ -135,7 +135,7 @@ public class UsersConnection extends GolderConnection{
 	 * @param userName
 	 * @param email
 	 * @param t
-	 * @return
+	 * @return User 
 	 * @throws SQLException
 	 */
 	public static User getInfo(String userName, String email, int t) throws SQLException{
@@ -161,7 +161,7 @@ public class UsersConnection extends GolderConnection{
 	 * Used to get the user with username and password
 	 * @param userName
 	 * @param password
-	 * @return
+	 * @return User
 	 * @throws SQLException
 	 */
 	public static User getInfo(String userName, String password) throws SQLException{
@@ -261,7 +261,7 @@ public class UsersConnection extends GolderConnection{
 	/**
 	 * 
 	 * @param u
-	 * @return
+	 * @return An ArrayList containing all the Courses in the user's schedule
 	 * @throws SQLException
 	 */
 	

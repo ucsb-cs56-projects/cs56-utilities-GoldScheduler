@@ -94,7 +94,7 @@ public class CourseConnection extends GolderConnection{
 	 * 
 	 * @param lectureId
 	 * @param sectionId
-	 * @return
+	 * @return Course that matches the lectureId and sectionId
 	 * @throws SQLException
 	 */
 	
@@ -139,7 +139,7 @@ public class CourseConnection extends GolderConnection{
 	 * @param sectionId
 	 * @param lectureColor
 	 * @param sectionColor
-	 * @return
+	 * @return Course
 	 * @throws SQLException
 	 */
 	
@@ -304,7 +304,7 @@ Course c = null;
 	/**
 	 * 
 	 * @param w
-	 * @return
+	 * @return Character array
 	 */
 	
 	private static char [] deCodeWeek(int w) {

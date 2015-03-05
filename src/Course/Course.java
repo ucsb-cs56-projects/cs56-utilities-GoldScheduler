@@ -35,9 +35,9 @@ public class Course{
 		*@param units Integer amount of units the course counts for
 		*@param preReqs String array of prerequisites for the course
 		*@param restrictions String array of restrictions of the course
-		*@param String array of the G.E. requirements that this course fulfills
-		*@param Lecture object that contains information about the course lecture
-		*@param Lecture object that contains information about the course section
+		*@param geFulfill String array of the G.E. requirements that this course fulfills
+		*@param lectInfo Lecture object that contains information about the course lecture
+		*@param sectInfo Lecture object that contains information about the course section
 		*/
     
     public Course(String courseID, String title, String fullTitle, String dept, String units,

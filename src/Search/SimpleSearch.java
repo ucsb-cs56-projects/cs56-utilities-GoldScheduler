@@ -8,27 +8,46 @@ import Course.Course;
 import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
-//import connection.UserInfo.*;
-//TODOs:
-//1. Auto-generated catch block
 /**
  This class will implement the simple search function, which takes a keyword
  from a textbar and searches the database for matches.
  */
 public class SimpleSearch{
-    /*
-     Initializing components
+    /**
+     Main display including all components
      */
-    //private User user;
     private JPanel display;
+    /**
+     ScrollPane including the main display
+     */
     private JScrollPane scrollableDisplay;
+    /**
+     Control panel with a textField for users to enter a searchword
+     */
     private JPanel control;
+    /**
+     The panel that displays the courses returned from the search
+     */
     private JPanel cDisplay;
+    /**
+     The textfield used for user input
+     */
     private JTextField searchField;
+    /**
+     Button to call the search function
+     */
     private JButton searchButton;
+    /**
+     The user's schedule, which will be used to add courses to
+     */
     private Scheduler schedule;
-    private JPanel sDisplay;
+    /**
+     Blue
+     */
     private final Color darkerColor = new Color(165,188,238);
+    /**
+     Light Blue
+     */
     private final Color lighterColor = new Color(201,212,237);
     //CONSTRUCTORS
     public SimpleSearch(){
@@ -263,6 +282,7 @@ public class SimpleSearch{
         return this.cDisplay;
     }
     /**
+     @param key Keyword to be used to search through the database
      @return Calls the setCourses using a keyword and returns the resulting panel
      */
     public JPanel getCourses(String key){
@@ -270,12 +290,17 @@ public class SimpleSearch{
         return this.cDisplay;
     }
     /**
+     @param list a list of Courses that match the keyword given by the user
      @return Calls the setCourses using an arrayList of Courses and returns the resulting panel
      */
     public JPanel getCourses(ArrayList<Course> list){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(list)));
         return this.cDisplay;
     }
+    /**
+     @param list A 3D ArrayList that has courses sourted by CourseID and Lecture
+     @return Calls the setCourses using the list returns the resulting panel
+     */
     public JPanel getCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> list){
         this.setCoursesBy3DArray(list);
         return this.cDisplay;
@@ -325,7 +350,7 @@ public class SimpleSearch{
         return groupedResults;
     }
     /**
-     @param groupedCourseResults an ArrayList of grouped courses by courseID
+     @param groupedCourseIDResult an ArrayList of grouped courses by courseID
      @return a 2D ArrayList where courses with the same time are grouped together
      */
     public static ArrayList<ArrayList<Course>> groupLectResults(ArrayList<Course> groupedCourseIDResult){
@@ -350,7 +375,7 @@ public class SimpleSearch{
         return groupedResults;
     }
     /**
-     @param groupedCourseResults an ArrayList of grouped courses by courseID
+     @param groupedCourseIDResults an ArrayList of grouped courses by courseID
      @return a 3D ArrayList wher courses are grouped by courseID then by time
      */
     public static ArrayList<ArrayList<ArrayList<Course>>> getGroupedResults(ArrayList<ArrayList<Course>> groupedCourseIDResults){
@@ -383,6 +408,9 @@ public class SimpleSearch{
         return display;
     }
     //ACTION LISTENER CLASSES
+    /**
+     Class to view a specific course upon a button being pressed
+     */
     class viewListener implements ActionListener{
         private Course c1;
         private SimpleSearch p;
@@ -411,6 +439,9 @@ public class SimpleSearch{
              
         }
     }
+    /**
+     Allows the user to return to the populated search view after viewing a specific course
+     */
     class backListener implements ActionListener{
         private SimpleSearch outer;
         private ArrayList<ArrayList<ArrayList<Course>>> cList1;
@@ -423,13 +454,17 @@ public class SimpleSearch{
             this.outer.display.revalidate();
             this.outer.display.repaint();
             this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
-            this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)), BorderLayout.CENTER);
+            this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)),
+                                   BorderLayout.CENTER);
             this.outer.scrollableDisplay.removeAll();
             this.outer.scrollableDisplay.revalidate();
             this.outer.scrollableDisplay.repaint();
             this.outer.scrollableDisplay.add(this.outer.display);
         }
     }
+    /**
+     Upon the press of a button, this class calls the function that searches the database using a keyword.
+     */
     class showResults implements ActionListener{
         private JTextField text;
         private SimpleSearch s;
@@ -451,6 +486,9 @@ public class SimpleSearch{
             this.s.scrollableDisplay.add(this.s.display);
         }
     }
+    /**
+     Allows the user to add classes to their schedule
+     */
     class addListener implements ActionListener{
         private Scheduler sch;
         private Course c;
@@ -482,5 +520,3 @@ public class SimpleSearch{
         }
     }
 }
-
-
