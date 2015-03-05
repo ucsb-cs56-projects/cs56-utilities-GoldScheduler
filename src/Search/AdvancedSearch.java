@@ -11,6 +11,10 @@ import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 //TODOs:
 //1. Loading screen while searching
+/**
+ This class will allow the user to select from: Department, Professor, or General Education
+ and indicate from a combobox, populated by category, what they are searching for.
+ */
 public class AdvancedSearch{
     private JPanel display;
     private JScrollPane scrollableDisplay;
@@ -345,6 +349,9 @@ public class AdvancedSearch{
         return courseList;
     }
     //ACTION LISTENER CLASSES
+    /**
+     Class to view a specific course upon a button being pressed
+     */
     class viewListener implements ActionListener{
         private Course c1;
         private AdvancedSearch p;
@@ -372,6 +379,9 @@ public class AdvancedSearch{
             this.p.scrollableDisplay.add(this.p.display);
         }
     }
+    /**
+     Allows the user to return to the populated search view after viewing a specific course
+     */
     class backListener implements ActionListener{
         private AdvancedSearch outer;
         private ArrayList<ArrayList<ArrayList<Course>>> cList1;
@@ -392,6 +402,9 @@ public class AdvancedSearch{
             this.outer.scrollableDisplay.add(this.outer.display);
         }
     }
+    /**
+     Populates a combobox according to a selcted radioButton
+     */
     class radioListener implements ActionListener{
         private JPanel p;
         private AdvancedSearch a;
@@ -412,6 +425,9 @@ public class AdvancedSearch{
             this.p.add(cMenu);
         }
     }
+    /**
+     Searches the database according to the choice selected from the combobox
+     */
     class menuListener implements ActionListener{
         private AdvancedSearch a;
         private String optionString;
@@ -437,6 +453,9 @@ public class AdvancedSearch{
             
         }
     }
+    /**
+     Allows the user to add classes to their schedule
+     */
     class addListener implements ActionListener{
         private Scheduler sch;
         private Course c;
