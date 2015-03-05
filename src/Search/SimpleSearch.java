@@ -397,40 +397,37 @@ public class SimpleSearch{
             this.p.display.removeAll();
             this.p.display.revalidate();
             this.p.display.repaint();
-            this.p.display.setLayout(new BoxLayout(this.p.display, BoxLayout.Y_AXIS));
-            this.p.display.add(this.c1.getPanel());
+            this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
             JButton back = new JButton("Back");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
-            this.p.display.add(buttonPanel);
-            class backListener implements ActionListener{
-                private SimpleSearch outer;
-                private ArrayList<ArrayList<ArrayList<Course>>> cList1;
-                public backListener(SimpleSearch outerIn, ArrayList<ArrayList<ArrayList<Course>>> cList1){
-                    this.outer = outerIn;
-                    this.cList1 = cList1;
-                }
-                public void actionPerformed(ActionEvent e){
-                    this.outer.display.removeAll();
-                    this.outer.display.revalidate();
-                    this.outer.display.repaint();
-                    this.outer.display.setLayout(new BoxLayout(this.outer.display, BoxLayout.Y_AXIS));
-                    this.outer.display.add(this.outer.getControl());
-                    this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)));
-                    this.outer.scrollableDisplay.removeAll();
-                    this.outer.scrollableDisplay.revalidate();
-                    this.outer.scrollableDisplay.repaint();
-                    this.outer.scrollableDisplay.add(this.outer.display);
-                }
-            }
             back.addActionListener(new backListener(this.p,this.cList));
-            this.p.display.add(buttonPanel);
+            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
             this.p.scrollableDisplay.removeAll();
             this.p.scrollableDisplay.revalidate();
             this.p.scrollableDisplay.repaint();
             this.p.scrollableDisplay.add(this.p.display);
              
+        }
+    }
+    class backListener implements ActionListener{
+        private SimpleSearch outer;
+        private ArrayList<ArrayList<ArrayList<Course>>> cList1;
+        public backListener(SimpleSearch outerIn, ArrayList<ArrayList<ArrayList<Course>>> cList1){
+            this.outer = outerIn;
+            this.cList1 = cList1;
+        }
+        public void actionPerformed(ActionEvent e){
+            this.outer.display.removeAll();
+            this.outer.display.revalidate();
+            this.outer.display.repaint();
+            this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
+            this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)), BorderLayout.CENTER);
+            this.outer.scrollableDisplay.removeAll();
+            this.outer.scrollableDisplay.revalidate();
+            this.outer.scrollableDisplay.repaint();
+            this.outer.scrollableDisplay.add(this.outer.display);
         }
     }
     class showResults implements ActionListener{
@@ -443,15 +440,11 @@ public class SimpleSearch{
         @Override
         public void actionPerformed(ActionEvent e) {
             String keyword = this.text.getText();
-            //displayLoad loadingDisplay = new displayLoad(this.s);
-            //Thread displayThread = new Thread(loadingDisplay);
-            //displayThread.start();
             this.s.display.removeAll();
             this.s.display.revalidate();
             this.s.display.repaint();
-            this.s.display.setLayout(new BoxLayout(this.s.display, BoxLayout.Y_AXIS));
-            this.s.display.add(this.s.getControl());
-            this.s.display.add(new JScrollPane(this.s.getCourses(keyword)));
+            this.s.display.add(this.s.getControl(),BorderLayout.NORTH);
+            this.s.display.add(new JScrollPane(this.s.getCourses(keyword)), BorderLayout.CENTER);
             this.s.scrollableDisplay.removeAll();
             this.s.scrollableDisplay.revalidate();
             this.s.scrollableDisplay.repaint();
@@ -488,96 +481,6 @@ public class SimpleSearch{
             this.s.scrollableDisplay .add(this.s.display);
         }
     }
- /*   class nextViewListener implements ActionListener{
-    /*
-    class nextViewListener implements ActionListener{
-	private Course c1;
-	private SimpleSearch s;
-	private ArrayList<Course> cList;
-	public nextViewListener(Course cIn1, SimpleSearch s, 
-				ArrayList<Course> cList){
-	    this.c1 = cIn1;
-	    this.s = s;
-	    this.cList = cList;
-	}
-	@Override
-	    public void actionPerformed(ActionEvent e){
-	    this.s.display.removeAll();
-	    this.s.display.repaint();
-	    this.s.display.add(this.c1.getPanel(), BorderLayout.NORTH);
-	    Jpanel buttonPanel = new JPanel();
-	    JButton next = new JButton("Next");
-	    buttonPanel.add(next);
-	    buttonPanel.setBackground(Color.LIGHT_GRAY);
-	    this.s.display.add(buttonPanel, BorderLayout.SOUTH);
-      
-	    class nextListener implements ActionListener{
-		private SimpleSearch outer;
-		private ArrayList<Course> nextList;
-		public nextListener(SimpleSearch outerIn, 
-				    ArrayList<Course> nextList){
-		    this.outer = outerIn;
-		    this.nextList = nextList;
-        }        
-		public void actionPerformed(ActionEvent e){
-		    this.outer.display.removeAll();
-		    this.outer.display.revalidate();
-		    this.outer.display.repaint();
-		    this.outer.display.add(this.outer.getControl(), 
-					   BorderLayout.NORTH);
-		    this.outer.display.add(this.outer.getCourses(this.cList1), 
-					   BorderLayout.SOUTH);
-		}
-	    }
-	    next.addActionListener(new nextListener(this.s, this.cList));
-	    this.s.display.add(buttonPanel, BorderLayout.South);
-	}
-    }
-    
-    class prevViewListener implements ActionListener{
-        private Course c1;
-        private SimpleSearch q;
-        private ArrayList<Course> cList;
-        public prevViewListener(Course cIn1, SimpleSearch q,
-                                ArrayList<Course> cList){
-            this.c1 = cIn1;
-            this.q = q;
-            this.cList = cList;
-        }
-        @Override
-            public void actionPerformed(ActionEvent e){
-            this.q.display.removeAll();
-            this.q.display.repaint();
-            this.q.display.add(this.c1.getPanel(), BorderLayout.NORTH);
-            Jpanel buttonPanel = new JPanel();
-            JButton prev = new JButton("Previous");
-            buttonPanel.add(prev);
-            buttonPanel.setBackground(Color.LIGHT_GRAY);
-            this.q.display.add(buttonPanel, BorderLayout.SOUTH);
-
-            class prevListener implements ActionListener{
-                private SimpleSearch outer;
-                private ArrayList<Course> prevList;
-                public prevListener(SimpleSearch outerIn,
-                                    ArrayList<Course> prevList){
-                    this.outer = outerIn;
-                    this.prevList = prevList;
-		}
-                public void actionPerformed(ActionEvent e){
-                    this.outer.display.removeAll();
-                    this.outer.display.revalidate();
-		    this.outer.display.repaint();
-                    this.outer.display.add(this.outer.getControl(),
-                                           BorderLayout.NORTH);
-                    this.outer.display.add(this.outer.getCourses(this.cList1),
-                                           BorderLayout.SOUTH);
-                }
-            }
-            next.addActionListener(new nextListener(this.q, this.cList));
-            this.q.display.add(buttonPanel, BorderLayout.SOUTH);
-        }
-    }
-  */
 }
 
 

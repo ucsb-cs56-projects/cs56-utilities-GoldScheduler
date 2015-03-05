@@ -20,7 +20,7 @@ public class AdvancedSearch{
     private final Color darkerColor = new Color(235,215,128);
     private final Color lighterColor = new Color(236,226,178);
     private String[] searchOptions = {"Department", "Professor", "General Education"};
-    //CONSTRUCOTRS
+    //CONSTRUCTORS
     public AdvancedSearch(){
 	   this.schedule = new Scheduler();
     }
@@ -50,10 +50,9 @@ public class AdvancedSearch{
     public void setDisplay(){
         //Initialize panel
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(910,600));
         panel.setLayout(new BorderLayout());
-        panel.add(this.getCourses(), BorderLayout.SOUTH);
         panel.add(this.getControl(), BorderLayout.NORTH);
+        panel.add(this.getCourses(), BorderLayout.SOUTH);
         this.display = panel;
     }
     //SCHEDULE
@@ -84,7 +83,7 @@ public class AdvancedSearch{
      */
     public void setCourses(){
         JPanel blank = new JPanel();
-        blank.setPreferredSize(new Dimension(900,533));
+        blank.setPreferredSize(new Dimension(600,533));
         blank.setBackground(this.darkerColor);
         this.cDisplay = blank;
     }
@@ -131,11 +130,11 @@ public class AdvancedSearch{
              2. header
              3. Lecture info
              4+. Section info
-             columns: 5
-             (Days, times, instrucors, location, addButton)
+             columns: 4
+             (Days, times, instrucors, [location,] addButton)
              */
             int rows = 2;
-            int columns = 5;
+            int columns = 4;
             /*
              Right now works for one section per course.
              TODO: Check if course name matches then put them together
@@ -147,7 +146,7 @@ public class AdvancedSearch{
             }
             rows+= numLects;
             rows+= totalNumSects;
-            coursePanel.setPreferredSize(new Dimension(910,33*rows));
+            coursePanel.setPreferredSize(new Dimension(600,33*rows));
             coursePanel.setLayout(new GridLayout(rows, columns));
             JPanel[][] panelNum = new JPanel[rows][columns];
             for(int y = 0 ; y<rows; y++){
@@ -168,7 +167,7 @@ public class AdvancedSearch{
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
             JLabel numCrs = new JLabel("Sections: " + totalNumSects);
-            panelNum[0][2].add(numCrs);
+            //panelNum[0][2].add(numCrs);
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
             JLabel times = new JLabel("Times");
@@ -181,7 +180,7 @@ public class AdvancedSearch{
             panelNum[1][0].add(d);
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
-            panelNum[1][3].add(loc);
+            //panelNum[1][3].add(loc);
             //Row 3: Lecture info
             int currentRow = 2;
             for(int i = 0; i<numLects; i++){
@@ -198,7 +197,7 @@ public class AdvancedSearch{
                 panelNum[currentRow][0].add(lectDay);
                 panelNum[currentRow][1].add(lectTime);
                 panelNum[currentRow][2].add(lectInstructor);
-                panelNum[currentRow][3].add(lectLocation);
+                //panelNum[currentRow][3].add(lectLocation);
                 currentRow++;
                 for(int j = 0; j<courseList.get(n).get(i).size(); j++){
                     currentCourse = courseList.get(n).get(i).get(j);
@@ -212,10 +211,10 @@ public class AdvancedSearch{
                     panelNum[currentRow][0].add(sectDay);
                     panelNum[currentRow][1].add(sectTime);
                     panelNum[currentRow][2].add(sectInstructor);
-                    panelNum[currentRow][3].add(sectLocation);
+                    //panelNum[currentRow][3].add(sectLocation);
                     JButton addToSchedule = new JButton("Add");
                     addToSchedule.addActionListener(new addListener(this.schedule,currentCourse));
-                    panelNum[currentRow][4].add(addToSchedule);
+                    panelNum[currentRow][3].add(addToSchedule);
                     currentRow++;
                 }
             }
@@ -264,7 +263,7 @@ public class AdvancedSearch{
     public void setControl(){
         JPanel controlPanel = new JPanel();
         int len = this.searchOptions.length;
-        controlPanel.setPreferredSize(new Dimension(66,66));
+        controlPanel.setPreferredSize(new Dimension(500,66));
         controlPanel.setLayout(new GridLayout(2, 1));
         //Made two panels because top one won't be broken down as much
         JPanel[] panelHolder = new JPanel[2];
@@ -360,13 +359,12 @@ public class AdvancedSearch{
             this.p.display.removeAll();
             this.p.display.revalidate();
             this.p.display.repaint();
-            this.p.display.setLayout(new BoxLayout(this.p.display, BoxLayout.Y_AXIS));
-            this.p.display.add(this.c1.getPanel());
+            this.p.display.add(this.c1.getPanel(), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
             JButton back = new JButton("Back");
             buttonPanel.add(back);
             buttonPanel.setBackground(Color.LIGHT_GRAY);
-            this.p.display.add(buttonPanel);
+            this.p.display.add(buttonPanel, BorderLayout.SOUTH);
             back.addActionListener(new backListener(this.p,this.cList));
             this.p.scrollableDisplay.removeAll();
             this.p.scrollableDisplay.revalidate();
@@ -386,9 +384,8 @@ public class AdvancedSearch{
             this.outer.display.removeAll();
             this.outer.display.revalidate();
             this.outer.display.repaint();
-            this.outer.display.setLayout(new BoxLayout(this.outer.display, BoxLayout.Y_AXIS));
-            this.outer.display.add(this.outer.getControl());
-            this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)));
+            this.outer.display.add(this.outer.getControl(), BorderLayout.NORTH);
+            this.outer.display.add(new JScrollPane(this.outer.getCoursesBy3DArray(this.cList1)), BorderLayout.CENTER);
             this.outer.scrollableDisplay.removeAll();
             this.outer.scrollableDisplay.revalidate();
             this.outer.scrollableDisplay.repaint();
@@ -431,9 +428,8 @@ public class AdvancedSearch{
             this.a.display.removeAll();
             this.a.display.revalidate();
             this.a.display.repaint();
-            this.a.display.setLayout(new BoxLayout(this.a.display, BoxLayout.Y_AXIS));
-            this.a.display.add(this.a.getControl());
-            this.a.display.add(new JScrollPane(getCourses(result)));
+            this.a.display.add(this.a.getControl(), BorderLayout.NORTH);
+            this.a.display.add(new JScrollPane(getCourses(result)), BorderLayout.CENTER);
             this.a.scrollableDisplay.removeAll();
             this.a.scrollableDisplay.revalidate();
             this.a.scrollableDisplay.repaint();
