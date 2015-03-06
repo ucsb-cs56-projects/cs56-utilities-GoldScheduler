@@ -38,6 +38,7 @@ class Scraper(object):
 	# Gets all Dept. names from Ninjacourse catalog
 	
 	def getDepts(self):
+		self.resetURL("https://ninjacourses.com/explore/4/")
 		deptList = []
 		for i in range (1,53):
 			xpath = '//*[@id="deptlist-left"]/li[' + str(i) + ']/a/text()' 
@@ -56,7 +57,8 @@ class Scraper(object):
 
 	# Returns a list of all courses in a single department 
 	# Courses that aren't offered are not in the returned list
-	def getCourses(self): 
+	def getCourses(self, dept): 
+		self.resetURL("https://ninjacourses.com/explore/4/department/" + dept)
 		courseList = []		 
 		courseList.append("trash")
 		i = 0
@@ -151,8 +153,7 @@ class Scraper(object):
 		self.tree = self.openPage()
 		return courseDict
 
-	def getCourseTimes(self, courseList): # Takes a list of courses in a single department
-		dept = "CMPSC"
+	def getCourseTimes(self, courseList, dept): # Takes a list of courses in a single department
 		courseTimes = dict() # Dictionary to hold course times, with the course as the key
 		for course in courseList: 
 			newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept)+1:]) + "/#sections"
@@ -175,8 +176,8 @@ class Scraper(object):
 
 
 	# xpath to units of course //*[@id="tab-sections"]/table/tr[2]/td[5]/text()
-	def getCourseUnitsAndProfessors(self,courseList):
-		dept = "CMPSC"
+	
+	def getCourseUnitsAndProfessors(self,courseList, dept):
 		courseUnitsAndProfessors = dict()
 		for course in courseList:
 			if course == "CMPSC 8":
