@@ -358,7 +358,7 @@ public class AdvancedSearch{
      @param key A keyword taken from the dropdown menu that represents what the user is looking for
      @param option The button clicked indicating which category the keyword belongs to
      */
-    public ArrayList<Course> getResults(String key, String option){
+    public ArrayList<Course> getResults(ArrayList<String> key, String option){
         ArrayList<Course> courseList = null;
 		try {
 			courseList = connection.courseInfo.CourseConnection.getResults(key, option);
@@ -451,12 +451,12 @@ public class AdvancedSearch{
                 submitButton.addActionListener(new submitListener(this.a.getCourses(0),this.a));
                 newPanel.add(submitButton);
             }
-            JComboBox cMenu = new JComboBox(menuList);
-            cMenu.addActionListener(new menuListener(this.a, this.optionString));
             this.p.removeAll();
             this.p.revalidate();
             this.p.repaint();
             if(!optionString.equals("General Education")){
+                JComboBox cMenu = new JComboBox(menuList);
+                cMenu.addActionListener(new menuListener(this.a, optionString));
                 this.p.add(cMenu);
             }
             this.a.display.removeAll();
@@ -488,9 +488,7 @@ public class AdvancedSearch{
                     keyArray.add(this.aSearch.geChecks.get(check));
                 }
             }
-            result = getResults(keyArray.get(0),"General Education");
-            //TODO: Database. New function that takes String array of ges
-            //result = getResults(keyArray, "General Education");
+            result = getResults(keyArray, "General Education");
             this.courseResultsPanel.removeAll();
             this.courseResultsPanel.revalidate();
             this.courseResultsPanel.repaint();
@@ -512,7 +510,9 @@ public class AdvancedSearch{
             ArrayList<Course> result = new ArrayList<Course>();
             JComboBox comboBox = (JComboBox) e.getSource();
             String selectedItem = (String)comboBox.getSelectedItem();
-            result = getResults(selectedItem, this.optionString);
+            ArrayList<String> selectedArray = new ArrayList<String>();
+            selectedArray.add(selectedItem);
+            result = getResults(selectedArray, this.optionString);
             this.a.display.removeAll();
             this.a.display.revalidate();
             this.a.display.repaint();

@@ -185,7 +185,9 @@ Course c = null;
      @param key
      @param option
      */
-	public static ArrayList<Course> getResults(String key, String option) throws SQLException{
+	public static ArrayList<Course> getResults(ArrayList<String> keys, String option) throws SQLException{
+        //Temporary
+        String key = keys.get(0);
 		if (option.equals("Department")){
 			Pattern pattern = 
 				    Pattern.compile("\\A.+\\((.+)\\)\\Z");
