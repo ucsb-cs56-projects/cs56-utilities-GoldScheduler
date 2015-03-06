@@ -437,8 +437,8 @@ public class AdvancedSearch{
         @Override
         public void actionPerformed(ActionEvent e){
             String [] menuList = getList(optionString);
+            JPanel newPanel = new JPanel();
             if(optionString.equals("General Education")){
-                JPanel newPanel = new JPanel();
                 newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
                 JCheckBox temp;
                 for(String s:menuList){
@@ -450,28 +450,22 @@ public class AdvancedSearch{
                 JButton submitButton = new JButton("Submit");
                 submitButton.addActionListener(new submitListener(this.a.getCourses(),this.a));
                 newPanel.add(submitButton);
-                this.p.removeAll();
-                this.p.revalidate();
-                this.p.repaint();
-                this.a.display.removeAll();
-                this.a.display.revalidate();
-                this.a.display.repaint();
-                this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
-                this.a.display.add(new JScrollPane(this.a.getCourses(0)), BorderLayout.CENTER);
-                this.a.display.add(new JScrollPane(newPanel), BorderLayout.EAST);
             }
-            else{
-                JComboBox cMenu = new JComboBox(menuList);
-                cMenu.addActionListener(new menuListener(this.a, this.optionString));
-                this.p.removeAll();
-                this.p.revalidate();
-                this.p.repaint();
+            JComboBox cMenu = new JComboBox(menuList);
+            cMenu.addActionListener(new menuListener(this.a, this.optionString));
+            this.p.removeAll();
+            this.p.revalidate();
+            this.p.repaint();
+            if(!optionString.equals("General Education")){
                 this.p.add(cMenu);
-                this.a.display.removeAll();
-                this.a.display.revalidate();
-                this.a.display.repaint();
-                this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
-                this.a.display.add(new JScrollPane(this.a.getCourses(0)), BorderLayout.CENTER);
+            }
+            this.a.display.removeAll();
+            this.a.display.revalidate();
+            this.a.display.repaint();
+            this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
+            this.a.display.add(new JScrollPane(this.a.getCourses(0)), BorderLayout.CENTER);
+            if(optionString.equals("General Education")){
+                this.a.display.add(new JScrollPane(newPanel), BorderLayout.EAST);
             }
         }
     }
