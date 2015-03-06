@@ -448,7 +448,7 @@ public class AdvancedSearch{
                     newPanel.add(temp);
                 }
                 JButton submitButton = new JButton("Submit");
-                submitButton.addActionListener(new submitListener(this.a.getCourses(),this.a));
+                submitButton.addActionListener(new submitListener(this.a.getCourses(0),this.a));
                 newPanel.add(submitButton);
             }
             JComboBox cMenu = new JComboBox(menuList);
