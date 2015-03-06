@@ -1,5 +1,6 @@
 package Search;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -24,15 +25,21 @@ public class AdvancedSearch{
     private final Color darkerColor = new Color(235,215,128);
     private final Color lighterColor = new Color(236,226,178);
     private String[] searchOptions = {"Department", "Professor", "General Education"};
+    private ArrayList<JCheckBox> geChecksList;
+    private HashMap<JCheckBox, String> geChecks;
     //CONSTRUCTORS
     public AdvancedSearch(){
 	   this.schedule = new Scheduler();
+        geChecksList = new ArrayList<JCheckBox>();
+        geChecks = new HashMap<JCheckBox, String>();
     }
     /**
      @param s Schedule saved in database
      */
     public AdvancedSearch(Scheduler s){
-	   this.schedule = s;
+        this.schedule = s;
+        geChecksList = new ArrayList<JCheckBox>();
+        geChecks = new HashMap<JCheckBox, String>();
     }
     /**
      @return returns the full set display with both the control and course panels
@@ -236,8 +243,15 @@ public class AdvancedSearch{
         return this.cDisplay;
     }
     /**
-     @return Calls the setCourses using an arrayList of Courses and returns the resulting panel.
+     @param i indicator that you don't want to call set courses
+     @return gets the current course display
+     */
+    public JPanel getCourses(int i){
+        return this.cDisplay;
+    }
+    /**
      @param list and ArrayList of unsorted courses
+     @return Calls the setCourses using an arrayList of Courses and returns the resulting panel.
      It is the result list
      */
     public JPanel getCourses(ArrayList<Course> list){
@@ -245,8 +259,8 @@ public class AdvancedSearch{
         return this.cDisplay;
     }
     /**
-     @return A panel that uses the sorted ArrayList to display the courses
      @param list a 3D ArrayList of sorted courses
+     @return A panel that uses the sorted ArrayList to display the courses
      */
     public JPanel getCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> list){
         this.setCoursesBy3DArray(list);
@@ -258,6 +272,13 @@ public class AdvancedSearch{
      */
     public JPanel getControl() {
         this.setControl();
+        return this.control;
+    }
+    /**
+     @param i indicator that you don't want to call set courses
+     @return gets the current control display
+     */
+    public JPanel getControl(int i) {
         return this.control;
     }
     /**
@@ -328,7 +349,9 @@ public class AdvancedSearch{
             return m;
         }
         else { //s==GE
-           String [] m= {"------","A1","A2", "AMHI", "AMI", "B", "C", "C1", "C2", "C3", "CSB", "CU", "CUC", "CUD", "D", "D1", "D2", "D3", "D4", "E", "E1", "E2", "ETH", "EUR",
+           String [] m= {//"------",
+               "A1","A2", "AMHI", "AMI", "B", "C", "C1", "C2", "C3", "CSB",
+               "CU", "CUC", "CUD", "D", "D1", "D2", "D3", "D4", "E", "E1", "E2", "ETH", "EUR",
                "F", "F1", "F2A", "F2B", "G", "H", "MAJ", "MG", "MUD", "MUG", "NWC", "QNT", "SUB",
                "UG", "UPU", "USB", "USR", "WRT"};
             return m;
@@ -417,12 +440,70 @@ public class AdvancedSearch{
         @Override
         public void actionPerformed(ActionEvent e){
             String [] menuList = getList(optionString);
-            JComboBox cMenu = new JComboBox(menuList);
-            cMenu.addActionListener(new menuListener(this.a, this.optionString));
-            this.p.removeAll();
-            this.p.revalidate();
-            this.p.repaint();
-            this.p.add(cMenu);
+            if(optionString.equals("General Education")){
+                JPanel newPanel = new JPanel();
+                newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
+                JCheckBox temp;
+                for(String s:menuList){
+                    temp = new JCheckBox(s);
+                    geChecksList.add(temp);
+                    geChecks.put(temp, s);
+                    newPanel.add(temp);
+                }
+                JButton submitButton = new JButton("Submit");
+                submitButton.addActionListener(new submitListener(this.a.getCourses(),this.a));
+                newPanel.add(submitButton);
+                this.p.removeAll();
+                this.p.revalidate();
+                this.p.repaint();
+                this.a.display.removeAll();
+                this.a.display.revalidate();
+                this.a.display.repaint();
+                this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
+                this.a.display.add(new JScrollPane(this.a.getCourses(0)), BorderLayout.CENTER);
+                this.a.display.add(new JScrollPane(newPanel), BorderLayout.EAST);
+            }
+            else{
+                JComboBox cMenu = new JComboBox(menuList);
+                cMenu.addActionListener(new menuListener(this.a, this.optionString));
+                this.p.removeAll();
+                this.p.revalidate();
+                this.p.repaint();
+                this.p.add(cMenu);
+                this.a.display.removeAll();
+                this.a.display.revalidate();
+                this.a.display.repaint();
+                this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
+                this.a.display.add(new JScrollPane(this.a.getCourses(0)), BorderLayout.CENTER);
+            }
+        }
+    }
+    /**
+     Searches the database according to the choices selected
+     */
+    class submitListener implements ActionListener{
+        private AdvancedSearch aSearch;
+        private JPanel courseResultsPanel;
+        public submitListener(JPanel courseResultsPanel, AdvancedSearch aSearch){
+            this.courseResultsPanel = courseResultsPanel;
+            this.aSearch = aSearch;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            ArrayList<Course> result = new ArrayList<Course>();
+            ArrayList<String> keyArray = new ArrayList<String>();
+            for(JCheckBox check: this.aSearch.geChecksList){
+                if(check.isSelected()){
+                    keyArray.add(this.aSearch.geChecks.get(check));
+                }
+            }
+            result = getResults(keyArray.get(0),"General Education");
+            //TODO: Database. New function that takes String array of ges
+            //result = getResults(keyArray, "General Education");
+            this.courseResultsPanel.removeAll();
+            this.courseResultsPanel.revalidate();
+            this.courseResultsPanel.repaint();
+            this.courseResultsPanel.add(new JScrollPane(getCourses(result)));
         }
     }
     /**
@@ -444,13 +525,12 @@ public class AdvancedSearch{
             this.a.display.removeAll();
             this.a.display.revalidate();
             this.a.display.repaint();
-            this.a.display.add(this.a.getControl(), BorderLayout.NORTH);
+            this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
             this.a.display.add(new JScrollPane(getCourses(result)), BorderLayout.CENTER);
             this.a.scrollableDisplay.removeAll();
             this.a.scrollableDisplay.revalidate();
             this.a.scrollableDisplay.repaint();
             this.a.scrollableDisplay.add(this.a.display);
-            
         }
     }
     /**

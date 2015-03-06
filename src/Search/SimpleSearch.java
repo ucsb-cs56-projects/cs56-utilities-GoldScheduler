@@ -13,41 +13,14 @@ import connection.courseInfo.CourseConnection;
  from a textbar and searches the database for matches.
  */
 public class SimpleSearch{
-    /**
-     Main display including all components
-     */
     private JPanel display;
-    /**
-     ScrollPane including the main display
-     */
     private JScrollPane scrollableDisplay;
-    /**
-     Control panel with a textField for users to enter a searchword
-     */
     private JPanel control;
-    /**
-     The panel that displays the courses returned from the search
-     */
     private JPanel cDisplay;
-    /**
-     The textfield used for user input
-     */
     private JTextField searchField;
-    /**
-     Button to call the search function
-     */
     private JButton searchButton;
-    /**
-     The user's schedule, which will be used to add courses to
-     */
     private Scheduler schedule;
-    /**
-     Blue
-     */
     private final Color darkerColor = new Color(165,188,238);
-    /**
-     Light Blue
-     */
     private final Color lighterColor = new Color(201,212,237);
     //CONSTRUCTORS
     public SimpleSearch(){
