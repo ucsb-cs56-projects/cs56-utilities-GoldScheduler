@@ -7,14 +7,9 @@ import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
 import connection.userInfo.*;
-
 //import java.awt.ItemSelectable;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
-//TODOs:
-//1. Check for other restrictions...
-//2. Error not a valid day
-//3. Error for time slot
 /**
  *This class should just take care of adding and removing courses to and from a schedule
  *It will also has a panel instance that will be used for displayins
@@ -83,9 +78,32 @@ public class Scheduler {
                 conflicts++;
                 return false;
             }
+            else if(Scheduler.timeSlot(c.getLect().timeStart)==0||
+                    Scheduler.timeSlot(c.getLect().timeEnd)==0||
+                    Scheduler.timeSlot(c.getSect().timeStart)==0||
+                    Scheduler.timeSlot(c.getSect().timeEnd)==0){
+                CourseConflict myConflict = new CourseConflict(c, d, 3);
+                cantAdd.add(myConflict);
+                conflicts++;
+                return false;
+            }
+            else if(Scheduler.daySlot(c.getSect().days[0])==0){
+                CourseConflict myConflict = new CourseConflict(c, d, 4);
+                cantAdd.add(myConflict);
+                conflicts++;
+                return false;
+            }
+            for(char day: c.getLect().days){
+                if(Scheduler.daySlot(day)==0){
+                     CourseConflict myConflict = new CourseConflict(c, d, 4);
+                     cantAdd.add(myConflict);
+                     conflicts++;
+                     return false;
+                }
+            }
         }
-        /*No time conflict
-         *Different course id
+        /* No time conflict
+           Different course id
          */
         courseList.add(c);
         this.schedulerGUI();
@@ -124,7 +142,6 @@ public class Scheduler {
     public void setMain(){
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        
         mainPanel.add(this.getPanel(), BorderLayout.WEST);
         mainPanel.add(this.getControl(), BorderLayout.EAST);
         this.mainPanel = mainPanel;
@@ -157,7 +174,6 @@ public class Scheduler {
                 panel.add(panelHolder[m][n]);
             }
         }
-        
         JLabel holder = new JLabel();
         String temp;
         //Make a label for times 8:00 AM-10:00 PM at 30 minute intervals
@@ -454,7 +470,6 @@ public class Scheduler {
                 cMenu.setSelectedIndex(6);
             }
             cMenu.addActionListener(new menuListener(g,this));
-            
             panelHolder[slot][0].add(title);
             panelHolder[slot][1].add(cMenu);
             JButton view = new JButton("View");
@@ -607,7 +622,6 @@ public class Scheduler {
         }
     }
 	class saveListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 		//TODO: write code that saves course IDs for the user
@@ -813,9 +827,6 @@ public class Scheduler {
                 slot = 0;
                 break;
         }
-        if(slot==0){
-            //TODO: Error not a valid day
-        }
         return slot;
     }
     /**
@@ -916,9 +927,6 @@ public class Scheduler {
             default:
                 slot=0;
                 break;
-        }
-        if(slot==0){
-            //TODO: ERROR
         }
         return slot;
     }

@@ -1,5 +1,4 @@
 package GUI;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -8,25 +7,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
-
 /**
  * Change User Info Panel
  * @author Wesley Pollek
  * @author Forrest Sun
  * @version Feb 12 2015
  */
-
 public class UserInfo extends JPanel{
-	
 	static private UserInfo hahaha;
-	
 	static {
 		try {
 			hahaha = new UserInfo();
@@ -36,50 +29,39 @@ public class UserInfo extends JPanel{
 			throw new RuntimeException(e);
 		}
 	}
-	
-    JTextField username;
-    JLabel userLabel;
-    JLabel userWrong;
-    JPasswordField password;
-    JLabel passLabel;
-    JLabel passWrong;
-    JPasswordField password2;
-    JLabel passLabel2;
-    JLabel pass2Wrong;
-    JPasswordField password1;
-    JLabel passLabel1;
-    JLabel pass1Wrong;
-    JTextField email;
-    JLabel emailLabel;
-    JLabel emailWrong;
-
-    JLabel majorLabel;
-
-    JButton changeButton;
-    JButton backButton;
-    JComboBox<String> majorList;
-    
-    JLabel update;
-    
+    private JTextField username;
+    private JLabel userLabel;
+    private JLabel userWrong;
+    private JPasswordField password;
+    private JLabel passLabel;
+    private JLabel passWrong;
+    private JPasswordField password2;
+    private JLabel passLabel2;
+    private JLabel pass2Wrong;
+    private JPasswordField password1;
+    private JLabel passLabel1;
+    private JLabel pass1Wrong;
+    private JTextField email;
+    private JLabel emailLabel;
+    private JLabel emailWrong;
+    private JLabel majorLabel;
+    private JButton changeButton;
+    private JButton backButton;
+    private JComboBox<String> majorList;
+    private JLabel update;
     private User u;
-    
     /**
      * Constructor
      * @throws SQLException 
      */
     private UserInfo() throws SQLException {
-    	
     	update = new JLabel();
     	update.setForeground(Color.RED);
-    	
     	username= new JTextField(20);
-
     	username.setEditable(false);
         userLabel= new JLabel("Username:");
         userWrong = new JLabel();
         userWrong.setForeground(Color.RED);
-
-        
         password= new JPasswordField(20);
         passLabel= new JLabel("Enter Password:");
         passWrong = new JLabel("<html> *You must enter password <br>to update your information</html>");
@@ -110,25 +92,18 @@ public class UserInfo extends JPanel{
     			}
     		}
         });
-        
         backButton = new JButton ("Back");
         backButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO goto mainpage
 			}
-        	
         });
-        
         majorLabel = new JLabel("Select Major:");        
         String[] majorStrings = CourseConnection.getMajor();
         majorList = new JComboBox<String>(majorStrings);
         go();
     }
-    
-    
-    
     void init() throws SQLException {
     	password.setText("");
     	password1.setText("");
@@ -137,12 +112,9 @@ public class UserInfo extends JPanel{
     	pass2Wrong.setText("");
     	emailWrong.setText("");
     	userWrong.setText("");
-    	
     	if (u!=null) {
-
 	    	username.setText(u.getUsername());
 	    	passWrong.setText("<html> *You must enter password <br>to update your information</html>");
-	    	
 	    	email.setText(u.getEmail());
 	    	majorList.setSelectedItem(u.getMajor());
     	} else {
@@ -151,34 +123,25 @@ public class UserInfo extends JPanel{
     		majorList.setSelectedIndex(0);
     	}
     }
-    
     void init(User user) throws SQLException {
     	u = user;
     	init();
     }
-    
     void setUser(User u) {
     	this.u=u;
     }
-    
     public static UserInfo getUserPanel() {
     	return hahaha;
     }
-        
-    
     /**
      * Validator Check all the information in the TextArea
      * Create account if no error
      * @throws SQLException 
      */
     public void Validator() throws SQLException {
-    	
     	update.setText("");
-
     	boolean validInfo = true;
-    	
     	String passinfo = new String(password.getPassword());
-    	
     	if (passinfo.equals("")) {passWrong.setText("<html> *You must enter password <br>to update your information</html>"); validInfo=false;}
     	else if (!passinfo.equals(u.getPassword())) { passWrong.setText("*Wrong password"); validInfo=false;}
     	else passWrong.setText("");
@@ -193,37 +156,29 @@ public class UserInfo extends JPanel{
 	    
 	    String emailInfo = email.getText();
 	    if (emailInfo.equals("") || emailInfo.equals(u.getEmail())) emailWrong.setText("");
-
 	    else {
 	    	//TODO (or not) email checking. Now only allow a-z A-Z 0-9 _ - .
 		    Pattern pattern = 
 		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\Z");
-
 		    Matcher matcher = 
 		    pattern.matcher(emailInfo);
-		    
 	    	if (!matcher.find()) {emailWrong.setText("Email format: example@example.com"); validInfo=false;}
 	    	else if (UsersConnection.getIdByEmail(emailInfo) > 0) emailWrong.setText("Email in use");
 	    	else emailWrong.setText("");
-	    	
 	    }
 	    if (validInfo) {
-
 	    	if (!emailInfo.equals("") && !emailInfo.equals(u.getEmail())) u.setEmail(emailInfo);
 	    	if (!passinfo1.equals("")) u.setPassword(passinfo1);
 	    	if (!majorList.getSelectedItem().equals(u.getMajor())) u.setMajor((String) majorList.getSelectedItem());
-	    	
 	    	init();
 	    	update.setText("Your information is up-dated");
 	    	passWrong.setText("");
 	    }
     }
     /** Test fucntion
-     *       
      * @param args
      * @throws SQLException
      */
-     
 	public static void main (String[] args) throws SQLException{
 	    JFrame window = new JFrame();
 		UserInfo userpanel = getUserPanel();
@@ -232,14 +187,11 @@ public class UserInfo extends JPanel{
 		window.setSize(910,650);
 	    window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
 		window.setVisible(true);
-
 	}
     /**
      * The graphic part
      */
     public void go(){
-		
-		
 		GridLayout innergrid = new GridLayout(8, 5);
 		innergrid.preferredLayoutSize(this);
 		JPanel innerpanel = new JPanel();
@@ -255,7 +207,6 @@ public class UserInfo extends JPanel{
 			innerpanel.add(spot[m][k]);
 		    }
 		}
-
 		this.add(innerpanel);
 		innergrid.setVgap(25);
 		spot[0][0].add(update);
@@ -275,22 +226,14 @@ public class UserInfo extends JPanel{
 		spot[4][0].add(emailLabel);
 		spot[4][1].add(email);
 		spot[4][2].add(emailWrong);
-		
-		
+				
 		spot[5][0].add(majorLabel);
 		spot[5][1].add(majorList);
 
-
-		
-		
 		spot[6][0].add(passLabel);
 		spot[6][1].add(password);
 		spot[6][2].add(passWrong);
 		
 		spot[7][1].add(changeButton);
-
-		
-
-
     }
 }

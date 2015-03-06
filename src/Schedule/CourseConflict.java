@@ -5,27 +5,22 @@ import javax.swing.*;
 import java.util.ArrayList;
 import Course.Course;
 import Course.Lecture;
-
 /**
- A class to keep track of course conflicts and why the course could not be added
- Eg. Reason and Course that it conflicted with
+ * A class to keep track of course conflicts and why the course could not be added
+ * Eg. Reason and Course that it conflicted with
  */
 public class CourseConflict{
     private Course courseInfo;
     private int error;
     private Course correspondingCourse;
-    
     public CourseConflict(){
         this.error = 0;
     }
-    
     public CourseConflict(Course courseInfo, Course correspondingCourse, int error){
         this.courseInfo = courseInfo;
         this.correspondingCourse = correspondingCourse;
         this.error = error;
     }
-    
-    
     /**
      @param courseInfo the Course that conflicts with the schedule
      Sets the courseInfo to the course that could not be added
@@ -66,7 +61,6 @@ public class CourseConflict{
     public int getError(){
         return this.error;
     }
-    
     /**
      @return String stating why the course could not be added
      */
@@ -77,6 +71,12 @@ public class CourseConflict{
         }
         if(this.error == 2){
             s = s + "Already have: " + this.correspondingCourse.courseID;
+        }
+        if(this.error == 3){
+            s = s + "Problem with the course time.";
+        }
+        if(this.error == 4){
+            s = s + "Problem with day the course is offered.";
         }
         return s;
     }

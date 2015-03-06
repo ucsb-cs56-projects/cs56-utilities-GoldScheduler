@@ -4,14 +4,11 @@ import java.util.HashMap;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import javax.swing.ButtonGroup;
 import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
-//TODOs:
-//1. Loading screen while searching
 /**
  This class will allow the user to select from: Department, Professor, or General Education
  and indicate from a combobox, populated by category, what they are searching for.
@@ -550,8 +547,3 @@ public class AdvancedSearch{
         }
     }
 }
-
-
-
-
-   

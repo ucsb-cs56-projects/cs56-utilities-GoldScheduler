@@ -1,6 +1,5 @@
 package Course;
 import java.awt.Color;
-
 /**
 * Lecture will include all of the information that we could want to change
 * If that's the case, we could just create a new instance of Lecture, so all of these
@@ -16,17 +15,16 @@ public class Lecture{
     public final String courseCode;
     public Color col;
     public final int id;
-    
     /**
-			*@param id Lecture Integer id corresponding to Golder's database
-			*@param professor String of the name of the teacher of this lecture
-			*@param timeStart Integer representation of the starting time
-			*@param timeEnd Integer representation of the ending time
-			*@param days char array of the days of the week this lecture occurs
-			*@param location String that tells the building and room # of the lecture
-			*@param courseCode String representation of the courseCode
-			*@param col Color that the lecture will be viewed as in a user's schedule
-			*/
+     *@param id Lecture Integer id corresponding to Golder's database
+     *@param professor String of the name of the teacher of this lecture
+     *@param timeStart Integer representation of the starting time
+     *@param timeEnd Integer representation of the ending time
+     *@param days char array of the days of the week this lecture occurs
+     *@param location String that tells the building and room # of the lecture
+     *@param courseCode String representation of the courseCode
+     *@param col Color that the lecture will be viewed as in a user's schedule
+    */
     public Lecture(int id, String professor, int timeStart, int timeEnd, char[] days, String location, String courseCode, Color col){
     		this.id = id;
         this.professor = professor;
@@ -75,12 +73,12 @@ public class Lecture{
             return (this.timeEnd/100)-12 + ":" + min + " PM";
         }
     }
-    
-    
+    /**
+     @return A string that represents the time in an easy-to-read manner
+     */
     public String timeString(){
         return this.timeStartString() + " - " + this.timeEndString();
     }
-    
     /**
      @return The day list as a string
      */
@@ -110,10 +108,9 @@ public class Lecture{
         }
         return s;
     }
-    
 		/**
-			*@return The day character as a string
-		  */
+         *@return The day character as a string
+         */
     public String dayStringShort(){
         String s = "";
         for(int i=0; i<days.length; i++){
@@ -140,5 +137,4 @@ public class Lecture{
         }
         return s;
     }
-
 }

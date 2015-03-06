@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 import java.util.ArrayList;
 /**
  *Course will just store all the data retrieved from the database, so the program doesn't
@@ -26,20 +25,18 @@ public class Course{
     private Lecture lectInfo;
     private Lecture sectInfo;
     private JButton view;
-    
 	/**
-		*@param courseID String of courseID according to the UCSB course catalog
-		*@param title String of shorter title of the course e.g. CMPSC 8
-		*@param fullTitle String of full title of course e.g. Computer Science Project Course
-		*@param dept String of department that the course belongs to
-		*@param units Integer amount of units the course counts for
-		*@param preReqs String array of prerequisites for the course
-		*@param restrictions String array of restrictions of the course
-		*@param geFulfill String array of the G.E. requirements that this course fulfills
-		*@param lectInfo Lecture object that contains information about the course lecture
-		*@param sectInfo Lecture object that contains information about the course section
-		*/
-    
+     *@param courseID String of courseID according to the UCSB course catalog
+     *@param title String of shorter title of the course e.g. CMPSC 8
+     *@param fullTitle String of full title of course e.g. Computer Science Project Course
+     *@param dept String of department that the course belongs to
+     *@param units Integer amount of units the course counts for
+     *@param preReqs String array of prerequisites for the course
+     *@param restrictions String array of restrictions of the course
+     *@param geFulfill String array of the G.E. requirements that this course fulfills
+     *@param lectInfo Lecture object that contains information about the course lecture
+     *@param sectInfo Lecture object that contains information about the course section
+     */
     public Course(String courseID, String title, String fullTitle, String dept, String units,
                   Course[] preReqs, String[] restrictions, String[] geFulfill, Lecture lectInfo,
                   Lecture sectInfo){
@@ -55,27 +52,41 @@ public class Course{
         this.sectInfo = sectInfo;
     }
     //Methods for only private member variable
+    /**
+     * @return the Lecture
+     */
     public Lecture getLect(){
         return this.lectInfo;
     }
+    /**
+     * @param the new Lecture
+     */
     public void setLect(Lecture lectInfo){
         this.lectInfo = lectInfo;
     }
+    /**
+     * @return the Section represented as a lecture object
+     */
     public Lecture getSect(){
         return this.sectInfo;
     }
+    /**
+     * @param the new Section
+     */
     public void setSect(Lecture sectInfo){
         this.sectInfo = sectInfo;
     }
-    
 	/**
-		* sets the color of the course as seen when the user views his/her schedule
-		*@param c Desired color to use for the course
-		*/
+     * sets the color of the course as seen when the user views his/her schedule
+     *@param c Desired color to use for the course
+    */
     public void setColor(Color c){
         lectInfo.col = c;
         sectInfo.col = c;
     }
+    /**
+     * @return the button to view a particular course
+     */
     public JButton getView(){
         return this.view;
     }
@@ -98,7 +109,6 @@ public class Course{
                 panelHolder[m][n].setBackground(myColor);
             }
         }
-        
         JLabel t = new JLabel("Title: ");
         JLabel ft = new JLabel("Full Title: ");
         JLabel u = new JLabel("Units: ");
@@ -119,10 +129,7 @@ public class Course{
         l.setFont(boldFont);
         sectTime.setFont(boldFont);
         sectLoc.setFont(boldFont);
-        
-        
         String myUnits = "" + this.units;
-        
         JLabel code = new JLabel(this.courseID);
         JLabel title = new JLabel(this.title);
         JLabel fullTitle = new JLabel(this.fullTitle);
@@ -133,8 +140,6 @@ public class Course{
         JLabel location = new JLabel(this.lectInfo.location);
         JLabel sTime = new JLabel(this.sectInfo.timeStartString()+ " - " + this.sectInfo.timeEndString());
         JLabel sLoc = new JLabel(this.sectInfo.location);
-
-        
         panelHolder[0][0].add(t, BorderLayout.EAST);
         panelHolder[0][1].add(title, BorderLayout.WEST);
         panelHolder[1][0].add(ft, BorderLayout.EAST);
@@ -153,15 +158,12 @@ public class Course{
         panelHolder[6][1].add(sTime, BorderLayout.WEST);
         //panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
         //panelHolder[7][1].add(sLoc, BorderLayout.WEST);
-        
-        
         JLabel p = new JLabel("PreRequisites: ");
         JLabel g = new JLabel("May apply to GE Requirements: ");
         JLabel r = new JLabel("Restrictions: ");
         p.setFont(boldFont);
         g.setFont(boldFont);
         r.setFont(boldFont);
-        
         int newCount = 7;
         JLabel temp;
         panelHolder[newCount][0].add(p, BorderLayout.EAST);
@@ -214,6 +216,4 @@ public class Course{
         }
         return panel;
     }
-    
 }
-

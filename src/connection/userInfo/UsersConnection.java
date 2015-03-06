@@ -1,12 +1,9 @@
 package connection.userInfo;
-
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import connection.GolderConnection;
 import Course.*;
-
 /**
  * Database Connection For User Information
  * Registers and retrieves user info
@@ -15,11 +12,7 @@ import Course.*;
  * @version Feb 10 2015
  *
  */
-
 public class UsersConnection extends GolderConnection{
-	
-	
-	
 	/**
 	 * Registration for users
 	 * @param username
@@ -39,17 +32,10 @@ public class UsersConnection extends GolderConnection{
 			major = "null";
 		else
 			major = "'" + major + '\'';
-
-			
-		stmt.executeUpdate(String.format("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);", 
+		stmt.executeUpdate(String.format("INSERT INTO users (user_name,user_password,email_address,major) VALUES ('%s','%s',%s,%s);",
 					username, password, email, major));
-
-
-		
-		
 		return getID(username,password);
-	}	
-	
+	}
 	/**
 	 * Login with username and password
 	 * @param username
@@ -61,9 +47,6 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static int getID(String username, String password) throws SQLException {
 		int id = 0;
-		
-
-			
 			if (stmt.execute(String.format("SELECT ID, user_password FROM `users` WHERE user_name='%s';", username))) {
 		        rs = stmt.getResultSet();
 		        if (rs.next()) {
@@ -73,13 +56,8 @@ public class UsersConnection extends GolderConnection{
 		        	return -1; //no username
 		        }
 		    }
-	
-		
-		
 		return id;
-		
 	}
-	
 	/**
 	 * Check if email is used
 	 * @param email
@@ -89,23 +67,15 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static int getIdByEmail(String email) throws SQLException {
 		int id = 0;
-		
-
-			
 			if (stmt.execute(String.format("SELECT ID FROM `users` WHERE email_address='%s';", email))) {
 		        rs = stmt.getResultSet();
 		        if (rs.next()) 
 			        return rs.getInt("ID");
 		        else
 		        	return -1; //no username
-		        
 		    }
-
-
-		
 		return id;
 	}
-	
 	/**
 	 * get User Infomation
 	 * @param ID User ID
@@ -113,23 +83,18 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static User getInfo(int ID) throws SQLException{
-		
 		User u = null;
-		
-
-			
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE ID='%s';", ID))) {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
 			        return null;
 		        rs.next();
-		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
+		        u = new User(rs.getString("user_name"), rs.getString("user_password"),
+                             rs.getString("email_address"), rs.getString("major"),
+                             rs.getInt("ID"));
 		    }
-
-
 		return u;
 	}
-	
 	/**
 	 * Used to reset the password
 	 * @param userName
@@ -139,11 +104,7 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException
 	 */
 	public static User getInfo(String userName, String email, int t) throws SQLException{
-		
 		User u = null;
-		
-
-			
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND email_address='%s';", userName, email))) {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
@@ -151,12 +112,8 @@ public class UsersConnection extends GolderConnection{
 		        rs.next();
 		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
 		    }
-
-
 		return u;
 	}
-	
-	
 	/**
 	 * Used to get the user with username and password
 	 * @param userName
@@ -165,9 +122,7 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException
 	 */
 	public static User getInfo(String userName, String password) throws SQLException{
-		
 		User u = null;
-			
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND user_password='%s';", userName, password))) {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
@@ -175,11 +130,8 @@ public class UsersConnection extends GolderConnection{
 		        rs.next();
 		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
 		    }
-
-
 		return u;
-	}	
-	
+	}
 	/**
 	 * update password
 	 * @param ID
@@ -187,12 +139,9 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static void setPassword(int ID, String pw) throws SQLException {
-		
-
-		stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",pw,ID));
-
+		stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",
+                                         pw,ID));
 	}
-	
 	/**
 	 * update email
 	 * @param ID
@@ -200,12 +149,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static void setEmail(int ID, String email) throws SQLException {
-
 		stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
-
-		
 	}
-	
 	/**
 	 * update major
 	 * @param ID
@@ -213,19 +158,14 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static void setMajor(int ID, String mj) throws SQLException  {
-
 		stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
-
 	}
-	
 	/**
 	 * Save the User Data
 	 * @param u
 	 * @param c
 	 */
-	//TODO
 	public static void saveCourse(User u, Course c) throws SQLException {
-		
 		int userId = u.getID();
 		int lectureID = c.getLect().id;
 		int lectureColor = c.getLect().col.getRGB();
@@ -233,97 +173,52 @@ public class UsersConnection extends GolderConnection{
 		int sectionColor = c.getSect().col.getRGB();
 			stmt.executeUpdate(String.format("INSERT INTO `student_schedule` (user_id,lecture_id,lecture_color,section_id,section_color) VALUES (%s,%s,%s,%s,%s);", 
 					userId, lectureID, lectureColor, sectionID,sectionColor));
-		
 	}
-	
 	/**
-	 * 
 	 * @param u
 	 * @param c
 	 * @throws SQLException
 	 */
-	
 	public static void deleteCourse(User u, Course c) throws SQLException {
-		
-		int userId = u.getID();
+        int userId = u.getID();
 		int lectureID = c.getLect().id;
 		int sectionID = c.getSect().id;
-		
 		try {
 			stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s AND lecture_id=%s AND section_id=%s;", 
 					userId, lectureID, sectionID));
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-		
 	}
-	
 	/**
-	 * 
 	 * @param u
 	 * @return An ArrayList containing all the Courses in the user's schedule
 	 * @throws SQLException
 	 */
-	
 	public static ArrayList<Course> getSchedule(User u) throws SQLException {
 		ArrayList<Course> ca = new ArrayList<Course>();
 		if (stmt.execute(String.format("SELECT * FROM `student_schedule` WHERE user_id = %s;", u.getID()))) {
-
 			rs = stmt.getResultSet();
 			rs.last();
 			int [][] m = new int[rs.getRow()][4];
 			rs.beforeFirst();
-			
 			for  (int i = 0; i < m.length; i++) {
 				rs.next();
 				m[i][0] = rs.getInt("lecture_id");
 				m[i][1] = rs.getInt("section_id");
 				m[i][2] = rs.getInt("lecture_color");
 				m[i][3] = rs.getInt("section_color");
-
         	}
 			for  (int i = 0; i < m.length; i++) 
 				ca.add(connection.courseInfo.CourseConnection.getCourse(m[i][0],m[i][1],m[i][2],m[i][3]));
 		}
 		return ca;
 	}
-	
 	/**
-	 * 
 	 * @param u
 	 * @throws SQLException
 	 */
-	
 	public static void deleteSchedule(User u) throws SQLException {
 		stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s;", u.getID()));
 	}
-	
-	/*
-	 * test 
-	 
-	
-	public static void main(String[] args) throws SQLException {
-		User u = getInfo(1);
-		
-		ArrayList<Course> a = connection.courseInfo.CourseConnection.SearchFullTitle("computer");
-		//System.out.println(a.size());
-		for (Course c : a)
-			saveCourse(u,c);
-		
-		
-		
-		ArrayList<Course> ca = getSchedule(u);
-		//System.out.println(ca.size());
-		for (Course c : ca) {
-			System.out.println(c.courseID);
-		}
-		
-		deleteSchedule(u);
-		
-		
-	}
-	*/
-	
-	 
-
 }

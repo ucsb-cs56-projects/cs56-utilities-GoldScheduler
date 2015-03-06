@@ -1,21 +1,13 @@
 package Schedule;
-//import java.awt.Container;
-//import java.awt.FlowLayout;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-
-//import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import Course.Course;
 import Course.Lecture;
-
 /**
  *This class will display schedule. Mostly just used for testing
  */
-
 public class ScheduleGUI{
     private Scheduler s;
     public static void main(String[] args){
@@ -23,18 +15,14 @@ public class ScheduleGUI{
         JFrame frame = new JFrame();
         frame. setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         frame. setSize(910,650);
-        
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        
         //Make course c
         char [] a = {'M','W'};
         Course [] b = {};
         String [] d = {};
-        
         char[] sectDay = {'T'};
         char[] sectDay2 = {'R'};
-        
         Lecture newSect = new Lecture(0, "PREBLE, E", 1800, 1850, sectDay, "PHELP 3525", "00000", new Color(129,190,247));
         Lecture newSect1 = new Lecture(0, "PREBLE, E", 1100, 1150, sectDay, "PHELP 3525", "00000", new Color(73,90,252));
         Lecture newSect2 = new Lecture(0, "PREBLE, E", 900, 950, sectDay, "PHELP 3525", "00000", new Color(169,226,195));
@@ -56,14 +44,12 @@ public class ScheduleGUI{
         Lecture v = new Lecture(0, "RALEY, M", 1730, 1845, n, "BRDA 1610", "19372", new Color(129,190,247));
         Course w = new Course("ENGL 10", "INTRO TO LIT STUDY", "Introduction to Literary Study",
                               "ENGL", "4.0", b, d, engl, v, newSect3);
-        
         //Make schedule
         Scheduler s = new Scheduler();
         //Add courses
         s.add(c);
         s.add(r);
         s.add(w);
-        
         //Display it
         mainPanel.add(s.getMain(), BorderLayout.SOUTH);
         frame.add(mainPanel);

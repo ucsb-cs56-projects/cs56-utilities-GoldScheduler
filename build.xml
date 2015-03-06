@@ -10,7 +10,6 @@
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
 
-
   <target name="init" description="compile">
 	<mkdir dir="build" />
   </target>
@@ -146,13 +145,13 @@
 	</java>		
   </target>
 
-<target name="compileCourse" depends="init" description="compile Course code">
+ <target name="compileCourse" depends="init" description="compile Course code">
     <javac srcdir="src/Course" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
         <classpath>
             <pathelement location="build"/>
         </classpath>
     </javac>
-</target>
+ </target>
 
   <target name="compileSchedule" depends="init, compileCourse" description="compile Schedule code">
       <javac srcdir="src/Schedule" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
@@ -163,7 +162,6 @@
           </classpath>		
       </javac>		
   </target>
-  
   
   <target name="runScheduleGui" depends="compileSchedule" description="run GUI for Scheduler class">
       <java fork="true" classname="Schedule.ScheduleGUI" classpath="build">
@@ -207,26 +205,5 @@
  <target name="clean" description="delete unnecessary files and directories">
     <delete dir="build" quiet="true" />
   </target>
-
-
-<target name="testSchedule" depends="compileSchedule" description="Runs all files ending in Test.java">		
-    		
-    <junit haltonerror="no" haltonfailure="no">		
-        <classpath>		
-            <pathelement location="lib/junit-4.10.jar"/>		
-            <pathelement location="build"/>		
-        </classpath>		
-        		
-        <batchtest fork="yes">		
-            <fileset dir="src/Schedule">		
-                <!-- this will pick up every class with a name ending in Test -->		
-                <include name="*Test.java"/>		
-            </fileset>		
-        </batchtest>		
-        		
-        <formatter type="plain" usefile="false" />		
-        		
-    </junit>		
-</target>
  
 </project>

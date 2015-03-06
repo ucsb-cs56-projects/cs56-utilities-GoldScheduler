@@ -1,26 +1,20 @@
 package GUI;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.*;
-
 import connection.courseInfo.CourseConnection;
 import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
-
 /**
  * Registration Panel
  * @author Wesley Pollek
  * @author Forrest Sun
  * @version Feb 12 2015
  */
-
 public class CreateAccount extends JPanel{
-	
 	JTextField username;
     JLabel userLabel;
     JLabel userWrong;
@@ -33,13 +27,10 @@ public class CreateAccount extends JPanel{
     JTextField email;
     JLabel emailLabel;
     JLabel emailWrong;
-
     JLabel majorLabel;
-
     JButton createButton;
     JButton backButton;
     JComboBox<String> majorList;
-    
     /**
      * Constructor
      * @throws SQLException 
@@ -51,7 +42,6 @@ public class CreateAccount extends JPanel{
         userWrong = new JLabel("*");
         userWrong.setForeground(Color.RED);
 
-        
         password= new JPasswordField(20);
         password.addKeyListener(new KeyValidator());
         passLabel= new JLabel("Enter Password:");
@@ -80,16 +70,11 @@ public class CreateAccount extends JPanel{
 				Golder.goToLogin();
 			}
         });
-        
         majorLabel = new JLabel("Select Major:");
-        
         String[] majorStrings = CourseConnection.getMajor();
-
         majorList = new JComboBox<String>(majorStrings);
-
         go();
     }
-    
     /**
      * Validate when hit enter
      * @author Forrest Sun
@@ -104,23 +89,18 @@ public class CreateAccount extends JPanel{
 					e1.printStackTrace();
 				}
         }
-    	
         public void keyTyped(KeyEvent e) {
             // Do something for the keyTyped event
         }
-        
         public void keyPressed(KeyEvent e) {
             // Do something for the keyPressed event
         }
-        
     }
-    
     /**
      * Validate when hit the button
      * @author Forrest Sun
      * @author Wesley Pollek
      */
-
     private class CreateButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -130,50 +110,39 @@ public class CreateAccount extends JPanel{
 			}
 		}
     }
-    
     /**
      * Validator Check all the information in the TextArea
      * Create account if no error
      * @throws SQLException 
      */
-    
     public void Validator() throws SQLException {
     	int tmp;
     	boolean validInfo = true;
     	String userinfo = username.getText();
     	String passinfo = new String(password.getPassword());
-    	
-    	
-    	
     	if (userinfo.equals("")) { userWrong.setText("*Please enter a valid username"); validInfo=false;}
     	else if ((tmp = UsersConnection.getID(userinfo, passinfo)) > 0 || tmp == -2) { userWrong.setText("*Username is in use"); validInfo=false;}
-    	else userWrong.setText("*"); 
-    	
+    	else userWrong.setText("*");
+        
 	    if (passinfo.length() < 4) { passWrong.setText("*Password must at least 4 charactor"); validInfo=false;}
 	    else passWrong.setText("*");
 	    
-	    String passinfo2 = new String(password2.getPassword());
-	    if (passinfo2.equals(passinfo)) pass2Wrong.setText("*");
+        String passinfo2 = new String(password2.getPassword());
+        if (passinfo2.equals(passinfo)) pass2Wrong.setText("*");
 	    else {pass2Wrong.setText("*Password does not match"); validInfo=false;}
 	    
 	    String emailInfo = email.getText();
 	    if (emailInfo.equals("")) emailWrong.setText("*");
-
 	    else {
 	    	//TODO (or not) email checking. Now only allow a-z A-Z 0-9 _ - .
 		    Pattern pattern = 
 		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\Z");
-
 		    Matcher matcher = 
 		    pattern.matcher(emailInfo);
-		    
 	    	if (!matcher.find()) {emailWrong.setText("Email format: example@example.com"); validInfo=false;}
 	    	else if (UsersConnection.getIdByEmail(emailInfo) > 0) emailWrong.setText("Email in use");
 	    	else emailWrong.setText("");
-	    	
 	    }
-	    
-
 	    if (validInfo) {
 	    	UsersConnection.Register(userinfo, passinfo, emailInfo, (String)majorList.getSelectedItem());
 	    	User u = connection.userInfo.UsersConnection.getInfo(userinfo,passinfo);
@@ -181,7 +150,6 @@ public class CreateAccount extends JPanel{
 	    	Golder.goToMain(u);
 	    }   
     }
-    
 	/**
 	  * Method that empties all of the text boxes
 	  */
@@ -192,7 +160,6 @@ public class CreateAccount extends JPanel{
     	email.setText("");
     	majorList.setSelectedIndex(0);
     }
-    
     /**
      * The graphic part
      */
@@ -240,8 +207,6 @@ public class CreateAccount extends JPanel{
 
 		spot[6][1].add(createButton);
 		spot[6][2].add(backButton);
-
 		rows[1].add(innerpanel);
-
     }
 }
