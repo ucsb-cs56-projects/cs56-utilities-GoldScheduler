@@ -113,6 +113,12 @@ public class Scheduler {
         return this.mainPanel;
     }
     /**
+     @return this returns the main panel that holds both the control and the schedule panels
+     */
+    public JScrollPane getScrollMain(){
+        return new JScrollPane(this.getMain());
+    }
+    /**
      Updates the main panel, so the display reflects current status. Simply holds both the control and schedule panels
      */
     public void setMain(){
@@ -484,7 +490,7 @@ public class Scheduler {
         Color darkerColor = new Color(161,161,161);
         Color lighterColor = new Color(181,181,181);
         JPanel courses = new JPanel();
-        courses.setPreferredSize(new Dimension(500,575));
+        courses.setLayout(new BoxLayout(courses, BoxLayout.Y_AXIS));
         courses.setBackground(darkerColor);
         ArrayList<CourseConflict> courseList = this.cantAdd;
         int numResults = courseList.size();
@@ -501,7 +507,7 @@ public class Scheduler {
             Lecture thisLecture = c.getLect();
             Lecture thisSection = c.getSect();
             JPanel coursePanel = new JPanel();
-            coursePanel.setPreferredSize(new Dimension(910,125));
+            coursePanel.setPreferredSize(new Dimension(750,125));
             int rows = 3;
             int columns = 4;
             rows++;
@@ -683,7 +689,7 @@ public class Scheduler {
             this.sch1.mainPanel.removeAll();
             this.sch1.mainPanel.revalidate();
             this.sch1.mainPanel.repaint();
-            this.sch1.mainPanel.add(sch1.getConflict(), BorderLayout.NORTH);
+            this.sch1.mainPanel.add(new JScrollPane(sch1.getConflict()), BorderLayout.NORTH);
             JPanel buttonPanel = new JPanel();
             buttonPanel.setPreferredSize(new Dimension(900,33));
             JButton back = new JButton("Back");
@@ -754,23 +760,28 @@ public class Scheduler {
 	}
 	return false;
     }
+    /**
+     @param lect1
+     @param lect2
+     @return if the two Lecture objects overlap
+     */
     public static boolean timeConflictHelper(Lecture lect1, Lecture lect2){
 	if(lect1.timeStart<=lect2.timeStart){
             //Check if they start at the same time
             if(lect1.timeStart==lect2.timeStart)
                 return true;
             else{
-                //c starts first, so we need d to start at the same time or
-                //after c.timeEnd
-                if(lect1.timeStart>=lect2.timeEnd)
+                //lect1 starts first, so we need lect2 to start at the same time or
+                //after lect1.timeEnd
+                if(lect2.timeStart>=lect1.timeEnd)
                     return false;
                 else
                     return true;
             }
         }
-        //d starts before c
+        //lect1 starts before lect2
         else {
-            if(lect2.timeStart>=lect1.timeEnd)
+            if(lect1.timeStart>=lect2.timeEnd)
                 return false;
             else
                 return true;
