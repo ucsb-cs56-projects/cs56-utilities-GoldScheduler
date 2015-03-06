@@ -158,37 +158,29 @@ class Scraper(object):
 		for course in courseList: 
 			newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept)+1:]) + "/#sections"
 			self.resetURL(newURL)  
-		
+			units = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[5]/text()')
 			# for each course, enter a for-loop that runs 20 times
 			for i in range(2,23): # Will loop 20 times to get all lecture and section times
 				if i == 2:
-					courseTimes[course] = [] # Initialize the list that corresponds to each course
+					# Initialize the list that corresponds to each course
+					# Value is a list of 3 lists (times, professors, units)
+					courseTimes[course] = [[],[],[]]
+					courseTimes[course][2].append(units)  #Add the units only once
+					professor = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[4]/a[2]/text()')
+					courseTimes[course][1].append(professor)
 
 				time = self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[2]/text()') 
 				# gets the time at the current table cell
-				
+				if ("M" in time and "W" in time) or ("T" in time and "R" in time):
+					professor = self.getData('//*[@id="tab-sections"]/table/tr[' + str(i) + ']/td[4]/a[2]/text()')
+					courseTimes[course][1].append(professor)
+
 				if len(time) > 2: # Basically, "if the table cell is not empty"
 					time = time.replace(" ","") # Clean up the string and append to the courselist
 					time = time.replace("\\", "")
 					time = time.replace("n","")
-					courseTimes[course].append(time)
+					courseTimes[course][0].append(time)
 		return courseTimes
 
 
 	# xpath to units of course //*[@id="tab-sections"]/table/tr[2]/td[5]/text()
-	
-	def getCourseUnitsAndProfessors(self,courseList, dept):
-		courseUnitsAndProfessors = dict()
-		for course in courseList:
-			if course == "CMPSC 8":
-				courseUnitsAndProfessors[course] = "Costanzo, C*Buoni, M J, 4"
-			else:
-				newURL = "https://ninjacourses.com/explore/4/course/" + dept + "/" + (course[len(dept)+1:]) + "/#sections"
-				self.resetURL(newURL)
-				units = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[5]/text()')
-				professor = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[4]/a[2]/text()')
-				if professor == '[]':
-					professor = self.getData('//*[@id="tab-sections"]/table/tr[2]/td[4]/span/a[2]/text()')
-				courseUnitsAndProfessors[course] = professor + units
-			print course + " " + courseUnitsAndProfessors[course]
-		return courseUnitsAndProfessors
