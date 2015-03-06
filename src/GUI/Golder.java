@@ -15,7 +15,7 @@ public class Golder {
     static CreateAccount ca;
     static JPanel m;
     static MainPage mainp;
-    //static ForgotUser fu;
+    static ForgotUser fu;
     public static void main (String[] args) throws SQLException{
         window = new JFrame("GOLDER");
         window.setSize(910,670);
@@ -23,7 +23,7 @@ public class Golder {
         window.setVisible(true);
         l = new Login();
         ca = new CreateAccount();
-        //fu = new ForgotUser();
+        fu = new ForgotUser();
         goToLogin();
     }
     /**
@@ -56,8 +56,8 @@ public class Golder {
      */
     //TODO
     public static void goToForgot(){
-        //window.setContentPane(fu);
-        //fu.clean();
+        window.setContentPane(fu);
+        fu.clean();
         window.validate();
     }
 }
