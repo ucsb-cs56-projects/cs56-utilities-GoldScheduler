@@ -155,7 +155,7 @@ for line in ftime:
 		#print course_info
 		
 		
-		cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s'" % course_name)
+		cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s' AND instructor_name='%s'" % (course_name,instructor))
 		#print("SELECT id FROM `spring_15` WHERE course_name='%s;'" % course_name)
 		course_info = cursor.fetchall()
 		
