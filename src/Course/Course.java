@@ -211,7 +211,7 @@ public class Course{
 	for(int i = 0; i<this.geFulfill.length; i++){
 	    resultString+= this.geFulfill[i];
 	    if(i!=(this.geFulfill.length-1)){
-		resultString+=" ,";
+		resultString+=", ";
 	    }
 	}
 	return resultString;
@@ -221,7 +221,7 @@ public class Course{
 	for(int i = 0; i<this.restrictions.length; i++){
 	    resultString+= this.restrictions[i];
 	    if(i!=(this.restrictions.length-1)){
-		resultString+=" ,";
+		resultString+=", ";
 	    }
 	}
 	return resultString;
