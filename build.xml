@@ -162,16 +162,7 @@
           </classpath>		
       </javac>		
   </target>
-  
-  <target name="runScheduleGui" depends="compileSchedule" description="run GUI for Scheduler class">
-      <java fork="true" classname="Schedule.ScheduleGUI" classpath="build">
-          <classpath>
-              <pathelement location="build"/>
-			  <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-          </classpath>
-      </java>		
-  </target>
-  
+
   <target name="compileSearch" depends="init, compileSchedule, compileCourse, compileConnectUser" description="compile Search code">
       <javac srcdir="src/Search" destdir="build" debug="true" debuglevel="lines,vars,source" includeantruntime = "false">
           <classpath>
@@ -181,26 +172,6 @@
           </classpath>
       </javac>
   </target>
-  
-  <target name="runSearch" depends="init,compileSearch" description="run the Simple Search program">
-      <java fork="true" classname="Search.SearchGUI" classpath="build">
-          <classpath>
-              <pathelement location="build"/>
-			  <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-          </classpath>
-      </java>
-  </target>
-  
-  <target name="runASearch" depends="init,compileSearch" description="run the Advanced Search program">
-      <java fork="true" classname="Search.AdvancedSearchGUI" classpath="build">
-          <classpath>
-              <pathelement location="build"/>
-              <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
-          </classpath>
-      </java>
-  </target>
-
-
 
  <target name="clean" description="delete unnecessary files and directories">
     <delete dir="build" quiet="true" />
