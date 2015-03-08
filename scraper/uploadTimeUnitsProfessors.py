@@ -129,7 +129,11 @@ for line in f:
 		#print course_info
 		
 		
+<<<<<<< HEAD
 		#cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s' AND week=%s AND start_time=%s AND end_time=%s" % (course_name, week,st,et))
+=======
+		cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s' AND instructor_name='%s'" % (course_name,instructor))
+>>>>>>> 423b85923ebb9db6f4a93e0b49ef4db1aa79f3c7
 		#print("SELECT id FROM `spring_15` WHERE course_name='%s;'" % course_name)
 		#course_info = cursor.fetchall()
 		
