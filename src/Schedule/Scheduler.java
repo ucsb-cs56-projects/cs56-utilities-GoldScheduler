@@ -410,7 +410,7 @@ public class Scheduler {
             sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
             sectionLabelTime.setBackground(sect.col);
             sectionLabelTime.setOpaque(true);
-            row = this.timeSlot(sect.timeStart)-1;
+            row = this.timeSlot(sect.timeStart);
             column = this.daySlot(sect.days[0]);
             //Labels
             panelHolder[row][column].add(sectionLabelTitle);
