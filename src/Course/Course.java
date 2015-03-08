@@ -175,50 +175,66 @@ public class Course{
         panelHolder[newCount][0].setBackground(myColor);
         if(this.preReqs.length==0){
             temp = new JLabel("None");
-            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(myColor);
-            newCount++;
-        }
-        else{
-            for(Course c:this.preReqs){
-                temp = new JLabel(c.courseID);
-                panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(myColor);
-                newCount++;
-            }
-        }
+	}
+	else{
+	    temp = new JLabel(this.getPreReqString());
+	}
+        panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+        panelHolder[newCount][1].setBackground(myColor);
+        newCount++;
         panelHolder[newCount][0].add(g, BorderLayout.EAST);
         panelHolder[newCount][0].setBackground(myColor);
         if(this.geFulfill.length==0){
             temp = new JLabel("None");
-            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(myColor);
-            newCount++;
-        }
-        else{
-            for(String s:this.geFulfill){
-                temp = new JLabel(s);
-                panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(myColor);
-                newCount++;
-            }
-        }
+	}
+	else{
+	    temp = new JLabel(this.getGEString());
+	}
+        panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+        panelHolder[newCount][1].setBackground(myColor);
+        newCount++;
         panelHolder[newCount][0].add(r, BorderLayout.EAST);
         panelHolder[newCount][0].setBackground(myColor);
         if(this.restrictions.length==0){
             temp = new JLabel("None");
-            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(myColor);
-            newCount++;
-        }
-        else{
-            for(String s:this.restrictions){
-                temp = new JLabel(s);
-                panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(myColor);
-                newCount++;
-            }
-        }
+	}        
+	else{
+	    temp = new JLabel(this.getRestString());
+	}
+	panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+        panelHolder[newCount][1].setBackground(myColor);
+        newCount++;
         return panel;
+    }
+
+    public String getGEString(){
+	String resultString = "";
+	for(int i = 0; i<this.geFulfill.length; i++){
+	    resultString+= this.geFulfill[i];
+	    if(i!=(this.geFulfill.length-1)){
+		resultString+=" ,";
+	    }
+	}
+	return resultString;
+    }
+    public String getRestString(){
+	String resultString = "";
+	for(int i = 0; i<this.restrictions.length; i++){
+	    resultString+= this.restrictions[i];
+	    if(i!=(this.restrictions.length-1)){
+		resultString+=" ,";
+	    }
+	}
+	return resultString;
+    } 
+    public String getPreReqString(){
+	String resultString = "";
+	for(int i = 0; i<this.preReqs.length; i++){
+	    resultString+= this.preReqs[i].courseID;
+	    if(i!=(this.preReqs.length-1)){
+		resultString+=" ,";
+	    }
+	}
+	return resultString;
     }
 }
