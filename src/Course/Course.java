@@ -155,12 +155,8 @@ public class Course{
         panelHolder[3][1].add(time, BorderLayout.WEST);
         panelHolder[4][0].add(dayList, BorderLayout.EAST);
         panelHolder[4][1].add(day, BorderLayout.WEST);
-        //panelHolder[6][0].add(l, BorderLayout.EAST);
-        //panelHolder[6][1].add(location, BorderLayout.WEST);
         panelHolder[5][0].add(sectTime, BorderLayout.EAST);
         panelHolder[5][1].add(sTime, BorderLayout.WEST);
-        //panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
-        //panelHolder[7][1].add(sLoc, BorderLayout.WEST);
         panelHolder[6][0].add(sectDay, BorderLayout.EAST);
         panelHolder[6][1].add(sDay, BorderLayout.WEST);
         JLabel p = new JLabel("PreRequisites: ");

@@ -21,11 +21,13 @@ public class Scheduler {
     private JPanel conflictPanel;
     private User currentUser;
     //CONSTRUCTORS
-    //2-arg constructor (Not sure if we'll even need this, but maybe we'll want to copy a schedule
     public Scheduler(ArrayList<Course> courseList){
         this.courseList = courseList;
     }	
-    public Scheduler(User user) { // 1-arg ctor that sets the member variable currentUser equal to the parameter user
+    /**
+     *@param user represents the current user, so a schedule can be retrieved
+     */
+    public Scheduler(User user) {
        	this.courseList = new ArrayList<Course>();
       	this.cantAdd = new ArrayList<CourseConflict>();
 	this.panel = new JPanel();
@@ -33,6 +35,10 @@ public class Scheduler {
         this.conflicts = 0;
        	this.setUser(user);
     }
+    /**
+     *@param user Current user
+     *@param courseList list of courses that belong to the user
+     */
     public Scheduler(User user, ArrayList<Course> courseList) {
         this.courseList = courseList;
         this.cantAdd = new ArrayList<CourseConflict>();
@@ -41,7 +47,9 @@ public class Scheduler {
         this.conflicts = 0;
         this.setUser(user);
     }
-    //No-arg constructor. Generates an empty schedule
+    /**
+     *No-arg constructor. Generates an empty schedule.
+     */
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
         this.cantAdd = new ArrayList<CourseConflict>();
@@ -49,20 +57,21 @@ public class Scheduler {
         this.controlPanel = new JPanel();
         this.conflicts = 0;
     }
+    /**
+     *@param user sets the current user
+     */
     public void setUser(User user) {
        	this.currentUser = user;
     }
     //EDITS COURSELIST
     /**
-     @param c the course that needs to be added
-     @return whether or not the course was added
+     *@param c the course that needs to be added
+     *@return whether or not the course was added
      */
     public boolean add(Course c){
         if(c==null)
             return false;
         for(Course d: this.courseList){
-            //This is bad, I know! timeConflict is a static method, so it shouldn't be called
-            //using this, but will leave it for now in case we decide to change that later
             if(c.courseID==d.courseID){
                 CourseConflict myConflict = new CourseConflict(c, d, 2);
                 cantAdd.add(myConflict);
@@ -99,6 +108,7 @@ public class Scheduler {
         }
         /* No time conflict
            Different course id
+	   Valid time and day slots
          */
         courseList.add(c);
         this.schedulerGUI();
@@ -106,8 +116,8 @@ public class Scheduler {
         return true;
     }
     /**
-     @param o the course that needs to be removed
-     @return whether or not the course was removed
+     *@param o the course that needs to be removed
+     *@return whether or not the course was removed
      */
     public boolean remove(Object o){
         if(!(o instanceof Course))
@@ -119,20 +129,20 @@ public class Scheduler {
     }
     //MAIN PANEL
     /**
-     @return this returns the main panel that holds both the control and the schedule panels
+     *@return this returns the main panel that holds both the control and the schedule panels
      */
     public JPanel getMain(){
         this.setMain();
         return this.mainPanel;
     }
     /**
-     @return this returns the main panel that holds both the control and the schedule panels
+     *@return this returns the main panel that holds both the control and the schedule panels
      */
     public JScrollPane getScrollMain(){
         return new JScrollPane(this.getMain());
     }
     /**
-     Updates the main panel, so the display reflects current status. Simply holds both the control and schedule panels
+     *Updates the main panel, so the display reflects current status. Simply holds both the control and schedule panels
      */
     public void setMain(){
         JPanel mainPanel = new JPanel();
@@ -143,14 +153,14 @@ public class Scheduler {
     }
     //SCHEDULE PANEL
     /**
-     @return this returns the main panel that includes the schedule with classes
+     *@return this returns the main panel that includes the schedule with classes
      */
     public JPanel getPanel(){
         this.schedulerGUI();
         return this.panel;
     }
     /**
-     Updates the schedule panel to display all classes in ArrayList
+     *Updates the schedule panel to display all classes in ArrayList
      */
     public void schedulerGUI(){
         GridLayout grid = new GridLayout(30, 6);
@@ -252,8 +262,7 @@ public class Scheduler {
             }
             if(numPanels==0){
                 //The class is not 50 minutes, 1hr and 15min, or 1hr and 50mins (Writing classes).
-                //Are there any other class lengths?
-            }
+             }
             int row;
             int column;
             //Title, location, time
@@ -395,8 +404,8 @@ public class Scheduler {
                     panelHolder[row+3][column].setBackground(lect.col);
                 }
             }
-            //Add section. There will only be one
-            JLabel sectionLabelTitle = new JLabel();
+            //Add section. There will only be one 
+           JLabel sectionLabelTitle = new JLabel();
             sectionLabelTitle.setText(g.courseID);
             sectionLabelTitle.setBackground(sect.col);
             sectionLabelTitle.setOpaque(true);
@@ -570,21 +579,25 @@ public class Scheduler {
             panelNum[2][1].add(lectTime);
             panelNum[2][2].add(lectInstructor);
             //Row 4+: Section Info
-            JLabel sectDay = new JLabel(thisSection.dayStringShort());
-            JLabel sectTime = new JLabel(thisSection.timeString());
-            JLabel sectInstructor = new JLabel("N/A");
-            JLabel sectLocation = new JLabel(thisSection.location);
-	    JButton addButton = new JButton("Add");
-	    addButton.addActionListener(new addListener(this,c));
-            panelNum[3][0].add(sectDay);
-            panelNum[3][1].add(sectTime);
-            panelNum[3][2].add(sectInstructor);
-	    panelNum[3][3].add(addButton);
-            panels[n].add(coursePanel);
+	    if(sect!=null){
+		JLabel sectDay = new JLabel(thisSection.dayStringShort());
+		JLabel sectTime = new JLabel(thisSection.timeString());
+		JLabel sectInstructor = new JLabel("N/A");
+      		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new addListener(this,c));
+		panelNum[3][0].add(sectDay);
+		panelNum[3][1].add(sectTime);
+		panelNum[3][2].add(sectInstructor);
+		panelNum[3][3].add(addButton);
+		panels[n].add(coursePanel);
+	    }
         }
         this.conflictPanel = courses;
     }
     //ACTION LISTENER CLASSES
+    /**
+     *Class to change color of the courses
+     */
     class menuListener implements ActionListener{
         private Course c;
         private Scheduler sch;
@@ -616,25 +629,31 @@ public class Scheduler {
             this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
         }
     }
-	class saveListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		//TODO: write code that saves course IDs for the user
-			try {
-				if (Scheduler.this.currentUser == null) System.out.println("NULL"); // This currently prints NULL after an exception is thrown
-				Scheduler.this.currentUser.deleteSchedule(); // First delete the old schedule so there are no conflicts
-			} catch (SQLException ex) { // this exception is being caught everytime thus far
-				ex.printStackTrace();
-			}
-			for (int i = 0; i < courseList.size(); i++) {
-				try { // now save each course in the current schedule to the database
-					UsersConnection.saveCourse(Scheduler.this.currentUser,courseList.get(i));
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
+    /**
+     *Class to save schedule to user
+     */
+     class saveListener implements ActionListener {
+       	@Override
+       	public void actionPerformed(ActionEvent e) {
+       	//TODO: write code that saves course IDs for the user
+	    try {
+       		if (Scheduler.this.currentUser == null) System.out.println("NULL"); // This currently prints NULL after an exception is thrown
+	      		Scheduler.this.currentUser.deleteSchedule(); // First delete the old schedule so there are no conflicts
+	     } catch (SQLException ex) { // this exception is being caught everytime thus far
+       		ex.printStackTrace();
+	     }
+	    for (int i = 0; i < courseList.size(); i++) {
+	       	try { // now save each course in the current schedule to the database
+		    UsersConnection.saveCourse(Scheduler.this.currentUser,courseList.get(i));
+	   	} catch (SQLException ex) {
+		    ex.printStackTrace();
+	       	}
+	    }
 	}
+     }
+    /**
+     *Class to remove course from schedule
+     */
     class deleteListener implements ActionListener{
         private Scheduler sch;
         private Course c;
@@ -652,6 +671,9 @@ public class Scheduler {
             this.sch.mainPanel.add(this.sch.getControl(), BorderLayout.EAST);
         }
     }
+    /**
+     *Class to view a particular class
+     */
     class viewListener implements ActionListener{
         Course c1;
         Scheduler sch1;
@@ -674,6 +696,9 @@ public class Scheduler {
             back.addActionListener(new backListener(this.sch1));
         }
     }
+    /**
+     *After viewing a class, returns to main schedule page
+     */
     class backListener implements ActionListener{
         private Scheduler outer;
         public backListener(Scheduler outerIn){
@@ -688,6 +713,9 @@ public class Scheduler {
             this.outer.mainPanel.add(this.outer.getControl(), BorderLayout.EAST);
         }
     }
+    /**
+     *Displays conflict panel
+     */
     class conflictListener implements ActionListener{
         Scheduler sch1;
         public conflictListener(Scheduler schIn1){
@@ -709,6 +737,9 @@ public class Scheduler {
             back.addActionListener(new backListener(this.sch1));
         }
     }
+    /**
+     *Remove conflict
+     */
     class removeListener implements ActionListener{
         private Scheduler sch;
         private CourseConflict c;
@@ -734,7 +765,7 @@ public class Scheduler {
         }
     }
     /**
-     Allows the user to add classes to their schedule
+     *Allows the user to add classes to their schedule
      */
     class addListener implements ActionListener{
         private Scheduler sch;
@@ -750,11 +781,9 @@ public class Scheduler {
     }
     //STATIC
     /**
-     @param c Course to be checked for time conflict
-     @param d Course to be checked against
-     @return true if there is time conflict and false if not
-     Currently a static method because I thought this would be the
-     best implementation. Checks lecture and section.
+     *@param c Course to be checked for time conflict
+     *@param d Course to be checked against
+     *@return true if there is time conflict and false if not
      */
     public static boolean timeConflict(Course c, Course d){
 	for(char thisDay:c.getLect().days){
@@ -785,9 +814,9 @@ public class Scheduler {
 	return false;
     }
     /**
-     @param lect1
-     @param lect2
-     @return if the two Lecture objects overlap
+     *@param lect1
+     *@param lect2
+     *@return if the two Lecture objects overlap
      */
     public static boolean timeConflictHelper(Lecture lect1, Lecture lect2){
 	if(lect1.timeStart<=lect2.timeStart){
@@ -795,8 +824,8 @@ public class Scheduler {
             if(lect1.timeStart==lect2.timeStart)
                 return true;
             else{
-                //lect1 starts first, so we need lect2 to start at the same time or
-                //after lect1.timeEnd
+                //lect1 starts first, so we need lect2 to start at the same time
+                //or after lect1.timeEnd
                 if(lect2.timeStart>=lect1.timeEnd)
                     return false;
                 else
@@ -812,8 +841,8 @@ public class Scheduler {
         }
     }
     /**
-     @param day character you want converted to column it belongs in
-     @return the column that corresponds to the day
+     *@param day character you want converted to column it belongs in
+     *@return the column that corresponds to the day
      */
     public static int daySlot(char day){
         int slot;
@@ -840,8 +869,8 @@ public class Scheduler {
         return slot;
     }
     /**
-     @param time the time you want converted to an int of which row it belongs in
-     @return the row that a particular time belongs in. If it is something:30, it will return the row\
+     *@param time the time you want converted to an int of which row it belongs in
+     *@return the row that a particular time belongs in. If it is something:30, it will return the row \
      corresponding to where the 30 is.
      */
     public static int timeSlot(int time){
