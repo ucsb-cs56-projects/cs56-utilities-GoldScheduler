@@ -35,53 +35,53 @@ def getWeek(w):
 
 
 
-ftime = open('CS_times.txt', 'r')
-fpu = open('CS_professors_and_units.txt', 'r')
+f = open('course_profs_times_units.txt', 'r')
+
 
 cnx = mysql.connector.connect(**config)
 cursor = cnx.cursor()
 
 resetCourse = True;
 resetLecture = True;
-
-nextProInList = False;
-ProList = None;
-listIt = 0;
+goThrough = False;
 
 corresponding_id = 0;
 
-for line in ftime:
+for line in f:
 
-	if re.match("\s+", line):
+	if re.match("\A\s+\Z", line):
 
 		resetCourse=True;
 		resetLecture=True;
+		goThrough=False;
+		continue;
+		
+	if goThrough:
 		continue;
 		
 	line = line[:-1]
-
-	if re.match("\*+", line):
-
-		resetLecture=True;
-		continue;
 	
 	if resetCourse:
+		m = re.match("(.+)\s\[(.*)\]", line);
+		
+		if not m:
+			continue;
 
-		corresponding_id=0;
-		course_name=line.replace(" ", "");
-		courseName=line;
+		course_name=m.group(1).replace(" ", "");
+		units=m.group(2);
 		resetCourse=False;
 		continue;
 		
-	if resetLecture:
+	m = re.match("\[(.*)\]\s\['(.*?)'(,'.*')?\]", line)
+	
+	if m:
+		resetLecture=False;
 
-		m = re.match("\[\'(.+)\'\]", line);
-
-		time = m.group(1);
+		time = m.group(2);
 		
-		if time != "TBA":
-			wocao=re.match('([A-Z]+)(.+)\-(.+)([AP])',time);
-			
+		if time != "RTBA":
+			wocao=re.match('([A-Z]+)([0-9:]+)\-(.+)([AP])',time);
+			print time;
 			week=getWeek(wocao.group(1))
 			
 			stm=re.match("(.+):(.+)", wocao.group(2));
@@ -110,33 +110,7 @@ for line in ftime:
 			et=0;
 
 		
-		
-		
-		if nextProInList:
-
-			listIt+=1;
-			instructor_name = ProList[listIt];
-			if len(ProList) == listIt+1:
-				nextProInList = False;
-				ProList=None;
-				listIt=0;
-		else:
-			fpu = open('CS_professors_and_units.txt', 'r')
-			for l in fpu:
-				m2 = re.match(courseName + "\[(.*)\]\[(.*)\]",l);
-				if m2:
-					m3 = re.match('.+\*.+',m2.group(1));
-					units = m2.group(2);
-					if m3:
-						ProList = m2.group(1).split('*');
-						nextProInList=True;
-						
-						instructor_name=ProList[0];
-					
-					else:
-						instructor_name=m2.group(1);
-					
-					break;
+		instructor_name=m.group(1);
 		
 		if instructor_name == "":
 			instructor_name = "TBA";
@@ -144,10 +118,10 @@ for line in ftime:
 		instructor_name = "'" + instructor_name.replace("'", "") + "'"
 
 		#TODO UPLOAD
-		#print course_name, instructor_name, corresponding_id, week, st, et, units;
-		cursor.execute("INSERT INTO `spring_15_lecture` (course_name, instructor_name, week, start_time, end_time) VALUES ('%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et))
+		#print "INSERT INTO `spring_15_lecture` (course_name, instructor_name, week, start_time, end_time) VALUES ('%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et)
+		#cursor.execute("INSERT INTO `spring_15_lecture` (course_name, instructor_name, week, start_time, end_time) VALUES ('%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et))
 		#print ("INSERT INTO spring_15 (corresponding_id, course_name, instructor_name, week, start_time, end_time) VALUES (0,'%s',%s,%s,%s,%s);" % (course_name, instructor_name, week,st,et));
-		#cursor.execute("UPDATE `courses` SET units=%s WHERE course_name='%s';" % (units,course_name));
+		cursor.execute("UPDATE `courses` SET units=%s WHERE course_name='%s';" % (units,course_name));
 		
 		
 		#cursor.execute("SELECT * FROM `spring_15_course`")
@@ -155,29 +129,40 @@ for line in ftime:
 		#print course_info
 		
 		
-		cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s'" % course_name)
+		#cursor.execute("SELECT id FROM `spring_15_lecture` WHERE course_name='%s' AND week=%s AND start_time=%s AND end_time=%s" % (course_name, week,st,et))
 		#print("SELECT id FROM `spring_15` WHERE course_name='%s;'" % course_name)
-		course_info = cursor.fetchall()
+		#course_info = cursor.fetchall()
 		
-		corresponding_id = course_info[0][0];
-		resetLecture=False
+		#corresponding_id = course_info[0][0];
+		#resetLecture=False
 		continue;
 		
-	instructor_name="'TBA'"
+	if resetLecture:
+		goThrough=True;
+		continue;
+		
+	
 	m = re.match("\[\'(.+)\'\]", line);
 	
-
-
 	
+	if not m:
+		continue;
+		
 	time = m.group(1);
 	
 	if time != "TBA":
-		wocao=re.match('([A-Z]+)(.+)\-(.+)([AP])',time);
+	
+		wocao=re.match("([A-Z]+)(.+)\-.*[AP]','.+\-(.+)([AP])",time);
+		if not wocao:
+			wocao=re.match('([A-Z]+)(.+)\-(.+)([AP])',time);
+			
 
 		week=getWeek(wocao.group(1))
 		
+		
 		stm=re.match("(.+):(.+)", wocao.group(2));
 		if stm:
+			print wocao.group(2);
 			st=int(stm.group(1)+stm.group(2));
 		else:
 			st=int(wocao.group(2))*100;
@@ -203,7 +188,7 @@ for line in ftime:
 				
 	#print course_name, instructor_name, corresponding_id, week, st, et, units;
 	#print ("INSERT INTO spring_15 (corresponding_id, course_name, instructor_name, week, start_time, end_time) VALUES ('%s','%s',%s,%s,%s,%s);" % (corresponding_id, course_name, instructor_name, week,st,et))
-	cursor.execute("INSERT INTO `spring_15_section` (corresponding_id, week, start_time, end_time) VALUES (%s,%s,%s,%s);" % (corresponding_id, week,st,et))
+	#cursor.execute("INSERT INTO `spring_15_section` (corresponding_id, week, start_time, end_time) VALUES (%s,%s,%s,%s);" % (corresponding_id, week,st,et))
 
 	
 	
