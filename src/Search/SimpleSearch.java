@@ -9,8 +9,8 @@ import Course.Lecture;
 import Schedule.Scheduler;
 import connection.courseInfo.CourseConnection;
 /**
- This class will implement the simple search function, which takes a keyword
- from a textbar and searches the database for matches.
+ *This class will implement the simple search function, which takes a keyword
+ *from a textbar and searches the database for matches.
  */
 public class SimpleSearch{
     private JPanel display;
@@ -27,35 +27,33 @@ public class SimpleSearch{
         this.schedule = new Scheduler();
     }
     /**
-     Constructor to use saved schedule
-     @param s Saved schedule from database
+     *Constructor to use saved schedule
+     *@param s Saved schedule from database
      */
     public SimpleSearch(Scheduler s){
         this.schedule = s;
     }
     //MAIN DISPLAY
     /**
-     Initializes the display
+     *Initializes the display
      */
     public void setDisplay(){
-        //Initialize panel
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        //Make control panel
         JScrollPane scrollSearch = new JScrollPane(this.getCourses());
         panel.add(this.getControl(), BorderLayout.NORTH);
         panel.add(scrollSearch, BorderLayout.SOUTH);
         this.display = panel;
     }
     /**
-     @return returns the full set display with both the control and course panels
+     *@return returns the full set display with both the control and course panels
      */
     public JPanel getDisplay(){
         this.setDisplay();
         return this.display;
     }
     /**
-     @return returns the full display in a scrollPane
+     *@return returns the full display in a scrollPane
      */
     public JScrollPane getScrollDisplay(){
         this.scrollableDisplay = new JScrollPane(this.getDisplay());
@@ -63,8 +61,8 @@ public class SimpleSearch{
     }
     //CONTROL DISPLAY
     /**
-     Sets the display panel and then returns it.
-     Creates the display panel that includes a control panel that you can type a keyword into
+     *Sets the display panel and then returns it.
+     *Creates the display panel that includes a control panel that you can type a keyword into
      */
     public void setControl(){
         JPanel controlPanel = new JPanel();
@@ -88,7 +86,7 @@ public class SimpleSearch{
         this.control = controlPanel;
     }
     /**
-     @return returns the control panel with the textField and submit button
+     *@return returns the control panel with the textField and submit button
      */
     public JPanel getControl(){
         this.setControl();
@@ -96,7 +94,7 @@ public class SimpleSearch{
     }
     //COURSE DISPLAY
     /**
-     Sets courses to a blank screen
+     *Sets courses to a blank screen
      */
     public void setCourses(){
         JPanel blank = new JPanel();
@@ -105,30 +103,28 @@ public class SimpleSearch{
         this.cDisplay = blank;
     }
     /**
-     Sets the course display according to a keyword
-     @param key Keyword indicating search requirements
+     *Sets the course display according to a keyword
+     *@param key Keyword indicating search requirements
      */
     public void setCourses(String key){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(this.getResults(key))));
     }
     /**
-     Sets course display according to an unsorted courseList
+     *Sets course display according to an unsorted courseList
      */
     public void setCourses(ArrayList<Course> courseList){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(courseList)));
     }
     /**
-     Sets the course display according to an ArrayList of Courses
+     *Sets the course display according to an ArrayList of Courses
      */
     public void setCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> courseList){
         JPanel courses = new JPanel();
         courses.setBackground(this.darkerColor);
         courses.setLayout(new BoxLayout(courses, BoxLayout.Y_AXIS));
-        //Number of CourseIDS
         int numResults = courseList.size();
         if(numResults == 0){
             courses.setBackground(this.darkerColor);
-            //courses.setPreferredSize(new Dimension(910,568));
             JLabel noResults = new JLabel("There are no courses that match what you're looking for");
             Font font = noResults.getFont();
             Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
@@ -158,10 +154,6 @@ public class SimpleSearch{
              */
             int rows = 2;
             int columns = 4;
-            /*
-             Right now works for one section per course.
-             TODO: Check if course name matches then put them together
-             */
             int numLects = courseList.get(n).size();
             int totalNumSects = 0;
             for(int i = 0; i<numLects; i++){
@@ -189,8 +181,6 @@ public class SimpleSearch{
             view.addActionListener(new viewListener(currentCourse,this, courseList));
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
-            JLabel numCrs = new JLabel("Sections: " + totalNumSects);
-            //panelNum[0][2].add(numCrs);
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
             JLabel times = new JLabel("Times");
@@ -203,10 +193,9 @@ public class SimpleSearch{
             panelNum[1][0].add(d);
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
-            //panelNum[1][3].add(loc);
             //Row 3: Lecture info
             int currentRow = 2;
-            for(int i = 0; i<numLects; i++){
+	    for(int i = 0; i<numLects; i++){
                 currentCourse = courseList.get(n).get(i).get(0);
                 thisLecture = currentCourse.getLect();
                 JLabel lectDay = new JLabel(thisLecture.dayStringShort());
@@ -220,11 +209,13 @@ public class SimpleSearch{
                 panelNum[currentRow][0].add(lectDay);
                 panelNum[currentRow][1].add(lectTime);
                 panelNum[currentRow][2].add(lectInstructor);
-                //panelNum[currentRow][3].add(lectLocation);
                 currentRow++;
-                for(Course c:courseList.get(n).get(i)){
+	        for(Course c:courseList.get(n).get(i)){
                     currentCourse = c;
                     thisLecture = currentCourse.getLect();
+		    JButton addToSchedule = new JButton("Add");
+                    addToSchedule.addActionListener(new addListener(this.schedule,currentCourse));
+		    if(currentCourse.getSect()!=null){
                     thisSection = currentCourse.getSect();
                     //Row 4+: Section Info
                     JLabel sectDay = new JLabel(thisSection.dayStringShort());
@@ -234,45 +225,46 @@ public class SimpleSearch{
                     panelNum[currentRow][0].add(sectDay);
                     panelNum[currentRow][1].add(sectTime);
                     panelNum[currentRow][2].add(sectInstructor);
-                    //panelNum[currentRow][3].add(sectLocation);
-                    JButton addToSchedule = new JButton("Add");
-                    addToSchedule.addActionListener(new addListener(this.schedule,currentCourse));
                     panelNum[currentRow][3].add(addToSchedule);
                     currentRow++;
-                }
-            }
-        }
+		    }
+		    else{
+			panelNum[currentRow-1][3].add(addToSchedule);
+		    }
+	        }
+	     }
+	  }
         for(int index = 0 ; index<numResults; index++){
             courses.add(panels[index]);
         }
         this.cDisplay = courses;
     }
     /**
-     @return sets panel to a blank panel and returns it
+     *@return sets panel to a blank panel and returns it
      */
     public JPanel getCourses(){
         this.setCourses();
         return this.cDisplay;
     }
     /**
-     @param key Keyword to be used to search through the database
-     @return Calls the setCourses using a keyword and returns the resulting panel
+     *@param key Keyword to be used to search through the database
+     *@return Calls the setCourses using a keyword and returns the resulting panel
      */
     public JPanel getCourses(String key){
         this.setCourses(key);
         return this.cDisplay;
     }
     /**
-     @param list a list of Courses that match the keyword given by the user
-     @return Calls the setCourses using an arrayList of Courses and returns the resulting panel
+     *@param list a list of Courses that match the keyword given by the user
+     *@return Calls the setCourses using an arrayList of Courses and returns the resulting panel
      */
     public JPanel getCourses(ArrayList<Course> list){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(list)));
         return this.cDisplay;
     }
     /**
-     @param list A 3D ArrayList that has courses sourted by CourseID and Lecture
-     @return Calls the setCourses using the list returns the resulting panel
+     *@param list A 3D ArrayList that has courses sourted by CourseID and Lecture
+     *@return Calls the setCourses using the list returns the resulting panel
      */
     public JPanel getCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> list){
         this.setCoursesBy3DArray(list);
@@ -280,29 +272,26 @@ public class SimpleSearch{
     }
     //RESULTS
     /**
-     Communicates with the database using a desired keyword
-     @param key A string that contains a keyword that will be used to talk to the database
-     @return An arrayList of courses, which are the results.
-     @throws SQLException
+     *Communicates with the database using a desired keyword
+     *@param key A string that contains a keyword that will be used to talk to the database
+     *@return An arrayList of courses, which are the results.
+     *@throws SQLException
      */
     public ArrayList<Course> getResults(String key) {
-    	//Course Code is not the real course code. It's my course code :)
+    	//Course Code is not the real course code. It's my course code
     	//Location is empty String. preReqs is empty Course array. restrictions is empty String array
     	try {
 			return CourseConnection.SearchFullTitle(key);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
     }
-    //TODO Refactor if you can think of a better way to do it. This seems kind of excessive
     /**
-     @param fullResultsList an ArrayList of all the courses that satyisfy the user's specifications
-     @return a 2D ArrayList where courses with the same courseID are grouped together
+     *@param fullResultsList an ArrayList of all the courses that satyisfy the user's specifications
+     *@return a 2D ArrayList where courses with the same courseID are grouped together
      */
     public static ArrayList<ArrayList<Course>> groupCourseIDResults(ArrayList<Course> fullResultsList){
-        //TODO: Not sure if this is the most efficient way to do things
         ArrayList<ArrayList<Course>> groupedResults = new ArrayList<ArrayList<Course>>();
         ArrayList<String> nameList = new ArrayList<String>();
         for(int i = 0; i< fullResultsList.size(); i++){
@@ -323,11 +312,11 @@ public class SimpleSearch{
         return groupedResults;
     }
     /**
-     @param groupedCourseIDResult an ArrayList of grouped courses by courseID
-     @return a 2D ArrayList where courses with the same time are grouped together
+     *@param groupedCourseIDResult an ArrayList of grouped courses by courseID
+     *@return a 2D ArrayList where courses with the same time are grouped together
      */
     public static ArrayList<ArrayList<Course>> groupLectResults(ArrayList<Course> groupedCourseIDResult){
-        //TODO: Might be better to use a hashcode, but for now I'll just use time
+        //Just using times to differentiate between courses with the same ID
         ArrayList<ArrayList<Course>> groupedResults = new ArrayList<ArrayList<Course>>();
         ArrayList<String> timeList = new ArrayList<String>();
         for(int i = 0; i< groupedCourseIDResult.size(); i++){
@@ -348,8 +337,8 @@ public class SimpleSearch{
         return groupedResults;
     }
     /**
-     @param groupedCourseIDResults an ArrayList of grouped courses by courseID
-     @return a 3D ArrayList wher courses are grouped by courseID then by time
+     *@param groupedCourseIDResults an ArrayList of grouped courses by courseID
+     *@return a 3D ArrayList wher courses are grouped by courseID then by time
      */
     public static ArrayList<ArrayList<ArrayList<Course>>> getGroupedResults(ArrayList<ArrayList<Course>> groupedCourseIDResults){
         ArrayList<ArrayList<ArrayList<Course>>> groupedResults = new ArrayList<ArrayList<ArrayList<Course>>>();
@@ -358,31 +347,9 @@ public class SimpleSearch{
         }
         return groupedResults;
     }
-    //SCHEDULE
-    /**
-     @return returns the schedule.
-     */
-    public Scheduler getSchedule(){
-        return this.schedule;
-    }
-    /**
-     sets the schedule to an empty one.
-    */
-    public void resetSchedule(){
-        this.schedule = new Scheduler();
-    }
-    /** 
-     this is a temporary method to test the add button and view the schedule
-     */
-    public JPanel displaySchedule(){
-        Scheduler s = this.schedule;
-        JPanel display = new JPanel();
-        display.add(s.getMain());
-        return display;
-    }
     //ACTION LISTENER CLASSES
     /**
-     Class to view a specific course upon a button being pressed
+     *Class to view a specific course upon a button being pressed
      */
     class viewListener implements ActionListener{
         private Course c1;
@@ -413,7 +380,7 @@ public class SimpleSearch{
         }
     }
     /**
-     Allows the user to return to the populated search view after viewing a specific course
+     *Allows the user to return to the populated search view after viewing a specific course
      */
     class backListener implements ActionListener{
         private SimpleSearch outer;
@@ -436,7 +403,7 @@ public class SimpleSearch{
         }
     }
     /**
-     Upon the press of a button, this class calls the function that searches the database using a keyword.
+     *Upon the press of a button, this class calls the function that searches the database using a keyword.
      */
     class showResults implements ActionListener{
         private JTextField text;
@@ -460,7 +427,7 @@ public class SimpleSearch{
         }
     }
     /**
-     Allows the user to add classes to their schedule
+     *Allows the user to add classes to their schedule
      */
     class addListener implements ActionListener{
         private Scheduler sch;
@@ -473,23 +440,6 @@ public class SimpleSearch{
         @Override
         public void actionPerformed(ActionEvent e){
             this.sch.add(c);
-        }
-    }
-    class displayLoad implements Runnable{
-        private SimpleSearch s;
-        public displayLoad(SimpleSearch s){
-            this.s = s;
-        }
-        public void run(){
-            this.s.display.removeAll();
-            this.s.display.revalidate();
-            this.s.display.repaint();
-            JLabel loadingLabel = new JLabel("Loading results...");
-            this.s.display.add(loadingLabel);
-            this.s.scrollableDisplay.removeAll();
-            this.s.scrollableDisplay.revalidate();
-            this.s.scrollableDisplay.repaint();
-            this.s.scrollableDisplay .add(this.s.display);
         }
     }
 }
