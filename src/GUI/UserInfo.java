@@ -13,7 +13,7 @@ import connection.courseInfo.CourseConnection;
 import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
 /**
- * Change User Info Panel
+ * Panel used to change User Info
  * @author Wesley Pollek
  * @author Forrest Sun
  * @version Feb 12 2015
@@ -147,7 +147,7 @@ public class UserInfo extends JPanel{
     	else passWrong.setText("");
 
     	String passinfo1 = new String(password1.getPassword());
-	    if (!passinfo1.equals("") && passinfo1.length() < 4) {pass1Wrong.setText("Password must at least 4 charactor"); validInfo=false;}
+	    if (!passinfo1.equals("") && passinfo1.length() < 4) {pass1Wrong.setText("Password must be at least 4 characters"); validInfo=false;}
 	    else pass1Wrong.setText("");
 	    
 	    String passinfo2 = new String(password2.getPassword());

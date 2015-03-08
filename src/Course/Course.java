@@ -53,13 +53,13 @@ public class Course{
     }
     //Methods for only private member variable
     /**
-     * @return the Lecture
+     * @return Lecture The current lecture variable
      */
     public Lecture getLect(){
         return this.lectInfo;
     }
     /**
-     * @param the new Lecture
+     * @param Lecture The new lecture to be set
      */
     public void setLect(Lecture lectInfo){
         this.lectInfo = lectInfo;
