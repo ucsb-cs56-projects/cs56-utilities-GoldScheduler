@@ -16,6 +16,7 @@ import connection.userInfo.UsersConnection;
  * Register Panel
  * @author Wesley Pollek
  * @author Forrest Sun
+ * @author Jonathan Easterman
  * @version Feb 12 2015
  */
 
@@ -154,7 +155,7 @@ public class ForgotUser extends JPanel{
     public void Validator() throws SQLException {
     	
     	update.setText("");
-    	
+    	setUser(UsersConnection.getInfo(username.getText(), emailf.getText(), 5));
     	
     	
     	
@@ -163,7 +164,7 @@ public class ForgotUser extends JPanel{
     	String emailinfo = new String(emailf.getText());
     	
     	if (emailinfo.equals("")) {emailWrong.setText("<html>*You must enter email to<br>update your password<html/>"); validInfo=false;}
-    	else if (!emailinfo.equals(u.getEmail())) { emailWrong.setText("*Wrong email"); validInfo=false;}
+    	else if (!emailinfo.equals(u.getEmail())) {System.out.println("here!"); emailWrong.setText("*Wrong email"); validInfo=false;}
     	else emailWrong.setText("");
     
     	String passinfo1 = new String(password1.getPassword());
@@ -178,8 +179,6 @@ public class ForgotUser extends JPanel{
 	    if (validInfo) {
 
 	    	if (!passinfo1.equals("")) u.setPassword(passinfo1);
-
-	    	
 	    	init();
 	    	update.setText("Your information is up-dated");
 	    	emailWrong.setText("");
