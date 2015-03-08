@@ -1,0 +1,7 @@
+Get user ID by username and password
+1
+Get user info by ID
+(1, u'sxh19911230', u'P@ssw0rd', u'sxh19911230@gmail.com', u'CMPSC', datetime.datetime(2015, 1, 25, 0, 3, 34))
+sxh19911230@gmail.com's ID:
+1
+Register

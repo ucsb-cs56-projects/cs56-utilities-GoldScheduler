@@ -267,6 +267,18 @@ public class CourseConnection extends GolderConnection{
 				case "H":
 					find += "h_reqs.coursename IS NOT NULL";
 					break;
+				case "ETH":
+					find += "ethnic_reqs.coursename IS NOT NULL";
+					break;
+				case "EUR":
+					find += "euro_reqs.coursename IS NOT NULL";
+					break;
+				case "WRT":
+					find += "writ_reqs.coursename IS NOT NULL";
+					break;
+				case "NWC":
+					find += "world_culture_reqs.coursename IS NOT NULL";
+					break;
 				default: 
 					find += "0";
 				

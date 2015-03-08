@@ -17,9 +17,8 @@ for line in f:
 		dept = m.group(1)
 		code = m.group(2)
 		dscp = m.group(3)
-		f2 = m.group(4)
-		print dept, code , dscp, f2
-		#cursor.execute("INSERT INTO courses (course_name, course_number, department, full_title) VALUES ('%s','%s','%s','%s');" % ("".join(dept.split())+code, code, dept, dscp.replace("\\","\\\\").replace("'","\\'")))
+
+		print ("INSERT INTO courses (course_name, course_code, department, description) VALUES ('%s','%s','%s','%s');" % ("".join(dept.split())+code, code, dept, dscp.replace("\\","\\\\").replace("'","\\'")))
 
 		
 
