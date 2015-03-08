@@ -217,7 +217,7 @@ public class CourseConnection extends GolderConnection{
 	}
     /**
      @return ArrayList of courses that match the key
-     @param key
+     @param keys
      @param option
      */
 	public static ArrayList<Course> getResults(ArrayList<String> keys, ArrayList<String>  option) throws SQLException{

@@ -5,8 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 /**
- *Course will just store all the data retrieved from the database, so the program doesn't
- *have to consistently communicate with the database.
+ * Course will just store all the data retrieved from the database, so the program doesn't
+ * have to consistently communicate with the database.
  */
 public class Course{
     /*All instance variables are public and final
@@ -53,45 +53,45 @@ public class Course{
     }
     //Methods for only private member variable
     /**
-     * @return the Lecture
+     * @return Lecture The current lecture variable
      */
     public Lecture getLect(){
         return this.lectInfo;
     }
     /**
-     * @param the new Lecture
+     * @param lectInfo The new Lecture to be set for this course
      */
     public void setLect(Lecture lectInfo){
         this.lectInfo = lectInfo;
     }
     /**
-     * @return the Section represented as a lecture object
+     * @return Section A section represented as a lecture object
      */
     public Lecture getSect(){
         return this.sectInfo;
     }
     /**
-     * @param the new Section
+     * @param sectInfo New lecture object being set as the section variable for this course.
      */
     public void setSect(Lecture sectInfo){
         this.sectInfo = sectInfo;
     }
 	/**
      * sets the color of the course as seen when the user views his/her schedule
-     *@param c Desired color to use for the course
+     * @param c Desired color to use for the course
     */
     public void setColor(Color c){
         lectInfo.col = c;
         sectInfo.col = c;
     }
     /**
-     * @return the button to view a particular course
+     * @return jButton button to view a particular course
      */
     public JButton getView(){
         return this.view;
     }
     /**
-     @return a panel that displays the course information
+     * @return JPanel panel that displays the course information
      */
     public JPanel getPanel(){
         JPanel panel = new JPanel();
@@ -155,12 +155,8 @@ public class Course{
         panelHolder[3][1].add(time, BorderLayout.WEST);
         panelHolder[4][0].add(dayList, BorderLayout.EAST);
         panelHolder[4][1].add(day, BorderLayout.WEST);
-        //panelHolder[6][0].add(l, BorderLayout.EAST);
-        //panelHolder[6][1].add(location, BorderLayout.WEST);
         panelHolder[5][0].add(sectTime, BorderLayout.EAST);
         panelHolder[5][1].add(sTime, BorderLayout.WEST);
-        //panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
-        //panelHolder[7][1].add(sLoc, BorderLayout.WEST);
         panelHolder[6][0].add(sectDay, BorderLayout.EAST);
         panelHolder[6][1].add(sDay, BorderLayout.WEST);
         JLabel p = new JLabel("PreRequisites: ");

@@ -36,4 +36,4 @@ KNOWN BUGS
 
 DOCUMENTATION
 -------------
-******put link to javadoc here*******
+http://www.cs.ucsb.edu/~hanna/cs48/Golder/javadoc

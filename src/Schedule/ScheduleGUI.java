@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import Course.Course;
 import Course.Lecture;
 /**
- *This class will display schedule. Mostly just used for testing
+ * Deprecated class used to test the AdvancedSearch class
+ * @author Hanna Vigil, Jonathan Easterman
+ * @version February 5, 2015
  */
 public class ScheduleGUI{
     private Scheduler s;
