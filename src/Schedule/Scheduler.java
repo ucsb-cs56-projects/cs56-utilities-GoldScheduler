@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import Course.Course;
 import Course.Lecture;
 import connection.userInfo.*;
-//import java.awt.ItemSelectable;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
 /**
  *This class should just take care of adding and removing courses to and from a schedule
  *It will also has a panel instance that will be used for displayins
@@ -79,9 +76,7 @@ public class Scheduler {
                 return false;
             }
             else if(Scheduler.timeSlot(c.getLect().timeStart)==0||
-                    Scheduler.timeSlot(c.getLect().timeEnd)==0||
-                    Scheduler.timeSlot(c.getSect().timeStart)==0||
-                    Scheduler.timeSlot(c.getSect().timeEnd)==0){
+                    Scheduler.timeSlot(c.getSect().timeStart)==0){
                 CourseConflict myConflict = new CourseConflict(c, d, 3);
                 cantAdd.add(myConflict);
                 conflicts++;
@@ -100,7 +95,7 @@ public class Scheduler {
                      conflicts++;
                      return false;
                 }
-            }
+	    }
         }
         /* No time conflict
            Different course id
@@ -562,7 +557,6 @@ public class Scheduler {
             panelNum[1][0].add(d);
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
-            panelNum[1][3].add(loc);
             //Row 3: Lecture info
             JLabel lectDay = new JLabel(thisLecture.dayStringShort());
             JLabel lectTime = new JLabel(thisLecture.timeString());
@@ -575,16 +569,17 @@ public class Scheduler {
             panelNum[2][0].add(lectDay);
             panelNum[2][1].add(lectTime);
             panelNum[2][2].add(lectInstructor);
-            panelNum[2][3].add(lectLocation);
             //Row 4+: Section Info
             JLabel sectDay = new JLabel(thisSection.dayStringShort());
             JLabel sectTime = new JLabel(thisSection.timeString());
             JLabel sectInstructor = new JLabel("N/A");
             JLabel sectLocation = new JLabel(thisSection.location);
+	    JButton addButton = new JButton("Add");
+	    addButton.addActionListener(new addListener(this,c));
             panelNum[3][0].add(sectDay);
             panelNum[3][1].add(sectTime);
             panelNum[3][2].add(sectInstructor);
-            panelNum[3][3].add(sectLocation);
+	    panelNum[3][3].add(addButton);
             panels[n].add(coursePanel);
         }
         this.conflictPanel = courses;
@@ -736,6 +731,21 @@ public class Scheduler {
             buttonPanel.setBackground(Color.LIGHT_GRAY);
             this.sch.mainPanel.add(buttonPanel, BorderLayout.SOUTH);
             back.addActionListener(new backListener(this.sch));
+        }
+    }
+    /**
+     Allows the user to add classes to their schedule
+     */
+    class addListener implements ActionListener{
+        private Scheduler sch;
+        private Course c;
+        public addListener(Scheduler sch, Course c){
+            this.sch = sch;
+            this.c = c;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            this.sch.add(c);
         }
     }
     //STATIC
