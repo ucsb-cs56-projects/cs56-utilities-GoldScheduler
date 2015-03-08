@@ -31,7 +31,7 @@ public class AdvancedSearch{
         geChecks = new HashMap<JCheckBox, String>();
     }
     /**
-     @param s Schedule saved in database
+     * @param s Schedule saved in database
      */
     public AdvancedSearch(Scheduler s){
         this.schedule = s;
@@ -39,24 +39,23 @@ public class AdvancedSearch{
         geChecks = new HashMap<JCheckBox, String>();
     }
     /**
-     @return returns the full set display with both the control and course panels
+     *@return returns the full set display with both the control and course panels
      */
     public JPanel getDisplay(){
         this.setDisplay();
         return this.display;
     }
     /**
-     @return returns the full display in a scrollPane
+     *@return returns the full display in a scrollPane
      */
     public JScrollPane getScrollDisplay(){
         this.scrollableDisplay = new JScrollPane(this.getDisplay());
         return this.scrollableDisplay;
     }
     /**
-     Initializes the display
+     *Initializes the display
      */
     public void setDisplay(){
-        //Initialize panel
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(this.getControl(), BorderLayout.NORTH);
@@ -65,7 +64,7 @@ public class AdvancedSearch{
     }
     //SCHEDULE
     /**
-     This will get the schedule display
+     *This will get the schedule display
      */
     public JPanel displaySchedule(){
         Scheduler s = this.schedule;
@@ -74,20 +73,20 @@ public class AdvancedSearch{
         return display;
     }
     /**
-     @return returns the schedule.
+     *@return returns the schedule.
      */
     public Scheduler getSchedule(){
         return this.schedule;
     }
     /**
-     sets the schedule to an empty one.
+     *sets the schedule to an empty one.
      */
     public void resetSchedule(){
         this.schedule = new Scheduler();
     }
-    //COURSE RESULTS
+    //COURSE DISPLAY
     /**
-     Sets courses to a blank screen
+     *Sets courses to a blank screen
      */
     public void setCourses(){
         JPanel blank = new JPanel();
@@ -96,23 +95,21 @@ public class AdvancedSearch{
         this.cDisplay = blank;
     }
     /**
-     Sets course display according to an unsorted courseList
+     *Sets course display according to an unsorted courseList
      */
     public void setCourses(ArrayList<Course> courseList){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(SimpleSearch.groupCourseIDResults(courseList)));
     }
     /**
-     Sets the course display according to an ArrayList of Courses.
-     @param courseList a 3D ArrayList sorted to make it easy to dispay the course results
+     *Sets the course display according to an ArrayList of Courses.
+     *@param courseList a 3D ArrayList sorted to make it easy to dispay the course results
      */
     public void setCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> courseList){
         JPanel courses = new JPanel();
         courses.setBackground(this.darkerColor);
         courses.setLayout(new BoxLayout(courses, BoxLayout.Y_AXIS));
-        //Number of CourseIDS
         int numResults = courseList.size();
         if(numResults == 0){
-            //courses.setPreferredSize(new Dimension(500,567));
             courses.setBackground(this.darkerColor);
             JLabel noResults = new JLabel("There are no courses that match what you're looking for");
             Font font = noResults.getFont();
@@ -143,10 +140,6 @@ public class AdvancedSearch{
              */
             int rows = 2;
             int columns = 4;
-            /*
-             Right now works for one section per course.
-             TODO: Check if course name matches then put them together
-             */
             int numLects = courseList.get(n).size();
             int totalNumSects = 0;
             for(int i = 0; i<numLects; i++){
@@ -174,8 +167,6 @@ public class AdvancedSearch{
             view.addActionListener(new viewListener(currentCourse,this, courseList));
             panelNum[0][0].add(t);
             panelNum[0][1].add(view);
-            JLabel numCrs = new JLabel("Sections: " + totalNumSects);
-            //panelNum[0][2].add(numCrs);
             //Row 2: Header
             JLabel d = new JLabel("Day(s)");
             JLabel times = new JLabel("Times");
@@ -188,7 +179,6 @@ public class AdvancedSearch{
             panelNum[1][0].add(d);
             panelNum[1][1].add(times);
             panelNum[1][2].add(inst);
-            //panelNum[1][3].add(loc);
             //Row 3: Lecture info
             int currentRow = 2;
             for(int i = 0; i<numLects; i++){
@@ -205,26 +195,31 @@ public class AdvancedSearch{
                 panelNum[currentRow][0].add(lectDay);
                 panelNum[currentRow][1].add(lectTime);
                 panelNum[currentRow][2].add(lectInstructor);
-                //panelNum[currentRow][3].add(lectLocation);
                 currentRow++;
-                for(int j = 0; j<courseList.get(n).get(i).size(); j++){
-                    currentCourse = courseList.get(n).get(i).get(j);
+	       	for(Course c:courseList.get(n).get(i)){
+                    currentCourse = c;
                     thisLecture = currentCourse.getLect();
-                    thisSection = currentCourse.getSect();
-                    //Row 4+: Section Info
-                    JLabel sectDay = new JLabel(thisSection.dayStringShort());
-                    JLabel sectTime = new JLabel(thisSection.timeString());
-                    JLabel sectInstructor = new JLabel("N/A");
-                    JLabel sectLocation = new JLabel(thisSection.location);
-                    panelNum[currentRow][0].add(sectDay);
-                    panelNum[currentRow][1].add(sectTime);
-                    panelNum[currentRow][2].add(sectInstructor);
-                    //panelNum[currentRow][3].add(sectLocation);
-                    JButton addToSchedule = new JButton("Add");
+		    JButton addToSchedule = new JButton("Add");
                     addToSchedule.addActionListener(new addListener(this.schedule,currentCourse));
-                    panelNum[currentRow][3].add(addToSchedule);
-                    currentRow++;
-                }
+		    //If there is a section the add button corresponds to each section
+		    if(currentCourse.getSect()!=null){
+			thisSection = currentCourse.getSect();
+			//Row 4+: Section Info
+			JLabel sectDay = new JLabel(thisSection.dayStringShort());
+			JLabel sectTime = new JLabel(thisSection.timeString());
+			JLabel sectInstructor = new JLabel("N/A");
+			JLabel sectLocation = new JLabel(thisSection.location);
+			panelNum[currentRow][0].add(sectDay);
+			panelNum[currentRow][1].add(sectTime);
+			panelNum[currentRow][2].add(sectInstructor);
+                        panelNum[currentRow][3].add(addToSchedule);
+			currentRow++;
+		    }
+		    //if there is no section, you must add the lecture
+		    else{
+			panelNum[currentRow-1][3].add(addToSchedule);
+		    }
+		}
             }
         }
         for(int index = 0 ; index<numResults; index++){
@@ -233,31 +228,30 @@ public class AdvancedSearch{
         this.cDisplay = courses;
     }
     /**
-     @return sets panel to a blank panel and returns it
+     *@return sets panel to a blank panel and returns it
      */
     public JPanel getCourses(){
         this.setCourses();
         return this.cDisplay;
     }
     /**
-     @param i indicator that you don't want to call set courses
-     @return gets the current course display
+     *@param i indicator that you don't want to call set courses
+     *@return gets the current course display
      */
     public JPanel getCourses(int i){
         return this.cDisplay;
     }
     /**
-     @param list and ArrayList of unsorted courses
-     @return Calls the setCourses using an arrayList of Courses and returns the resulting panel.
-     It is the result list
+     *@param list and ArrayList of unsorted courses
+     *@return Calls the setCourses using an arrayList of Courses and returns the resulting panel.
      */
     public JPanel getCourses(ArrayList<Course> list){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(SimpleSearch.groupCourseIDResults(list)));
         return this.cDisplay;
     }
     /**
-     @param list a 3D ArrayList of sorted courses
-     @return A panel that uses the sorted ArrayList to display the courses
+     *@param list a 3D ArrayList of sorted courses
+     *@return A panel that uses the sorted ArrayList to display the courses
      */
     public JPanel getCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> list){
         this.setCoursesBy3DArray(list);
@@ -265,29 +259,28 @@ public class AdvancedSearch{
     }
     //CONTROL
     /**
-     Calls setControl for a blank panel to display
+     *Calls setControl for a blank panel to display
      */
     public JPanel getControl() {
         this.setControl();
         return this.control;
     }
     /**
-     @param i indicator that you don't want to call set courses
-     @return gets the current control display
+     *@param i indicator that you don't want to call set courses
+     *@return gets the current control display
      */
     public JPanel getControl(int i) {
         return this.control;
     }
     /**
-     Sets the display panel and then returns it.
-     Creates the display panel that includes a control panel that you can type a keyword into
+     *Sets the display panel and then returns it.
+     *Creates the display panel that includes a control panel that you can type a keyword into
     */
     public void setControl(){
         JPanel controlPanel = new JPanel();
         int len = this.searchOptions.length;
         controlPanel.setPreferredSize(new Dimension(500,66));
         controlPanel.setLayout(new GridLayout(2, 1));
-        //Made two panels because top one won't be broken down as much
         JPanel[] panelHolder = new JPanel[2];
         for(int i = 0; i<2; i++){
             panelHolder[i] = new JPanel();
@@ -320,11 +313,9 @@ public class AdvancedSearch{
         this.control = controlPanel;
     }
     //GETTING RESULTS
-    //TODO handle the SQLException
-    //if it throws SQLException, the return value would be null
     /**
-     @param s Indicates which option to populate the combobox with
-     @return a String array to select from that relates to the option chosen
+     *@param s Indicates which option to populate the combobox with
+     *@return a String array to select from that relates to the option chosen
      */
     public String[] getList(String s){
         if(s=="Department"){
@@ -347,18 +338,15 @@ public class AdvancedSearch{
         }
         else { //s==GE
            String [] m= {//"------",
-               "A1","A2", "AMHI", "AMI", "B", "C", "C1", "C2", "C3", "CSB",
-               "CU", "CUC", "CUD", "D", "D1", "D2", "D3", "D4", "E", "E1", "E2", "ETH", "EUR",
-               "F", "F1", "F2A", "F2B", "G", "H", "MAJ", "MG", "MUD", "MUG", "NWC", "QNT", "SUB",
-               "UG", "UPU", "USB", "USR", "WRT"};
+               "B", "C", "D", "F", "G", "H", "ETH", "EUR", "NWC", "WRT"};
             return m;
         }
     }
     /**
-     @param key A keyword taken from the dropdown menu that represents what the user is looking for
-     @param option The button clicked indicating which category the keyword belongs to
+     *@param key A keyword taken from the dropdown menu that represents what the user is looking for
+     *@param option The button clicked indicating which category the keyword belongs to
      */
-    public ArrayList<Course> getResults(ArrayList<String> key, String option){
+    public ArrayList<Course> getResults(ArrayList<String> key, ArrayList<String>  option){
         ArrayList<Course> courseList = null;
 		try {
 			courseList = connection.courseInfo.CourseConnection.getResults(key, option);
@@ -370,7 +358,7 @@ public class AdvancedSearch{
     }
     //ACTION LISTENER CLASSES
     /**
-     Class to view a specific course upon a button being pressed
+     *Class to view a specific course upon a button being pressed
      */
     class viewListener implements ActionListener{
         private Course c1;
@@ -400,7 +388,7 @@ public class AdvancedSearch{
         }
     }
     /**
-     Allows the user to return to the populated search view after viewing a specific course
+     *Allows the user to return to the populated search view after viewing a specific course
      */
     class backListener implements ActionListener{
         private AdvancedSearch outer;
@@ -423,7 +411,7 @@ public class AdvancedSearch{
         }
     }
     /**
-     Populates a combobox according to a selcted radioButton
+     *Populates a combobox according to a selcted radioButton
      */
     class radioListener implements ActionListener{
         private JPanel p;
@@ -470,7 +458,7 @@ public class AdvancedSearch{
         }
     }
     /**
-     Searches the database according to the choices selected
+     *Searches the database according to the choices selected
      */
     class submitListener implements ActionListener{
         private AdvancedSearch aSearch;
@@ -483,12 +471,14 @@ public class AdvancedSearch{
         public void actionPerformed(ActionEvent e){
             ArrayList<Course> result = new ArrayList<Course>();
             ArrayList<String> keyArray = new ArrayList<String>();
+            ArrayList<String> optionArray = new ArrayList<String>();
             for(JCheckBox check: this.aSearch.geChecksList){
                 if(check.isSelected()){
+                	optionArray.add("General Education");
                     keyArray.add(this.aSearch.geChecks.get(check));
                 }
             }
-            result = getResults(keyArray, "General Education");
+            result = getResults(keyArray, optionArray);
             this.courseResultsPanel.removeAll();
             this.courseResultsPanel.revalidate();
             this.courseResultsPanel.repaint();
@@ -496,7 +486,7 @@ public class AdvancedSearch{
         }
     }
     /**
-     Searches the database according to the choice selected from the combobox
+     *Searches the database according to the choice selected from the combobox
      */
     class menuListener implements ActionListener{
         private AdvancedSearch a;
@@ -511,8 +501,10 @@ public class AdvancedSearch{
             JComboBox comboBox = (JComboBox) e.getSource();
             String selectedItem = (String)comboBox.getSelectedItem();
             ArrayList<String> selectedArray = new ArrayList<String>();
+            ArrayList<String> option = new ArrayList<String>();
             selectedArray.add(selectedItem);
-            result = getResults(selectedArray, this.optionString);
+            option.add(this.optionString);
+            result = getResults(selectedArray, option);
             this.a.display.removeAll();
             this.a.display.revalidate();
             this.a.display.repaint();
@@ -525,7 +517,7 @@ public class AdvancedSearch{
         }
     }
     /**
-     Allows the user to add classes to their schedule
+     *Allows the user to add classes to their schedule
      */
     class addListener implements ActionListener{
         private Scheduler sch;

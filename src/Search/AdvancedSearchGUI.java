@@ -3,6 +3,12 @@ import java.awt.*;
 import javax.swing.*;
 import Course.Course;
 import Course.Lecture;
+
+/**
+ * Deprecated class used to test the AdvancedSearch class
+ * @author Hanna Vigil, Jonathan Easterman
+ * @version February 5, 2015
+ */
 public class AdvancedSearchGUI {
     public static void main(String[] args){
         //Make frame

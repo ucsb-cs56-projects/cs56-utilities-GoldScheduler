@@ -13,9 +13,11 @@ import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
 
 /**
- * Register Panel
+ * Additional screen that allows the user to change a forgotten password.
+ * User must have the username and email of the account.
  * @author Wesley Pollek
  * @author Forrest Sun
+ * @author Jonathan Easterman
  * @version Feb 12 2015
  */
 
@@ -118,6 +120,10 @@ public class ForgotUser extends JPanel{
         go();
     }
     
+    /**
+     * Initializes all of the text fields to empty string ""
+     * @throws SQLException
+     */
     void init() throws SQLException {
     	if (u!=null) {
 	    	userWrong.setText("");   
@@ -131,15 +137,28 @@ public class ForgotUser extends JPanel{
     	}
     }
     
+    /**
+     * Sets user member variable and
+     * initializes all of the text fields to empty string ""
+     * @throws SQLException
+     */
     void init(User user) throws SQLException {
     	u = user;
     	init();
     }
     
+    
+    /**
+     * @param u desired User instance to set user
+     * member variable
+     */
     void setUser(User u) {
     	this.u=u;
     }
     
+    /**
+     * @return The static member which holds the user panel
+     */
     public static ForgotUser getUserPanel() {
     	return hahaha;
     }
@@ -151,10 +170,16 @@ public class ForgotUser extends JPanel{
      */
     
 
+    /**
+     * Validates that inputted info is correct,
+     * resets password info in database
+     * resets textfields to empty string ""
+     * @throws SQLException
+     */
     public void Validator() throws SQLException {
     	
     	update.setText("");
-    	
+    	setUser(UsersConnection.getInfo(username.getText(), emailf.getText(), 5));
     	
     	
     	
@@ -163,7 +188,7 @@ public class ForgotUser extends JPanel{
     	String emailinfo = new String(emailf.getText());
     	
     	if (emailinfo.equals("")) {emailWrong.setText("<html>*You must enter email to<br>update your password<html/>"); validInfo=false;}
-    	else if (!emailinfo.equals(u.getEmail())) { emailWrong.setText("*Wrong email"); validInfo=false;}
+    	else if (!emailinfo.equals(u.getEmail())) {System.out.println("here!"); emailWrong.setText("*Wrong email"); validInfo=false;}
     	else emailWrong.setText("");
     
     	String passinfo1 = new String(password1.getPassword());
@@ -178,8 +203,6 @@ public class ForgotUser extends JPanel{
 	    if (validInfo) {
 
 	    	if (!passinfo1.equals("")) u.setPassword(passinfo1);
-
-	    	
 	    	init();
 	    	update.setText("Your information is up-dated");
 	    	emailWrong.setText("");
@@ -205,8 +228,11 @@ public class ForgotUser extends JPanel{
 
 	}
 	
+	/**
+	 * resets all textfields to empty string ""
+	 */
     public void clean() {
-    	update.setText("");
+    update.setText("");
 	username.setText("");
 	userWrong.setText("");
 	emailf.setText("");
@@ -222,7 +248,7 @@ public class ForgotUser extends JPanel{
 
     
     /**
-     * The graphic part
+     * Initializes graphics window
      */
     public void go(){
 		GridLayout basegrid = new GridLayout(2, 1);
@@ -231,7 +257,7 @@ public class ForgotUser extends JPanel{
 		for(int i=0;i<2; i++){
 			rows[i]= new JPanel();
 			rows[i].setOpaque(true);
-			rows[i].setBackground(Color.BLUE);
+			rows[i].setBackground(new Color(172,183,203));
 			this.add(rows[i]);
 		}
 		GridLayout innergrid = new GridLayout(8, 5);
@@ -241,7 +267,7 @@ public class ForgotUser extends JPanel{
 		for(int m=0;m<8;m++){
 		    for (int k=0;k<5;k++){
 			spot[m][k]=new JPanel();
-			spot[m][k].setBackground(Color.YELLOW);
+			spot[m][k].setBackground(new Color(204,204,196));
 			spot[m][k].setOpaque(true);
 			innerpanel.add(spot[m][k]);
 		    }

@@ -5,8 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 /**
- *Course will just store all the data retrieved from the database, so the program doesn't
- *have to consistently communicate with the database.
+ * Course will just store all the data retrieved from the database, so the program doesn't
+ * have to consistently communicate with the database.
  */
 public class Course{
     /*All instance variables are public and final
@@ -53,45 +53,45 @@ public class Course{
     }
     //Methods for only private member variable
     /**
-     * @return the Lecture
+     * @return Lecture The current lecture variable
      */
     public Lecture getLect(){
         return this.lectInfo;
     }
     /**
-     * @param the new Lecture
+     * @param lectInfo The new Lecture to be set for this course
      */
     public void setLect(Lecture lectInfo){
         this.lectInfo = lectInfo;
     }
     /**
-     * @return the Section represented as a lecture object
+     * @return Section A section represented as a lecture object
      */
     public Lecture getSect(){
         return this.sectInfo;
     }
     /**
-     * @param the new Section
+     * @param sectInfo New lecture object being set as the section variable for this course.
      */
     public void setSect(Lecture sectInfo){
         this.sectInfo = sectInfo;
     }
 	/**
      * sets the color of the course as seen when the user views his/her schedule
-     *@param c Desired color to use for the course
+     * @param c Desired color to use for the course
     */
     public void setColor(Color c){
         lectInfo.col = c;
         sectInfo.col = c;
     }
     /**
-     * @return the button to view a particular course
+     * @return jButton button to view a particular course
      */
     public JButton getView(){
         return this.view;
     }
     /**
-     @return a panel that displays the course information
+     * @return JPanel panel that displays the course information
      */
     public JPanel getPanel(){
         JPanel panel = new JPanel();
@@ -116,9 +116,25 @@ public class Course{
         JLabel ti = new JLabel("Time: ");
         JLabel dayList = new JLabel("Days: ");
         JLabel l = new JLabel("Location: ");
-        JLabel sectTime = new JLabel("Section Time: ");
-        JLabel sectDay = new JLabel("Section Day: ");
-        JLabel sectLoc = new JLabel("Section Location: ");
+	int newCount = 5;
+	if(this.sectInfo!=null){
+	    JLabel sectTime = new JLabel("Section Time: ");
+	    JLabel sectDay = new JLabel("Section Day: ");
+	    JLabel sectLoc = new JLabel("Section Location: ");
+	    Font font = sectTime.getFont();
+	    Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+	    sectTime.setFont(boldFont);
+	    sectDay.setFont(boldFont);
+	    sectLoc.setFont(boldFont);
+	    JLabel sTime = new JLabel(this.sectInfo.timeStartString()+ " - " + this.sectInfo.timeEndString());
+	    JLabel sDay = new JLabel(this.sectInfo.dayString());
+	    JLabel sLoc = new JLabel(this.sectInfo.location);
+	    panelHolder[5][0].add(sectTime, BorderLayout.EAST);
+	    panelHolder[5][1].add(sTime, BorderLayout.WEST);
+	    panelHolder[6][0].add(sectDay, BorderLayout.EAST);
+	    panelHolder[6][1].add(sDay, BorderLayout.WEST);
+	    newCount = 7;
+	}
         Font font = t.getFont();
         Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
         t.setFont(boldFont);
@@ -128,9 +144,6 @@ public class Course{
         ti.setFont(boldFont);
         dayList.setFont(boldFont);
         l.setFont(boldFont);
-        sectTime.setFont(boldFont);
-        sectDay.setFont(boldFont);
-        sectLoc.setFont(boldFont);
         String myUnits = "" + this.units;
         JLabel code = new JLabel(this.courseID);
         JLabel title = new JLabel(this.title);
@@ -140,13 +153,8 @@ public class Course{
         JLabel time = new JLabel(this.lectInfo.timeStartString() + " - " + this.lectInfo.timeEndString());
         JLabel day = new JLabel(this.lectInfo.dayString());
         JLabel location = new JLabel(this.lectInfo.location);
-        JLabel sTime = new JLabel(this.sectInfo.timeStartString()+ " - " + this.sectInfo.timeEndString());
-        JLabel sDay = new JLabel(this.sectInfo.dayString());
-        JLabel sLoc = new JLabel(this.sectInfo.location);
         panelHolder[0][0].add(t, BorderLayout.EAST);
         panelHolder[0][1].add(title, BorderLayout.WEST);
-        //panelHolder[1][0].add(ft, BorderLayout.EAST);
-        //panelHolder[1][1].add(fullTitle, BorderLayout.WEST);
         panelHolder[1][0].add(u, BorderLayout.EAST);
         panelHolder[1][1].add(units, BorderLayout.WEST);
         panelHolder[2][0].add(d, BorderLayout.EAST);
@@ -155,70 +163,77 @@ public class Course{
         panelHolder[3][1].add(time, BorderLayout.WEST);
         panelHolder[4][0].add(dayList, BorderLayout.EAST);
         panelHolder[4][1].add(day, BorderLayout.WEST);
-        //panelHolder[6][0].add(l, BorderLayout.EAST);
-        //panelHolder[6][1].add(location, BorderLayout.WEST);
-        panelHolder[5][0].add(sectTime, BorderLayout.EAST);
-        panelHolder[5][1].add(sTime, BorderLayout.WEST);
-        //panelHolder[7][0].add(sectLoc, BorderLayout.EAST);
-        //panelHolder[7][1].add(sLoc, BorderLayout.WEST);
-        panelHolder[6][0].add(sectDay, BorderLayout.EAST);
-        panelHolder[6][1].add(sDay, BorderLayout.WEST);
         JLabel p = new JLabel("PreRequisites: ");
         JLabel g = new JLabel("May apply to GE Requirements: ");
         JLabel r = new JLabel("Restrictions: ");
         p.setFont(boldFont);
         g.setFont(boldFont);
         r.setFont(boldFont);
-        int newCount = 7;
         JLabel temp;
         panelHolder[newCount][0].add(p, BorderLayout.EAST);
         panelHolder[newCount][0].setBackground(myColor);
         if(this.preReqs.length==0){
             temp = new JLabel("None");
-            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(myColor);
-            newCount++;
-        }
-        else{
-            for(Course c:this.preReqs){
-                temp = new JLabel(c.courseID);
-                panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(myColor);
-                newCount++;
-            }
-        }
+	}
+	else{
+	    temp = new JLabel(this.getPreReqString());
+	}
+        panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+        panelHolder[newCount][1].setBackground(myColor);
+        newCount++;
         panelHolder[newCount][0].add(g, BorderLayout.EAST);
         panelHolder[newCount][0].setBackground(myColor);
         if(this.geFulfill.length==0){
             temp = new JLabel("None");
-            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(myColor);
-            newCount++;
-        }
-        else{
-            for(String s:this.geFulfill){
-                temp = new JLabel(s);
-                panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(myColor);
-                newCount++;
-            }
-        }
+	}
+	else{
+	    temp = new JLabel(this.getGEString());
+	}
+        panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+        panelHolder[newCount][1].setBackground(myColor);
+        newCount++;
         panelHolder[newCount][0].add(r, BorderLayout.EAST);
         panelHolder[newCount][0].setBackground(myColor);
         if(this.restrictions.length==0){
             temp = new JLabel("None");
-            panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-            panelHolder[newCount][1].setBackground(myColor);
-            newCount++;
-        }
-        else{
-            for(String s:this.restrictions){
-                temp = new JLabel(s);
-                panelHolder[newCount][1].add(temp, BorderLayout.WEST);
-                panelHolder[newCount][1].setBackground(myColor);
-                newCount++;
-            }
-        }
+	}        
+	else{
+	    temp = new JLabel(this.getRestString());
+	}
+	panelHolder[newCount][1].add(temp, BorderLayout.WEST);
+        panelHolder[newCount][1].setBackground(myColor);
+        newCount++;
         return panel;
+    }
+
+    public String getGEString(){
+	String resultString = "";
+	for(int i = 0; i<this.geFulfill.length; i++){
+	    resultString+= this.geFulfill[i];
+	    if(i!=(this.geFulfill.length-1)){
+		resultString+=", ";
+	    }
+	}
+	return resultString;
+    }
+    public String getRestString(){
+	String resultString = "";
+	for(int i = 0; i<this.restrictions.length; i++){
+	    resultString+= this.restrictions[i];
+	    if(i!=(this.restrictions.length-1)){
+		resultString+=", ";
+	    }
+	}
+	return resultString;
+    } 
+    public String getPreReqString(){
+	String resultString = "";
+	for(int i = 0; i<this.preReqs.length; i++){
+	    resultString+= this.preReqs[i].courseID;
+	    if(i!=(this.preReqs.length-1)){
+		resultString+=", ";
+	    }
+	}
+	return resultString;
     }
 }

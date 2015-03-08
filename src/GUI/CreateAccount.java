@@ -170,7 +170,7 @@ public class CreateAccount extends JPanel{
 		for(int i=0;i<2; i++){
 			rows[i]= new JPanel();
 			rows[i].setOpaque(true);
-			rows[i].setBackground(Color.BLUE);
+			rows[i].setBackground(new Color(172,183,203));
 			this.add(rows[i]);
 		}
 		GridLayout innergrid = new GridLayout(7, 5);
@@ -180,7 +180,7 @@ public class CreateAccount extends JPanel{
 		for(int m=0;m<7;m++){
 		    for (int k=0;k<5;k++){
 			spot[m][k]=new JPanel();
-			spot[m][k].setBackground(Color.YELLOW);
+			spot[m][k].setBackground(new Color(204,204,196));
 			spot[m][k].setOpaque(true);
 			innerpanel.add(spot[m][k]);
 		    }

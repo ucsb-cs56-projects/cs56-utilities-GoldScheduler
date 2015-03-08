@@ -51,13 +51,13 @@ public class MainPage {
         this.u = u;
     }
     /**
-     @return the current user
+     * @return the current user
      */
 	public User getUser() {
 		return this.u;
 	}
     /** 
-     Sets the main display and allows the user to travel between pages
+     * Sets the main display and allows the user to travel between pages
      */
     public void setDisplay(){
         main = new JPanel();
@@ -121,7 +121,7 @@ public class MainPage {
         this.main.add(display, BorderLayout.EAST);
     }
     /**
-     @return Sets the main display and returns the result
+     * @return Sets the main display and returns the result
      */
     public JPanel getDisplay(){
         this.setDisplay();
@@ -129,7 +129,7 @@ public class MainPage {
     }
     //USER
     /**
-     @param u User that the user variable will be changed to
+     * @param u User that the user variable will be changed to
      */
     void setUser(User u) {
         this.u=u;
@@ -145,7 +145,7 @@ public class MainPage {
     }
     //ACTION LISTENER CLASSES
     /**
-     Opens a simpleSeach page
+     * Opens a simpleSeach page
      */
     class searchListener implements ActionListener{
         private MainPage p;
@@ -169,7 +169,7 @@ public class MainPage {
         }
     }
     /**
-     Opens an advanced search page
+     * Opens an advanced search page
      */
     class advSearchListener implements ActionListener{
         private MainPage p;
@@ -193,8 +193,8 @@ public class MainPage {
         }
     }
     /**
-     Opens up a schedule page
-    */
+     * Opens up a schedule page
+     */
     class schedListener implements ActionListener{
         private MainPage p;
         private Scheduler s;
@@ -217,7 +217,7 @@ public class MainPage {
         }
     }
     /**
-     When the user clicks one of the buttons, this allows the user to return to the main page
+     * When the user clicks one of the buttons, this allows the user to return to the main page
      */
     class backListener implements ActionListener{
         private MainPage outer;

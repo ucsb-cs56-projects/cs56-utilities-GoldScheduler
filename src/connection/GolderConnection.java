@@ -30,8 +30,7 @@ class Config{
  */
 public class GolderConnection {
 	//variables
-	public static Statement stmt;
-	public static ResultSet rs;
+
 	public static Connection conn;
 	// A static initialization for all the static variables
 	static {
@@ -72,7 +71,7 @@ public class GolderConnection {
 			conn = DriverManager.getConnection("jdbc:mysql://"
 			    		   + Config.host+"/"+ Config.table,
 			    		   Config.username, Config.password);
-			stmt = conn.createStatement();
+			
 		} catch (SQLException e) {
 			
 			int n = JOptionPane.showConfirmDialog(
