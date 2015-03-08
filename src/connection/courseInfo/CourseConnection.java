@@ -182,7 +182,7 @@ Course c = null;
 	}
     /**
      @return ArrayList of courses that match the key
-     @param key
+     @param keys
      @param option
      */
 	public static ArrayList<Course> getResults(ArrayList<String> keys, String option) throws SQLException{

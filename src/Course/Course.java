@@ -59,7 +59,7 @@ public class Course{
         return this.lectInfo;
     }
     /**
-     * @param lectinfo The new Lecture to be set for this course
+     * @param lectInfo The new Lecture to be set for this course
      */
     public void setLect(Lecture lectInfo){
         this.lectInfo = lectInfo;
