@@ -293,7 +293,7 @@ public class Scheduler {
                 day2Time.setFont(day2Time.getFont().deriveFont(10f));
                 day2Time.setBackground(lect.col);
                 day2Time.setOpaque(true);
-                row = this.timeSlot(lect.timeStart)-1;
+                row = this.timeSlot(lect.timeStart);
                 column = 0;
                 if(numPanels>=2){
                     //If just 2, show time and course ID for day 1 and 2
@@ -346,7 +346,7 @@ public class Scheduler {
                 day3Time.setFont(day1Time.getFont().deriveFont(10f));
                 day3Time.setBackground(lect.col);
                 day3Time.setOpaque(true);
-                row = this.timeSlot(lect.timeStart)-1;
+                row = this.timeSlot(lect.timeStart);
                 column = 0;
                if(numPanels>=2){
                    //Labels
@@ -381,7 +381,7 @@ public class Scheduler {
                 day4Time.setFont(day4Time.getFont().deriveFont(6f));
                 day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
-                row = this.timeSlot(lect.timeStart)-1;
+                row = this.timeSlot(lect.timeStart);
                 column = 0;
                 if(numPanels>=2){
                     column = this.daySlot(lect.days[3]);
