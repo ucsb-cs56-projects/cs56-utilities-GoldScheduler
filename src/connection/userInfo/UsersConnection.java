@@ -188,12 +188,19 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static void saveCourse(User u, Course c) throws SQLException {
 		Statement stmt = conn.createStatement();
+		int sectionID;
+		int sectionColor;
 
 		int userId = u.getID();
 		int lectureID = c.getLect().id;
 		int lectureColor = c.getLect().col.getRGB();
-		int sectionID = c.getSect().id;
-		int sectionColor = c.getSect().col.getRGB();
+		if (c.getSect() == null) {
+			sectionID = 0;
+			sectionColor = 0;
+		} else {
+			sectionID = c.getSect().id;
+			sectionColor = c.getSect().col.getRGB();
+		}
 			stmt.executeUpdate(String.format("INSERT INTO `student_schedule` (user_id,lecture_id,lecture_color,section_id,section_color) VALUES (%s,%s,%s,%s,%s);", 
 					userId, lectureID, lectureColor, sectionID,sectionColor));
 	}
