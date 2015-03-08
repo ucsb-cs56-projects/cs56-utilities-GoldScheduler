@@ -1,7 +1,10 @@
 package connection.userInfo;
 import java.awt.Color;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
 import connection.GolderConnection;
 import Course.*;
 /**
@@ -23,6 +26,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static int Register(String username, String password, String email, String major) throws SQLException {
+		Statement stmt = conn.createStatement();
+
 		if (email.equals(""))
 			email = "null";
 		else
@@ -46,6 +51,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static int getID(String username, String password) throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
 		int id = 0;
 			if (stmt.execute(String.format("SELECT ID, user_password FROM `users` WHERE user_name='%s';", username))) {
 		        rs = stmt.getResultSet();
@@ -67,6 +74,8 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static int getIdByEmail(String email) throws SQLException {
 		int id = 0;
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
 			if (stmt.execute(String.format("SELECT ID FROM `users` WHERE email_address='%s';", email))) {
 		        rs = stmt.getResultSet();
 		        if (rs.next()) 
@@ -84,6 +93,8 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static User getInfo(int ID) throws SQLException{
 		User u = null;
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE ID='%s';", ID))) {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
@@ -105,6 +116,8 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static User getInfo(String userName, String email, int t) throws SQLException{
 		User u = null;
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND email_address='%s';", userName, email))) {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
@@ -123,6 +136,8 @@ public class UsersConnection extends GolderConnection{
 	 */
 	public static User getInfo(String userName, String password) throws SQLException{
 		User u = null;
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND user_password='%s';", userName, password))) {
 		        rs = stmt.getResultSet();
 		        if (rs.isLast()) 
@@ -139,6 +154,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static void setPassword(int ID, String pw) throws SQLException {
+		Statement stmt = conn.createStatement();
+
 		stmt.executeUpdate(String.format("UPDATE `users` SET user_password='%s' WHERE ID='%s';",
                                          pw,ID));
 	}
@@ -149,6 +166,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static void setEmail(int ID, String email) throws SQLException {
+		Statement stmt = conn.createStatement();
+
 		stmt.executeUpdate(String.format("UPDATE `users` SET email_address='%s' WHERE ID='%s';",email,ID));
 	}
 	/**
@@ -158,6 +177,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException 
 	 */
 	public static void setMajor(int ID, String mj) throws SQLException  {
+		Statement stmt = conn.createStatement();
+
 		stmt.executeUpdate(String.format("UPDATE `users` SET major='%s' WHERE ID='%s';",mj,ID));
 	}
 	/**
@@ -166,6 +187,8 @@ public class UsersConnection extends GolderConnection{
 	 * @param c
 	 */
 	public static void saveCourse(User u, Course c) throws SQLException {
+		Statement stmt = conn.createStatement();
+
 		int userId = u.getID();
 		int lectureID = c.getLect().id;
 		int lectureColor = c.getLect().col.getRGB();
@@ -180,6 +203,7 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException
 	 */
 	public static void deleteCourse(User u, Course c) throws SQLException {
+		Statement stmt = conn.createStatement();
         int userId = u.getID();
 		int lectureID = c.getLect().id;
 		int sectionID = c.getSect().id;
@@ -196,6 +220,8 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException
 	 */
 	public static ArrayList<Course> getSchedule(User u) throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
 		ArrayList<Course> ca = new ArrayList<Course>();
 		if (stmt.execute(String.format("SELECT * FROM `student_schedule` WHERE user_id = %s;", u.getID()))) {
 			rs = stmt.getResultSet();
@@ -219,6 +245,7 @@ public class UsersConnection extends GolderConnection{
 	 * @throws SQLException
 	 */
 	public static void deleteSchedule(User u) throws SQLException {
+		Statement stmt = conn.createStatement();
 		stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s;", u.getID()));
 	}
 }

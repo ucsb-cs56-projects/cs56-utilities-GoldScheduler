@@ -349,7 +349,7 @@ public class AdvancedSearch{
      *@param key A keyword taken from the dropdown menu that represents what the user is looking for
      *@param option The button clicked indicating which category the keyword belongs to
      */
-    public ArrayList<Course> getResults(ArrayList<String> key, String option){
+    public ArrayList<Course> getResults(ArrayList<String> key, ArrayList<String>  option){
         ArrayList<Course> courseList = null;
 		try {
 			courseList = connection.courseInfo.CourseConnection.getResults(key, option);
@@ -474,12 +474,14 @@ public class AdvancedSearch{
         public void actionPerformed(ActionEvent e){
             ArrayList<Course> result = new ArrayList<Course>();
             ArrayList<String> keyArray = new ArrayList<String>();
+            ArrayList<String> optionArray = new ArrayList<String>();
             for(JCheckBox check: this.aSearch.geChecksList){
                 if(check.isSelected()){
+                	optionArray.add("General Education");
                     keyArray.add(this.aSearch.geChecks.get(check));
                 }
             }
-            result = getResults(keyArray, "General Education");
+            result = getResults(keyArray, optionArray);
             this.courseResultsPanel.removeAll();
             this.courseResultsPanel.revalidate();
             this.courseResultsPanel.repaint();
@@ -502,8 +504,10 @@ public class AdvancedSearch{
             JComboBox comboBox = (JComboBox) e.getSource();
             String selectedItem = (String)comboBox.getSelectedItem();
             ArrayList<String> selectedArray = new ArrayList<String>();
+            ArrayList<String> option = new ArrayList<String>();
             selectedArray.add(selectedItem);
-            result = getResults(selectedArray, this.optionString);
+            option.add(this.optionString);
+            result = getResults(selectedArray, option);
             this.a.display.removeAll();
             this.a.display.revalidate();
             this.a.display.repaint();
