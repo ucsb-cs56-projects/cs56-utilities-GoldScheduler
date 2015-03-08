@@ -404,24 +404,26 @@ public class Scheduler {
                     panelHolder[row+3][column].setBackground(lect.col);
                 }
             }
-            //Add section. There will only be one 
-           JLabel sectionLabelTitle = new JLabel();
-            sectionLabelTitle.setText(g.courseID);
-            sectionLabelTitle.setBackground(sect.col);
-            sectionLabelTitle.setOpaque(true);
-            JLabel sectionLabelTime = new JLabel();
-            sectionLabelTime.setText(sect.timeString());
-            sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
-            sectionLabelTime.setBackground(sect.col);
-            sectionLabelTime.setOpaque(true);
-            row = this.timeSlot(sect.timeStart);
-            column = this.daySlot(sect.days[0]);
-            //Labels
-            panelHolder[row][column].add(sectionLabelTitle);
-            panelHolder[row+1][column].add(sectionLabelTime);
-            //Background
-            panelHolder[row][column].setBackground(sect.col);
-            panelHolder[row+1][column].setBackground(sect.col);
+            //Add section. There will only be one
+	    if(sect!=null){ 
+		JLabel sectionLabelTitle = new JLabel();
+		sectionLabelTitle.setText(g.courseID);
+		sectionLabelTitle.setBackground(sect.col);
+		sectionLabelTitle.setOpaque(true);
+		JLabel sectionLabelTime = new JLabel();
+		sectionLabelTime.setText(sect.timeString());
+		sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
+		sectionLabelTime.setBackground(sect.col);
+		sectionLabelTime.setOpaque(true);
+		row = this.timeSlot(sect.timeStart);
+		column = this.daySlot(sect.days[0]);
+		//Labels
+		panelHolder[row][column].add(sectionLabelTitle);
+		panelHolder[row+1][column].add(sectionLabelTime);
+		//Background
+		panelHolder[row][column].setBackground(sect.col);
+		panelHolder[row+1][column].setBackground(sect.col);
+	    }
         }
         panel.setPreferredSize(new Dimension(600, 600));
         this.panel = panel;
@@ -579,7 +581,7 @@ public class Scheduler {
             panelNum[2][1].add(lectTime);
             panelNum[2][2].add(lectInstructor);
             //Row 4+: Section Info
-	    if(sect!=null){
+	    if(thisSection!=null){
 		JLabel sectDay = new JLabel(thisSection.dayStringShort());
 		JLabel sectTime = new JLabel(thisSection.timeString());
 		JLabel sectInstructor = new JLabel("N/A");
