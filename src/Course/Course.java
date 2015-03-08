@@ -116,9 +116,25 @@ public class Course{
         JLabel ti = new JLabel("Time: ");
         JLabel dayList = new JLabel("Days: ");
         JLabel l = new JLabel("Location: ");
-        JLabel sectTime = new JLabel("Section Time: ");
-        JLabel sectDay = new JLabel("Section Day: ");
-        JLabel sectLoc = new JLabel("Section Location: ");
+	int newCount = 5;
+	if(this.sectInfo!=null){
+	    JLabel sectTime = new JLabel("Section Time: ");
+	    JLabel sectDay = new JLabel("Section Day: ");
+	    JLabel sectLoc = new JLabel("Section Location: ");
+	    Font font = sectTime.getFont();
+	    Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+	    sectTime.setFont(boldFont);
+	    sectDay.setFont(boldFont);
+	    sectLoc.setFont(boldFont);
+	    JLabel sTime = new JLabel(this.sectInfo.timeStartString()+ " - " + this.sectInfo.timeEndString());
+	    JLabel sDay = new JLabel(this.sectInfo.dayString());
+	    JLabel sLoc = new JLabel(this.sectInfo.location);
+	    panelHolder[5][0].add(sectTime, BorderLayout.EAST);
+	    panelHolder[5][1].add(sTime, BorderLayout.WEST);
+	    panelHolder[6][0].add(sectDay, BorderLayout.EAST);
+	    panelHolder[6][1].add(sDay, BorderLayout.WEST);
+	    newCount = 7;
+	}
         Font font = t.getFont();
         Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
         t.setFont(boldFont);
@@ -128,9 +144,6 @@ public class Course{
         ti.setFont(boldFont);
         dayList.setFont(boldFont);
         l.setFont(boldFont);
-        sectTime.setFont(boldFont);
-        sectDay.setFont(boldFont);
-        sectLoc.setFont(boldFont);
         String myUnits = "" + this.units;
         JLabel code = new JLabel(this.courseID);
         JLabel title = new JLabel(this.title);
@@ -140,13 +153,8 @@ public class Course{
         JLabel time = new JLabel(this.lectInfo.timeStartString() + " - " + this.lectInfo.timeEndString());
         JLabel day = new JLabel(this.lectInfo.dayString());
         JLabel location = new JLabel(this.lectInfo.location);
-        JLabel sTime = new JLabel(this.sectInfo.timeStartString()+ " - " + this.sectInfo.timeEndString());
-        JLabel sDay = new JLabel(this.sectInfo.dayString());
-        JLabel sLoc = new JLabel(this.sectInfo.location);
         panelHolder[0][0].add(t, BorderLayout.EAST);
         panelHolder[0][1].add(title, BorderLayout.WEST);
-        //panelHolder[1][0].add(ft, BorderLayout.EAST);
-        //panelHolder[1][1].add(fullTitle, BorderLayout.WEST);
         panelHolder[1][0].add(u, BorderLayout.EAST);
         panelHolder[1][1].add(units, BorderLayout.WEST);
         panelHolder[2][0].add(d, BorderLayout.EAST);
@@ -155,17 +163,12 @@ public class Course{
         panelHolder[3][1].add(time, BorderLayout.WEST);
         panelHolder[4][0].add(dayList, BorderLayout.EAST);
         panelHolder[4][1].add(day, BorderLayout.WEST);
-        panelHolder[5][0].add(sectTime, BorderLayout.EAST);
-        panelHolder[5][1].add(sTime, BorderLayout.WEST);
-        panelHolder[6][0].add(sectDay, BorderLayout.EAST);
-        panelHolder[6][1].add(sDay, BorderLayout.WEST);
         JLabel p = new JLabel("PreRequisites: ");
         JLabel g = new JLabel("May apply to GE Requirements: ");
         JLabel r = new JLabel("Restrictions: ");
         p.setFont(boldFont);
         g.setFont(boldFont);
         r.setFont(boldFont);
-        int newCount = 7;
         JLabel temp;
         panelHolder[newCount][0].add(p, BorderLayout.EAST);
         panelHolder[newCount][0].setBackground(myColor);
@@ -228,7 +231,7 @@ public class Course{
 	for(int i = 0; i<this.preReqs.length; i++){
 	    resultString+= this.preReqs[i].courseID;
 	    if(i!=(this.preReqs.length-1)){
-		resultString+=" ,";
+		resultString+=", ";
 	    }
 	}
 	return resultString;
