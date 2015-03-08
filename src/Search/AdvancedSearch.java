@@ -338,10 +338,7 @@ public class AdvancedSearch{
         }
         else { //s==GE
            String [] m= {//"------",
-               "A1","A2", "AMHI", "AMI", "B", "C", "C1", "C2", "C3", "CSB",
-               "CU", "CUC", "CUD", "D", "D1", "D2", "D3", "D4", "E", "E1", "E2", "ETH", "EUR",
-               "F", "F1", "F2A", "F2B", "G", "H", "MAJ", "MG", "MUD", "MUG", "NWC", "QNT", "SUB",
-               "UG", "UPU", "USB", "USR", "WRT"};
+               "B", "C", "D", "F", "G", "H", "ETH", "EUR", "NWC", "WRT"}
             return m;
         }
     }
