@@ -13,6 +13,7 @@ import connection.userInfo.User;
 import connection.userInfo.UsersConnection;
 
 /**
+ * Login page
  * @author Wesley Pollek
  * @author Forrest Sun
  * @version Feb 10 2015
