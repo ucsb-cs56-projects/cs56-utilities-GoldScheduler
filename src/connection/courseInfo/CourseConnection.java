@@ -210,8 +210,7 @@ public class CourseConnection extends GolderConnection{
 					}
 				}
 			}
-		for (int i = 0; i < ca.size();i++)
-			System.out.println(ca.get(i).courseID);
+
 		
 		return ca;
 	}
