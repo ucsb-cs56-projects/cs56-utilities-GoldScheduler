@@ -223,6 +223,7 @@ public class CourseConnection extends GolderConnection{
      */
 	public static ArrayList<Course> getResults(ArrayList<String> keys, ArrayList<String>  option) throws SQLException{
 		int len = keys.size();
+		
         String find = "";
         for (int i = 0; i < len; i++) {
 			if (option.get(i).equals("Department")){
@@ -287,6 +288,8 @@ public class CourseConnection extends GolderConnection{
 				
 			}
         }
+        
+
 		ArrayList<Course> ca = new ArrayList<Course>();
 		Statement stmt = conn.createStatement();
 		ResultSet rs;
@@ -349,7 +352,9 @@ public class CourseConnection extends GolderConnection{
 				}
 			}
 		}
-			
+		
+		
+		
 		return ca;
 	}
 	/**
