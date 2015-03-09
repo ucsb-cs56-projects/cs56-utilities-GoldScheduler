@@ -336,8 +336,7 @@ public class AdvancedSearch{
             return m;
         }
         else { //s==GE
-           String [] m= {//"------",
-               "B", "C", "D", "E", "F", "G", "H", "ETH", "EUR", "NWC", "WRT"};
+           String [] m= {"B", "C", "D", "E", "F", "G", "H", "ETH", "EUR", "QNT", "NWC", "WRT"};
             return m;
         }
     }

@@ -275,6 +275,9 @@ public class CourseConnection extends GolderConnection{
                     case "NWC":
                         find += "world_culture_reqs.coursename IS NOT NULL";
                         break;
+                    case "QNT":
+                        find += "quantitative_reqs.coursename IS NOT NULL";
+                        break;
                     default:
                         find += "0";
                         
