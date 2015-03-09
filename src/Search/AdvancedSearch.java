@@ -427,6 +427,7 @@ public class AdvancedSearch{
             if(optionString.equals("General Education")){
                 newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
                 JCheckBox temp;
+                geChecksList = new ArrayList<JCheckBox>();
                 for(String s:menuList){
                     temp = new JCheckBox(s);
                     geChecksList.add(temp);
@@ -486,6 +487,7 @@ public class AdvancedSearch{
             JPanel newPanel = new JPanel();
             newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
             JCheckBox temp;
+            geChecksList = new ArrayList<JCheckBox>();
             for(String s:menuList){
                 temp = new JCheckBox(s);
                 geChecksList.add(temp);
