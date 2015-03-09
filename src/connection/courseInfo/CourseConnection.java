@@ -150,10 +150,7 @@ public class CourseConnection extends GolderConnection{
 		ResultSet rs;
 		Statement stmt2 = conn.createStatement();
 		ResultSet rs2;
-		
-				
-		
-		
+
 			stmt.execute(String.format("SELECT * FROM `spring_15_lecture` "
 					+ "INNER JOIN `courses` ON spring_15_lecture.course_name=courses.course_name "
 					+ "LEFT JOIN `b_reqs` ON spring_15_lecture.course_name=b_reqs.coursename "
@@ -225,7 +222,9 @@ public class CourseConnection extends GolderConnection{
 		int len = keys.size();
 		
         String find = "";
+        
         for (int i = 0; i < len; i++) {
+        	 System.out.println(i);
 			if (option.get(i).equals("Department")){
 				Pattern pattern = 
 					    Pattern.compile("\\A.+\\((.+)\\)\\Z");
@@ -290,6 +289,7 @@ public class CourseConnection extends GolderConnection{
         }
         
 
+
 		ArrayList<Course> ca = new ArrayList<Course>();
 		Statement stmt = conn.createStatement();
 		ResultSet rs;
@@ -352,9 +352,7 @@ public class CourseConnection extends GolderConnection{
 				}
 			}
 		}
-		
-		
-		
+
 		return ca;
 	}
 	/**
