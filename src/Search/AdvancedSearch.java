@@ -336,8 +336,7 @@ public class AdvancedSearch{
             return m;
         }
         else { //s==GE
-           String [] m= {//"------",
-               "B", "C", "D", "F", "G", "H", "ETH", "EUR", "NWC", "WRT"};
+           String [] m= {"B", "C", "D", "E", "F", "G", "H", "ETH", "EUR", "QNT", "NWC", "WRT"};
             return m;
         }
     }
@@ -460,28 +459,47 @@ public class AdvancedSearch{
      *Searches the database according to the choices selected
      */
     class submitListener implements ActionListener{
-        private AdvancedSearch aSearch;
+        private AdvancedSearch a;
         private JPanel courseResultsPanel;
-        public submitListener(JPanel courseResultsPanel, AdvancedSearch aSearch){
+        public submitListener(JPanel courseResultsPanel, AdvancedSearch a){
             this.courseResultsPanel = courseResultsPanel;
-            this.aSearch = aSearch;
+            this.a = a;
         }
         @Override
         public void actionPerformed(ActionEvent e){
             ArrayList<Course> result = new ArrayList<Course>();
             ArrayList<String> keyArray = new ArrayList<String>();
             ArrayList<String> optionArray = new ArrayList<String>();
-            for(JCheckBox check: this.aSearch.geChecksList){
+            String [] menuList = getList("General Education");
+            for(JCheckBox check: this.a.geChecksList){
                 if(check.isSelected()){
                 	optionArray.add("General Education");
-                    keyArray.add(this.aSearch.geChecks.get(check));
+                    keyArray.add(this.a.geChecks.get(check));
                 }
             }
             result = getResults(keyArray, optionArray);
-            this.courseResultsPanel.removeAll();
-            this.courseResultsPanel.revalidate();
-            this.courseResultsPanel.repaint();
-            this.courseResultsPanel.add(new JScrollPane(getCourses(result)));
+            this.a.display.removeAll();
+            this.a.display.revalidate();
+            this.a.display.repaint();
+            this.a.display.add(this.a.getControl(0), BorderLayout.NORTH);
+            this.a.display.add(new JScrollPane(getCourses(result)), BorderLayout.CENTER);
+            JPanel newPanel = new JPanel();
+            newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
+            JCheckBox temp;
+            for(String s:menuList){
+                temp = new JCheckBox(s);
+                geChecksList.add(temp);
+                geChecks.put(temp, s);
+                newPanel.add(temp);
+            }
+            JButton submitButton = new JButton("Submit");
+            submitButton.addActionListener(new submitListener(this.a.getCourses(0),this.a));
+            newPanel.add(submitButton);
+            this.a.display.add(new JScrollPane(newPanel), BorderLayout.EAST);
+            this.a.scrollableDisplay.removeAll();
+            this.a.scrollableDisplay.revalidate();
+            this.a.scrollableDisplay.repaint();
+            this.a.scrollableDisplay.add(this.a.display);
         }
     }
     /**
