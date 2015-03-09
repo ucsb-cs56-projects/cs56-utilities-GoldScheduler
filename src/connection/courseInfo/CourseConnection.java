@@ -336,7 +336,7 @@ public class CourseConnection extends GolderConnection{
                             deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"),
                             new Color(169,226,195));
 					Lecture se = new Lecture(rs2.getInt("spring_15_section.id"), "TBA", rs2.getInt("spring_15_section.start_time"),
-                            rs2.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")),
+                            rs2.getInt("spring_15_section.end_time"), deCodeWeek(rs2.getInt("spring_15_section.week")),
                             "", rs2.getString("spring_15_section.id"), new Color(169,226,195));
 					Course r = new Course(rs.getString("courses.course_name"), rs.getString("courses.full_title"),
 							rs.getString("courses.full_title"), rs.getString("department"), rs.getString("units"),
