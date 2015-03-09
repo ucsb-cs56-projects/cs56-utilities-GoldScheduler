@@ -175,7 +175,7 @@ public class CourseConnection extends GolderConnection{
 				
 				stmt2.execute(String.format("SELECT * FROM `spring_15_section` WHERE corresponding_id = %s", rs.getInt("spring_15_lecture.id")));
 				rs2=stmt2.getResultSet();
-				if (rs2.last()) {
+				if (rs2.isAfterLast()) {
 				
 	        		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
 	                                         rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
@@ -191,14 +191,16 @@ public class CourseConnection extends GolderConnection{
 	                                      le, se);
 	        		ca.add(r);
 				} else {
+					
 					while (rs2.next()) {
 						Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
                                 rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
                                 deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"),
                                 new Color(169,226,195));
-						Lecture se = new Lecture(rs.getInt("spring_15_section.id"), "TBA", rs.getInt("spring_15_section.start_time"),
-                                rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")),
-                                "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+						Lecture se = new Lecture(rs2.getInt("spring_15_section.id"), "TBA", rs2.getInt("spring_15_section.start_time"),
+                                rs2.getInt("spring_15_section.end_time"), deCodeWeek(rs2.getInt("spring_15_section.week")),
+                                "", rs2.getString("spring_15_section.id"), new Color(169,226,195));
+						
 						Course r = new Course(rs.getString("courses.course_name"), rs.getString("courses.full_title"),
 								rs.getString("courses.full_title"), rs.getString("department"), rs.getString("units"),
                              new Course [0], new String [0], deCodeGEFill(rs.getString(12), rs.getString(13), rs.getString(14),
@@ -312,7 +314,7 @@ public class CourseConnection extends GolderConnection{
 			
 			stmt2.execute(String.format("SELECT * FROM `spring_15_section` WHERE corresponding_id = %s", rs.getInt("spring_15_lecture.id")));
 			rs2=stmt2.getResultSet();
-			if (rs2.last()) {
+			if (rs2.isAfterLast()) {
 			
         		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
                                          rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
@@ -333,9 +335,9 @@ public class CourseConnection extends GolderConnection{
                             rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
                             deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"),
                             new Color(169,226,195));
-					Lecture se = new Lecture(rs.getInt("spring_15_section.id"), "TBA", rs.getInt("spring_15_section.start_time"),
-                            rs.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")),
-                            "", rs.getString("spring_15_section.id"), new Color(169,226,195));
+					Lecture se = new Lecture(rs2.getInt("spring_15_section.id"), "TBA", rs2.getInt("spring_15_section.start_time"),
+                            rs2.getInt("spring_15_section.end_time"), deCodeWeek(rs.getInt("spring_15_section.week")),
+                            "", rs2.getString("spring_15_section.id"), new Color(169,226,195));
 					Course r = new Course(rs.getString("courses.course_name"), rs.getString("courses.full_title"),
 							rs.getString("courses.full_title"), rs.getString("department"), rs.getString("units"),
                          new Course [0], new String [0], deCodeGEFill(rs.getString(12), rs.getString(13), rs.getString(14),
