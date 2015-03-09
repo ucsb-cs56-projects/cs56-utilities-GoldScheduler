@@ -472,6 +472,7 @@ public class AdvancedSearch{
             ArrayList<String> keyArray = new ArrayList<String>();
             ArrayList<String> optionArray = new ArrayList<String>();
             String [] menuList = getList("General Education");
+            //TODO a bug caused by not refresh the checkbox
             for(JCheckBox check: this.a.geChecksList){
                 if(check.isSelected()){
                 	optionArray.add("General Education");
