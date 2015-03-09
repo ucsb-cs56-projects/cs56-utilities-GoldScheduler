@@ -84,18 +84,26 @@ public class Scheduler {
                 conflicts++;
                 return false;
             }
-            else if(Scheduler.timeSlot(c.getLect().timeStart)==0||
-                    Scheduler.timeSlot(c.getSect().timeStart)==0){
+            else if(Scheduler.timeSlot(c.getLect().timeStart)==0){
                 CourseConflict myConflict = new CourseConflict(c, d, 3);
                 cantAdd.add(myConflict);
                 conflicts++;
                 return false;
             }
-            else if(Scheduler.daySlot(c.getSect().days[0])==0){
-                CourseConflict myConflict = new CourseConflict(c, d, 4);
-                cantAdd.add(myConflict);
-                conflicts++;
-                return false;
+            if(c.getSect()!=null){
+                if(Scheduler.timeSlot(c.getSect().timeStart)==0){
+                    CourseConflict myConflict = new CourseConflict(c, d, 3);
+                    cantAdd.add(myConflict);
+                    conflicts++;
+                    return false;
+                }
+                else if(Scheduler.daySlot(c.getSect().days[0])==0){
+                    CourseConflict myConflict = new CourseConflict(c, d, 4);
+                    cantAdd.add(myConflict);
+                    conflicts++;
+                    return false;
+                }
+
             }
             for(char day: c.getLect().days){
                 if(Scheduler.daySlot(day)==0){
@@ -105,7 +113,7 @@ public class Scheduler {
                      return false;
                 }
 	    }
-        }
+    }
         /* No time conflict
            Different course id
 	   Valid time and day slots
@@ -273,12 +281,12 @@ public class Scheduler {
             day1Title.setOpaque(true);
             JLabel day1Location = new JLabel();
             day1Location.setText(lect.location);
-            day1Location.setFont(day1Location.getFont().deriveFont(10f));
+            day1Location.setFont(day1Location.getFont().deriveFont(9f));
             day1Location.setBackground(lect.col);
             day1Location.setOpaque(true);
             JLabel day1Time = new JLabel();
             day1Time.setText(lect.timeString());
-            day1Time.setFont(day1Time.getFont().deriveFont(10f));
+            day1Time.setFont(day1Time.getFont().deriveFont(9f));
             day1Time.setBackground(lect.col);
             day1Time.setOpaque(true);
             if(g.getLect().days.length>1){
@@ -289,12 +297,12 @@ public class Scheduler {
                 day2Title.setOpaque(true);
                 JLabel day2Location = new JLabel();
                 day2Location.setText(lect.location);
-                day2Location.setFont(day1Location.getFont().deriveFont(10f));
+                day2Location.setFont(day1Location.getFont().deriveFont(9f));
                 day2Location.setBackground(lect.col);
                 day2Location.setOpaque(true);
                 JLabel day2Time = new JLabel();
                 day2Time.setText(lect.timeString());
-                day2Time.setFont(day2Time.getFont().deriveFont(10f));
+                day2Time.setFont(day2Time.getFont().deriveFont(9f));
                 day2Time.setBackground(lect.col);
                 day2Time.setOpaque(true);
                 row = this.timeSlot(lect.timeStart);
@@ -342,12 +350,12 @@ public class Scheduler {
                 day3Title.setOpaque(true);
                 JLabel day3Location = new JLabel();
                 day3Location.setText(lect.location);
-                day3Location.setFont(day3Location.getFont().deriveFont(10f));
+                day3Location.setFont(day3Location.getFont().deriveFont(9f));
                 day3Location.setBackground(lect.col);
                 day3Location.setOpaque(true);
                 JLabel day3Time = new JLabel();
                 day3Time.setText(lect.timeString());
-                day3Time.setFont(day1Time.getFont().deriveFont(10f));
+                day3Time.setFont(day1Time.getFont().deriveFont(9f));
                 day3Time.setBackground(lect.col);
                 day3Time.setOpaque(true);
                 row = this.timeSlot(lect.timeStart);
@@ -377,12 +385,12 @@ public class Scheduler {
                 day4Title.setOpaque(true);
                 JLabel day4Location = new JLabel();
                 day4Location.setText(lect.location);
-                day4Location.setFont(day4Location.getFont().deriveFont(10f));
+                day4Location.setFont(day4Location.getFont().deriveFont(9f));
                 day4Location.setBackground(lect.col);
                 day4Location.setOpaque(true);
                 JLabel day4Time = new JLabel();
                 day4Time.setText(lect.timeString());
-                day4Time.setFont(day4Time.getFont().deriveFont(6f));
+                day4Time.setFont(day4Time.getFont().deriveFont(9f));
                 day4Time.setBackground(lect.col);
                 day4Time.setOpaque(true);
                 row = this.timeSlot(lect.timeStart);
@@ -412,7 +420,7 @@ public class Scheduler {
 		sectionLabelTitle.setOpaque(true);
 		JLabel sectionLabelTime = new JLabel();
 		sectionLabelTime.setText(sect.timeString());
-		sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(10f));
+		sectionLabelTime.setFont(sectionLabelTime.getFont().deriveFont(9f));
 		sectionLabelTime.setBackground(sect.col);
 		sectionLabelTime.setOpaque(true);
 		row = this.timeSlot(sect.timeStart);
@@ -581,18 +589,18 @@ public class Scheduler {
             panelNum[2][1].add(lectTime);
             panelNum[2][2].add(lectInstructor);
             //Row 4+: Section Info
-	    if(thisSection!=null){
-		JLabel sectDay = new JLabel(thisSection.dayStringShort());
-		JLabel sectTime = new JLabel(thisSection.timeString());
-		JLabel sectInstructor = new JLabel("N/A");
-      		JButton addButton = new JButton("Add");
-		addButton.addActionListener(new addListener(this,c));
-		panelNum[3][0].add(sectDay);
-		panelNum[3][1].add(sectTime);
-		panelNum[3][2].add(sectInstructor);
-		panelNum[3][3].add(addButton);
-		panels[n].add(coursePanel);
-	    }
+            if(thisSection!=null){
+                JLabel sectDay = new JLabel(thisSection.dayStringShort());
+                JLabel sectTime = new JLabel(thisSection.timeString());
+                JLabel sectInstructor = new JLabel("N/A");
+                JButton addButton = new JButton("Add");
+                addButton.addActionListener(new addListener(this,c));
+                panelNum[3][0].add(sectDay);
+                panelNum[3][1].add(sectTime);
+                panelNum[3][2].add(sectInstructor);
+                panelNum[3][3].add(addButton);
+            }
+            panels[n].add(coursePanel);
         }
         this.conflictPanel = courses;
     }
@@ -788,31 +796,35 @@ public class Scheduler {
      *@return true if there is time conflict and false if not
      */
     public static boolean timeConflict(Course c, Course d){
-	for(char thisDay:c.getLect().days){
-	    char sectDay = c.getSect().days[0];
-	    for(char thisDay2:d.getLect().days){
-		if(thisDay==thisDay2){
-		    if(Scheduler.timeConflictHelper(c.getLect(), d.getLect())==true){
-			return true;
-		    }
-		}
-		else if(thisDay==d.getSect().days[0]){
-		    if(Scheduler.timeConflictHelper(c.getLect(), d.getSect())==true){
-		        return true;
-		    }
-		}
-		else if(sectDay==d.getLect().days[0]){
-		    if(Scheduler.timeConflictHelper(c.getSect(), d.getLect())==true){
-			return true;
-		    }
-		}
-		else if(sectDay==d.getSect().days[0]){
-		    if(Scheduler.timeConflictHelper(c.getSect(), d.getSect())==true){
-			return true;
-		    }
-		}
-	    }
-	}
+        for(char thisDay:c.getLect().days){
+            if(c.getSect()!=null){
+                for(char thisDay2:d.getLect().days){
+                    char sectDay = c.getSect().days[0];
+                    if(sectDay==d.getLect().days[0]){
+                        if(Scheduler.timeConflictHelper(c.getSect(), d.getLect())==true){
+                            return true;
+                        }
+                    }
+                    else if(sectDay==d.getSect().days[0]){
+                        if(Scheduler.timeConflictHelper(c.getSect(), d.getSect())==true){
+                            return true;
+                        }
+                    }
+                }
+            }
+            if(thisDay==d.getSect().days[0]){
+                if(Scheduler.timeConflictHelper(c.getLect(), d.getSect())==true){
+                    return true;
+                }
+            }
+            for(char thisDay2:d.getLect().days){
+                if(thisDay==thisDay2){
+                    if(Scheduler.timeConflictHelper(c.getLect(), d.getLect())==true){
+                        return true;
+                    }
+                }
+            }
+        }
 	return false;
     }
     /**

@@ -196,30 +196,29 @@ public class AdvancedSearch{
                 panelNum[currentRow][1].add(lectTime);
                 panelNum[currentRow][2].add(lectInstructor);
                 currentRow++;
-	       	for(Course c:courseList.get(n).get(i)){
+                for(Course c:courseList.get(n).get(i)){
                     currentCourse = c;
                     thisLecture = currentCourse.getLect();
-		    JButton addToSchedule = new JButton("Add");
+                    JButton addToSchedule = new JButton("Add");
                     addToSchedule.addActionListener(new addListener(this.schedule,currentCourse));
-		    //If there is a section the add button corresponds to each section
-		    if(currentCourse.getSect()!=null){
-			thisSection = currentCourse.getSect();
-			//Row 4+: Section Info
-			JLabel sectDay = new JLabel(thisSection.dayStringShort());
-			JLabel sectTime = new JLabel(thisSection.timeString());
-			JLabel sectInstructor = new JLabel("N/A");
-			JLabel sectLocation = new JLabel(thisSection.location);
-			panelNum[currentRow][0].add(sectDay);
-			panelNum[currentRow][1].add(sectTime);
-			panelNum[currentRow][2].add(sectInstructor);
+                    //If there is a section the add button corresponds to each section
+                    if(currentCourse.getSect()==null){
+                        panelNum[currentRow-1][3].add(addToSchedule);
+                    }
+                    else{
+                        thisSection = currentCourse.getSect();
+                        //Row 4+: Section Info
+                        JLabel sectDay = new JLabel(thisSection.dayStringShort());
+                        JLabel sectTime = new JLabel(thisSection.timeString());
+                        JLabel sectInstructor = new JLabel("N/A");
+                        JLabel sectLocation = new JLabel(thisSection.location);
+                        panelNum[currentRow][0].add(sectDay);
+                        panelNum[currentRow][1].add(sectTime);
+                        panelNum[currentRow][2].add(sectInstructor);
                         panelNum[currentRow][3].add(addToSchedule);
-			currentRow++;
-		    }
-		    //if there is no section, you must add the lecture
-		    else{
-			panelNum[currentRow-1][3].add(addToSchedule);
-		    }
-		}
+                        currentRow++;
+                    }
+                }
             }
         }
         for(int index = 0 ; index<numResults; index++){
