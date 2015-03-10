@@ -224,7 +224,6 @@ public class CourseConnection extends GolderConnection{
         String find = "";
         
         for (int i = 0; i < len; i++) {
-        	 System.out.println(i);
 			if (option.get(i).equals("Department")){
 				Pattern pattern = 
 					    Pattern.compile("\\A.+\\((.+)\\)\\Z");
