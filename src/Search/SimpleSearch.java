@@ -157,7 +157,11 @@ public class SimpleSearch{
             int numLects = courseList.get(n).size();
             int totalNumSects = 0;
             for(int i = 0; i<numLects; i++){
-                totalNumSects += courseList.get(n).get(i).size();
+                for(Course thisCourse: courseList.get(n).get(i)){
+                    if(thisCourse.getSect()!=null){
+                        totalNumSects += 1;
+                    }
+                }
             }
             rows+= numLects;
             rows+= totalNumSects;
