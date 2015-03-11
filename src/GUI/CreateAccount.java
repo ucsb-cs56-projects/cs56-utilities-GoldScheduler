@@ -96,10 +96,8 @@ public class CreateAccount extends JPanel{
             // Do something for the keyPressed event
         }
     }
-    /**
+    /*
      * Validate when hit the button
-     * @author Forrest Sun
-     * @author Wesley Pollek
      */
     private class CreateButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -134,7 +132,6 @@ public class CreateAccount extends JPanel{
 	    String emailInfo = email.getText();
 	    if (emailInfo.equals("")) emailWrong.setText("*");
 	    else {
-	    	//TODO (or not) email checking. Now only allow a-z A-Z 0-9 _ - .
 		    Pattern pattern = 
 		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\Z");
 		    Matcher matcher = 

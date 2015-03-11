@@ -205,6 +205,7 @@ public class UsersConnection extends GolderConnection{
 					userId, lectureID, lectureColor, sectionID,sectionColor));
 	}
 	/**
+	 * delete single course in the schedule
 	 * @param u
 	 * @param c
 	 * @throws SQLException
@@ -222,6 +223,7 @@ public class UsersConnection extends GolderConnection{
 		}
 	}
 	/**
+	 * get all the schedules saved in DB
 	 * @param u
 	 * @return An ArrayList containing all the Courses in the user's schedule
 	 * @throws SQLException
@@ -248,6 +250,7 @@ public class UsersConnection extends GolderConnection{
 		return ca;
 	}
 	/**
+	 * delete entire schedule 
 	 * @param u
 	 * @throws SQLException
 	 */

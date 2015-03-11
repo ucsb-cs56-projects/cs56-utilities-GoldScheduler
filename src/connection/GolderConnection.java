@@ -1,15 +1,11 @@
 package connection;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
  * @author Forrest Sun
@@ -58,7 +54,7 @@ public class GolderConnection {
 		return conn != null;
 	}
 	/**
-	 * For Connect or Reconnect
+	 * For Connection or Reconnection
 	 * @throws SQLException 
 	 */
 	public static void connect() {
