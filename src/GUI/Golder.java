@@ -54,7 +54,6 @@ public class Golder {
     /**
      Goes to the forgotten password display
      */
-    //TODO
     public static void goToForgot(){
         window.setContentPane(fu);
         fu.clean();

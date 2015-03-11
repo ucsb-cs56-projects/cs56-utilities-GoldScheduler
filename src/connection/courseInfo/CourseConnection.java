@@ -16,7 +16,7 @@ import connection.GolderConnection;
  * @version Feb 12 2015
  */
 public class CourseConnection extends GolderConnection{
-	/*
+	/**
 	 * get an array of String of all Majors
 	 * @return an array list of Majors
 	 * @throws SQLException
@@ -40,6 +40,7 @@ public class CourseConnection extends GolderConnection{
 		return m;
 	}
 	/**
+	 * get an array of String of all Professors
 	 * @return An array list of professors
 	 * @throws SQLException
 	 */
@@ -62,6 +63,7 @@ public class CourseConnection extends GolderConnection{
 		return m;
 	}
 	/**
+	 * get a course based on lecture ID and section ID
 	 * @param lectureId
 	 * @param sectionId
 	 * @return Course that matches the lectureId and sectionId
@@ -71,7 +73,7 @@ public class CourseConnection extends GolderConnection{
 		return getCourse(lectureId, sectionId, -5643581, -5643581);
 	}
 	/**
-	 * get course with color
+	 * get course based on lecture ID and section ID with colors
 	 * @param lectureId
 	 * @param sectionId
 	 * @param lectureColor
@@ -355,6 +357,7 @@ public class CourseConnection extends GolderConnection{
 		return ca;
 	}
 	/**
+	 * method to support the week decode from database
 	 * @param w
 	 * @return Character array
 	 */
@@ -403,6 +406,7 @@ public class CourseConnection extends GolderConnection{
 		return week;
 	}
     /**
+     * a method to support the GEFULLFILL decode from database
      @param b
      @param c
      @param d

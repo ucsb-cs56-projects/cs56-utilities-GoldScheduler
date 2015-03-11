@@ -104,6 +104,10 @@ public class UserInfo extends JPanel{
         majorList = new JComboBox<String>(majorStrings);
         go();
     }
+    /**
+     * initialize the boxes
+     * @throws SQLException
+     */
     void init() throws SQLException {
     	password.setText("");
     	password1.setText("");
@@ -123,13 +127,28 @@ public class UserInfo extends JPanel{
     		majorList.setSelectedIndex(0);
     	}
     }
+    
+    /**
+     * initialize the boxes and set user
+     * @param user
+     * @throws SQLException
+     */
     void init(User user) throws SQLException {
     	u = user;
     	init();
     }
+    
+    /**
+     * reset the user
+     * @param u
+     */
     void setUser(User u) {
     	this.u=u;
     }
+    
+    /**
+     * @return the panel for user information
+     */
     public static UserInfo getUserPanel() {
     	return hahaha;
     }

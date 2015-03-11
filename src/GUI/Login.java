@@ -19,7 +19,6 @@ import connection.userInfo.UsersConnection;
  * @version Feb 10 2015
  */
 
-
 public class Login extends JPanel{
     JTextField username;
     JLabel userLabel;
@@ -30,6 +29,9 @@ public class Login extends JPanel{
     JLabel wrong;
     JButton createAcc;
     
+    /**
+     * Constructor
+     */
     
     public Login(){
     	username= new JTextField(20);
@@ -63,6 +65,9 @@ public class Login extends JPanel{
         go();
     }
     
+    /**
+     * Validate when press enter
+     */
     
     class KeyValidator extends KeyAdapter {
     	public void keyReleased(KeyEvent e) {
@@ -84,6 +89,10 @@ public class Login extends JPanel{
         */
     }
     
+    /**
+     * Validate when hit button
+     */
+    
     class LoginButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -100,6 +109,11 @@ public class Login extends JPanel{
 		}
     }
 
+    
+    /**
+     * validate the information in the boxes
+     * @throws SQLException
+     */
     
     public void Validator() throws SQLException {
     	String userinfo = username.getText();
@@ -126,6 +140,9 @@ public class Login extends JPanel{
 	}
 	*/
     
+    /**
+     * initialize the boxes;
+     */
     public void clean() {
     	wrong.setText("");
     	username.setText("");
@@ -133,7 +150,9 @@ public class Login extends JPanel{
     }
 	
 
-
+    /**
+     * graphic part
+     */
     public void go(){
 		GridLayout basegrid = new GridLayout(2, 1);
 		this.setLayout(basegrid);
