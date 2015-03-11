@@ -172,7 +172,7 @@ public class CourseConnection extends GolderConnection{
 				
 				stmt2.execute(String.format("SELECT * FROM `spring_15_section` WHERE corresponding_id = %s", rs.getInt("spring_15_lecture.id")));
 				rs2=stmt2.getResultSet();
-				if (rs2.isAfterLast()) {
+				if (!rs2.next()) {
 				
 	        		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
 	                                         rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
@@ -188,7 +188,7 @@ public class CourseConnection extends GolderConnection{
 	                                      le, se);
 	        		ca.add(r);
 				} else {
-					
+					rs2.beforeFirst();
 					while (rs2.next()) {
 						Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
                                 rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
@@ -316,8 +316,7 @@ public class CourseConnection extends GolderConnection{
 			
 			stmt2.execute(String.format("SELECT * FROM `spring_15_section` WHERE corresponding_id = %s", rs.getInt("spring_15_lecture.id")));
 			rs2=stmt2.getResultSet();
-			if (rs2.isAfterLast()) {
-			
+			if (!rs2.next()) {
         		Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
                                          rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
                                          deCodeWeek(rs.getInt("spring_15_lecture.week")), "", rs.getString("spring_15_lecture.id"),
@@ -332,6 +331,7 @@ public class CourseConnection extends GolderConnection{
                                       le, se);
         		ca.add(r);
 			} else {
+				rs2.beforeFirst();
 				while (rs2.next()) {
 					Lecture le = new Lecture(rs.getInt("spring_15_lecture.id"), rs.getString("spring_15_lecture.instructor_name"),
                             rs.getInt("spring_15_lecture.start_time"),  rs.getInt("spring_15_lecture.end_time"),
