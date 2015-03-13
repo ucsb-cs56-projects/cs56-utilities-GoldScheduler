@@ -198,7 +198,6 @@ public class CreateAccount extends JPanel{
 		spot[4][2].add(email);
 		spot[4][3].add(emailWrong);
 		
-		
 		spot[5][1].add(majorLabel);
 		spot[5][2].add(majorList);
 

@@ -40,18 +40,10 @@
       <copy todir="${javadocDest}" >
           <fileset dir="javadoc"/>
       </copy>
-      
-      <!-- Note: this only does the chmod command on the
-       javadoc subdirectory and its contents.  You MIGHT have to
-       MANUALLY do the chmod on the parent directories.  However,
-       you should only need to do that once. -->
-      
       <chmod dir="${javadocDest}" perm="755"  type="dir" includes="**" />
       <chmod dir="${javadocDest}" perm="755"  type="file" includes="**/*" />
       <echo>Javadoc deployed to ${javadocURL}</echo>
-      
  </target>
-
 
   <target name="run" depends="compile" description="run">
      <java fork="true" classname="GUI.Golder" classpath="build">
