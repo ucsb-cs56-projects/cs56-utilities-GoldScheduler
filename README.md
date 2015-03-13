@@ -2,7 +2,7 @@ Golder
 ======
 Gaucho On-line Data Effortless Registration
 ------
-![alt tag](https://github.ucsb.edu/jdogg5566/Golder/blob/master/python_old_files/theLogo.png)
+![alt tag](https://github.ucsb.edu/jdogg5566/Golder/blob/master/src/GUI/theLogo.png)
 
 An improved version of the class search/scheduler on Gold built with Java:  [Source Directory](https://github.ucsb.edu/jdogg5566/Golder/tree/master/src)
 
