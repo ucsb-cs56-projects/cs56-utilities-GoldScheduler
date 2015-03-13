@@ -52,6 +52,7 @@ public class User {
 	public int getID(){return this.id;}
     /**
      @param password the password the user wishes to be used
+     @throws SQLException throws exception if password could not be set
      */
 	public void setPassword(String password) throws SQLException{
 		this.password=password;
@@ -59,6 +60,7 @@ public class User {
 	}
     /**
      @param email the email the user wishes to be used
+    @throws SQLException throws exception if email could not be set
      */
 	public void setEmail(String email) throws SQLException{
 		this.email=email;
@@ -66,6 +68,7 @@ public class User {
 	}
     /**
      @param major the major the user wishes to be used
+     @throws SQLException throws exception if major could not be set
      */
 	public void setMajor(String major) throws SQLException{
 		this.major=major;
@@ -74,6 +77,7 @@ public class User {
     /**
      Adds course to a user, so the schedule can be saved
      @param c The course to be added
+     @throws SQLException throws exception if course could not be added
      */
 	public void addCourse(Course c) throws SQLException {
 		UsersConnection.saveCourse(this, c);
@@ -81,18 +85,21 @@ public class User {
     /**
      Deletes course from a user
      @param c The course to be deleted
+     @throws SQLException throws exception if course could not be deleted
      */
 	public void deleteCourse(Course c) throws SQLException {
 		UsersConnection.deleteCourse(this, c);
 	}
 	/**
      @return an ArrayList of all the courses that belong to a user
+     @throws SQLException throws exception if Schedule could not be retrieved
      */
 	public ArrayList<Course> getSchedule() throws SQLException {
 		return UsersConnection.getSchedule(this);
 	}
     /**
      Deletes all courses that belong to a user
+     @throws SQLException throws exception if schedule could not be deleted
      */
 	public void deleteSchedule() throws SQLException {
 		UsersConnection.deleteSchedule(this);

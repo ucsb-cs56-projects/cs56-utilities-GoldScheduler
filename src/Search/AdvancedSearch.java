@@ -65,6 +65,7 @@ public class AdvancedSearch{
     //SCHEDULE
     /**
      *This will get the schedule display
+     * @return the panel with the schedule display
      */
     public JPanel displaySchedule(){
         Scheduler s = this.schedule;
@@ -96,6 +97,7 @@ public class AdvancedSearch{
     }
     /**
      *Sets course display according to an unsorted courseList
+     * @param courseList the array of courses to be put into display
      */
     public void setCourses(ArrayList<Course> courseList){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(SimpleSearch.groupCourseIDResults(courseList)));
@@ -263,6 +265,7 @@ public class AdvancedSearch{
     //CONTROL
     /**
      *Calls setControl for a blank panel to display
+     * @return the Control panel
      */
     public JPanel getControl() {
         this.setControl();
@@ -347,6 +350,7 @@ public class AdvancedSearch{
     /**
      *@param key A keyword taken from the dropdown menu that represents what the user is looking for
      *@param option The button clicked indicating which category the keyword belongs to
+     * @return the arrayList of courses returned from the database
      */
     public ArrayList<Course> getResults(ArrayList<String> key, ArrayList<String>  option){
         ArrayList<Course> courseList = null;

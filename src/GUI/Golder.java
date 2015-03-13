@@ -44,6 +44,7 @@ public class Golder {
     }
     /**
      Goes to the main page
+     @param u User
      */
     public static void goToMain(User u) {
 	mainp = new MainPage(u);

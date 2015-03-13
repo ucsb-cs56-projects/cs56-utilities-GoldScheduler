@@ -33,7 +33,7 @@ public class CreateAccount extends JPanel{
     JComboBox<String> majorList;
     /**
      * Constructor
-     * @throws SQLException 
+     * @throws SQLException throws exception if account could not be created
      */
     public CreateAccount() throws SQLException {
     	username= new JTextField(20);
@@ -111,7 +111,7 @@ public class CreateAccount extends JPanel{
     /**
      * Validator Check all the information in the TextArea
      * Create account if no error
-     * @throws SQLException 
+     * @throws SQLException throws exception if validation could not be completed
      */
     public void Validator() throws SQLException {
     	int tmp;

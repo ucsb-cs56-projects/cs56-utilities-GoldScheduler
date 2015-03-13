@@ -48,7 +48,7 @@ public class Scheduler {
         this.setUser(user);
     }
     /**
-     *No-arg constructor. Generates an empty schedule.
+     * No-arg constructor. Generates an empty schedule.
      */
     public Scheduler(){
         this.courseList = new ArrayList<Course>();
@@ -828,8 +828,8 @@ public class Scheduler {
 	return false;
     }
     /**
-     *@param lect1
-     *@param lect2
+     *@param lect1 First lecture
+     *@param lect2 Second lecture
      *@return if the two Lecture objects overlap
      */
     public static boolean timeConflictHelper(Lecture lect1, Lecture lect2){

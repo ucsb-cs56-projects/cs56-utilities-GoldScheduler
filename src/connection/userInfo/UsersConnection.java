@@ -18,12 +18,12 @@ import Course.*;
 public class UsersConnection extends GolderConnection{
 	/**
 	 * Registration for users
-	 * @param username
-	 * @param password
-	 * @param email
-	 * @param major
-	 * @return User ID
-	 * @throws SQLException 
+	 * @param username desired Username
+	 * @param password desired password
+	 * @param email user's email
+	 * @param major user's email
+	 * @return User ID ID number from created user
+	 * @throws SQLException throws exception if user could not be created
 	 */
 	public static int Register(String username, String password, String email, String major) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -43,12 +43,12 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * Login with username and password
-	 * @param username
-	 * @param password
-	 * @return User ID 
+	 * @param username input username
+	 * @param password input password to match username
+	 * @return User ID ID number for the user
 	 * -1 if no username
 	 * -2 if wrong password
-	 * @throws SQLException 
+	 * @throws SQLException  throws exception if connection fails
 	 */
 	public static int getID(String username, String password) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -67,10 +67,10 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * Check if email is used
-	 * @param email
+	 * @param email User's email
 	 * @return User Id
 	 * -1 if no username
-	 * @throws SQLException 
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static int getIdByEmail(String email) throws SQLException {
 		int id = 0;
@@ -89,7 +89,7 @@ public class UsersConnection extends GolderConnection{
 	 * get User Infomation
 	 * @param ID User ID
 	 * @return User
-	 * @throws SQLException 
+	 * @throws SQLException  throws exception if connection fails
 	 */
 	public static User getInfo(int ID) throws SQLException{
 		User u = null;
@@ -108,11 +108,11 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * Used to reset the password
-	 * @param userName
-	 * @param email
-	 * @param t
+	 * @param userName Input username
+	 * @param email Corresponding email
+	 * @param t used to make the signature different
 	 * @return User 
-	 * @throws SQLException
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static User getInfo(String userName, String email, int t) throws SQLException{
 		User u = null;
@@ -129,10 +129,10 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * Used to get the user with username and password
-	 * @param userName
-	 * @param password
+	 * @param userName Input username
+	 * @param password Corresponding password
 	 * @return User
-	 * @throws SQLException
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static User getInfo(String userName, String password) throws SQLException{
 		User u = null;
@@ -149,9 +149,9 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * update password
-	 * @param ID
-	 * @param pw
-	 * @throws SQLException 
+	 * @param ID User ID number
+	 * @param pw new Password
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static void setPassword(int ID, String pw) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -161,9 +161,9 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * update email
-	 * @param ID
-	 * @param email
-	 * @throws SQLException 
+	 * @param ID User ID number
+	 * @param email new Email
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static void setEmail(int ID, String email) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -172,9 +172,9 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * update major
-	 * @param ID
-	 * @param mj
-	 * @throws SQLException 
+	 * @param ID User ID number
+	 * @param mj new Email
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static void setMajor(int ID, String mj) throws SQLException  {
 		Statement stmt = conn.createStatement();
@@ -183,8 +183,9 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * Save the User Data
-	 * @param u
-	 * @param c
+	 * @param u User
+	 * @param c Course to be added
+     * @throws SQLException throws exception if course could not be saved
 	 */
 	public static void saveCourse(User u, Course c) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -206,9 +207,9 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * delete single course in the schedule
-	 * @param u
-	 * @param c
-	 * @throws SQLException
+	 * @param u User
+	 * @param c Course to be deleted
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static void deleteCourse(User u, Course c) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -224,9 +225,9 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * get all the schedules saved in DB
-	 * @param u
+	 * @param u User
 	 * @return An ArrayList containing all the Courses in the user's schedule
-	 * @throws SQLException
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static ArrayList<Course> getSchedule(User u) throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -251,8 +252,8 @@ public class UsersConnection extends GolderConnection{
 	}
 	/**
 	 * delete entire schedule 
-	 * @param u
-	 * @throws SQLException
+	 * @param u User
+	 * @throws SQLException throws exception if connection fails
 	 */
 	public static void deleteSchedule(User u) throws SQLException {
 		Statement stmt = conn.createStatement();

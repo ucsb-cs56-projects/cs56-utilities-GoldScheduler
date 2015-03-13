@@ -29,7 +29,7 @@ public class GolderConnection {
 
 	public static Connection conn;
 	// A static initialization for all the static variables
-	static {
+	static{
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader("config/config.config"));
@@ -43,8 +43,18 @@ public class GolderConnection {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		connect();
-	}
+        try{
+            connect();
+        } catch(SQLException ex){
+            int n = JOptionPane.showConfirmDialog(
+                                                  null,
+                                                  "Do you want to reconnect?",
+                                                  "Connection Error",
+                                                  JOptionPane.YES_NO_OPTION,
+                                                  JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
+    }
 	//Functions
 	/**
 	 * Check connection
@@ -55,9 +65,9 @@ public class GolderConnection {
 	}
 	/**
 	 * For Connection or Reconnection
-	 * @throws SQLException 
+	 * @throws SQLException throws exception if a connection could not be made
 	 */
-	public static void connect() {
+	public static void connect() throws SQLException{
 		try {
 		    Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {

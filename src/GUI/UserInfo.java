@@ -24,7 +24,6 @@ public class UserInfo extends JPanel{
 		try {
 			hahaha = new UserInfo();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -66,7 +65,7 @@ public class UserInfo extends JPanel{
         passLabel= new JLabel("Enter Password:");
         passWrong = new JLabel("<html> *You must enter password <br>to update your information</html>");
         passWrong.setForeground(Color.RED);
-        
+
         password1= new JPasswordField(20);
         passLabel1= new JLabel("New Password:");
         pass1Wrong = new JLabel();
@@ -127,7 +126,6 @@ public class UserInfo extends JPanel{
     		majorList.setSelectedIndex(0);
     	}
     }
-    
     /**
      * initialize the boxes and set user
      * @param user
@@ -137,7 +135,6 @@ public class UserInfo extends JPanel{
     	u = user;
     	init();
     }
-    
     /**
      * reset the user
      * @param u
@@ -145,7 +142,6 @@ public class UserInfo extends JPanel{
     void setUser(User u) {
     	this.u=u;
     }
-    
     /**
      * @return the panel for user information
      */
@@ -155,7 +151,7 @@ public class UserInfo extends JPanel{
     /**
      * Validator Check all the information in the TextArea
      * Create account if no error
-     * @throws SQLException 
+     * @throws SQLException throws exception if connection could not be made
      */
     public void Validator() throws SQLException {
     	update.setText("");
@@ -195,8 +191,8 @@ public class UserInfo extends JPanel{
 	    }
     }
     /** Test fucntion
-     * @param args
-     * @throws SQLException
+     * @param args main arguments
+     * @throws SQLException throws exception if no connection
      */
 	public static void main (String[] args) throws SQLException{
 	    JFrame window = new JFrame();

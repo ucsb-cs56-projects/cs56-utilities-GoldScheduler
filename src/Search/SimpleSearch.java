@@ -105,18 +105,21 @@ public class SimpleSearch{
     /**
      *Sets the course display according to a keyword
      *@param key Keyword indicating search requirements
+     * @throws SQLException throws exception if it cannot communicate with database
      */
-    public void setCourses(String key){
+    public void setCourses(String key) throws SQLException{
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(this.getResults(key))));
     }
     /**
      *Sets course display according to an unsorted courseList
+     * @param courseList list of courses to be added to display
      */
     public void setCourses(ArrayList<Course> courseList){
         this.setCoursesBy3DArray(SimpleSearch.getGroupedResults(groupCourseIDResults(courseList)));
     }
     /**
      *Sets the course display according to an ArrayList of Courses
+     * @param courseList a 3D array list separated by course ID then lecture time
      */
     public void setCoursesBy3DArray(ArrayList<ArrayList<ArrayList<Course>>> courseList){
         JPanel courses = new JPanel();
@@ -252,8 +255,9 @@ public class SimpleSearch{
     /**
      *@param key Keyword to be used to search through the database
      *@return Calls the setCourses using a keyword and returns the resulting panel
+     *@throws SQLException throws exception if it cannot connect
      */
-    public JPanel getCourses(String key){
+    public JPanel getCourses(String key) throws SQLException{
         this.setCourses(key);
         return this.cDisplay;
     }
@@ -278,9 +282,9 @@ public class SimpleSearch{
      *Communicates with the database using a desired keyword
      *@param key A string that contains a keyword that will be used to talk to the database
      *@return An arrayList of courses, which are the results.
-     *@throws SQLException
+     *@throws SQLException throws exception if connection fails
      */
-    public ArrayList<Course> getResults(String key) {
+    public ArrayList<Course> getResults(String key) throws SQLException{
     	//Course Code is not the real course code. It's my course code
     	//Location is empty String. preReqs is empty Course array. restrictions is empty String array
     	try {
@@ -416,13 +420,17 @@ public class SimpleSearch{
             this.s = s;
         }
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e){
             String keyword = this.text.getText();
             this.s.display.removeAll();
             this.s.display.revalidate();
             this.s.display.repaint();
             this.s.display.add(this.s.getControl(),BorderLayout.NORTH);
-            this.s.display.add(new JScrollPane(this.s.getCourses(keyword)), BorderLayout.CENTER);
+            try{
+                this.s.display.add(new JScrollPane(this.s.getCourses(keyword)), BorderLayout.CENTER);
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
             this.s.scrollableDisplay.removeAll();
             this.s.scrollableDisplay.revalidate();
             this.s.scrollableDisplay.repaint();

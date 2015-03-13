@@ -19,7 +19,7 @@ public class CourseConnection extends GolderConnection{
 	/**
 	 * get an array of String of all Majors
 	 * @return an array list of Majors
-	 * @throws SQLException
+	 * @throws SQLException throws exception if course can't be made
 	 */
 	public static String[] getMajor() throws SQLException {
 		Statement stmt = conn.createStatement();
@@ -42,7 +42,7 @@ public class CourseConnection extends GolderConnection{
 	/**
 	 * get an array of String of all Professors
 	 * @return An array list of professors
-	 * @throws SQLException
+	 * @throws SQLException throws exception if course can't be made
 	 */
 	public static String[] getProfessor() throws SQLException {
 		String [] m = null;
@@ -64,22 +64,22 @@ public class CourseConnection extends GolderConnection{
 	}
 	/**
 	 * get a course based on lecture ID and section ID
-	 * @param lectureId
-	 * @param sectionId
+	 * @param lectureId Course number id for lecture
+	 * @param sectionId Course number id for section
 	 * @return Course that matches the lectureId and sectionId
-	 * @throws SQLException
+	 * @throws SQLException throws exception if course can't be made
 	 */
 	public static Course getCourse(int lectureId, int sectionId) throws SQLException {
 		return getCourse(lectureId, sectionId, -5643581, -5643581);
 	}
 	/**
 	 * get course based on lecture ID and section ID with colors
-	 * @param lectureId
-	 * @param sectionId
-	 * @param lectureColor
-	 * @param sectionColor
-	 * @return Course
-	 * @throws SQLException
+	 * @param lectureId Course number id for lecture
+	 * @param sectionId Course number id for section
+	 * @param lectureColor Color to display the lecture
+	 * @param sectionColor Same color to identify section with lecture
+	 * @return Course Course created by the search
+	 * @throws SQLException throws exception if course can't be made
 	 */
 	public static Course getCourse(int lectureId, int sectionId,int lectureColor, int sectionColor) throws SQLException {
 		Course c = null;
@@ -144,7 +144,7 @@ public class CourseConnection extends GolderConnection{
 	 * Simple Search Support
 	 * @param s Search String
 	 * @return All courses contain s
-	 * @throws SQLException
+	 * @throws SQLException Throws exception if course could not be created
 	 */
 	public static ArrayList<Course> SearchFullTitle(String s) throws SQLException{
 		ArrayList<Course> ca = new ArrayList<Course>();
@@ -217,8 +217,9 @@ public class CourseConnection extends GolderConnection{
 	}
     /**
      @return ArrayList of courses that match the key
-     @param keys
-     @param option
+     @param keys List of keys to search with
+     @param option Indicates which column to serch in
+     @throws SQLException throws exception if course could not be created
      */
 	public static ArrayList<Course> getResults(ArrayList<String> keys, ArrayList<String>  option) throws SQLException{
 		int len = keys.size();
@@ -358,7 +359,7 @@ public class CourseConnection extends GolderConnection{
 	}
 	/**
 	 * method to support the week decode from database
-	 * @param w
+	 * @param w Week value
 	 * @return Character array
 	 */
 	private static char [] deCodeWeek(int w) {
