@@ -30,10 +30,6 @@ USE
 ---
 Using this program should be relatively self-explanatory. If you are new to it, you must first set up an account to log-in. Once logged in you can either search for classes or view your schedule. Once you find the course that you are interested in, you can add it to your schedule by clicking the add course button. If you decide that a selected course is not for you, you can remove courses from your schedule page, and change colors of the current classes to allow for easier distinguishing and aesthetic appeal.
 
-KNOWN BUGS
-----------
-*****write known bugs here******
-
 DOCUMENTATION
 -------------
 http://www.cs.ucsb.edu/~hanna/cs48/Golder/javadoc
