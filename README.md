@@ -1,3 +1,8 @@
+# cs56-utilities-GoldScheduler
+An application that will allow students to search the UCSB course catalog and create a schedule
+
+PREVIOUS DOCUMENTATION BELOW
+
 Golder
 ======
 Gaucho On-line Data Effortless Registration
@@ -11,7 +16,7 @@ AUTHORS
 Hanna Vigil
 Forrest Sun
 Wesley Pollek
-Johnathan Easterman
+Jonathan Easterman
 Chloe Pounds
 
 INTRODUCTION

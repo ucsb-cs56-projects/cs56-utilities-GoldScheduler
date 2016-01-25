@@ -57,6 +57,7 @@ docs/_build/
 javadoc/
 .ant-targets-build.xml
 
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -65,8 +66,13 @@ javadoc/
 *.war
 *.ear
 
+
 # Eclipse 
 .classpath
 
 # EMACS
 *~
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
