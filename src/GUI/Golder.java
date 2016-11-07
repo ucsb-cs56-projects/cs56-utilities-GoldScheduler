@@ -6,7 +6,7 @@ import connection.userInfo.User;
 /**
  * The class for start program and switch between panels
  * @author Forrest Sun
- * @author Wesley Pollek
+ * @author James Yang
  * @version Feb 12 2015
  */
 public class Golder {
@@ -18,8 +18,8 @@ public class Golder {
     static ForgotUser fu;
     public static void main (String[] args) throws SQLException{
         window = new JFrame("GOLDER");
-        window.setSize(910,670);
-        window.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
+        window.setSize(750,680);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
         l = new Login();
         ca = new CreateAccount();
