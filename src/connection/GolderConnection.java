@@ -16,9 +16,7 @@ import javax.swing.JOptionPane;
  * A class to hold the configuration information for a particular database
  */
 class Config{
-	public static String host;
-	public static String username;
-	public static String password;
+	public static String path;
 	public static String table;
 }
 /**
@@ -33,9 +31,7 @@ public class GolderConnection {
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader("config/config.config"));
-			Config.host = br.readLine();
-			Config.username =  br.readLine();
-			Config.password = br.readLine();
+			Config.path = br.readLine();
 			Config.table = br.readLine();
 	        br.close();
 	    } catch (FileNotFoundException e) {
@@ -68,18 +64,17 @@ public class GolderConnection {
 	 * @throws SQLException throws exception if a connection could not be made
 	 */
 	public static void connect() throws SQLException{
+		// try {
+		//     Class.forName("org.xerial.jdbc.Driver");
+		// } catch (ClassNotFoundException e) {
+		//     throw new RuntimeException("Cannot find the driver in the classpath!", e);
+		// }
 		try {
-		    Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-		    throw new RuntimeException("Cannot find the driver in the classpath!", e);
-		}
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://"
-			    		   + Config.host+"/"+ Config.table,
-			    		   Config.username, Config.password);
-			
+			conn = DriverManager.getConnection("jdbc:sqlite:" + Config.path);
+
+
 		} catch (SQLException e) {
-			
+
 			int n = JOptionPane.showConfirmDialog(
 					null,
 				    "Do you want to reconnect?",
