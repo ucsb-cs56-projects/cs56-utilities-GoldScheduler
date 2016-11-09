@@ -10,6 +10,9 @@
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
 
+  <property name="databaseFile" value="tmp/golder.db" />
+  <property name="sqlTableCommands" value="upload/GolderTables.txt" />
+
   <target name="init" description="compile">
 	<mkdir dir="build" />
   </target>
@@ -168,5 +171,12 @@
  <target name="clean" description="delete unnecessary files and directories">
     <delete dir="build" quiet="true" />
   </target>
+
+ <target name="init-db" description="initialize database">
+  <exec executable="sqlite3" input="${sqlTableCommandsy}">
+    <arg value="${databaseFile}"/>
+  </exec>
+  <echo>Created file ${databaseFile}</echo>
+ </target>
 
 </project>

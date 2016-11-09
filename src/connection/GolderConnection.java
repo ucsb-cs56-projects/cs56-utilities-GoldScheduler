@@ -42,6 +42,7 @@ public class GolderConnection {
         try{
             connect();
         } catch(SQLException ex){
+			ex.printStackTrace();
             int n = JOptionPane.showConfirmDialog(
                                                   null,
                                                   "Do you want to reconnect?",
@@ -74,7 +75,7 @@ public class GolderConnection {
 
 
 		} catch (SQLException e) {
-
+			e.printStackTrace();
 			int n = JOptionPane.showConfirmDialog(
 					null,
 				    "Do you want to reconnect?",
