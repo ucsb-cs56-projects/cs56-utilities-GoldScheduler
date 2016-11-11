@@ -78,7 +78,7 @@ public class UsersConnection extends GolderConnection{
 		ResultSet rs;
 			if (stmt.execute(String.format("SELECT ID FROM `users` WHERE email_address='%s';", email))) {
 		        rs = stmt.getResultSet();
-		        if (rs.next()) 
+		        if (rs.next())
 			        return rs.getInt("ID");
 		        else
 		        	return -1; //no username
@@ -97,12 +97,11 @@ public class UsersConnection extends GolderConnection{
 		ResultSet rs;
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE ID='%s';", ID))) {
 		        rs = stmt.getResultSet();
-		        if (rs.isLast()) 
-			        return null;
-		        rs.next();
-		        u = new User(rs.getString("user_name"), rs.getString("user_password"),
+		        if(rs.next()) {
+		        	u = new User(rs.getString("user_name"), rs.getString("user_password"),
                              rs.getString("email_address"), rs.getString("major"),
                              rs.getInt("ID"));
+						}
 		    }
 		return u;
 	}
@@ -111,7 +110,7 @@ public class UsersConnection extends GolderConnection{
 	 * @param userName Input username
 	 * @param email Corresponding email
 	 * @param t used to make the signature different
-	 * @return User 
+	 * @return User
 	 * @throws SQLException throws exception if connection fails
 	 */
 	public static User getInfo(String userName, String email, int t) throws SQLException{
@@ -120,7 +119,7 @@ public class UsersConnection extends GolderConnection{
 		ResultSet rs;
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND email_address='%s';", userName, email))) {
 		        rs = stmt.getResultSet();
-		        if (rs.isLast()) 
+		        if (rs.isLast())
 			        return null;
 		        rs.next();
 		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
@@ -140,10 +139,9 @@ public class UsersConnection extends GolderConnection{
 		ResultSet rs;
 			if (stmt.execute(String.format("SELECT * FROM `users` WHERE user_name='%s' AND user_password='%s';", userName, password))) {
 		        rs = stmt.getResultSet();
-		        if (rs.isLast()) 
-			        return null;
-		        rs.next();
-		        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
+		        if(rs.next()) {
+			        u = new User(rs.getString("user_name"), rs.getString("user_password"), rs.getString("email_address"), rs.getString("major"), rs.getInt("ID"));
+						}
 		    }
 		return u;
 	}
@@ -202,7 +200,7 @@ public class UsersConnection extends GolderConnection{
 			sectionID = c.getSect().id;
 			sectionColor = c.getSect().col.getRGB();
 		}
-			stmt.executeUpdate(String.format("INSERT INTO `student_schedule` (user_id,lecture_id,lecture_color,section_id,section_color) VALUES (%s,%s,%s,%s,%s);", 
+			stmt.executeUpdate(String.format("INSERT INTO `student_schedule` (user_id,lecture_id,lecture_color,section_id,section_color) VALUES (%s,%s,%s,%s,%s);",
 					userId, lectureID, lectureColor, sectionID,sectionColor));
 	}
 	/**
@@ -217,7 +215,7 @@ public class UsersConnection extends GolderConnection{
 		int lectureID = c.getLect().id;
 		int sectionID = c.getSect().id;
 		try {
-			stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s AND lecture_id=%s AND section_id=%s;", 
+			stmt.executeUpdate(String.format("DELETE FROM `student_schedule` WHERE user_id=%s AND lecture_id=%s AND section_id=%s;",
 					userId, lectureID, sectionID));
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -245,13 +243,13 @@ public class UsersConnection extends GolderConnection{
 				m[i][2] = rs.getInt("lecture_color");
 				m[i][3] = rs.getInt("section_color");
         	}
-			for  (int i = 0; i < m.length; i++) 
+			for  (int i = 0; i < m.length; i++)
 				ca.add(connection.courseInfo.CourseConnection.getCourse(m[i][0],m[i][1],m[i][2],m[i][3]));
 		}
 		return ca;
 	}
 	/**
-	 * delete entire schedule 
+	 * delete entire schedule
 	 * @param u User
 	 * @throws SQLException throws exception if connection fails
 	 */

@@ -15,7 +15,7 @@ import connection.userInfo.UsersConnection;
  * @version Feb 12 2015
  */
 public class CreateAccount extends JPanel{
-	JTextField username;
+    JTextField username;
     JLabel userLabel;
     JLabel userWrong;
     JPasswordField password;
@@ -31,6 +31,7 @@ public class CreateAccount extends JPanel{
     JButton createButton;
     JButton backButton;
     JComboBox<String> majorList;
+    // static Validator Validator;
     /**
      * Constructor
      * @throws SQLException throws exception if account could not be created
@@ -84,7 +85,9 @@ public class CreateAccount extends JPanel{
     	public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == 10)
 				try {
-					Validator();
+				    Validator();
+				    // Validator.validate();
+				    
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -102,12 +105,16 @@ public class CreateAccount extends JPanel{
     private class CreateButtonValidator implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Validator();
+			    Validator();
+			    // Validator.validate();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		}
     }
+    /**
+
+
     /**
      * Validator Check all the information in the TextArea
      * Create account if no error
@@ -130,13 +137,29 @@ public class CreateAccount extends JPanel{
 	    else {pass2Wrong.setText("*Password does not match"); validInfo=false;}
 	    
 	    String emailInfo = email.getText();
-	    if (emailInfo.equals("")) emailWrong.setText("*");
+	    if (emailInfo.equals("")){
+		emailWrong.setText("*Please enter a valid email");
+	Golder.goToMain(null);	
+	    }
+	     
 	    else {
-		    Pattern pattern = 
+		// Pattern 1 is for emails like blah@gmail.com
+	       	    Pattern pattern = 
 		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\Z");
+		    //pattern 2 is for emails like blah@csil.cs.edu
+		    Pattern patternb =
+		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\.\\w+\\Z");
+		    // pattern 3 is for emails like blah@yadda.yad.ya.com
+		    Pattern patternc = 
+		    Pattern.compile("\\A[\\w\\-\\.]+@\\w+\\.\\w+\\.+\\w+\\.\\w+\\Z");
 		    Matcher matcher = 
 		    pattern.matcher(emailInfo);
-	    	if (!matcher.find()) {emailWrong.setText("Email format: example@example.com"); validInfo=false;}
+		    Matcher matcher2 =
+		    patternb.matcher(emailInfo);
+		    Matcher matcher3 =
+		    patternc.matcher(emailInfo);
+		    if (!matcher.find() && !matcher2.find() && !matcher3.find()){
+		emailWrong.setText("Incorrect email format"); validInfo=false;}
 	    	else if (UsersConnection.getIdByEmail(emailInfo) > 0) emailWrong.setText("Email in use");
 	    	else emailWrong.setText("");
 	    }
@@ -146,7 +169,8 @@ public class CreateAccount extends JPanel{
 	    	if (u==null) throw new RuntimeException("Null User");
 	    	Golder.goToMain(u);
 	    }   
-    }
+}
+
 	/**
 	  * Method that empties all of the text boxes
 	  */

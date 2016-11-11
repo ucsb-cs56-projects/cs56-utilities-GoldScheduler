@@ -1,87 +1,64 @@
-CREATE TABLE Users
-(
-ID bigint NOT NULL AUTO_INCREMENT,
-user_name varchar(255) NOT NULL UNIQUE,
-user_password varchar(255) NOT NULL,
-email_address varchar(255) UNIQUE,
-major varchar(255),
-user_registered datetime DEFAULT NOW(),
-PRIMARY KEY (ID)
-)
-
-CREATE TABLE courses
-(
-course_name varchar(20) NOT NULL UNIQUE,
-course_code varchar(20),
-department varchar(20),
-description varchar(255),
-b_reqs TINYINT DEFAULT 0,
-c_reqs TINYINT DEFAULT 0,
-d_reqs TINYINT DEFAULT 0,
-e_reqs TINYINT DEFAULT 0,
-f_reqs TINYINT DEFAULT 0,
-g_reqs TINYINT DEFAULT 0,
-h_reqs TINYINT DEFAULT 0,
-ethnic_regs TINYINT  DEFAULT 0,
-euro_regs TINYINT DEFAULT 0,
-quantitative_reqs TINYINT DEFAULT 0,
-world_culture_reqs TINYINT DEFAULT 0,
-writ_reqs TINYINT DEFAULT 0,
-
-PRIMARY KEY (course_name)
+CREATE TABLE Users(
+  ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_name VARCHAR(255) NOT NULL UNIQUE,
+  user_password VARCHAR(255) NOT NULL,
+  email_address VARCHAR(255) UNIQUE,
+  major VARCHAR(255),
+  user_registered DATETIME DEFAULT (datetime('now','localtime'))
 );
 
 
-CREATE TABLE depts
-(
-department varchar(20),
-department_no_space varchar(20),
-description varchar(255),
-
-PRIMARY KEY (department)
+CREATE TABLE courses(
+  course_name varchar(20) PRIMARY KEY,
+  course_code varchar(20),
+  department varchar(20),
+  description varchar(255),
+  b_reqs INTEGER DEFAULT 0,
+  c_reqs INTEGER DEFAULT 0,
+  d_reqs INTEGER DEFAULT 0,
+  e_reqs INTEGER DEFAULT 0,
+  f_reqs INTEGER DEFAULT 0,
+  g_reqs INTEGER DEFAULT 0,
+  h_reqs INTEGER DEFAULT 0,
+  ethnic_regs INTEGER  DEFAULT 0,
+  euro_regs INTEGER DEFAULT 0,
+  quantitative_reqs INTEGER DEFAULT 0,
+  world_culture_reqs INTEGER DEFAULT 0,
+  writ_reqs INTEGER DEFAULT 0
 );
 
-CREATE TABLE spring_15_lecture
-(
-id bigint NOT NULL AUTO_INCREMENT,
-course_name varchar(20) NOT NULL,
-instructor_name varchar(20) NOT NULL,
-week TINYINT,
-start_time SMALLINT,
-end_time SMALLINT,
 
-PRIMARY KEY (id),
-FOREIGN KEY (corresponding_id) REFERENCES spring_15(id)
-)
-
-CREATE TABLE spring_15_section
-(
-id bigint NOT NULL AUTO_INCREMENT,
-corresponding_id bigint,
-course_name varchar(20) NOT NULL,
-instructor_name varchar(20) NOT NULL,
-week TINYINT,
-start_time SMALLINT,
-end_time SMALLINT,
-
-PRIMARY KEY (id),
-FOREIGN KEY (corresponding_id) REFERENCES spring_15_lecture(id)
-)
-
-CREATE TABLE depts
-(
-department varchar(20),
-department_no_space varchar(20),
-description varchar(255),
-
-PRIMARY KEY (department)
+CREATE TABLE depts (
+  department varchar(20) PRIMARY KEY,
+  department_no_space varchar(20),
+  description varchar(255)
 );
 
-CREATE TABLE student_schedule
-(
-user_id bigint NOT NULL,
-lecture_id bigint NOT NULL,
-lecture_color int,
-section_id bigint, 
-section_color int
-)
+CREATE TABLE student_schedule(
+  user_id INTEGER NOT NULL,
+  lecture_id INTEGER NOT NULL,
+  lecture_color INTEGER,
+  section_id INTEGER,
+  section_color INTEGER
+);
+
+CREATE TABLE spring_15_lecture(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  course_name varchar(20) NOT NULL,
+  instructor_name varchar(20) NOT NULL,
+  week INTEGER,
+  start_time INTEGER,
+  end_time INTEGER
+);
+
+CREATE TABLE spring_15_section(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  corresponding_id INTEGER,
+  course_name varchar(20) NOT NULL,
+  instructor_name varchar(20) NOT NULL,
+  week INTEGER,
+  start_time INTEGER,
+  end_time INTEGER,
+
+  FOREIGN KEY (corresponding_id) REFERENCES spring_15_lecture(id)
+);
