@@ -10,7 +10,7 @@
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
 
-  <property name="databaseFile" value="tmp/golder.db" />
+  <property name="databaseFile" value ="tmp/golder.db" />
   <property name="sqlTableCommands" value="upload/GolderTables.txt" />
 
   <target name="init" description="compile">
@@ -173,7 +173,8 @@
   </target>
 
  <target name="init-db" description="initialize database">
-  <exec executable="sqlite3" input="${sqlTableCommandsy}">
+   <mkdir dir = "tmp"/>
+   <exec executable="sqlite3" input="${sqlTableCommands}"> 
     <arg value="${databaseFile}"/>
   </exec>
   <echo>Created file ${databaseFile}</echo>
