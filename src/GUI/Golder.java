@@ -32,7 +32,7 @@ public class Golder {
     public static void goToLogin() {
         window.setContentPane(l);
         l.clean();
-        window.validate();
+	window.validate();
 	
 	
     }
