@@ -25,7 +25,7 @@ INTRODUCTION
 
 INSTRUCTIONS
 ------------
-To run the system, simply navigate to the repository and type "ant run". We use a build.xml file for testing and running different parts of our program. Your system must have the capabillity to run Java programs from the swing.javax package. A good connection to the internet is also required for accessing the database information quickly. This system uses J2SE 1.8 and Ant 1.9. 
+To run the system, simply navigate to the repository and type "ant init-db" and then "ant run". We use a build.xml file for testing and running different parts of our program. Your system must have the capabillity to run Java programs from the swing.javax package. A good connection to the internet is also required for accessing the database information quickly. This system uses J2SE 1.8 and Ant 1.9. 
 
 SPECIAL INFORMATION
 -------------------
